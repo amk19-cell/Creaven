@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWLS  -  Satisfaction With Life Scale | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#3D8B8B;--teal-dark:#2A6464;--teal-light:#E0EEEE;--violet:#7B6B8D;--sage:#7A9E7E;--sage-light:#EDF5EE;--cream:#FAF8F4;--cream-dark:#F0EBE1;--charcoal:#1E1E1E;--mid:#5A5A5A;--light:#999;--green:#27AE60;--green-light:#E9F7EF;--yellow:#D4AC0D;--yellow-light:#FEF9E7;--orange:#E07B39;--orange-light:#FDF0E8;--red:#C0392B;--red-light:#FDEAEA}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh}
+.lang-bar{background:var(--charcoal);padding:7px 48px;display:flex;justify-content:flex-end;gap:4px;align-items:center}
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-btn:hover,.lang-btn.active{background:var(--teal);border-color:var(--teal);color:white}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.nav-logo{text-decoration:none;display:flex;flex-direction:column}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark)}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase}
+.nav-back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s}
+.nav-back:hover{color:var(--teal)}.nav-back svg{width:16px;height:16px}
+.view{display:none}.view.active{display:block}
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--sage-light);color:var(--sage);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,54px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px}
+.intro-wrap h1 em{font-style:italic;color:var(--teal)}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.info-card .ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:4px}
+.info-card .ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px}
+.info-box p{font-size:13px;line-height:1.7}
+.info-box.sage{background:var(--sage-light);color:var(--sage)}
+.info-box.teal{background:var(--teal-light);color:var(--teal-dark)}
+.scale-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.scale-chip{background:white;border-radius:20px;padding:5px 14px;font-size:11px;color:var(--teal-dark);border:1px solid rgba(61,139,139,.25)}
+.btn-start{background:var(--teal);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+.btn-start:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(61,139,139,.3)}
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.progress-bar-wrap{margin-bottom:40px}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--teal);font-weight:600}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--sage),var(--teal));border-radius:2px;transition:width .5s ease}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(0,0,0,.06);margin-bottom:32px;animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px}
+.scale-options{display:flex;flex-direction:column;gap:10px}
+.scale-option{display:flex;align-items:center;gap:16px;padding:14px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--cream)}
+.scale-option:hover,.scale-option.selected{border-color:var(--teal);background:var(--teal-light)}
+.scale-option input{display:none}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.scale-option.selected .opt-dot{background:var(--teal);border-color:var(--teal)}
+.scale-option.selected .opt-dot::after{content:'';width:8px;height:8px;background:white;border-radius:50%}
+.opt-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal);width:24px;text-align:center}
+.opt-label{font-size:13px;color:var(--mid);flex:1}
+.nav-btns{display:flex;justify-content:space-between;align-items:center}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-prev:hover{border-color:var(--teal);color:var(--teal)}
+.btn-next{background:var(--teal);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-next:hover{background:var(--teal-dark)}.btn-next:disabled{background:var(--light);cursor:not-allowed}
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px}
+.results-header{text-align:center;margin-bottom:48px}
+.results-icon{font-size:56px;margin-bottom:16px}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px}
+.results-header h2 em{font-style:italic;color:var(--teal)}
+.results-header p{font-size:14px;color:var(--mid)}
+.total-score-card{background:white;border-radius:24px;padding:40px;text-align:center;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.ts-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px}
+.ts-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;line-height:1;margin-bottom:8px}
+.ts-max{font-size:14px;color:var(--light);margin-bottom:20px}
+.ts-badge{display:inline-block;padding:6px 20px;border-radius:30px;font-size:14px;font-weight:500}
+.severity-bar-wrap{margin-top:24px}
+.severity-bar{height:8px;background:linear-gradient(to right,#C0392B,#E07B39,#D4AC0D,#27AE60,#2A6464);border-radius:4px;position:relative}
+.severity-marker{position:absolute;top:-6px;transform:translateX(-50%);width:20px;height:20px;background:white;border:3px solid var(--charcoal);border-radius:50%;transition:left 1s ease .3s}
+.severity-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--light)}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8}
+.range-table{width:100%;border-collapse:collapse;margin-top:20px}
+.range-table th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(0,0,0,.06)}
+.range-table td{padding:10px 12px;font-size:13px;color:var(--mid);border-bottom:1px solid rgba(0,0,0,.04)}
+.range-table tr.current-row td{font-weight:500;color:var(--charcoal)}
+.range-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+.cta-results{background:linear-gradient(135deg,var(--teal-dark),var(--sage));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7}
+.btn-consult{background:white;color:var(--teal-dark);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7}
+.disclaimer strong{color:var(--charcoal)}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s}
+.btn-retake:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:768px){.lang-bar,nav{padding-left:20px;padding-right:20px}.intro-wrap,.test-wrap,.results-wrap{padding-left:20px;padding-right:20px}.question-text{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+<nav>
+  <a href="safemind.html" class="nav-logo"><span class="main">Safe Mind</span></a>
+  <a href="tests.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><span id="nav-back-label">Back to Assessments</span></a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Personal Development</div>
+    <h1 id="i-title">Satisfaction <em>With Life</em> Scale</h1>
+    <div class="abbr">SWLS  -  Diener, Emmons, Larsen and Griffin, 1985</div>
+    <p class="intro-desc" id="i-desc">The Satisfaction With Life Scale is the most widely used measure of cognitive well-being and life satisfaction. It assesses your overall evaluation of your life as a whole. In the creative industry, life satisfaction is often disrupted by the gap between public success and private fulfillment, the unpredictability of career trajectories, and the sacrifice of personal milestones for professional goals.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">5</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">2</div><div class="ic-label" id="i-ml">Minutes</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+    <div class="info-box sage"><p id="i-note"><strong>A note before you start:</strong> Life satisfaction is a cognitive judgment, not just an emotion. It reflects how you evaluate your life against your own standards and goals, not against anyone else's. Answer honestly based on what you truly feel, not what you think you should feel.</p></div>
+    <div class="info-box teal"><p id="i-instructions"><strong>Instructions:</strong> Below are five statements with which you may agree or disagree. Using the scale provided, indicate your agreement with each item.</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">1 Strongly disagree</span>
+        <span class="scale-chip">4 Neither agree nor disagree</span>
+        <span class="scale-chip">7 Strongly agree</span>
+      </div>
+    </div>
+    <br><button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta"><span class="prog-label" id="t-prog-label">Progress</span><span class="prog-count" id="progCount">1 / 5</span></div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:20%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header"><div class="results-icon">🌿</div><h2 id="r-title">Your <em>Life Satisfaction Results</em></h2><p id="r-subtitle">A snapshot of how you evaluate your life right now</p></div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results"><h3 id="r-cta-h">Life satisfaction can change.</h3><p id="r-cta-p">Whether your score is high or low, a consultation can help you understand what is driving your current evaluation of your life, and what steps could bring greater alignment between who you are and how you live.</p><button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button></div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The SWLS measures cognitive life satisfaction at a specific point in time. Scores can fluctuate based on current circumstances. This is not a clinical diagnosis.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back:"Back to Assessments", eyebrow:"Personal Development",
+    desc:"The Satisfaction With Life Scale measures your overall cognitive evaluation of your life. In the creative industry, life satisfaction is often disrupted by the gap between public success and private fulfillment.",
+    ql:"Questions", ml:"Minutes", av:"Free", al:"Instant Results",
+    note:"<strong>A note before you start:</strong> Life satisfaction is a cognitive judgment, not just an emotion. Answer honestly based on what you truly feel, not what you think you should feel.",
+    instructions:"<strong>Instructions:</strong> Below are five statements. Using a scale from 1 (strongly disagree) to 7 (strongly agree), indicate your agreement with each item.",
+    scale:["Strongly disagree","Disagree","Slightly disagree","Neither agree nor disagree","Slightly agree","Agree","Strongly agree"],
+    btn_start:"Begin Assessment", prog_label:"Progress", q_of:"of",
+    btn_prev:"Previous", btn_next:"Next", btn_results:"See Results",
+    r_title_plain:"Life Satisfaction Results",
+    r_subtitle:"A snapshot of how you evaluate your life right now",
+    r_cta_h:"Life satisfaction can change.",
+    r_cta_p:"Whether your score is high or low, a consultation can help you understand what drives your current evaluation of your life and what steps could bring greater fulfillment.",
+    r_cta_btn:"Book a Consultation",
+    r_disclaimer:"<strong>Important notice:</strong> The SWLS measures cognitive life satisfaction at a specific point in time. Scores can fluctuate based on circumstances. This is not a clinical diagnosis.",
+    r_retake:"Retake Assessment", out_of:"out of 35", score_label:"Total Score",
+    ranges:[
+      {min:5,  max:9,  label:"Extremely dissatisfied", color:"#C0392B", bg:"#FDEAEA", interp:"Your score indicates extreme dissatisfaction with life. At this level, you may be experiencing significant suffering in multiple life domains. This level of dissatisfaction warrants professional attention. Please consider reaching out to our team or another mental health professional."},
+      {min:10, max:14, label:"Dissatisfied",           color:"#E07B39", bg:"#FDF0E8", interp:"Your score indicates dissatisfaction with life. You may feel that your life falls short of what you hoped for or expected. This is a signal worth paying attention to. Exploring what is missing or misaligned in your life with professional support can be genuinely helpful."},
+      {min:15, max:19, label:"Slightly below average", color:"#D4AC0D", bg:"#FEF9E7", interp:"Your score is slightly below average for life satisfaction. There are likely areas of your life you find meaningful but other areas where you feel something important is missing. This is a common experience in high-demand creative careers where personal life often gets sacrificed."},
+      {min:20, max:20, label:"Neutral",                  color:"#7A9E7E", bg:"#EDF5EE", interp:"Your score of 20 represents a neutral point where you are neither satisfied nor dissatisfied with your life. You see your life as having about equal amounts of good and bad. This is a meaningful threshold worth reflecting on."},
+      {min:21, max:24, label:"Slightly satisfied",      color:"#7A9E7E", bg:"#EDF5EE", interp:"Your score indicates slight satisfaction with life. Life is mostly good for you, but you would like some areas to be better. This is a very common range and suggests room for growth and fulfillment without significant distress."},
+      {min:25, max:29, label:"Satisfied",              color:"#27AE60", bg:"#E9F7EF", interp:"Your score indicates good life satisfaction. You feel reasonably content with your life overall and have a generally positive evaluation of how things are going. Continue to protect and nurture the conditions that allow this to persist."},
+      {min:30, max:35, label:"Highly satisfied",       color:"#2A6464", bg:"#E0EEEE", interp:"Your score indicates high life satisfaction. You have a strong sense that your life is going well and aligns closely with your values and goals. This level of satisfaction is associated with resilience, productivity, and positive relationships. Continue to reflect on what sustains it."}
+    ],
+    questions:[
+      "In most ways my life is close to my ideal.",
+      "The conditions of my life are excellent.",
+      "I am satisfied with my life.",
+      "So far I have gotten the important things I want in life.",
+      "If I could live my life over, I would change almost nothing."
+    ]
+  },
+  fr: {
+    back:"Retour aux evaluations", eyebrow:"Developpement personnel",
+    desc:"L'echelle de satisfaction de vie mesure votre evaluation cognitive globale de votre vie. Dans l'industrie creative, la satisfaction de vie est souvent perturbee par l'ecart entre le succes public et l'accomplissement personnel.",
+    ql:"Questions", ml:"Minutes", av:"Gratuit", al:"Resultats immediats",
+    note:"<strong>Note avant de commencer :</strong> La satisfaction de vie est un jugement cognitif. Repondez honnêtement selon ce que vous ressentez vraiment, pas ce que vous pensez devoir ressentir.",
+    instructions:"<strong>Instructions :</strong> Voici cinq affirmations. En utilisant une echelle de 1 (pas du tout d'accord) a 7 (tout a fait d'accord), indiquez votre accord avec chaque element.",
+    scale:["Pas du tout d'accord","Pas d'accord","Plutot pas d'accord","Ni d'accord ni en desaccord","Plutot d'accord","D'accord","Tout a fait d'accord"],
+    btn_start:"Commencer l'evaluation", prog_label:"Progression", q_of:"sur",
+    btn_prev:"Precedent", btn_next:"Suivant", btn_results:"Voir les resultats",
+    r_title_plain:"Resultats satisfaction de vie",
+    r_subtitle:"Un apercu de votre evaluation de votre vie en ce moment",
+    r_cta_h:"La satisfaction de vie peut changer.",
+    r_cta_p:"Que votre score soit eleve ou faible, une consultation peut vous aider a comprendre ce qui influence votre evaluation actuelle de votre vie.",
+    r_cta_btn:"Prendre rendez-vous",
+    r_disclaimer:"<strong>Note importante :</strong> Le SWLS mesure la satisfaction cognitive de vie a un moment precis. Les scores peuvent fluctuer selon les circonstances.",
+    r_retake:"Repasser l'evaluation", out_of:"sur 35", score_label:"Score total",
+    ranges:[
+      {min:5,  max:9,  label:"Tres insatisfait(e)",          color:"#C0392B", bg:"#FDEAEA", interp:"Votre score indique une tres grande insatisfaction de vie. A ce niveau, vous pourriez souffrir significativement dans plusieurs domaines de votre vie. Ce niveau merite une attention professionnelle."},
+      {min:10, max:14, label:"Insatisfait(e)",               color:"#E07B39", bg:"#FDF0E8", interp:"Votre score indique une insatisfaction de vie. Vous pouvez avoir le sentiment que votre vie ne repond pas a vos espoirs ou attentes. Explorer ce qui manque avec un soutien professionnel peut etre genuinement utile."},
+      {min:15, max:19, label:"Legerement sous la moyenne",   color:"#D4AC0D", bg:"#FEF9E7", interp:"Votre score est legerement sous la moyenne pour la satisfaction de vie. Il y a probablement des domaines de votre vie que vous trouvez significatifs mais d'autres ou vous sentez qu'il manque quelque chose d'important."},
+      {min:20, max:20, label:"Neutre",                        color:"#7A9E7E", bg:"#EDF5EE", interp:"Votre score de 20 represente un point neutre ou vous netes ni satisfait(e) ni insatisfait(e) de votre vie. Vous percevez votre vie comme ayant autant de bons que de mauvais elements. C'est un seuil significatif qui merite reflexion."},
+      {min:21, max:24, label:"Legerement satisfait(e)",        color:"#7A9E7E", bg:"#EDF5EE", interp:"Votre score indique une legere satisfaction de vie. La vie va generalement bien pour vous, mais vous souhaiteriez que certains domaines s'ameliorent. C'est une plage tres courante qui suggere une marge de croissance sans detresse significative."},
+      {min:25, max:29, label:"Satisfait(e)",                 color:"#27AE60", bg:"#E9F7EF", interp:"Votre score indique une bonne satisfaction de vie. Vous vous sentez raisonnablement content(e) de votre vie dans l'ensemble. Continuez a proteger les conditions qui permettent cela."},
+      {min:30, max:35, label:"Tres satisfait(e)",            color:"#2A6464", bg:"#E0EEEE", interp:"Votre score indique une forte satisfaction de vie. Vous avez le sentiment fort que votre vie se deroule bien et correspond etroitement a vos valeurs et objectifs."}
+    ],
+    questions:[
+      "Sur la plupart des points, ma vie est proche de mon ideal.",
+      "Les conditions de ma vie sont excellentes.",
+      "Je suis satisfait(e) de ma vie.",
+      "Jusqu'ici j'ai obtenu les choses importantes que je voulais dans la vie.",
+      "Si je pouvais recommencer ma vie, je ne changerais presque rien."
+    ]
+  },
+  kr: {
+    back:"평가 목록으로 돌아가기", eyebrow:"자기 개발",
+    desc:"삶의 만족도 척도는 삶에 대한 전반적인 인지적 평가를 측정합니다. 창작 산업에서 삶의 만족도는 종종 공적 성공과 사적 성취 사이의 격차로 인해 방해받습니다.",
+    ql:"문항", ml:"분", av:"무료", al:"즉시 결과",
+    note:"<strong>시작 전 안내:</strong> 삶의 만족도는 인지적 판단입니다. 마땅히 느껴야 한다고 생각하는 것이 아니라 실제로 느끼는 것을 바탕으로 솔직하게 답하세요.",
+    instructions:"<strong>지침:</strong> 다음 5가지 문장에 대해 1점(전혀 동의하지 않음)에서 7점(매우 동의함)까지의 척도를 사용하여 동의 정도를 표시하세요.",
+    scale:["전혀 동의하지 않음","동의하지 않음","약간 동의하지 않음","동의도 반대도 아님","약간 동의함","동의함","매우 동의함"],
+    btn_start:"평가 시작", prog_label:"진행률", q_of:"/",
+    btn_prev:"이전", btn_next:"다음", btn_results:"결과 보기",
+    r_title_plain:"삶의 만족도 결과",
+    r_subtitle:"지금 이 순간 삶을 평가하는 방식의 스냅샷",
+    r_cta_h:"삶의 만족도는 변할 수 있습니다.",
+    r_cta_p:"점수가 높든 낮든, 상담을 통해 현재 삶의 평가를 이끄는 요인과 더 큰 성취감을 가져올 단계를 이해할 수 있습니다.",
+    r_cta_btn:"상담 예약",
+    r_disclaimer:"<strong>중요 안내:</strong> SWLS는 특정 시점의 인지적 삶의 만족도를 측정합니다. 점수는 상황에 따라 변동될 수 있습니다.",
+    r_retake:"다시 평가하기", out_of:"/ 35점", score_label:"총점",
+    ranges:[
+      {min:5,  max:9,  label:"매우 불만족",    color:"#C0392B", bg:"#FDEAEA", interp:"귀하의 점수는 삶에 대한 극도의 불만족을 나타냅니다. 이 수준에서는 여러 삶의 영역에서 상당한 고통을 경험하고 있을 수 있습니다. 저희 팀이나 다른 정신건강 전문가에게 연락하는 것을 고려해 주세요."},
+      {min:10, max:14, label:"불만족",          color:"#E07B39", bg:"#FDF0E8", interp:"귀하의 점수는 삶에 대한 불만족을 나타냅니다. 삶이 바라거나 기대했던 것에 미치지 못한다고 느낄 수 있습니다. 전문 지원을 통해 무엇이 부족하거나 맞지 않는지 탐구하는 것이 도움이 될 수 있습니다."},
+      {min:15, max:19, label:"평균 약간 이하",  color:"#D4AC0D", bg:"#FEF9E7", interp:"귀하의 점수는 삶의 만족도에서 평균보다 약간 낮습니다. 의미 있게 느끼는 삶의 영역도 있지만 중요한 무언가가 빠진 것 같은 영역도 있을 것입니다."},
+      {min:20, max:20, label:"중립",            color:"#7A9E7E", bg:"#EDF5EE", interp:"20점은 삶에 대해 만족하지도 불만족하지도 않는 중립점을 나타냅니다. 좋은 것과 나쁜 것이 거의 같다고 인식합니다. 이것은 반영할 가치가 있는 의미 있는 임계점입니다."},
+      {min:21, max:24, label:"약간 만족",        color:"#7A9E7E", bg:"#EDF5EE", interp:"귀하의 점수는 삶에 대한 약간의 만족을 나타냅니다. 전반적으로 삶이 좋지만 일부 영역이 더 나아지길 원합니다. 이는 매우 일반적인 범위입니다."},
+      {min:25, max:29, label:"만족",            color:"#27AE60", bg:"#E9F7EF", interp:"귀하의 점수는 좋은 삶의 만족도를 나타냅니다. 전반적으로 삶에 대해 합리적으로 만족하고 있습니다. 이것을 지속시키는 조건을 계속 보호하고 키워나가세요."},
+      {min:30, max:35, label:"매우 만족",       color:"#2A6464", bg:"#E0EEEE", interp:"귀하의 점수는 높은 삶의 만족도를 나타냅니다. 삶이 잘 되고 있고 가치와 목표와 밀접하게 일치한다는 강한 감각을 갖고 있습니다."}
+    ],
+    questions:[
+      "대부분의 면에서 내 삶은 나의 이상에 가깝다.",
+      "내 삶의 조건은 훌륭하다.",
+      "나는 내 삶에 만족한다.",
+      "지금까지 나는 삶에서 원했던 중요한 것들을 얻었다.",
+      "내 삶을 다시 살 수 있다면 거의 아무것도 바꾸지 않을 것이다."
+    ]
+  },
+  jp: {
+    back:"評価一覧に戻る", eyebrow:"自己成長",
+    desc:"人生満足度尺度は人生に対する全体的な認知的評価を測定します。クリエイティブ産業では、公的な成功と私的な充実感の差によって人生満足度が乱されることがよくあります。",
+    ql:"質問", ml:"分", av:"無料", al:"即時結果",
+    note:"<strong>開始前の注意：</strong>人生満足度は認知的判断です。あるべきだと思うことではなく、本当に感じることに基づいて正直に答えてください。",
+    instructions:"<strong>指示：</strong>以下の5つの文について、1（全く同意しない）から7（強く同意する）の尺度を使って同意の程度を示してください。",
+    scale:["全く同意しない","同意しない","やや同意しない","どちらでもない","やや同意する","同意する","強く同意する"],
+    btn_start:"評価を開始する", prog_label:"進捗", q_of:"/",
+    btn_prev:"前へ", btn_next:"次へ", btn_results:"結果を見る",
+    r_title_plain:"人生満足度の結果",
+    r_subtitle:"今この瞬間の人生評価のスナップショット",
+    r_cta_h:"人生満足度は変わることができます。",
+    r_cta_p:"スコアが高くても低くても、相談を通じて現在の人生評価を動かしているものと、より大きな充実感をもたらすステップを理解することができます。",
+    r_cta_btn:"相談を予約する",
+    r_disclaimer:"<strong>重要なお知らせ：</strong>SWLSは特定の時点での認知的人生満足度を測定します。スコアは状況によって変動する可能性があります。",
+    r_retake:"再評価する", out_of:"/ 35点", score_label:"合計スコア",
+    ranges:[
+      {min:5,  max:9,  label:"非常に不満",   color:"#C0392B", bg:"#FDEAEA", interp:"人生に対する極度の不満を示しています。専門家のサポートをご検討ください。"},
+      {min:10, max:14, label:"不満",         color:"#E07B39", bg:"#FDF0E8", interp:"人生への不満を示しています。専門的なサポートで何が欠けているか探ることが役立つかもしれません。"},
+      {min:15, max:19, label:"平均以下",     color:"#D4AC0D", bg:"#FEF9E7", interp:"人生満足度が平均よりやや低いです。意味を感じる領域もありますが、重要な何かが欠けていると感じる領域もあるでしょう。"},
+      {min:20, max:20, label:"中立的",       color:"#7A9E7E", bg:"#EDF5EE", interp:"20点は満足でも不満足でもない中立点を表しています。人生に良い点と悪い点が等しくあると感じています。"},
+      {min:21, max:24, label:"やや満足",     color:"#7A9E7E", bg:"#EDF5EE", interp:"人生にやや満足していることを示しています。全体的には良いですが、改善したい領域があります。"},
+      {min:25, max:29, label:"満足",         color:"#27AE60", bg:"#E9F7EF", interp:"良好な人生満足度を示しています。全体的に人生にほどよく満足しています。"},
+      {min:30, max:35, label:"非常に満足",   color:"#2A6464", bg:"#E0EEEE", interp:"高い人生満足度を示しています。人生がうまくいっており、価値観や目標と密接に一致しているという強い感覚があります。"}
+    ],
+    questions:[
+      "ほとんどの点で、私の生活は理想に近い。",
+      "私の生活環境は素晴らしい。",
+      "私は自分の人生に満足している。",
+      "これまでのところ、人生で望んでいた重要なものを得てきた。",
+      "もし人生をやり直せるとしたら、ほとんど何も変えないだろう。"
+    ]
+  },
+  zh: {
+    back:"返回评估列表", eyebrow:"个人发展",
+    desc:"生活满意度量表测量您对生活的整体认知评价。在创意产业中，生活满意度常常因公众成功与个人成就感之间的差距而受到干扰。",
+    ql:"问题", ml:"分钟", av:"免费", al:"即时结果",
+    note:"<strong>开始前的提示：</strong>生活满意度是一种认知判断。请根据您真正的感受诚实回答，而不是您认为应该感受到什么。",
+    instructions:"<strong>说明：</strong>以下是五个陈述。使用1（强烈不同意）到7（强烈同意）的量表，表示您对每个项目的同意程度。",
+    scale:["强烈不同意","不同意","有些不同意","既不同意也不反对","有些同意","同意","强烈同意"],
+    btn_start:"开始评估", prog_label:"进度", q_of:"/",
+    btn_prev:"上一题", btn_next:"下一题", btn_results:"查看结果",
+    r_title_plain:"生活满意度结果",
+    r_subtitle:"您现在对生活评价的快照",
+    r_cta_h:"生活满意度可以改变。",
+    r_cta_p:"无论您的分数高低，咨询可以帮助您了解当前生活评价的驱动因素以及可以带来更大成就感的步骤。",
+    r_cta_btn:"预约咨询",
+    r_disclaimer:"<strong>重要提示：</strong>SWLS在特定时间点测量认知生活满意度。分数可能会根据情况波动。这不是临床诊断。",
+    r_retake:"重新评估", out_of:"/ 35分", score_label:"总分",
+    ranges:[
+      {min:5,  max:9,  label:"极度不满意",   color:"#C0392B", bg:"#FDEAEA", interp:"您的分数表明对生活极度不满意。在这个水平上，您可能在生活的多个领域经历重大痛苦。请考虑联系专业人士。"},
+      {min:10, max:14, label:"不满意",       color:"#E07B39", bg:"#FDF0E8", interp:"您的分数表明对生活不满意。在专业支持下探索缺少什么可能真的很有帮助。"},
+      {min:15, max:19, label:"略低于平均",   color:"#D4AC0D", bg:"#FEF9E7", interp:"您的分数略低于生活满意度的平均水平。可能有些生活领域有意义，但在其他领域感到缺少重要的东西。"},
+      {min:20, max:20, label:"中立",         color:"#7A9E7E", bg:"#EDF5EE", interp:"20分代表一个中立点，您对生活既不满意也不不满意。生活中的好坏几乎相等。这是值得反思的有意义的临界点。"},
+      {min:21, max:24, label:"略微满意",     color:"#7A9E7E", bg:"#EDF5EE", interp:"您的分数表明对生活略微满意。生活总体上不错，但您希望某些领域能更好。"},
+      {min:25, max:29, label:"满意",         color:"#27AE60", bg:"#E9F7EF", interp:"您的分数表明良好的生活满意度。您总体上对生活感到相当满意。继续保护和培育使这种满意持续的条件。"},
+      {min:30, max:35, label:"非常满意",     color:"#2A6464", bg:"#E0EEEE", interp:"您的分数表明高度生活满意度。您强烈地感到生活进展顺利，与您的价值观和目标密切一致。"}
+    ],
+    questions:[
+      "在大多数方面，我的生活接近我的理想。",
+      "我的生活条件非常好。",
+      "我对我的生活感到满意。",
+      "到目前为止，我已经得到了生活中想要的重要东西。",
+      "如果我能重新生活，我几乎不会改变什么。"
+    ]
+  },
+  th: {
+    back:"กลับไปยังรายการประเมิน", eyebrow:"การพัฒนาตนเอง",
+    desc:"มาตรวัดความพึงพอใจในชีวิตวัดการประเมินชีวิตโดยรวมของคุณ ในอุตสาหกรรมสร้างสรรค์ ความพึงพอใจในชีวิตมักถูกรบกวนจากช่องว่างระหว่างความสำเร็จในที่สาธารณะและความสำเร็จส่วนตัว",
+    ql:"คำถาม", ml:"นาที", av:"ฟรี", al:"ผลทันที",
+    note:"<strong>หมายเหตุก่อนเริ่ม:</strong> ความพึงพอใจในชีวิตเป็นการตัดสินทางความรู้ความเข้าใจ ตอบอย่างซื่อสัตย์ตามสิ่งที่คุณรู้สึกจริงๆ",
+    instructions:"<strong>คำแนะนำ:</strong> ต่อไปนี้คือห้าข้อความ ใช้มาตราส่วนตั้งแต่ 1 (ไม่เห็นด้วยอย่างยิ่ง) ถึง 7 (เห็นด้วยอย่างยิ่ง)",
+    scale:["ไม่เห็นด้วยอย่างยิ่ง","ไม่เห็นด้วย","ค่อนข้างไม่เห็นด้วย","ไม่เห็นด้วยหรือเห็นด้วย","ค่อนข้างเห็นด้วย","เห็นด้วย","เห็นด้วยอย่างยิ่ง"],
+    btn_start:"เริ่มการประเมิน", prog_label:"ความคืบหน้า", q_of:"/",
+    btn_prev:"ก่อนหน้า", btn_next:"ถัดไป", btn_results:"ดูผลลัพธ์",
+    r_title_plain:"ผลลัพธ์ความพึงพอใจในชีวิต",
+    r_subtitle:"ภาพรวมของการประเมินชีวิตของคุณในขณะนี้",
+    r_cta_h:"ความพึงพอใจในชีวิตสามารถเปลี่ยนได้",
+    r_cta_p:"ไม่ว่าคะแนนของคุณจะสูงหรือต่ำ การปรึกษาสามารถช่วยให้คุณเข้าใจสิ่งที่ขับเคลื่อนการประเมินชีวิตปัจจุบันของคุณ",
+    r_cta_btn:"นัดหมายปรึกษา",
+    r_disclaimer:"<strong>หมายเหตุสำคัญ:</strong> SWLS วัดความพึงพอใจในชีวิตเชิงความรู้ความเข้าใจในช่วงเวลาที่เฉพาะเจาะจง ไม่ใช่การวินิจฉัยทางคลินิก",
+    r_retake:"ประเมินใหม่", out_of:"/ 35 คะแนน", score_label:"คะแนนรวม",
+    ranges:[
+      {min:5,  max:9,  label:"ไม่พอใจอย่างมาก",      color:"#C0392B", bg:"#FDEAEA", interp:"คะแนนของคุณบ่งชี้ถึงความไม่พอใจในชีวิตอย่างมาก กรุณาพิจารณาติดต่อผู้เชี่ยวชาญ"},
+      {min:10, max:14, label:"ไม่พอใจ",               color:"#E07B39", bg:"#FDF0E8", interp:"คะแนนของคุณบ่งชี้ถึงความไม่พอใจในชีวิต การสำรวจสิ่งที่ขาดหายไปด้วยการสนับสนุนจากผู้เชี่ยวชาญอาจเป็นประโยชน์"},
+      {min:15, max:19, label:"ต่ำกว่าค่าเฉลี่ยเล็กน้อย", color:"#D4AC0D", bg:"#FEF9E7", interp:"คะแนนของคุณต่ำกว่าค่าเฉลี่ยความพึงพอใจในชีวิตเล็กน้อย อาจมีบางส่วนของชีวิตที่มีความหมาย แต่ยังรู้สึกว่าขาดบางสิ่งที่สำคัญ"},
+      {min:20, max:20, label:"เป็นกลาง",               color:"#7A9E7E", bg:"#EDF5EE", interp:"20 คะแนนแทนจุดที่เป็นกลางที่คุณไม่พอใจหรือไม่พอใจกับชีวิต คุณรับรู้ว่าชีวิตมีสิ่งดีและไม่ดีเท่ากัน นี่เป็นเกณฑ์ที่มีความหมายและคุ้มค่าแก่การไตร่ตรอง"},
+      {min:21, max:24, label:"พอใจเล็กน้อย",           color:"#7A9E7E", bg:"#EDF5EE", interp:"คะแนนของคุณบ่งชี้ถึงความพึงพอใจในชีวิตเล็กน้อย โดยรวมชีวิตดี แต่คุณต้องการให้บางด้านดีขึ้น นี่เป็นช่วงที่พบบ่อยมาก"},
+      {min:25, max:29, label:"พอใจ",                  color:"#27AE60", bg:"#E9F7EF", interp:"คะแนนของคุณบ่งชี้ถึงความพึงพอใจในชีวิตที่ดี คุณรู้สึกพอใจกับชีวิตโดยรวม ดูแลรักษาเงื่อนไขที่ทำให้สิ่งนี้ดำเนินต่อไป"},
+      {min:30, max:35, label:"พอใจมาก",               color:"#2A6464", bg:"#E0EEEE", interp:"คะแนนของคุณบ่งชี้ถึงความพึงพอใจในชีวิตสูง คุณมีความรู้สึกอย่างแรงกล้าว่าชีวิตดำเนินไปอย่างดีและสอดคล้องกับคุณค่าและเป้าหมายของคุณ"}
+    ],
+    questions:[
+      "ในหลายๆ ด้าน ชีวิตของฉันใกล้เคียงกับอุดมคติของฉัน",
+      "เงื่อนไขของชีวิตฉันยอดเยี่ยม",
+      "ฉันพอใจกับชีวิตของฉัน",
+      "จนถึงตอนนี้ ฉันได้รับสิ่งสำคัญที่ต้องการในชีวิต",
+      "ถ้าฉันสามารถดำเนินชีวิตอีกครั้ง ฉันจะแทบไม่เปลี่ยนแปลงอะไรเลย"
+    ]
+  }
+};
+
+let lang='en', current=0, answers=new Array(5).fill(null);
+
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyTranslations();if(document.getElementById('view-test').classList.contains('active'))renderQ();}
+
+function applyTranslations(){
+  const t=T[lang];
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-av').textContent=t.av;
+  document.getElementById('i-al').textContent=t.al;
+  document.getElementById('i-note').innerHTML=t.note;
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+}
+
+function startTest(){showView('view-test');renderQ();}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+function renderQ(){
+  const t=T[lang];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' 5';
+  document.getElementById('progFill').style.width=((current+1)/5*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' 5';
+  document.getElementById('questionText').textContent=t.questions[current];
+  const opts=document.getElementById('scaleOptions');
+  opts.innerHTML='';
+  // SWLS uses 1-7 scale
+  for(let i=1;i<=7;i++){
+    const div=document.createElement('label');
+    div.className='scale-option'+(answers[current]===i?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+i+'"><div class="opt-dot"></div><div class="opt-val">'+i+'</div><div class="opt-label">'+t.scale[i-1]+'</div>';
+    div.onclick=(function(val,el){return function(){selectOption(val,el);};})(i,div);
+    opts.appendChild(div);
+  }
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  const bn=document.getElementById('btnNext');
+  bn.textContent=current===4?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  const card=document.getElementById('questionCard');
+  card.style.animation='none';card.offsetHeight;card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(val,el){
+  answers[current]=val;
+  document.querySelectorAll('.scale-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+function nextQ(){if(answers[current]===null)return;if(current<4){current++;renderQ();}else showResults();}
+function prevQ(){if(current>0){current--;renderQ();}}
+
+function showResults(){
+  const t=T[lang];
+  const total=answers.reduce((a,b)=>a+(b||0),0);
+  const range=t.ranges.find(r=>total>=r.min&&total<=r.max);
+  const pct=Math.round(((total-5)/30)*100);
+  document.getElementById('r-title').innerHTML='Your <em>'+t.r_title_plain+'</em>';
+  document.getElementById('totalScoreCard').innerHTML=
+    '<div class="ts-label">'+t.score_label+'</div>'+
+    '<div class="ts-score" style="color:'+range.color+'">'+total+'</div>'+
+    '<div class="ts-max">'+t.out_of+'</div>'+
+    '<div class="ts-badge" style="background:'+range.bg+';color:'+range.color+'">'+range.label+'</div>'+
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:'+pct+'%"></div></div>'+
+    '<div class="severity-labels"><span>5</span><span>10</span><span>15</span><span>20</span><span>25</span><span>35</span></div></div>';
+  document.getElementById('interpretationBox').innerHTML=
+    '<h3>'+range.label+'</h3><p>'+range.interp+'</p>'+
+    '<table class="range-table" style="margin-top:20px"><thead><tr><th>Score</th><th>Level</th></tr></thead><tbody>'+
+    t.ranges.map(r=>'<tr class="'+(total>=r.min&&total<=r.max?'current-row':'')+'"><td><span class="range-dot" style="background:'+r.color+'"></span>'+r.min+' - '+r.max+'</td><td>'+r.label+(total>=r.min&&total<=r.max?' \u2190':'')+'</td></tr>').join('')+
+    '</tbody></table>';
+  showView('view-results');
+}
+
+function resetTest(){current=0;answers=new Array(5).fill(null);showView('view-intro');}
+applyTranslations();
+</script>
+</body>
+</html>

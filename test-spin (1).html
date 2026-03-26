@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPIN  -  Social Phobia Inventory | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#3D8B8B;--teal-dark:#2A6464;--teal-light:#E0EEEE;--violet:#7B6B8D;--violet-light:#EDE8F2;--plum:#7D4E7E;--plum-light:#F3EAF4;--cream:#FAF8F4;--cream-dark:#F0EBE1;--charcoal:#1E1E1E;--mid:#5A5A5A;--light:#999;--green:#27AE60;--green-light:#E9F7EF;--yellow:#D4AC0D;--yellow-light:#FEF9E7;--orange:#E07B39;--orange-light:#FDF0E8;--red:#C0392B;--red-light:#FDEAEA}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh}
+.lang-bar{background:var(--charcoal);padding:7px 48px;display:flex;justify-content:flex-end;gap:4px;align-items:center}
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-btn:hover,.lang-btn.active{background:var(--teal);border-color:var(--teal);color:white}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.nav-logo{text-decoration:none;display:flex;flex-direction:column}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark)}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase}
+.nav-back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s}
+.nav-back:hover{color:var(--teal)}.nav-back svg{width:16px;height:16px}
+.view{display:none}.view.active{display:block}
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--plum-light);color:var(--plum);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,54px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px}
+.intro-wrap h1 em{font-style:italic;color:var(--teal)}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.info-card .ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:4px}
+.info-card .ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px}
+.info-box p{font-size:13px;line-height:1.7}
+.info-box.plum{background:var(--plum-light);color:var(--plum)}
+.info-box.teal{background:var(--teal-light);color:var(--teal-dark)}
+.scale-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.scale-chip{background:white;border-radius:20px;padding:5px 14px;font-size:11px;color:var(--teal-dark);border:1px solid rgba(61,139,139,.25)}
+.btn-start{background:var(--teal);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+.btn-start:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(61,139,139,.3)}
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.progress-bar-wrap{margin-bottom:40px}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--teal);font-weight:600}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--plum),var(--teal));border-radius:2px;transition:width .5s ease}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(0,0,0,.06);margin-bottom:32px;animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px}
+.scale-options{display:flex;flex-direction:column;gap:10px}
+.scale-option{display:flex;align-items:center;gap:16px;padding:14px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--cream)}
+.scale-option:hover,.scale-option.selected{border-color:var(--teal);background:var(--teal-light)}
+.scale-option input{display:none}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.scale-option.selected .opt-dot{background:var(--teal);border-color:var(--teal)}
+.scale-option.selected .opt-dot::after{content:'';width:8px;height:8px;background:white;border-radius:50%}
+.opt-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal);width:24px;text-align:center}
+.opt-label{font-size:13px;color:var(--mid);flex:1}
+.nav-btns{display:flex;justify-content:space-between;align-items:center}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-prev:hover{border-color:var(--teal);color:var(--teal)}
+.btn-next{background:var(--teal);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-next:hover{background:var(--teal-dark)}.btn-next:disabled{background:var(--light);cursor:not-allowed}
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px}
+.results-header{text-align:center;margin-bottom:48px}
+.results-icon{font-size:56px;margin-bottom:16px}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px}
+.results-header h2 em{font-style:italic;color:var(--teal)}
+.results-header p{font-size:14px;color:var(--mid)}
+.total-score-card{background:white;border-radius:24px;padding:40px;text-align:center;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.ts-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px}
+.ts-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;line-height:1;margin-bottom:8px}
+.ts-max{font-size:14px;color:var(--light);margin-bottom:20px}
+.ts-badge{display:inline-block;padding:6px 20px;border-radius:30px;font-size:14px;font-weight:500}
+.severity-bar-wrap{margin-top:24px}
+.severity-bar{height:8px;background:linear-gradient(to right,#27AE60,#D4AC0D,#E07B39,#C0392B);border-radius:4px;position:relative}
+.severity-marker{position:absolute;top:-6px;transform:translateX(-50%);width:20px;height:20px;background:white;border:3px solid var(--charcoal);border-radius:50%;transition:left 1s ease .3s}
+.severity-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--light)}
+.subscores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.subscore-card{background:white;border-radius:16px;padding:20px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.sub-title{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.sub-score{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin-bottom:4px}
+.sub-label{font-size:12px}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8}
+.cta-results{background:linear-gradient(135deg,var(--plum),var(--violet));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7}
+.btn-consult{background:white;color:var(--plum);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7}
+.disclaimer strong{color:var(--charcoal)}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s}
+.btn-retake:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:768px){.lang-bar,nav{padding-left:20px;padding-right:20px}.intro-wrap,.test-wrap,.results-wrap{padding-left:20px;padding-right:20px}.question-text{font-size:20px}.subscores-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+<nav>
+  <a href="safemind.html" class="nav-logo"><span class="main">Safe Mind</span></a>
+  <a href="tests.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><span id="nav-back-label">Back to Assessments</span></a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Anxiety and Distress</div>
+    <h1 id="i-title">Social Phobia <em>Inventory</em></h1>
+    <div class="abbr">SPIN  -  Connor et al., Duke University, 2000</div>
+    <p class="intro-desc" id="i-desc">The Social Phobia Inventory measures fear, avoidance, and physiological distress related to social situations. In the creative industry, social anxiety is paradoxically common among performers who appear confident on stage but experience intense fear of judgment, rejection, or humiliation in real-life interactions, interviews, and social media exposure.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">17</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">5</div><div class="ic-label" id="i-ml">Minutes</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+    <div class="info-box plum"><p id="i-note"><strong>A note before you start:</strong> Social anxiety is not shyness. It is a clinical condition that can significantly impact quality of life, relationships, and career. It is also one of the most treatable anxiety disorders. There is no judgment in your answers.</p></div>
+    <div class="info-box teal"><p id="i-instructions"><strong>Instructions:</strong> For each item, indicate how much the following problems have bothered you during the past week.</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">0 Not at all</span><span class="scale-chip">1 A little bit</span><span class="scale-chip">2 Somewhat</span><span class="scale-chip">3 Very much</span><span class="scale-chip">4 Extremely</span>
+      </div>
+    </div>
+    <br><button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta"><span class="prog-label" id="t-prog-label">Progress</span><span class="prog-count" id="progCount">1 / 17</span></div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:6%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header"><div class="results-icon">🌐</div><h2 id="r-title">Your <em>SPIN Results</em></h2><p id="r-subtitle">Based on the past week</p></div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="subscores-grid" id="subscoresGrid"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results"><h3 id="r-cta-h">Your discomfort in social situations is real and treatable.</h3><p id="r-cta-p">Social anxiety responds very well to therapy, particularly cognitive-behavioral approaches. Our team understands the unique pressures of the creative industry and can offer targeted, confidential support.</p><button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button></div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The SPIN is a validated screening tool. It is not a clinical diagnosis. A score of 19 or above suggests social anxiety disorder that warrants clinical evaluation.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back:"Back to Assessments", eyebrow:"Anxiety and Distress",
+    desc:"The Social Phobia Inventory measures fear, avoidance, and physiological distress in social situations. In the creative industry, social anxiety is paradoxically common among performers who appear confident on stage but experience intense fear of judgment or rejection in real-life interactions.",
+    ql:"Questions", ml:"Minutes", av:"Free", al:"Instant Results",
+    note:"<strong>A note before you start:</strong> Social anxiety is not shyness. It is a clinical condition that significantly impacts quality of life and is one of the most treatable anxiety disorders.",
+    instructions:"<strong>Instructions:</strong> For each item, indicate how much the following problems have bothered you during the past week.",
+    scale:["Not at all","A little bit","Somewhat","Very much","Extremely"],
+    btn_start:"Begin Assessment", prog_label:"Progress", q_of:"of",
+    btn_prev:"Previous", btn_next:"Next", btn_results:"See Results",
+    r_title_plain:"SPIN Results", r_subtitle:"Based on the past week",
+    r_cta_h:"Your discomfort in social situations is real and treatable.",
+    r_cta_p:"Social anxiety responds very well to therapy. Our team understands the unique pressures of the creative industry and can offer targeted, confidential support.",
+    r_cta_btn:"Book a Consultation",
+    r_disclaimer:"<strong>Important notice:</strong> The SPIN is a validated screening tool, not a clinical diagnosis. A score of 19 or above suggests social anxiety disorder warranting clinical evaluation.",
+    r_retake:"Retake Assessment", out_of:"out of 68", score_label:"Total Score",
+    sub_labels:["Fear","Avoidance","Physiological"],
+    ranges:[
+      {min:0,  max:18, label:"No social phobia",        color:"#27AE60", bg:"#E9F7EF", interp:"Your score falls below the clinical threshold for social phobia. You may experience some discomfort in social situations, which is entirely normal, but it does not appear to be interfering significantly with your daily life or functioning."},
+      {min:19, max:29, label:"Mild social phobia",      color:"#D4AC0D", bg:"#FEF9E7", interp:"Your score suggests mild social phobia. You likely experience notable discomfort in some social situations, particularly those involving performance, evaluation, or new interactions. Note: some clinical guidelines use a threshold of 25 or above as a more precise cut-off for social anxiety disorder. If your score is 25 or above, a clinical evaluation is particularly recommended. This level of social anxiety can be improved significantly with brief therapeutic support."},
+      {min:30, max:39, label:"Moderate social phobia",  color:"#E07B39", bg:"#FDF0E8", interp:"Your score suggests moderate social phobia. Social anxiety at this level is likely affecting your relationships, work interactions, and possibly your creative output. In the entertainment industry, this can manifest as extreme difficulty with interviews, fan interactions, or team dynamics despite appearing confident publicly."},
+      {min:40, max:49, label:"Severe social phobia",    color:"#C0392B", bg:"#FDEAEA", interp:"Your score suggests severe social phobia. At this level, social anxiety is likely having a significant impact on your life, causing avoidance of important situations and potentially impacting your career and relationships. Effective, evidence-based treatments exist. We encourage you to reach out."},
+      {min:50, max:68, label:"Very severe social phobia", color:"#7B241C", bg:"#FADBD8", interp:"Your score suggests very severe social phobia. This level of social anxiety may be highly impairing across multiple areas of your life. We strongly encourage you to book a consultation with one of our psychologists. With appropriate support, significant improvement is possible."}
+    ],
+    questions:[
+      {text:"I am afraid of people in authority.", sub:0},
+      {text:"I am bothered by blushing in front of people.", sub:2},
+      {text:"Parties and social events scare me.", sub:0},
+      {text:"I avoid talking to people I don't know.", sub:1},
+      {text:"Being criticized scares me a lot.", sub:0},
+      {text:"I avoid doing things or speaking to people for fear of embarrassment.", sub:1},
+      {text:"Sweating in front of people causes me distress.", sub:2},
+      {text:"I avoid going to parties.", sub:1},
+      {text:"I avoid activities in which I am the center of attention.", sub:1},
+      {text:"Talking to strangers scares me.", sub:0},
+      {text:"I avoid having to give speeches.", sub:1},
+      {text:"I would do anything to avoid being criticized.", sub:1},
+      {text:"Heart palpitations bother me when I am around people.", sub:2},
+      {text:"I am afraid of doing things when people might be watching.", sub:0},
+      {text:"Being embarrassed or looking stupid are among my worst fears.", sub:0},
+      {text:"I avoid speaking to anyone in authority.", sub:1},
+      {text:"Trembling or shaking in front of others is distressing to me.", sub:2}
+    ]
+  },
+  fr: {
+    back:"Retour aux evaluations", eyebrow:"Anxiete et detresse",
+    desc:"Le SPIN mesure la peur, l'evitement et la detresse physiologique dans les situations sociales. Dans l'industrie creative, l'anxiete sociale est paradoxalement courante chez les performers qui paraissent confiants sur scene mais vivent une peur intense du jugement dans les interactions reelles.",
+    ql:"Questions", ml:"Minutes", av:"Gratuit", al:"Resultats immediats",
+    note:"<strong>Note avant de commencer :</strong> L'anxiete sociale n'est pas de la timidite. C'est une condition clinique qui affecte significativement la qualite de vie et est parmi les troubles anxieux les plus traitables.",
+    instructions:"<strong>Instructions :</strong> Pour chaque element, indiquez dans quelle mesure les problemes suivants vous ont gene(e) au cours de la semaine passee.",
+    scale:["Pas du tout","Un peu","Quelque peu","Beaucoup","Extremement"],
+    btn_start:"Commencer l'evaluation", prog_label:"Progression", q_of:"sur",
+    btn_prev:"Precedent", btn_next:"Suivant", btn_results:"Voir les resultats",
+    r_title_plain:"Resultats SPIN", r_subtitle:"Base sur la semaine passee",
+    r_cta_h:"Votre inconfort dans les situations sociales est reel et traitable.",
+    r_cta_p:"L'anxiete sociale repond tres bien a la therapie. Notre equipe comprend les pressions uniques de l'industrie creative et peut offrir un soutien cible et confidentiel.",
+    r_cta_btn:"Prendre rendez-vous",
+    r_disclaimer:"<strong>Note importante :</strong> Le SPIN est un outil de depistage valide, pas un diagnostic clinique. Un score de 19 ou plus suggere un trouble d'anxiete sociale.",
+    r_retake:"Repasser l'evaluation", out_of:"sur 68", score_label:"Score total",
+    sub_labels:["Peur","Evitement","Physiologique"],
+    ranges:[
+      {min:0,  max:18, label:"Pas de phobie sociale",         color:"#27AE60", bg:"#E9F7EF", interp:"Votre score est en dessous du seuil clinique pour la phobie sociale. Vous pouvez ressentir un certain inconfort dans des situations sociales, ce qui est tout a fait normal, mais cela ne semble pas interferer significativement avec votre vie quotidienne."},
+      {min:19, max:29, label:"Phobie sociale legere",         color:"#D4AC0D", bg:"#FEF9E7", interp:"Votre score suggere une phobie sociale legere. Vous vivez probablement un inconfort notable dans certaines situations sociales. Note : certaines directives cliniques utilisent un seuil de 25 ou plus comme critere plus precis du trouble d'anxiete sociale. Si votre score est de 25 ou plus, une evaluation clinique est particulierement recommandee."},
+      {min:30, max:39, label:"Phobie sociale moderee",        color:"#E07B39", bg:"#FDF0E8", interp:"Votre score suggere une phobie sociale moderee. L'anxiete sociale a ce niveau affecte probablement vos relations et vos interactions professionnelles. Consultez notre equipe pour explorer des strategies de soutien adaptees."},
+      {min:40, max:49, label:"Phobie sociale severe",         color:"#C0392B", bg:"#FDEAEA", interp:"Votre score suggere une phobie sociale severe. L'anxiete sociale a ce niveau cause probablement un evitement significatif et impacte votre carriere et vos relations. Des traitements efficaces existent. Nous vous encourageons a contacter notre equipe."},
+      {min:50, max:68, label:"Phobie sociale tres severe",    color:"#7B241C", bg:"#FADBD8", interp:"Votre score suggere une phobie sociale tres severe. Ce niveau d'anxiete sociale peut etre tres invalidant. Nous vous encourageons vivement a prendre rendez-vous avec l'un de nos psychologues. Une amelioration significative est possible avec un soutien approprie."}
+    ],
+    questions:[
+      {text:"J'ai peur des personnes en autorite.", sub:0},
+      {text:"Rougir devant les autres me gene.", sub:2},
+      {text:"Les fetes et les evenements sociaux me font peur.", sub:0},
+      {text:"J'evite de parler aux personnes que je ne connais pas.", sub:1},
+      {text:"Etre critique(e) me fait tres peur.", sub:0},
+      {text:"J'evite de faire des choses ou de parler aux gens par peur de l'embarras.", sub:1},
+      {text:"Transpirer devant les autres me cause de la detresse.", sub:2},
+      {text:"J'evite d'aller aux fetes.", sub:1},
+      {text:"J'evite les activites dans lesquelles je suis le centre d'attention.", sub:1},
+      {text:"Parler a des inconnus me fait peur.", sub:0},
+      {text:"J'evite de devoir faire des discours.", sub:1},
+      {text:"Je ferais n'importe quoi pour eviter d'etre critique(e).", sub:1},
+      {text:"Les palpitations cardiaques me genent quand je suis entouree de gens.", sub:2},
+      {text:"J'ai peur de faire des choses quand des gens pourraient me regarder.", sub:0},
+      {text:"Etre embarrasse(e) ou paraitre stupide font partie de mes pires craintes.", sub:0},
+      {text:"J'evite de parler a quiconque en autorite.", sub:1},
+      {text:"Trembler ou secouer devant les autres me cause de la detresse.", sub:2}
+    ]
+  },
+  kr: {
+    back:"평가 목록으로 돌아가기", eyebrow:"불안 및 고통",
+    desc:"사회공포증 척도는 사회적 상황에서의 두려움, 회피, 생리적 고통을 측정합니다. 창작 산업에서 사회 불안은 무대에서는 자신감 있어 보이지만 실제 상호작용에서 판단이나 거절에 대한 강렬한 두려움을 경험하는 공연자들에게 역설적으로 흔합니다.",
+    ql:"문항", ml:"분", av:"무료", al:"즉시 결과",
+    note:"<strong>시작 전 안내:</strong> 사회 불안은 수줍음이 아닙니다. 삶의 질에 상당한 영향을 미치는 임상적 상태이며 가장 치료 가능한 불안 장애 중 하나입니다.",
+    instructions:"<strong>지침:</strong> 각 항목에 대해 지난 한 주 동안 다음 문제들로 얼마나 괴로웠는지 표시하세요.",
+    scale:["전혀 없음","약간","다소","매우","극도로"],
+    btn_start:"평가 시작", prog_label:"진행률", q_of:"/",
+    btn_prev:"이전", btn_next:"다음", btn_results:"결과 보기",
+    r_title_plain:"SPIN 결과", r_subtitle:"지난 한 주를 바탕으로",
+    r_cta_h:"사회적 상황에서의 불편함은 실제이며 치료 가능합니다.",
+    r_cta_p:"사회 불안은 치료에 매우 잘 반응합니다. 저희 팀은 창작 산업의 고유한 압박을 이해하고 맞춤형 지원을 제공할 수 있습니다.",
+    r_cta_btn:"상담 예약",
+    r_disclaimer:"<strong>중요 안내:</strong> SPIN은 검증된 선별 도구이며 임상 진단이 아닙니다. 19점 이상의 점수는 사회불안장애를 시사합니다.",
+    r_retake:"다시 평가하기", out_of:"/ 68점", score_label:"총점",
+    sub_labels:["두려움","회피","생리적"],
+    ranges:[
+      {min:0,  max:18, label:"사회공포증 없음",        color:"#27AE60", bg:"#E9F7EF", interp:"귀하의 점수는 사회공포증의 임상 기준치 이하입니다. 일부 사회적 상황에서 불편함을 느낄 수 있지만 이는 완전히 정상이며 일상생활에 크게 방해가 되지 않는 것으로 보입니다."},
+      {min:19, max:29, label:"경미한 사회공포증",      color:"#D4AC0D", bg:"#FEF9E7", interp:"귀하의 점수는 경미한 사회공포증을 시사합니다. 특정 사회적 상황에서 주목할 만한 불편함을 경험할 가능성이 높습니다. 참고: 일부 임상 지침은 25점 이상을 사회불안장애의 더 정확한 기준점으로 사용합니다. 25점 이상이면 임상 평가가 특히 권장됩니다."},
+      {min:30, max:39, label:"중등도 사회공포증",      color:"#E07B39", bg:"#FDF0E8", interp:"귀하의 점수는 중등도 사회공포증을 시사합니다. 이 수준의 사회 불안은 관계와 업무 상호작용에 영향을 미칠 가능성이 높습니다. 맞춤형 지원 전략을 탐색하기 위해 저희 팀에 문의하세요."},
+      {min:40, max:49, label:"심각한 사회공포증",      color:"#C0392B", bg:"#FDEAEA", interp:"귀하의 점수는 심각한 사회공포증을 시사합니다. 이 수준의 사회 불안은 중요한 상황을 회피하게 하고 커리어와 관계에 영향을 줄 수 있습니다. 효과적인 치료법이 존재합니다. 저희 팀에 연락하시길 권장합니다."},
+      {min:50, max:68, label:"매우 심각한 사회공포증", color:"#7B241C", bg:"#FADBD8", interp:"귀하의 점수는 매우 심각한 사회공포증을 시사합니다. 이 수준의 사회 불안은 삶의 여러 영역에서 매우 장애가 될 수 있습니다. 저희 심리학자와 상담을 예약하시길 강력히 권장합니다."}
+    ],
+    questions:[
+      {text:"나는 권위 있는 사람들을 두려워한다.", sub:0},
+      {text:"사람들 앞에서 얼굴을 붉히는 것이 신경 쓰인다.", sub:2},
+      {text:"파티와 사교 행사가 무섭다.", sub:0},
+      {text:"모르는 사람과 이야기하는 것을 피한다.", sub:1},
+      {text:"비판받는 것이 매우 무섭다.", sub:0},
+      {text:"당황할까봐 무언가를 하거나 사람들에게 말하는 것을 피한다.", sub:1},
+      {text:"사람들 앞에서 땀을 흘리면 고통스럽다.", sub:2},
+      {text:"파티에 가는 것을 피한다.", sub:1},
+      {text:"내가 주목받는 활동을 피한다.", sub:1},
+      {text:"낯선 사람과 이야기하는 것이 무섭다.", sub:0},
+      {text:"연설을 해야 하는 것을 피한다.", sub:1},
+      {text:"비판을 피하기 위해 무엇이든 할 것이다.", sub:1},
+      {text:"사람들과 함께 있을 때 심장 박동이 신경 쓰인다.", sub:2},
+      {text:"사람들이 지켜볼 수 있을 때 무언가를 하는 것이 두렵다.", sub:0},
+      {text:"당황하거나 어리석어 보이는 것이 내 최악의 두려움 중 하나이다.", sub:0},
+      {text:"권위 있는 사람과는 누구와도 이야기하는 것을 피한다.", sub:1},
+      {text:"다른 사람들 앞에서 떨거나 흔들리는 것이 고통스럽다.", sub:2}
+    ]
+  },
+  jp: {
+    back:"評価一覧に戻る", eyebrow:"不安と苦痛",
+    desc:"社会恐怖症インベントリーは社会的状況における恐怖、回避、生理的苦痛を測定します。クリエイティブ産業では、舞台では自信ありげに見えるが実際の相互作用では判断や拒絶への強い恐怖を経験するパフォーマーに逆説的に多く見られます。",
+    ql:"質問", ml:"分", av:"無料", al:"即時結果",
+    note:"<strong>開始前の注意：</strong>社会不安は内気さではありません。生活の質に大きな影響を与える臨床的な状態であり、最も治療可能な不安障害の一つです。",
+    instructions:"<strong>指示：</strong>各項目について、過去1週間にどの程度その問題に悩まされたかを示してください。",
+    scale:["全くない","少し","ある程度","かなり","非常に"],
+    btn_start:"評価を開始する", prog_label:"進捗", q_of:"/",
+    btn_prev:"前へ", btn_next:"次へ", btn_results:"結果を見る",
+    r_title_plain:"SPIN結果", r_subtitle:"過去1週間に基づいて",
+    r_cta_h:"社会的状況での不快感は実在し、治療可能です。",
+    r_cta_p:"社会不安は治療に非常によく反応します。私たちのチームはクリエイティブ産業の特有のプレッシャーを理解し、的を絞った支援を提供できます。",
+    r_cta_btn:"相談を予約する",
+    r_disclaimer:"<strong>重要なお知らせ：</strong>SPINは検証済みスクリーニングツールです。19点以上は社会不安障害を示します。",
+    r_retake:"再評価する", out_of:"/ 68点", score_label:"合計スコア",
+    sub_labels:["恐怖","回避","生理的"],
+    ranges:[
+      {min:0,  max:18, label:"社会恐怖症なし",       color:"#27AE60", bg:"#E9F7EF", interp:"スコアは社会恐怖症の臨床閾値を下回っています。"},
+      {min:19, max:29, label:"軽度の社会恐怖症",     color:"#D4AC0D", bg:"#FEF9E7", interp:"スコアは軽度の社会恐怖症を示しています。特定の社会的状況で顕著な不快感を経験する可能性があります。注：一部のガイドラインでは25点以上をより正確な基準として使用しています。"},
+      {min:30, max:39, label:"中程度の社会恐怖症",   color:"#E07B39", bg:"#FDF0E8", interp:"スコアは中程度の社会恐怖症を示しています。関係や職業的相互作用に影響している可能性があります。"},
+      {min:40, max:49, label:"重度の社会恐怖症",     color:"#C0392B", bg:"#FDEAEA", interp:"スコアは重度の社会恐怖症を示しています。効果的な治療法があります。チームへの連絡をお勧めします。"},
+      {min:50, max:68, label:"非常に重度の社会恐怖症", color:"#7B241C", bg:"#FADBD8", interp:"スコアは非常に重度の社会恐怖症を示しています。適切なサポートで大幅な改善が可能です。"}
+    ],
+    questions:[
+      {text:"権威ある人が怖い。", sub:0},
+      {text:"人前で顔が赤くなることが気になる。", sub:2},
+      {text:"パーティーや社交イベントが怖い。", sub:0},
+      {text:"知らない人と話すことを避ける。", sub:1},
+      {text:"批判されることがとても怖い。", sub:0},
+      {text:"恥ずかしさへの恐れから何かをしたり人と話したりすることを避ける。", sub:1},
+      {text:"人前で汗をかくことが苦痛だ。", sub:2},
+      {text:"パーティーに行くことを避ける。", sub:1},
+      {text:"注目の的になる活動を避ける。", sub:1},
+      {text:"見知らぬ人と話すことが怖い。", sub:0},
+      {text:"スピーチをしなければならないことを避ける。", sub:1},
+      {text:"批判されないためなら何でもする。", sub:1},
+      {text:"人の周りにいると動悸が気になる。", sub:2},
+      {text:"人が見ているかもしれない時に何かをするのが怖い。", sub:0},
+      {text:"恥をかいたり愚かに見えたりすることが最も恐れていることの一つだ。", sub:0},
+      {text:"権威ある人とは誰とも話すことを避ける。", sub:1},
+      {text:"人前で震えることが苦痛だ。", sub:2}
+    ]
+  },
+  zh: {
+    back:"返回评估列表", eyebrow:"焦虑与痛苦",
+    desc:"社交恐惧症量表测量社交情境中的恐惧、回避和生理痛苦。在创意产业中，社交焦虑在台上看起来自信的表演者中出乎意料地常见，他们在实际互动中会经历对判断或拒绝的强烈恐惧。",
+    ql:"问题", ml:"分钟", av:"免费", al:"即时结果",
+    note:"<strong>开始前的提示：</strong>社交焦虑不是害羞。这是一种对生活质量有重大影响的临床状况，也是最可治疗的焦虑障碍之一。",
+    instructions:"<strong>说明：</strong>对于每个项目，请指出过去一周以下问题困扰您的程度。",
+    scale:["完全没有","一点点","有些","很多","极度"],
+    btn_start:"开始评估", prog_label:"进度", q_of:"/",
+    btn_prev:"上一题", btn_next:"下一题", btn_results:"查看结果",
+    r_title_plain:"SPIN结果", r_subtitle:"基于过去一周",
+    r_cta_h:"您在社交情境中的不适是真实的，也是可以治疗的。",
+    r_cta_p:"社交焦虑对治疗反应非常好。我们的团队了解创意行业的独特压力，可以提供有针对性的保密支持。",
+    r_cta_btn:"预约咨询",
+    r_disclaimer:"<strong>重要提示：</strong>SPIN是经过验证的筛查工具，不是临床诊断。19分或以上表明社交焦虑障碍。",
+    r_retake:"重新评估", out_of:"/ 68分", score_label:"总分",
+    sub_labels:["恐惧","回避","生理"],
+    ranges:[
+      {min:0,  max:18, label:"无社交恐惧症",       color:"#27AE60", bg:"#E9F7EF", interp:"您的分数低于社交恐惧症的临床阈值。您可能在某些社交情境中感到不舒服，这是完全正常的，似乎没有显著影响日常生活。"},
+      {min:19, max:29, label:"轻度社交恐惧症",     color:"#D4AC0D", bg:"#FEF9E7", interp:"您的分数表明轻度社交恐惧症。您在某些社交情境中可能会感到明显不适。注：部分临床指南将25分或以上作为社交焦虑障碍更精确的临界点。如果您的分数为25分或以上，特别建议进行临床评估。"},
+      {min:30, max:39, label:"中度社交恐惧症",     color:"#E07B39", bg:"#FDF0E8", interp:"您的分数表明中度社交恐惧症。这个水平的社交焦虑可能正在影响您的关系和工作互动。"},
+      {min:40, max:49, label:"严重社交恐惧症",     color:"#C0392B", bg:"#FDEAEA", interp:"您的分数表明严重社交恐惧症。存在有效的循证治疗方法。我们鼓励您联系我们。"},
+      {min:50, max:68, label:"非常严重的社交恐惧症", color:"#7B241C", bg:"#FADBD8", interp:"您的分数表明非常严重的社交恐惧症。在适当支持下，显著改善是可能的。我们强烈建议您预约咨询。"}
+    ],
+    questions:[
+      {text:"我害怕权威人物。", sub:0},
+      {text:"在人前脸红让我感到困扰。", sub:2},
+      {text:"聚会和社交活动让我感到害怕。", sub:0},
+      {text:"我避免与不认识的人交谈。", sub:1},
+      {text:"被批评让我非常害怕。", sub:0},
+      {text:"我因为害怕尴尬而避免做事或与人交谈。", sub:1},
+      {text:"在人前出汗让我感到痛苦。", sub:2},
+      {text:"我避免参加聚会。", sub:1},
+      {text:"我避免参加我是注意焦点的活动。", sub:1},
+      {text:"与陌生人交谈让我感到害怕。", sub:0},
+      {text:"我避免不得不发表演讲。", sub:1},
+      {text:"我会做任何事来避免被批评。", sub:1},
+      {text:"与人在一起时心跳让我感到困扰。", sub:2},
+      {text:"当人们可能在看时，我害怕做事情。", sub:0},
+      {text:"感到尴尬或看起来愚蠢是我最大的恐惧之一。", sub:0},
+      {text:"我避免与任何权威人物交谈。", sub:1},
+      {text:"在别人面前颤抖或摇晃让我感到痛苦。", sub:2}
+    ]
+  },
+  th: {
+    back:"กลับไปยังรายการประเมิน", eyebrow:"ความวิตกกังวลและความทุกข์",
+    desc:"มาตรวัดโรคกลัวสังคมวัดความกลัว การหลีกเลี่ยง และความทุกข์ทางสรีรวิทยาในสถานการณ์ทางสังคม ในอุตสาหกรรมสร้างสรรค์ ความวิตกกังวลทางสังคมเป็นเรื่องธรรมดาอย่างย้อนแย้งในหมู่นักแสดงที่ดูมั่นใจบนเวทีแต่กลัวการตัดสินในชีวิตจริง",
+    ql:"คำถาม", ml:"นาที", av:"ฟรี", al:"ผลทันที",
+    note:"<strong>หมายเหตุก่อนเริ่ม:</strong> ความวิตกกังวลทางสังคมไม่ใช่ความขี้อาย เป็นภาวะทางคลินิกที่ส่งผลกระทบต่อคุณภาพชีวิตอย่างมีนัยสำคัญและเป็นหนึ่งในความผิดปกติทางความวิตกกังวลที่รักษาได้มากที่สุด",
+    instructions:"<strong>คำแนะนำ:</strong> สำหรับแต่ละรายการ ระบุว่าปัญหาต่อไปนี้รบกวนคุณมากแค่ไหนในช่วงสัปดาห์ที่ผ่านมา",
+    scale:["ไม่เลย","เล็กน้อย","บางส่วน","มาก","อย่างรุนแรง"],
+    btn_start:"เริ่มการประเมิน", prog_label:"ความคืบหน้า", q_of:"/",
+    btn_prev:"ก่อนหน้า", btn_next:"ถัดไป", btn_results:"ดูผลลัพธ์",
+    r_title_plain:"ผลลัพธ์ SPIN", r_subtitle:"จากสัปดาห์ที่ผ่านมา",
+    r_cta_h:"ความไม่สบายใจในสถานการณ์ทางสังคมของคุณเป็นเรื่องจริงและรักษาได้",
+    r_cta_p:"ความวิตกกังวลทางสังคมตอบสนองต่อการบำบัดได้ดีมาก ทีมของเราเข้าใจแรงกดดันเฉพาะของอุตสาหกรรมสร้างสรรค์",
+    r_cta_btn:"นัดหมายปรึกษา",
+    r_disclaimer:"<strong>หมายเหตุสำคัญ:</strong> SPIN เป็นเครื่องมือคัดกรองที่ผ่านการตรวจสอบแล้ว ไม่ใช่การวินิจฉัยทางคลินิก คะแนน 19 ขึ้นไปบ่งชี้ถึงโรคกลัวสังคม",
+    r_retake:"ประเมินใหม่", out_of:"/ 68 คะแนน", score_label:"คะแนนรวม",
+    sub_labels:["ความกลัว","การหลีกเลี่ยง","สรีรวิทยา"],
+    ranges:[
+      {min:0,  max:18, label:"ไม่มีโรคกลัวสังคม",         color:"#27AE60", bg:"#E9F7EF", interp:"คะแนนของคุณต่ำกว่าเกณฑ์ทางคลินิกสำหรับโรคกลัวสังคม คุณอาจรู้สึกไม่สบายในสถานการณ์ทางสังคมบางอย่าง ซึ่งเป็นเรื่องปกติ"},
+      {min:19, max:29, label:"โรคกลัวสังคมเล็กน้อย",      color:"#D4AC0D", bg:"#FEF9E7", interp:"คะแนนของคุณบ่งชี้ถึงโรคกลัวสังคมเล็กน้อย หมายเหตุ: แนวทางทางคลินิกบางส่วนใช้คะแนน 25 ขึ้นไปเป็นจุดตัดที่แม่นยำกว่าสำหรับโรคกังวลทางสังคม หากคะแนนของคุณ 25 ขึ้นไป แนะนำให้ประเมินทางคลินิกโดยเฉพาะ"},
+      {min:30, max:39, label:"โรคกลัวสังคมปานกลาง",       color:"#E07B39", bg:"#FDF0E8", interp:"คะแนนของคุณบ่งชี้ถึงโรคกลัวสังคมปานกลาง ความวิตกกังวลทางสังคมในระดับนี้อาจส่งผลต่อความสัมพันธ์และการโต้ตอบในที่ทำงาน"},
+      {min:40, max:49, label:"โรคกลัวสังคมรุนแรง",        color:"#C0392B", bg:"#FDEAEA", interp:"คะแนนของคุณบ่งชี้ถึงโรคกลัวสังคมรุนแรง มีการรักษาที่มีหลักฐานรับรองที่มีประสิทธิภาพ เราขอแนะนำให้ติดต่อทีมของเรา"},
+      {min:50, max:68, label:"โรคกลัวสังคมรุนแรงมาก",    color:"#7B241C", bg:"#FADBD8", interp:"คะแนนของคุณบ่งชี้ถึงโรคกลัวสังคมรุนแรงมาก เราขอแนะนำอย่างยิ่งให้นัดหมายปรึกษากับนักจิตวิทยาของเรา"}
+    ],
+    questions:[
+      {text:"ฉันกลัวคนที่มีอำนาจ", sub:0},
+      {text:"การหน้าแดงต่อหน้าคนอื่นทำให้ฉันรำคาญ", sub:2},
+      {text:"งานปาร์ตี้และงานสังสรรค์ทำให้ฉันกลัว", sub:0},
+      {text:"ฉันหลีกเลี่ยงการพูดคุยกับคนที่ฉันไม่รู้จัก", sub:1},
+      {text:"การถูกวิจารณ์ทำให้ฉันกลัวมาก", sub:0},
+      {text:"ฉันหลีกเลี่ยงการทำสิ่งต่างๆ หรือพูดคุยกับผู้คนเพราะกลัวความอับอาย", sub:1},
+      {text:"การเหงื่อออกต่อหน้าคนอื่นทำให้ฉันทุกข์ใจ", sub:2},
+      {text:"ฉันหลีกเลี่ยงการไปงานปาร์ตี้", sub:1},
+      {text:"ฉันหลีกเลี่ยงกิจกรรมที่ฉันเป็นศูนย์กลางความสนใจ", sub:1},
+      {text:"การพูดคุยกับคนแปลกหน้าทำให้ฉันกลัว", sub:0},
+      {text:"ฉันหลีกเลี่ยงการต้องกล่าวสุนทรพจน์", sub:1},
+      {text:"ฉันจะทำทุกอย่างเพื่อหลีกเลี่ยงการถูกวิจารณ์", sub:1},
+      {text:"ใจสั่นรบกวนฉันเมื่ออยู่กับผู้คน", sub:2},
+      {text:"ฉันกลัวที่จะทำสิ่งต่างๆ เมื่อผู้คนอาจกำลังดูอยู่", sub:0},
+      {text:"การอับอายหรือดูโง่เป็นหนึ่งในความกลัวที่แย่ที่สุดของฉัน", sub:0},
+      {text:"ฉันหลีกเลี่ยงการพูดคุยกับใครก็ตามที่มีอำนาจ", sub:1},
+      {text:"การสั่นหรือแกว่งต่อหน้าคนอื่นทำให้ฉันทุกข์ใจ", sub:2}
+    ]
+  }
+};
+
+let lang='en', current=0, answers=new Array(17).fill(null);
+
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyTranslations();if(document.getElementById('view-test').classList.contains('active'))renderQ();}
+
+function applyTranslations(){
+  const t=T[lang];
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-av').textContent=t.av;
+  document.getElementById('i-al').textContent=t.al;
+  document.getElementById('i-note').innerHTML=t.note;
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('i-scale-preview').innerHTML=t.scale.map((s,i)=>'<span class="scale-chip">'+i+' '+s+'</span>').join('');
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+}
+
+function startTest(){showView('view-test');renderQ();}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+function renderQ(){
+  const t=T[lang];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' 17';
+  document.getElementById('progFill').style.width=((current+1)/17*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' 17';
+  document.getElementById('questionText').textContent=t.questions[current].text;
+  const opts=document.getElementById('scaleOptions');
+  opts.innerHTML='';
+  for(let i=0;i<=4;i++){
+    const div=document.createElement('label');
+    div.className='scale-option'+(answers[current]===i?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+i+'"><div class="opt-dot"></div><div class="opt-val">'+i+'</div><div class="opt-label">'+t.scale[i]+'</div>';
+    div.onclick=(function(val,el){return function(){selectOption(val,el);};})(i,div);
+    opts.appendChild(div);
+  }
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  const bn=document.getElementById('btnNext');
+  bn.textContent=current===16?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  const card=document.getElementById('questionCard');
+  card.style.animation='none';card.offsetHeight;card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(val,el){
+  answers[current]=val;
+  document.querySelectorAll('.scale-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+function nextQ(){if(answers[current]===null)return;if(current<16){current++;renderQ();}else showResults();}
+function prevQ(){if(current>0){current--;renderQ();}}
+
+function showResults(){
+  const t=T[lang];
+  const total=answers.reduce((a,b)=>a+(b||0),0);
+  const range=t.ranges.find(r=>total>=r.min&&total<=r.max);
+  const pct=Math.round((total/68)*100);
+
+  // Subscores: fear items (sub=0), avoidance (sub=1), physiological (sub=2)
+  const subScores=[0,0,0];
+  t.questions.forEach((q,i)=>{subScores[q.sub]+=(answers[i]||0);});
+
+  document.getElementById('r-title').innerHTML='Your <em>'+t.r_title_plain+'</em>';
+  document.getElementById('totalScoreCard').innerHTML=
+    '<div class="ts-label">'+t.score_label+'</div>'+
+    '<div class="ts-score" style="color:'+range.color+'">'+total+'</div>'+
+    '<div class="ts-max">'+t.out_of+'</div>'+
+    '<div class="ts-badge" style="background:'+range.bg+';color:'+range.color+'">'+range.label+'</div>'+
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:'+pct+'%"></div></div>'+
+    '<div class="severity-labels"><span>0</span><span>19</span><span>30</span><span>40</span><span>50</span><span>68</span></div></div>';
+
+  const subColors=['#C0392B','#E07B39','#7B6B8D'];
+  const subMax=[28,28,16];
+  document.getElementById('subscoresGrid').innerHTML=subScores.map((s,i)=>
+    '<div class="subscore-card">'+
+    '<div class="sub-title">'+t.sub_labels[i]+'</div>'+
+    '<div class="sub-score" style="color:'+subColors[i]+'">'+s+'<span style="font-size:14px;color:var(--light)"> / '+subMax[i]+'</span></div>'+
+    '</div>'
+  ).join('');
+
+  document.getElementById('interpretationBox').innerHTML='<h3>'+range.label+'</h3><p>'+range.interp+'</p>';
+  showView('view-results');
+}
+
+function resetTest(){current=0;answers=new Array(17).fill(null);showView('view-intro');}
+applyTranslations();
+</script>
+</body>
+</html>

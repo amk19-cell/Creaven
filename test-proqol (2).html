@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProQOL  -  Professional Quality of Life | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#3D8B8B;--teal-dark:#2A6464;--teal-light:#E0EEEE;--violet:#7B6B8D;--violet-light:#EDE8F2;--forest:#2E7D52;--forest-light:#E8F5EE;--cream:#FAF8F4;--cream-dark:#F0EBE1;--charcoal:#1E1E1E;--mid:#5A5A5A;--light:#999;--green:#27AE60;--green-light:#E9F7EF;--yellow:#D4AC0D;--yellow-light:#FEF9E7;--orange:#E07B39;--orange-light:#FDF0E8;--red:#C0392B;--red-light:#FDEAEA}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh}
+.lang-bar{background:var(--charcoal);padding:7px 48px;display:flex;justify-content:flex-end;gap:4px;align-items:center}
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-btn:hover,.lang-btn.active{background:var(--teal);border-color:var(--teal);color:white}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.nav-logo{text-decoration:none;display:flex;flex-direction:column}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark)}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase}
+.nav-back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s}
+.nav-back:hover{color:var(--teal)}.nav-back svg{width:16px;height:16px}
+.view{display:none}.view.active{display:block}
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--forest-light);color:var(--forest);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,54px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px}
+.intro-wrap h1 em{font-style:italic;color:var(--teal)}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.info-card .ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:4px}
+.info-card .ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px}
+.info-box p{font-size:13px;line-height:1.7}
+.info-box.forest{background:var(--forest-light);color:var(--forest)}
+.info-box.teal{background:var(--teal-light);color:var(--teal-dark)}
+.dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.dim-card{background:white;border-radius:12px;padding:12px;text-align:center}
+.dim-icon{font-size:20px;margin-bottom:4px}
+.dim-name{font-size:11px;font-weight:500;margin-bottom:2px}
+.dim-desc{font-size:10px;color:var(--light)}
+.scale-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.scale-chip{background:white;border-radius:20px;padding:5px 14px;font-size:11px;color:var(--teal-dark);border:1px solid rgba(61,139,139,.25)}
+.btn-start{background:var(--teal);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+.btn-start:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(61,139,139,.3)}
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.progress-bar-wrap{margin-bottom:40px}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--teal);font-weight:600}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--forest),var(--teal));border-radius:2px;transition:width .5s ease}
+.dim-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;letter-spacing:.08em;margin-bottom:14px}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(0,0,0,.06);margin-bottom:32px;animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px}
+.scale-options{display:flex;flex-direction:column;gap:10px}
+.scale-option{display:flex;align-items:center;gap:16px;padding:14px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--cream)}
+.scale-option:hover,.scale-option.selected{border-color:var(--teal);background:var(--teal-light)}
+.scale-option input{display:none}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.scale-option.selected .opt-dot{background:var(--teal);border-color:var(--teal)}
+.scale-option.selected .opt-dot::after{content:'';width:8px;height:8px;background:white;border-radius:50%}
+.opt-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal);width:24px;text-align:center}
+.opt-label{font-size:13px;color:var(--mid);flex:1}
+.nav-btns{display:flex;justify-content:space-between;align-items:center}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-prev:hover{border-color:var(--teal);color:var(--teal)}
+.btn-next{background:var(--teal);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-next:hover{background:var(--teal-dark)}.btn-next:disabled{background:var(--light);cursor:not-allowed}
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px}
+.results-header{text-align:center;margin-bottom:48px}
+.results-icon{font-size:56px;margin-bottom:16px}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px}
+.results-header h2 em{font-style:italic;color:var(--teal)}
+.results-header p{font-size:14px;color:var(--mid)}
+.three-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.dim-result-card{background:white;border-radius:20px;padding:24px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.dr-icon{font-size:28px;margin-bottom:8px}
+.dr-name{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.dr-score{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;margin-bottom:4px}
+.dr-level{font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.dr-bar{height:4px;background:var(--cream-dark);border-radius:2px}
+.dr-fill{height:100%;border-radius:2px;transition:width 1s ease .3s}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8;margin-bottom:12px}
+.cta-results{background:linear-gradient(135deg,var(--forest),var(--teal-dark));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7}
+.btn-consult{background:white;color:var(--forest);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7}
+.disclaimer strong{color:var(--charcoal)}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s}
+.btn-retake:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:768px){.lang-bar,nav{padding-left:20px;padding-right:20px}.intro-wrap,.test-wrap,.results-wrap{padding-left:20px;padding-right:20px}.question-text{font-size:20px}.three-cards,.dim-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+<nav>
+  <a href="safemind.html" class="nav-logo"><span class="main">Safe Mind</span></a>
+  <a href="tests.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><span id="nav-back-label">Back to Assessments</span></a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Work and Burnout</div>
+    <h1 id="i-title">Professional <em>Quality</em><br>of Life Scale</h1>
+    <div class="abbr">ProQOL-5  -  Stamm, 2010. Compassion Fatigue and Satisfaction</div>
+    <p class="intro-desc" id="i-desc">The ProQOL measures the positive and negative aspects of caring for others in professional roles. Unlike other burnout tools, it captures both what drains you and what sustains you. Particularly relevant for psychologists, managers, coordinators, and anyone in the creative industry who holds ongoing responsibility for other people's well-being.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">30</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">15</div><div class="ic-label" id="i-ml">Minutes</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+    <div class="info-box forest">
+      <p id="i-note"><strong>Three dimensions:</strong></p>
+      <div class="dim-grid" id="i-dim-grid">
+        <div class="dim-card"><div class="dim-icon">💚</div><div class="dim-name">Compassion Satisfaction</div><div class="dim-desc">The pleasure you derive from helping others</div></div>
+        <div class="dim-card"><div class="dim-icon">😔</div><div class="dim-name">Burnout</div><div class="dim-desc">Feelings of hopelessness and exhaustion</div></div>
+        <div class="dim-card"><div class="dim-icon">⚡</div><div class="dim-name">Secondary Trauma</div><div class="dim-desc">Trauma absorbed from those you help</div></div>
+      </div>
+    </div>
+    <div class="info-box teal"><p id="i-instructions"><strong>Instructions:</strong> Think about your work in the past 30 days. Using the scale below, indicate how often each statement applies to you.</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">1 Never</span>
+        <span class="scale-chip">2 Rarely</span>
+        <span class="scale-chip">3 Sometimes</span>
+        <span class="scale-chip">4 Often</span>
+        <span class="scale-chip">5 Very often</span>
+      </div>
+    </div>
+    <br><button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta"><span class="prog-label" id="t-prog-label">Progress</span><span class="prog-count" id="progCount">1 / 30</span></div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:3%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="dim-tag" id="dimTag"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header"><div class="results-icon">🌿</div><h2 id="r-title">Your <em>ProQOL Results</em></h2><p id="r-subtitle">Your professional quality of life profile</p></div>
+    <div class="three-cards" id="threeCards"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results"><h3 id="r-cta-h">Your well-being matters as much as those you serve.</h3><p id="r-cta-p">Caring for others sustainably requires caring for yourself. Our team can help you understand your ProQOL profile and develop strategies to protect and strengthen your compassion satisfaction while reducing burnout and secondary trauma.</p><button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button></div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The ProQOL-5 is a validated tool developed by Beth Hudnall Stamm. It is freely available for use without cost. Scores are interpreted relative to normative samples. This is not a clinical diagnosis.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back:"Back to Assessments", eyebrow:"Work and Burnout",
+    desc:"The ProQOL measures both the positive and negative aspects of caring for others professionally. It captures what drains you and what sustains you in your role.",
+    ql:"Questions", ml:"Minutes", av:"Free", al:"Instant Results",
+    note:"<strong>Three dimensions:</strong>",
+    dim_cards:[
+      {icon:"💚",name:"Compassion Satisfaction",desc:"The pleasure you derive from helping others"},
+      {icon:"😔",name:"Burnout",desc:"Feelings of hopelessness and exhaustion"},
+      {icon:"⚡",name:"Secondary Trauma",desc:"Trauma absorbed from those you help"}
+    ],
+    instructions:"<strong>Instructions:</strong> Think about your work in the past 30 days. Indicate how often each statement applies to you.",
+    scale:["Never","Rarely","Sometimes","Often","Very often"],
+    btn_start:"Begin Assessment", prog_label:"Progress", q_of:"of",
+    btn_prev:"Previous", btn_next:"Next", btn_results:"See Results",
+    r_title_plain:"ProQOL Results", r_subtitle:"Your professional quality of life profile",
+    r_cta_h:"Your well-being matters as much as those you serve.",
+    r_cta_p:"Caring for others sustainably requires caring for yourself. Our team can help you understand your ProQOL profile and develop strategies to protect your compassion satisfaction.",
+    r_cta_btn:"Book a Consultation",
+    r_disclaimer:"<strong>Important notice:</strong> The ProQOL-5 is a widely used tool for measuring professional quality of life. Its three-subscale structure has been questioned in recent psychometric research. Results should be interpreted as general indicators rather than definitive clinical measures. This is not a clinical diagnosis. Your psychologist will review and contextualize your results.",
+    r_retake:"Retake Assessment",
+    dim_names:["Compassion Satisfaction","Burnout","Secondary Trauma"],
+    dim_icons:["💚","😔","⚡"],
+    cs_levels:[
+      {max:22,label:"Low",color:"#C0392B",bg:"#FDEAEA"},
+      {max:41,label:"Average",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"High",color:"#27AE60",bg:"#E9F7EF"}
+    ],
+    bo_st_levels:[
+      {max:22,label:"Low",color:"#27AE60",bg:"#E9F7EF"},
+      {max:41,label:"Moderate",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"High",color:"#C0392B",bg:"#FDEAEA"}
+    ],
+    questions:[
+      // CS items: 3,6,12,16,18,20,22,24,27,30 (1-indexed) = indices 2,5,11,15,17,19,21,23,26,29
+      {text:"I am happy.", dim:0},
+      {text:"I am preoccupied with more than one person I help.", dim:1},
+      {text:"I get satisfaction from being able to help people.", dim:0},
+      {text:"I feel connected to others.", dim:0},
+      {text:"I jump or am startled by unexpected sounds.", dim:2},
+      {text:"I feel invigorated after working with those I help.", dim:0},
+      {text:"I find it difficult to separate my personal life from my life as a helper.", dim:2},
+      {text:"I am not as productive at work because I am losing sleep over traumatic experiences of a person I help.", dim:1},
+      {text:"I think that I might have been affected by the traumatic stress of those I help.", dim:2},
+      {text:"I feel trapped by my job as a helper.", dim:1},
+      {text:"Because of my helping, I have felt 'on edge' about various things.", dim:2},
+      {text:"I like my work as a helper.", dim:0},
+      {text:"I feel depressed because of the traumatic experiences of the people I help.", dim:1},
+      {text:"I feel as though I am experiencing the trauma of someone I have helped.", dim:2},
+      {text:"I have beliefs that sustain me.", dim:0},
+      {text:"I am pleased with how I am able to keep up with helping techniques and protocols.", dim:0},
+      {text:"I am the person I always wanted to be.", dim:0},
+      {text:"My work makes me feel satisfied.", dim:0},
+      {text:"I feel worn out because of my work as a helper.", dim:1},
+      {text:"I have happy thoughts and feelings about those I help and how I could help them.", dim:0},
+      {text:"I feel overwhelmed because my case load seems endless.", dim:1},
+      {text:"I believe I can make a difference through my work.", dim:0},
+      {text:"I avoid certain activities or situations because they remind me of frightening experiences of the people I help.", dim:2},
+      {text:"I am proud of what I can do to help.", dim:0},
+      {text:"As a result of my helping, I have intrusive, frightening thoughts.", dim:2},
+      {text:"I feel 'bogged down' by the system.", dim:1},
+      {text:"I have thoughts that I am a 'success' as a helper.", dim:0},
+      {text:"I can't recall important parts of my work with trauma victims.", dim:2},
+      {text:"I am a very caring person.", dim:0},
+      {text:"I am happy that I chose to do this work.", dim:0}
+    ]
+  },
+  fr: {
+    back:"Retour aux evaluations", eyebrow:"Travail et epuisement",
+    desc:"Le ProQOL mesure les aspects positifs et negatifs du soin aux autres dans un role professionnel. Il capture ce qui vous epuise et ce qui vous soutient dans votre role.",
+    ql:"Questions", ml:"Minutes", av:"Gratuit", al:"Resultats immediats",
+    note:"<strong>Trois dimensions :</strong>",
+    dim_cards:[
+      {icon:"💚",name:"Satisfaction de compassion",desc:"Le plaisir que vous tirez d'aider les autres"},
+      {icon:"😔",name:"Epuisement",desc:"Sentiments d'impuissance et d'epuisement"},
+      {icon:"⚡",name:"Trauma secondaire",desc:"Trauma absorbe de ceux que vous aidez"}
+    ],
+    instructions:"<strong>Instructions :</strong> Pensez a votre travail au cours des 30 derniers jours. Indiquez la frequence a laquelle chaque affirmation s'applique a vous.",
+    scale:["Jamais","Rarement","Parfois","Souvent","Tres souvent"],
+    btn_start:"Commencer l'evaluation", prog_label:"Progression", q_of:"sur",
+    btn_prev:"Precedent", btn_next:"Suivant", btn_results:"Voir les resultats",
+    r_title_plain:"Resultats ProQOL", r_subtitle:"Votre profil de qualite de vie professionnelle",
+    r_cta_h:"Votre bien-etre est aussi important que celui des personnes que vous aidez.",
+    r_cta_p:"Prendre soin des autres de maniere durable necessite de prendre soin de soi. Notre equipe peut vous aider a comprendre votre profil ProQOL.",
+    r_cta_btn:"Prendre rendez-vous",
+    r_disclaimer:"<strong>Note importante :</strong> Le ProQOL-5 est un outil largement utilise pour mesurer la qualite de vie professionnelle. Sa structure a trois sous-echelles a ete remise en question dans des recherches psychometriques recentes. Les resultats doivent etre interpretes comme des indicateurs generaux. Ce n'est pas un diagnostic clinique. Votre psychologue examinera et contextualisera vos resultats.",
+    r_retake:"Repasser l'evaluation",
+    dim_names:["Satisfaction de compassion","Epuisement","Trauma secondaire"],
+    dim_icons:["💚","😔","⚡"],
+    cs_levels:[
+      {max:22,label:"Faible",color:"#C0392B",bg:"#FDEAEA"},
+      {max:41,label:"Moyen",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"Eleve",color:"#27AE60",bg:"#E9F7EF"}
+    ],
+    bo_st_levels:[
+      {max:22,label:"Faible",color:"#27AE60",bg:"#E9F7EF"},
+      {max:41,label:"Modere",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"Eleve",color:"#C0392B",bg:"#FDEAEA"}
+    ],
+    questions:[
+      {text:"Je suis heureux(se).", dim:0},
+      {text:"Je suis preoccupe(e) par plus d'une personne que j'aide.", dim:1},
+      {text:"J'obtiens de la satisfaction en etant capable d'aider les gens.", dim:0},
+      {text:"Je me sens connecte(e) aux autres.", dim:0},
+      {text:"Je sursaute ou suis surpris(e) par des sons inattendus.", dim:2},
+      {text:"Je me sens vivifie(e) apres avoir travaille avec ceux que j'aide.", dim:0},
+      {text:"J'ai du mal a separer ma vie personnelle de ma vie en tant qu'aidant(e).", dim:2},
+      {text:"Je suis moins productif(ve) au travail parce que je perds le sommeil a cause des experiences traumatiques d'une personne que j'aide.", dim:1},
+      {text:"Je pense que j'ai peut-etre ete affecte(e) par le stress traumatique de ceux que j'aide.", dim:2},
+      {text:"Je me sens pris(e) au piege par mon travail d'aidant(e).", dim:1},
+      {text:"A cause de mon aide, je me suis senti(e) sur les nerfs a propos de diverses choses.", dim:2},
+      {text:"J'aime mon travail d'aidant(e).", dim:0},
+      {text:"Je me sens deprime(e) a cause des experiences traumatiques des personnes que j'aide.", dim:1},
+      {text:"J'ai l'impression de vivre le trauma de quelqu'un que j'ai aide.", dim:2},
+      {text:"J'ai des croyances qui me soutiennent.", dim:0},
+      {text:"Je suis satisfait(e) de la facon dont je peux me tenir au courant des techniques et protocoles d'aide.", dim:0},
+      {text:"Je suis la personne que j'ai toujours voulu etre.", dim:0},
+      {text:"Mon travail me donne de la satisfaction.", dim:0},
+      {text:"Je me sens epuise(e) a cause de mon travail d'aidant(e).", dim:1},
+      {text:"J'ai des pensees et sentiments heureux a propos de ceux que j'aide.", dim:0},
+      {text:"Je me sens submergé(e) parce que ma charge de cas semble interminable.", dim:1},
+      {text:"Je crois que je peux faire une difference par mon travail.", dim:0},
+      {text:"J'evite certaines activites ou situations parce qu'elles me rappellent des experiences effrayantes des personnes que j'aide.", dim:2},
+      {text:"Je suis fier(fiere) de ce que je peux faire pour aider.", dim:0},
+      {text:"A la suite de mon aide, j'ai des pensees intrusives et effrayantes.", dim:2},
+      {text:"Je me sens enlise(e) par le systeme.", dim:1},
+      {text:"J'ai des pensees que je suis un 'succes' en tant qu'aidant(e).", dim:0},
+      {text:"Je ne peux pas me souvenir de parties importantes de mon travail avec des victimes de trauma.", dim:2},
+      {text:"Je suis une personne tres attentionnee.", dim:0},
+      {text:"Je suis heureux(se) d'avoir choisi ce travail.", dim:0}
+    ]
+  },
+  kr: {
+    back:"평가 목록으로 돌아가기", eyebrow:"직업 스트레스",
+    desc:"ProQOL은 전문적인 역할에서 타인을 돌보는 것의 긍정적, 부정적 측면을 모두 측정합니다. 귀하를 지치게 하는 것과 지탱해주는 것을 모두 파악합니다.",
+    ql:"문항", ml:"분", av:"무료", al:"즉시 결과",
+    note:"<strong>세 가지 차원:</strong>",
+    dim_cards:[
+      {icon:"💚",name:"공감 만족도",desc:"타인을 돕는 것에서 얻는 즐거움"},
+      {icon:"😔",name:"소진",desc:"무기력함과 탈진 느낌"},
+      {icon:"⚡",name:"이차 외상",desc:"돕는 사람들로부터 흡수된 트라우마"}
+    ],
+    instructions:"<strong>지침:</strong> 지난 30일 동안의 업무를 생각하면서 각 진술이 귀하에게 얼마나 자주 적용되는지 표시하세요.",
+    scale:["전혀","드물게","때때로","자주","매우 자주"],
+    btn_start:"평가 시작", prog_label:"진행률", q_of:"/",
+    btn_prev:"이전", btn_next:"다음", btn_results:"결과 보기",
+    r_title_plain:"ProQOL 결과", r_subtitle:"귀하의 직업 삶의 질 프로필",
+    r_cta_h:"귀하의 웰빙은 귀하가 돕는 사람들의 웰빙만큼 중요합니다.",
+    r_cta_p:"지속 가능하게 타인을 돌보려면 자신을 돌봐야 합니다. 저희 팀이 귀하의 ProQOL 프로필을 이해하고 공감 만족도를 보호하는 전략을 개발하는 데 도움을 드릴 수 있습니다.",
+    r_cta_btn:"상담 예약",
+    r_disclaimer:"<strong>중요 안내:</strong> ProQOL-5는 직업 삶의 질을 측정하는 널리 사용되는 도구입니다. 세 가지 하위 척도 구조는 최근 심리측정 연구에서 의문이 제기되었습니다. 결과는 일반적인 지표로 해석되어야 합니다. 임상 진단이 아닙니다. 귀하의 심리학자가 결과를 검토하고 맥락화할 것입니다.",
+    r_retake:"다시 평가하기",
+    dim_names:["공감 만족도","소진","이차 외상"],
+    dim_icons:["💚","😔","⚡"],
+    cs_levels:[
+      {max:22,label:"낮음",color:"#C0392B",bg:"#FDEAEA"},
+      {max:41,label:"보통",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"높음",color:"#27AE60",bg:"#E9F7EF"}
+    ],
+    bo_st_levels:[
+      {max:22,label:"낮음",color:"#27AE60",bg:"#E9F7EF"},
+      {max:41,label:"보통",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"높음",color:"#C0392B",bg:"#FDEAEA"}
+    ],
+    questions:[
+      {text:"나는 행복하다.", dim:0},
+      {text:"나는 내가 돕는 두 명 이상의 사람들에 대해 걱정한다.", dim:1},
+      {text:"나는 사람들을 도울 수 있어서 만족감을 얻는다.", dim:0},
+      {text:"나는 다른 사람들과 연결되어 있다고 느낀다.", dim:0},
+      {text:"나는 예상치 못한 소리에 놀라거나 깜짝 놀란다.", dim:2},
+      {text:"나는 내가 돕는 사람들과 함께 일한 후 활력을 느낀다.", dim:0},
+      {text:"나는 개인 생활과 조력자로서의 생활을 분리하기 어렵다.", dim:2},
+      {text:"내가 돕는 사람의 외상 경험으로 인해 잠을 잃어 업무에서 생산성이 떨어진다.", dim:1},
+      {text:"나는 내가 돕는 사람들의 외상 스트레스의 영향을 받았을 수도 있다고 생각한다.", dim:2},
+      {text:"나는 조력자로서의 일에 갇혀 있다고 느낀다.", dim:1},
+      {text:"도움을 줌으로 인해 나는 다양한 것들에 대해 '신경이 예민해진' 느낌이 들었다.", dim:2},
+      {text:"나는 조력자로서의 일이 좋다.", dim:0},
+      {text:"내가 돕는 사람들의 외상 경험으로 인해 우울함을 느낀다.", dim:1},
+      {text:"내가 도왔던 누군가의 외상을 경험하고 있는 것 같다.", dim:2},
+      {text:"나를 지탱해주는 신념이 있다.", dim:0},
+      {text:"나는 지원 기술과 프로토콜을 따라가는 방식에 만족한다.", dim:0},
+      {text:"나는 내가 항상 되고 싶었던 사람이다.", dim:0},
+      {text:"나의 일은 나에게 만족감을 준다.", dim:0},
+      {text:"조력자로서의 일로 인해 지쳐있다.", dim:1},
+      {text:"내가 돕는 사람들과 그들을 어떻게 도울 수 있는지에 대한 행복한 생각과 감정이 있다.", dim:0},
+      {text:"사례 부하가 끝없이 보여 압도당한다.", dim:1},
+      {text:"나는 업무를 통해 변화를 만들 수 있다고 믿는다.", dim:0},
+      {text:"내가 돕는 사람들의 무서운 경험을 상기시키기 때문에 특정 활동이나 상황을 피한다.", dim:2},
+      {text:"내가 도울 수 있는 것에 대해 자랑스럽다.", dim:0},
+      {text:"도움의 결과로 침습적이고 무서운 생각이 든다.", dim:2},
+      {text:"시스템에 의해 '막힌' 느낌이 든다.", dim:1},
+      {text:"나는 조력자로서 '성공'이라는 생각이 든다.", dim:0},
+      {text:"외상 피해자와의 업무에서 중요한 부분을 기억할 수 없다.", dim:2},
+      {text:"나는 매우 배려심 있는 사람이다.", dim:0},
+      {text:"나는 이 일을 선택한 것이 기쁘다.", dim:0}
+    ]
+  },
+  jp: {
+    back:"評価一覧に戻る", eyebrow:"職業ストレス",
+    desc:"ProQOLは専門的な役割で他者をケアすることの肯定的・否定的側面を測定します。あなたを消耗させるものとあなたを支えるものの両方を把握します。",
+    ql:"質問", ml:"分", av:"無料", al:"即時結果",
+    note:"<strong>3つの次元：</strong>",
+    dim_cards:[
+      {icon:"💚",name:"思いやり満足感",desc:"他者を助けることから得る喜び"},
+      {icon:"😔",name:"燃え尽き症候群",desc:"無力感と疲弊の感情"},
+      {icon:"⚡",name:"二次的外傷",desc:"助ける人から吸収したトラウマ"}
+    ],
+    instructions:"<strong>指示：</strong>過去30日間の仕事について考えてください。各文がどのくらいの頻度であなたに当てはまるかを示してください。",
+    scale:["全くない","めったにない","時々","よく","非常によく"],
+    btn_start:"評価を開始する", prog_label:"進捗", q_of:"/",
+    btn_prev:"前へ", btn_next:"次へ", btn_results:"結果を見る",
+    r_title_plain:"ProQOL結果", r_subtitle:"あなたの職業的生活の質プロファイル",
+    r_cta_h:"あなたの幸福は、あなたが助ける人たちと同じくらい重要です。",
+    r_cta_p:"持続可能に他者をケアするには自分自身をケアする必要があります。私たちのチームがProQOLプロファイルを理解する手助けをします。",
+    r_cta_btn:"相談を予約する",
+    r_disclaimer:"<strong>重要なお知らせ：</strong>ProQOL-5は職業的生活の質を測定するために広く使用されているツールです。3つのサブスケール構造は最近の心理測定研究で疑問視されています。結果は一般的な指標として解釈されるべきです。臨床診断ではありません。心理士が結果を確認し文脈化します。",
+    r_retake:"再評価する",
+    dim_names:["思いやり満足感","燃え尽き症候群","二次的外傷"],
+    dim_icons:["💚","😔","⚡"],
+    cs_levels:[
+      {max:22,label:"低い",color:"#C0392B",bg:"#FDEAEA"},
+      {max:41,label:"平均",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"高い",color:"#27AE60",bg:"#E9F7EF"}
+    ],
+    bo_st_levels:[
+      {max:22,label:"低い",color:"#27AE60",bg:"#E9F7EF"},
+      {max:41,label:"中程度",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"高い",color:"#C0392B",bg:"#FDEAEA"}
+    ],
+    questions:[
+      {text:"私は幸せだ。", dim:0},
+      {text:"私は助けている複数の人のことで頭がいっぱいだ。", dim:1},
+      {text:"人々を助けられることで満足感を得ている。", dim:0},
+      {text:"他者とのつながりを感じる。", dim:0},
+      {text:"予期しない音に飛び上がったり驚いたりする。", dim:2},
+      {text:"助けている人たちと仕事をした後、元気が出る。", dim:0},
+      {text:"私生活と援助者としての生活を切り離すのが難しい。", dim:2},
+      {text:"助けている人のトラウマ体験で眠れず、仕事の生産性が下がっている。", dim:1},
+      {text:"助けている人たちのトラウマストレスに影響を受けているかもしれないと思う。", dim:2},
+      {text:"援助者としての仕事に縛られていると感じる。", dim:1},
+      {text:"援助の結果、様々なことに対して「緊張した」状態になっている。", dim:2},
+      {text:"援助者としての仕事が好きだ。", dim:0},
+      {text:"助けている人たちのトラウマ体験のために落ち込んでいる。", dim:1},
+      {text:"助けた人のトラウマを自分が体験しているように感じる。", dim:2},
+      {text:"私を支える信念がある。", dim:0},
+      {text:"援助技術やプロトコルを習得できていることに満足している。", dim:0},
+      {text:"私はなりたかった人間になっている。", dim:0},
+      {text:"仕事に満足感を感じる。", dim:0},
+      {text:"援助者としての仕事で疲れ果てている。", dim:1},
+      {text:"助けている人たちと彼らをどう助けられるかについて幸せな考えや気持ちがある。", dim:0},
+      {text:"ケースが終わりなく続くように思えて圧倒される。", dim:1},
+      {text:"仕事を通じて変化をもたらせると信じている。", dim:0},
+      {text:"助けている人たちの怖い体験を思い出させるため、特定の活動や状況を避ける。", dim:2},
+      {text:"助けられることで誇りに思う。", dim:0},
+      {text:"援助の結果、侵入的で怖い考えが浮かぶ。", dim:2},
+      {text:"システムに「行き詰まっている」と感じる。", dim:1},
+      {text:"援助者として「成功している」という考えがある。", dim:0},
+      {text:"トラウマ被害者との仕事の重要な部分を思い出せない。", dim:2},
+      {text:"私はとても思いやりのある人だ。", dim:0},
+      {text:"この仕事を選んで良かったと思う。", dim:0}
+    ]
+  },
+  zh: {
+    back:"返回评估列表", eyebrow:"工作压力",
+    desc:"ProQOL测量专业角色中照顾他人的积极和消极方面。它捕捉了消耗您的因素和支持您的因素。",
+    ql:"问题", ml:"分钟", av:"免费", al:"即时结果",
+    note:"<strong>三个维度：</strong>",
+    dim_cards:[
+      {icon:"💚",name:"同情满足",desc:"从帮助他人中获得的快乐"},
+      {icon:"😔",name:"职业倦怠",desc:"无助和精疲力竭的感觉"},
+      {icon:"⚡",name:"继发性创伤",desc:"从被帮助者吸收的创伤"}
+    ],
+    instructions:"<strong>说明：</strong>思考您过去30天的工作。指出每个陈述在多大程度上适用于您。",
+    scale:["从不","很少","有时","经常","非常频繁"],
+    btn_start:"开始评估", prog_label:"进度", q_of:"/",
+    btn_prev:"上一题", btn_next:"下一题", btn_results:"查看结果",
+    r_title_plain:"ProQOL结果", r_subtitle:"您的职业生活质量概况",
+    r_cta_h:"您的幸福与您服务的人同样重要。",
+    r_cta_p:"可持续地照顾他人需要照顾自己。我们的团队可以帮助您了解ProQOL概况并制定保护策略。",
+    r_cta_btn:"预约咨询",
+    r_disclaimer:"<strong>重要提示：</strong>ProQOL-5是广泛用于测量职业生活质量的工具。其三分量表结构在近期心理测量研究中受到质疑。结果应作为一般指标解释。不是临床诊断。您的心理学家将审查并情境化您的结果。",
+    r_retake:"重新评估",
+    dim_names:["同情满足","职业倦怠","继发性创伤"],
+    dim_icons:["💚","😔","⚡"],
+    cs_levels:[
+      {max:22,label:"低",color:"#C0392B",bg:"#FDEAEA"},
+      {max:41,label:"平均",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"高",color:"#27AE60",bg:"#E9F7EF"}
+    ],
+    bo_st_levels:[
+      {max:22,label:"低",color:"#27AE60",bg:"#E9F7EF"},
+      {max:41,label:"中等",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"高",color:"#C0392B",bg:"#FDEAEA"}
+    ],
+    questions:[
+      {text:"我是快乐的。", dim:0},
+      {text:"我为不止一个我帮助的人感到担忧。", dim:1},
+      {text:"我从能够帮助人们中获得满足感。", dim:0},
+      {text:"我感到与他人有联系。", dim:0},
+      {text:"我被意外的声音吓到或惊吓。", dim:2},
+      {text:"与我帮助的人工作后，我感到充满活力。", dim:0},
+      {text:"我发现很难将个人生活与助人者的生活分开。", dim:2},
+      {text:"由于我帮助的人的创伤经历影响了我的睡眠，我在工作中不如以前高效。", dim:1},
+      {text:"我认为我可能受到了我帮助的人的创伤压力的影响。", dim:2},
+      {text:"我感到被助人者的工作所困。", dim:1},
+      {text:"由于我的帮助，我对各种事情感到紧张。", dim:2},
+      {text:"我喜欢我作为助人者的工作。", dim:0},
+      {text:"我因我帮助的人的创伤经历而感到沮丧。", dim:1},
+      {text:"我感到自己正在经历我帮助过的某人的创伤。", dim:2},
+      {text:"我有支持我的信念。", dim:0},
+      {text:"我对自己能够跟上帮助技术和协议感到满意。", dim:0},
+      {text:"我是我一直想成为的人。", dim:0},
+      {text:"我的工作让我感到满足。", dim:0},
+      {text:"我因作为助人者的工作而感到精疲力竭。", dim:1},
+      {text:"我对我帮助的人和如何帮助他们有快乐的想法和感受。", dim:0},
+      {text:"我感到不知所措，因为我的案件量似乎无穷无尽。", dim:1},
+      {text:"我相信我可以通过工作做出改变。", dim:0},
+      {text:"我避免某些活动或情况，因为它们让我想起我帮助的人的恐怖经历。", dim:2},
+      {text:"我为自己能提供的帮助感到自豪。", dim:0},
+      {text:"由于我的帮助，我有侵入性的、令人恐惧的想法。", dim:2},
+      {text:"我感到被系统所困。", dim:1},
+      {text:"我认为自己作为助人者是成功的。", dim:0},
+      {text:"我无法记住与创伤受害者工作的重要部分。", dim:2},
+      {text:"我是一个非常有爱心的人。", dim:0},
+      {text:"我很高兴选择了这份工作。", dim:0}
+    ]
+  },
+  th: {
+    back:"กลับไปยังรายการประเมิน", eyebrow:"ความเครียดในการทำงาน",
+    desc:"ProQOL วัดทั้งด้านบวกและด้านลบของการดูแลผู้อื่นในบทบาทวิชาชีพ โดยจับทั้งสิ่งที่ทำให้คุณเหนื่อยล้าและสิ่งที่ช่วยค้ำจุนคุณ",
+    ql:"คำถาม", ml:"นาที", av:"ฟรี", al:"ผลทันที",
+    note:"<strong>สามมิติ:</strong>",
+    dim_cards:[
+      {icon:"💚",name:"ความพึงพอใจด้านความเห็นอกเห็นใจ",desc:"ความสุขที่ได้รับจากการช่วยเหลือผู้อื่น"},
+      {icon:"😔",name:"ความหมดไฟ",desc:"ความรู้สึกสิ้นหวังและหมดแรง"},
+      {icon:"⚡",name:"บาดแผลทางจิตใจทุติยภูมิ",desc:"บาดแผลที่ดูดซับจากผู้ที่คุณช่วยเหลือ"}
+    ],
+    instructions:"<strong>คำแนะนำ:</strong> นึกถึงการทำงานของคุณใน 30 วันที่ผ่านมา ระบุว่าแต่ละข้อความนำไปใช้กับคุณบ่อยแค่ไหน",
+    scale:["ไม่เลย","แทบไม่","บางครั้ง","บ่อย","บ่อยมาก"],
+    btn_start:"เริ่มการประเมิน", prog_label:"ความคืบหน้า", q_of:"/",
+    btn_prev:"ก่อนหน้า", btn_next:"ถัดไป", btn_results:"ดูผลลัพธ์",
+    r_title_plain:"ผลลัพธ์ ProQOL", r_subtitle:"โปรไฟล์คุณภาพชีวิตทางวิชาชีพของคุณ",
+    r_cta_h:"ความเป็นอยู่ที่ดีของคุณสำคัญเท่ากับผู้ที่คุณให้บริการ",
+    r_cta_p:"การดูแลผู้อื่นอย่างยั่งยืนต้องการการดูแลตัวเอง ทีมของเราสามารถช่วยให้คุณเข้าใจโปรไฟล์ ProQOL และพัฒนากลยุทธ์เพื่อปกป้องความพึงพอใจด้านความเห็นอกเห็นใจ",
+    r_cta_btn:"นัดหมายปรึกษา",
+    r_disclaimer:"<strong>หมายเหตุสำคัญ:</strong> ProQOL-5 เป็นเครื่องมือที่ใช้กันอย่างแพร่หลายในการวัดคุณภาพชีวิตทางวิชาชีพ โครงสร้างสามมิติถูกตั้งคำถามในการวิจัยทางจิตวิทยาล่าสุด ผลลัพธ์ควรได้รับการตีความเป็นตัวบ่งชี้ทั่วไป ไม่ใช่การวินิจฉัยทางคลินิก นักจิตวิทยาของคุณจะตรวจสอบและให้บริบทผลลัพธ์",
+    r_retake:"ประเมินใหม่",
+    dim_names:["ความพึงพอใจด้านความเห็นอกเห็นใจ","ความหมดไฟ","บาดแผลทางจิตใจทุติยภูมิ"],
+    dim_icons:["💚","😔","⚡"],
+    cs_levels:[
+      {max:22,label:"ต่ำ",color:"#C0392B",bg:"#FDEAEA"},
+      {max:41,label:"ปานกลาง",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"สูง",color:"#27AE60",bg:"#E9F7EF"}
+    ],
+    bo_st_levels:[
+      {max:22,label:"ต่ำ",color:"#27AE60",bg:"#E9F7EF"},
+      {max:41,label:"ปานกลาง",color:"#D4AC0D",bg:"#FEF9E7"},
+      {max:50,label:"สูง",color:"#C0392B",bg:"#FDEAEA"}
+    ],
+    questions:[
+      {text:"ฉันมีความสุข", dim:0},
+      {text:"ฉันหมกมุ่นอยู่กับคนที่ฉันช่วยมากกว่าหนึ่งคน", dim:1},
+      {text:"ฉันได้รับความพึงพอใจจากการช่วยเหลือผู้คน", dim:0},
+      {text:"ฉันรู้สึกเชื่อมโยงกับผู้อื่น", dim:0},
+      {text:"ฉันกระโดดหรือตกใจกลัวเสียงที่ไม่คาดคิด", dim:2},
+      {text:"ฉันรู้สึกมีพลังหลังจากทำงานกับผู้ที่ฉันช่วย", dim:0},
+      {text:"ฉันพบว่ายากที่จะแยกชีวิตส่วนตัวออกจากชีวิตการเป็นผู้ช่วยเหลือ", dim:2},
+      {text:"ฉันไม่มีประสิทธิผลในการทำงานเพราะสูญเสียการนอนหลับเนื่องจากประสบการณ์อันเจ็บปวดของผู้ที่ฉันช่วย", dim:1},
+      {text:"ฉันคิดว่าฉันอาจได้รับผลกระทบจากความเครียดจากบาดแผลของผู้ที่ฉันช่วย", dim:2},
+      {text:"ฉันรู้สึกติดกับดักในงานผู้ช่วยเหลือ", dim:1},
+      {text:"เพราะการช่วยเหลือของฉัน ฉันรู้สึก 'ตึงเครียด' เกี่ยวกับสิ่งต่างๆ", dim:2},
+      {text:"ฉันชอบงานผู้ช่วยเหลือของฉัน", dim:0},
+      {text:"ฉันรู้สึกหดหู่เพราะประสบการณ์อันเจ็บปวดของผู้ที่ฉันช่วย", dim:1},
+      {text:"ฉันรู้สึกราวกับว่ากำลังประสบกับบาดแผลของคนที่ฉันช่วย", dim:2},
+      {text:"ฉันมีความเชื่อที่ค้ำจุนฉัน", dim:0},
+      {text:"ฉันพอใจกับวิธีที่ฉันสามารถติดตามเทคนิคและโปรโตคอลการช่วยเหลือ", dim:0},
+      {text:"ฉันเป็นคนที่ฉันต้องการเสมอ", dim:0},
+      {text:"งานของฉันทำให้ฉันรู้สึกพึงพอใจ", dim:0},
+      {text:"ฉันรู้สึกเหนื่อยล้าเพราะงานผู้ช่วยเหลือของฉัน", dim:1},
+      {text:"ฉันมีความคิดและความรู้สึกที่มีความสุขเกี่ยวกับผู้ที่ฉันช่วย", dim:0},
+      {text:"ฉันรู้สึกท่วมท้นเพราะภาระงานดูเหมือนไม่มีที่สิ้นสุด", dim:1},
+      {text:"ฉันเชื่อว่าฉันสามารถสร้างความแตกต่างผ่านงานของฉัน", dim:0},
+      {text:"ฉันหลีกเลี่ยงกิจกรรมหรือสถานการณ์บางอย่างเพราะมันทำให้นึกถึงประสบการณ์น่ากลัวของผู้ที่ฉันช่วย", dim:2},
+      {text:"ฉันภูมิใจในสิ่งที่ฉันทำได้เพื่อช่วย", dim:0},
+      {text:"ฉันมีความคิดที่น่ากลัวและรุกล้ำอันเป็นผลจากการช่วยเหลือ", dim:2},
+      {text:"ฉันรู้สึกถูกระบบฉุดรั้ง", dim:1},
+      {text:"ฉันมีความคิดว่าฉันเป็น 'ผู้ประสบความสำเร็จ' ในฐานะผู้ช่วยเหลือ", dim:0},
+      {text:"ฉันไม่สามารถจำส่วนสำคัญของงานกับเหยื่อบาดแผลได้", dim:2},
+      {text:"ฉันเป็นคนที่ใส่ใจมาก", dim:0},
+      {text:"ฉันดีใจที่เลือกทำงานนี้", dim:0}
+    ]
+  }
+};
+
+// ProQOL scoring:
+// CS items (dim=0): items at index 0,2,3,5,11,14,15,16,17,19,21,23,26,28,29
+// BO items (dim=1): items at index 1,7,9,12,18,20,25
+// STS items (dim=2): items at index 4,6,8,10,13,22,24,27
+// Item 1 (index 0) is NOT reversed in ProQOL-5 standard scoring
+
+let lang='en', current=0, answers=new Array(30).fill(null);
+
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyTranslations();if(document.getElementById('view-test').classList.contains('active'))renderQ();}
+
+function applyTranslations(){
+  const t=T[lang];
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-av').textContent=t.av;
+  document.getElementById('i-al').textContent=t.al;
+  document.getElementById('i-note').innerHTML=t.note;
+  document.getElementById('i-dim-grid').innerHTML=t.dim_cards.map(d=>'<div class="dim-card"><div class="dim-icon">'+d.icon+'</div><div class="dim-name">'+d.name+'</div><div class="dim-desc">'+d.desc+'</div></div>').join('');
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('i-scale-preview').innerHTML=t.scale.map((s,i)=>'<span class="scale-chip">'+(i+1)+' '+s+'</span>').join('');
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+}
+
+function startTest(){showView('view-test');renderQ();}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+const dimColors=['#27AE60','#E07B39','#7B6B8D'];
+const dimTagBgs=['#E8F5EE','#FDF0E8','#EDE8F2'];
+
+function renderQ(){
+  const t=T[lang];
+  const q=t.questions[current];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' 30';
+  document.getElementById('progFill').style.width=((current+1)/30*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' 30';
+  const tag=document.getElementById('dimTag');
+  tag.textContent=t.dim_names[q.dim];
+  tag.style.background=dimTagBgs[q.dim];
+  tag.style.color=dimColors[q.dim];
+  document.getElementById('questionText').textContent=q.text;
+  const opts=document.getElementById('scaleOptions');
+  opts.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const div=document.createElement('label');
+    div.className='scale-option'+(answers[current]===i?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+i+'"><div class="opt-dot"></div><div class="opt-val">'+i+'</div><div class="opt-label">'+t.scale[i-1]+'</div>';
+    div.onclick=(function(val,el){return function(){selectOption(val,el);};})(i,div);
+    opts.appendChild(div);
+  }
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  const bn=document.getElementById('btnNext');
+  bn.textContent=current===29?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  const card=document.getElementById('questionCard');
+  card.style.animation='none';card.offsetHeight;card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(val,el){
+  answers[current]=val;
+  document.querySelectorAll('.scale-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+function nextQ(){if(answers[current]===null)return;if(current<29){current++;renderQ();}else showResults();}
+function prevQ(){if(current>0){current--;renderQ();}}
+
+function calcDimScore(dimIdx){
+  const t=T[lang];
+  const items=t.questions.map((q,i)=>({dim:q.dim,i})).filter(q=>q.dim===dimIdx);
+  return items.reduce((sum,q)=>sum+(answers[q.i]||1),0);
+}
+
+function getLevelCS(score,levels){return levels.find(l=>score<=l.max)||levels[levels.length-1];}
+
+function showResults(){
+  const t=T[lang];
+  const cs=calcDimScore(0);
+  const bo=calcDimScore(1);
+  const sts=calcDimScore(2);
+
+  const csLevel=getLevelCS(cs,t.cs_levels);
+  const boLevel=getLevelCS(bo,t.bo_st_levels);
+  const stsLevel=getLevelCS(sts,t.bo_st_levels);
+
+  document.getElementById('r-title').innerHTML='Your <em>'+t.r_title_plain+'</em>';
+
+  document.getElementById('threeCards').innerHTML=[
+    {score:cs,level:csLevel,name:t.dim_names[0],icon:'💚',max:50},
+    {score:bo,level:boLevel,name:t.dim_names[1],icon:'😔',max:35},
+    {score:sts,level:stsLevel,name:t.dim_names[2],icon:'⚡',max:40}
+  ].map(d=>
+    '<div class="dim-result-card">'+
+    '<div class="dr-icon">'+d.icon+'</div>'+
+    '<div class="dr-name">'+d.name+'</div>'+
+    '<div class="dr-score" style="color:'+d.level.color+'">'+d.score+'</div>'+
+    '<div class="dr-level" style="background:'+d.level.bg+';color:'+d.level.color+'">'+d.level.label+'</div>'+
+    '<div class="dr-bar"><div class="dr-fill" style="width:'+Math.round(d.score/d.max*100)+'%;background:'+d.level.color+'"></div></div>'+
+    '</div>'
+  ).join('');
+
+  let interp='<h3>Your ProQOL Profile</h3>';
+  if(csLevel.label==='High'||csLevel.label==='Eleve'||csLevel.label==='높음'||csLevel.label==='高い'||csLevel.label==='高'||csLevel.label==='สูง'){
+    interp+='<p><strong>'+t.dim_names[0]+':</strong> Your score indicates high compassion satisfaction. You find genuine meaning and fulfillment in your helping role. This is a significant protective factor against burnout and secondary trauma.</p>';
+  } else if(csLevel.label==='Low'||csLevel.label==='Faible'||csLevel.label==='낮음'||csLevel.label==='低い'||csLevel.label==='低'||csLevel.label==='ต่ำ'){
+    interp+='<p><strong>'+t.dim_names[0]+':</strong> Your score indicates low compassion satisfaction. You may be finding it difficult to feel rewarded by your helping role. This is worth exploring, as compassion satisfaction is a key resource for sustainable caring work.</p>';
+  } else {
+    interp+='<p><strong>'+t.dim_names[0]+':</strong> Your score indicates average compassion satisfaction. There are elements of your work that feel meaningful, but also areas where the sense of reward may feel reduced.</p>';
+  }
+  if(boLevel.label==='High'||boLevel.label==='Eleve'||boLevel.label==='높음'||boLevel.label==='高い'||boLevel.label==='高'||boLevel.label==='สูง'){
+    interp+='<p><strong>'+t.dim_names[1]+':</strong> Your burnout score is high. This suggests significant feelings of hopelessness and ineffectiveness in your work. This level of burnout requires attention and support.</p>';
+  }
+  if(stsLevel.label==='High'||stsLevel.label==='Eleve'||stsLevel.label==='높음'||stsLevel.label==='高い'||stsLevel.label==='高'||stsLevel.label==='สูง'){
+    interp+='<p><strong>'+t.dim_names[2]+':</strong> Your secondary traumatic stress score is high. You may be absorbing the trauma of those you help. This is common in helping professions but requires active management through supervision, self-care, and professional support.</p>';
+  }
+  document.getElementById('interpretationBox').innerHTML=interp;
+  showView('view-results');
+}
+
+function resetTest(){current=0;answers=new Array(30).fill(null);showView('view-intro');}
+applyTranslations();
+</script>
+</body>
+</html>

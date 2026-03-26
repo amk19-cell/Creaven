@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Consultation | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #3A6B3A;
+  --teal-dark: #2A4A2A;
+  --teal-light: #E8F2E8;
+  --teal-xlight: #F0F8F8;
+  --violet: #7B6B8D;
+  --cream: #FAF8F4;
+  --cream-dark: #F0EBE1;
+  --charcoal: #1E1E1E;
+  --mid: #5A5A5A;
+  --light: #999;
+  --white: #FFFFFF;
+  --green: #27AE60;
+  --red: #C0392B;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+/* LANG BAR */
+.lang-bar {
+  background: var(--charcoal);
+  padding: 7px 48px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  align-items: center;
+}
+.lang-bar span { color: var(--light); font-size: 11px; letter-spacing: .08em; margin-right: 8px; }
+.lang-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.6);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.lang-btn:hover, .lang-btn.active { background: var(--teal); border-color: var(--teal); color: white; }
+
+/* NAV */
+nav {
+  padding: 16px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(250,248,244,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo { text-decoration: none; display: flex; flex-direction: column; }
+.nav-logo .main { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal-dark); }
+.nav-logo .sub { font-size: 10px; color: var(--light); letter-spacing: .14em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-link { text-decoration: none; color: var(--mid); font-size: 13px; transition: color .2s; }
+.nav-link:hover { color: var(--teal); }
+.nav-link.active { color: var(--teal); font-weight: 500; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 50%, #5BA8A8 100%);
+  padding: 80px 48px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  color: rgba(255,255,255,.9);
+  padding: 5px 16px;
+  border-radius: 30px;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 300;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  position: relative;
+}
+.hero h1 em { font-style: italic; color: rgba(255,255,255,.8); }
+.hero p {
+  font-size: 16px;
+  color: rgba(255,255,255,.75);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+  position: relative;
+}
+
+/* CONSULTATION TYPES */
+.section { padding: 72px 48px; max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300;
+  color: var(--charcoal);
+  margin-bottom: 48px;
+  line-height: 1.15;
+}
+.section-title em { font-style: italic; color: var(--teal); }
+
+.consult-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.consult-card {
+  background: white;
+  border-radius: 20px;
+  padding: 36px;
+  border: 1.5px solid rgba(0,0,0,.06);
+  cursor: pointer;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+.consult-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--teal), var(--violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s;
+}
+.consult-card:hover { border-color: var(--teal); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(61,139,139,.12); }
+.consult-card:hover::before { transform: scaleX(1); }
+.consult-card.selected { border-color: var(--teal); background: var(--teal-xlight); box-shadow: 0 8px 32px rgba(61,139,139,.15); }
+.consult-card.selected::before { transform: scaleX(1); }
+
+.card-icon { font-size: 32px; margin-bottom: 16px; }
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 10px;
+}
+.card-desc { font-size: 13px; color: var(--mid); line-height: 1.7; margin-bottom: 16px; }
+.card-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.card-select {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,.15);
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.consult-card.selected .card-select {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.consult-card.selected .card-select::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+/* BOOKING SECTION */
+.booking-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.booking-col {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.booking-col-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+}
+.booking-col-sub { font-size: 13px; color: var(--light); margin-bottom: 28px; line-height: 1.6; }
+
+/* CALENDLY */
+.calendly-placeholder {
+  background: var(--teal-xlight);
+  border: 2px dashed var(--teal-light);
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--teal-dark);
+}
+.calendly-placeholder .cal-icon { font-size: 40px; margin-bottom: 12px; }
+.calendly-placeholder p { font-size: 13px; line-height: 1.7; margin-bottom: 16px; }
+.btn-calendly {
+  background: var(--teal);
+  color: white;
+  padding: 13px 32px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-calendly:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(61,139,139,.3); }
+
+/* FORM */
+.form-group { margin-bottom: 20px; }
+.form-label { font-size: 12px; color: var(--mid); letter-spacing: .06em; text-transform: uppercase; font-weight: 500; margin-bottom: 8px; display: block; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid rgba(0,0,0,.1);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--charcoal);
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color .2s;
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--teal); background: white; }
+.form-textarea { resize: vertical; min-height: 100px; }
+.form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+  color: white;
+  padding: 16px;
+  border-radius: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .25s;
+  margin-top: 8px;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(61,139,139,.3); }
+
+/* DIVIDER */
+.or-divider {
+  text-align: center;
+  position: relative;
+  margin: 24px 0;
+}
+.or-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(0,0,0,.08);
+}
+.or-divider span {
+  background: white;
+  padding: 0 16px;
+  font-size: 12px;
+  color: var(--light);
+  position: relative;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* SUCCESS */
+.success-msg {
+  display: none;
+  background: var(--teal-xlight);
+  border: 1px solid var(--teal-light);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+.success-msg.show { display: block; }
+.success-msg p { font-size: 14px; color: var(--teal-dark); line-height: 1.7; }
+
+/* INFO BOX */
+.info-strip {
+  background: var(--charcoal);
+  padding: 48px;
+  margin-top: 0;
+}
+.info-strip-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.info-item { text-align: center; }
+.info-item .ii-icon { font-size: 28px; margin-bottom: 12px; }
+.info-item .ii-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: white; margin-bottom: 6px; }
+.info-item .ii-desc { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; }
+
+/* FOOTER */
+footer {
+  background: var(--charcoal);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 24px 48px;
+  text-align: center;
+}
+footer p { font-size: 12px; color: rgba(255,255,255,.3); }
+
+@media (max-width: 900px) {
+  .lang-bar, nav, .hero, .section, .info-strip { padding-left: 20px; padding-right: 20px; }
+  .consult-grid { grid-template-columns: 1fr; }
+  .booking-wrap { grid-template-columns: 1fr; }
+  .info-strip-inner { grid-template-columns: 1fr; gap: 28px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-safemind.png" alt="Safe Mind" style="height:44px;width:auto;object-fit:contain;">
+    <div style="display:flex;flex-direction:column;line-height:1;">
+      <span class="main">Safe Mind</span>
+      <span class="sub">Psychological Well-being</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" id="nl-home">Home</a>
+    <a href="tests.html" class="nav-link" id="nl-tests">Assessments</a>
+    <a href="organizations.html" class="nav-link" id="nl-org">For Organizations</a>
+    <a href="booking.html" class="nav-link active" id="nl-book">Book</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow" id="h-eyebrow">Clinical Consultations</div>
+  <h1 id="h-title">Book a <em>Consultation</em></h1>
+  <p id="h-desc">Choose the type of support that fits your situation. Every session is confidential, conducted remotely, and tailored to the realities of creative industry work.</p>
+</div>
+
+<!-- CONSULTATION TYPES -->
+<div class="section">
+  <div class="section-label" id="s1-label">Step 1</div>
+  <div class="section-title" id="s1-title">Choose your <em>type of consultation</em></div>
+
+  <div class="consult-grid" id="consultGrid">
+    <!-- Cards injected by JS -->
+  </div>
+
+  <div class="section-label" id="s2-label">Step 2</div>
+  <div class="section-title" id="s2-title">Choose how you want to <em>book</em></div>
+
+  <div class="booking-wrap">
+    <!-- CALENDLY -->
+    <div class="booking-col">
+      <div class="booking-col-title" id="cal-title">Choose a time slot</div>
+      <div class="booking-col-sub" id="cal-sub">Browse available slots and book directly in your calendar. You will receive an automatic confirmation.</div>
+      <div class="calendly-placeholder">
+        <div class="cal-icon">📅</div>
+        <p id="cal-placeholder-text">Click below to open the booking calendar and choose a slot that works for you.</p>
+        <a href="https://calendly.com/hellosafemindconnect/30min" target="_blank" class="btn-calendly" id="cal-btn">Open Calendar</a>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="booking-col">
+      <div class="booking-col-title" id="form-title">Send a message first</div>
+      <div class="booking-col-sub" id="form-sub">Prefer to explain your situation before booking? Write to us and we will get back to you within 48 hours to confirm your appointment.</div>
+
+      <div class="form-group">
+        <label class="form-label" id="fl-name">Full name</label>
+        <input type="text" class="form-input" id="fi-name" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="fl-email">Email address</label>
+        <input type="email" class="form-input" id="fi-email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="fl-type">Type of consultation</label>
+        <select class="form-select" id="fi-type">
+          <!-- Options injected by JS -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="fl-message">Your message (optional)</label>
+        <textarea class="form-textarea" id="fi-message" placeholder="Tell us briefly about what brings you here..."></textarea>
+      </div>
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()">Send Request</button>
+      <div class="success-msg" id="successMsg">
+        <p id="success-text">Thank you. Your request has been received. We will contact you within 48 hours to confirm your appointment at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1b7f357a767a7074755b627a73747435787476">[email&#160;protected]</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-inner" id="infoStrip">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<footer>
+  <p id="footer-text">Safe Mind &copy; 2026 &mdash; Psychological Well-being for the Creative Industry &mdash; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fe9ad09f939f959190be879f969191d09d9193">[email&#160;protected]</a></p>
+</footer>
+
+<script>
+const T = {
+  en: {
+    eyebrow: "Clinical Consultations",
+    title: "Book a <em>Consultation</em>",
+    desc: "Choose the type of support that fits your situation. Every session is confidential, conducted remotely, and tailored to the realities of creative industry work.",
+    s1_label: "Step 1", s1_title: "Choose your <em>type of consultation</em>",
+    s2_label: "Step 2", s2_title: "Choose how you want to <em>book</em>",
+    nl_home: "Home", nl_tests: "Assessments", nl_org: "For Organizations", nl_book: "Book",
+    cal_title: "Choose a time slot",
+    cal_sub: "Browse available slots and book directly in your calendar. You will receive an automatic confirmation.",
+    cal_placeholder: "Click below to open the booking calendar and choose a slot that works for you.",
+    cal_btn: "Open Calendar",
+    form_title: "Send a message first",
+    form_sub: "Prefer to explain your situation before booking? Write to us and we will get back to you within 48 hours to confirm your appointment.",
+    fl_name: "Full name", fl_email: "Email address", fl_type: "Type of consultation",
+    fl_message: "Your message (optional)",
+    fi_name_ph: "Your name", fi_email_ph: "your@email.com",
+    fi_message_ph: "Tell us briefly about what brings you here...",
+    btn_submit: "Send Request",
+    success: "Thank you. Your request has been received. We will contact you within 48 hours to confirm your appointment at hellosafemindconnect@gmail.com",
+    consultations: [
+      { icon: "🌱", title: "Individual Consultation", duration: "50 min", desc: "A one-on-one session with a psychologist. You bring what you are carrying. We listen, we assess, and we work through it together. No agenda other than your well-being. Suitable for anyone experiencing distress, burnout, anxiety, creative blocks, or relational difficulties related to your work." },
+      { icon: "🧠", title: "Psychological Assessment", duration: "90 min", desc: "A structured clinical evaluation using validated psychometric tools from our assessment library. Results are interpreted by a psychologist and delivered as a written clinical report. Recommended when you want a clear picture of your current psychological state across multiple dimensions." },
+      { icon: "🔁", title: "Follow-up Session", duration: "50 min", desc: "A continuation session for clients who have already completed an initial consultation or assessment. We track progress, revisit what has shifted, and adjust the support plan. Available to returning clients only." },
+      { icon: "🏢", title: "Organizational Consultation", duration: "60 min", desc: "A strategic session for agencies, labels, studios, and production companies interested in Safe Mind organizational programs. We discuss your team's needs, assess the scope of support required, and present our B2B offering. For decision-makers and HR leads." }
+    ],
+    select_option: "Select a consultation type",
+    info: [
+      { icon: "🔒", title: "Strictly confidential", desc: "Everything shared in a session stays between you and your psychologist. Safe Mind does not share clinical information with employers, agencies, or any third party." },
+      { icon: "🌍", title: "Fully remote", desc: "All consultations are conducted via secure video call. You can be anywhere in the world. No travel required." },
+      { icon: "💬", title: "6 languages", desc: "Sessions available in English, French, Korean, Japanese, Chinese, and Thai. Speak in the language you think in." }
+    ]
+  },
+  fr: {
+    eyebrow: "Consultations cliniques",
+    title: "Prendre <em>rendez-vous</em>",
+    desc: "Choisissez le type d'accompagnement adapte a votre situation. Chaque seance est confidentielle, conduite a distance, et adaptee aux realites de l'industrie creative.",
+    s1_label: "Etape 1", s1_title: "Choisissez votre <em>type de consultation</em>",
+    s2_label: "Etape 2", s2_title: "Choisissez comment vous voulez <em>reserver</em>",
+    nl_home: "Accueil", nl_tests: "Evaluations", nl_org: "Pour les organisations", nl_book: "Reserver",
+    cal_title: "Choisissez un creneau",
+    cal_sub: "Consultez les creneaux disponibles et reservez directement dans votre calendrier. Vous recevrez une confirmation automatique.",
+    cal_placeholder: "Cliquez ci-dessous pour ouvrir le calendrier de reservation et choisir un creneau qui vous convient.",
+    cal_btn: "Ouvrir le calendrier",
+    form_title: "Envoyer un message d'abord",
+    form_sub: "Vous preferez expliquer votre situation avant de reserver ? Ecrivez-nous et nous vous recontacterons dans les 48 heures pour confirmer votre rendez-vous.",
+    fl_name: "Nom complet", fl_email: "Adresse email", fl_type: "Type de consultation",
+    fl_message: "Votre message (optionnel)",
+    fi_name_ph: "Votre nom", fi_email_ph: "votre@email.com",
+    fi_message_ph: "Dites-nous brievement ce qui vous amene...",
+    btn_submit: "Envoyer la demande",
+    success: "Merci. Votre demande a bien ete recue. Nous vous contacterons dans les 48 heures pour confirmer votre rendez-vous a hellosafemindconnect@gmail.com",
+    consultations: [
+      { icon: "🌱", title: "Consultation individuelle", duration: "50 min", desc: "Une seance en tete-a-tete avec un psychologue. Vous apportez ce que vous portez. Nous ecoutons, nous evaluons et nous travaillons ensemble. Adaptee a toute personne en detresse, epuisement, anxiete, blocage creatif ou difficultes relationnelles liees au travail." },
+      { icon: "🧠", title: "Bilan psychologique", duration: "90 min", desc: "Une evaluation clinique structuree utilisant des outils psychometriques valides de notre bibliotheque. Les resultats sont interpretes par un psychologue et livres sous forme de rapport clinique ecrit. Recommande pour avoir une image claire de votre etat psychologique actuel." },
+      { icon: "🔁", title: "Seance de suivi", duration: "50 min", desc: "Une seance de continuation pour les clients ayant deja complete une consultation ou un bilan initial. Nous suivons les progres, revistons ce qui a change et ajustons le plan de soutien. Disponible pour les clients de retour uniquement." },
+      { icon: "🏢", title: "Consultation organisationnelle", duration: "60 min", desc: "Une seance strategique pour les agences, labels, studios et societes de production souhaitant decouvrir les programmes organisationnels Safe Mind. Nous discutons des besoins de votre equipe et presentons notre offre B2B. Pour les decideurs et responsables RH." }
+    ],
+    select_option: "Selectionnez un type de consultation",
+    info: [
+      { icon: "🔒", title: "Strictement confidentiel", desc: "Tout ce qui est partage en seance reste entre vous et votre psychologue. Safe Mind ne partage aucune information clinique avec les employeurs, agences ou tiers." },
+      { icon: "🌍", title: "Entierement a distance", desc: "Toutes les consultations se deroulent par appel video securise. Vous pouvez etre n'importe ou dans le monde." },
+      { icon: "💬", title: "6 langues", desc: "Seances disponibles en anglais, francais, coreen, japonais, chinois et thai. Parlez dans la langue dans laquelle vous pensez." }
+    ]
+  },
+  kr: {
+    eyebrow: "임상 상담",
+    title: "<em>상담 예약</em>하기",
+    desc: "귀하의 상황에 맞는 지원 유형을 선택하세요. 모든 세션은 기밀이며 원격으로 진행되고 창작 산업의 현실에 맞게 조정됩니다.",
+    s1_label: "1단계", s1_title: "<em>상담 유형</em> 선택",
+    s2_label: "2단계", s2_title: "<em>예약 방법</em> 선택",
+    nl_home: "홈", nl_tests: "평가", nl_org: "기관을 위한", nl_book: "예약",
+    cal_title: "시간대 선택",
+    cal_sub: "사용 가능한 시간대를 확인하고 캘린더에서 직접 예약하세요. 자동 확인서를 받게 됩니다.",
+    cal_placeholder: "아래를 클릭하여 예약 캘린더를 열고 편한 시간대를 선택하세요.",
+    cal_btn: "캘린더 열기",
+    form_title: "먼저 메시지 보내기",
+    form_sub: "예약 전에 상황을 설명하고 싶으신가요? 저희에게 작성해 주시면 48시간 이내에 연락드려 예약을 확인하겠습니다.",
+    fl_name: "성명", fl_email: "이메일 주소", fl_type: "상담 유형",
+    fl_message: "메시지 (선택사항)",
+    fi_name_ph: "성함", fi_email_ph: "your@email.com",
+    fi_message_ph: "여기에 오신 이유를 간략히 알려주세요...",
+    btn_submit: "요청 보내기",
+    success: "감사합니다. 요청이 접수되었습니다. 48시간 이내에 hellosafemindconnect@gmail.com으로 연락드려 예약을 확인하겠습니다.",
+    consultations: [
+      { icon: "🌱", title: "개인 상담", duration: "50분", desc: "심리학자와의 일대일 세션입니다. 짊어지고 있는 것을 가져오세요. 우리는 듣고, 평가하고, 함께 해결해 나갑니다. 업무 관련 고통, 번아웃, 불안, 창의적 장벽 또는 관계적 어려움을 경험하는 모든 사람에게 적합합니다." },
+      { icon: "🧠", title: "심리 평가", duration: "90분", desc: "검증된 심리측정 도구를 사용한 구조화된 임상 평가입니다. 결과는 심리학자가 해석하고 서면 임상 보고서로 제공됩니다. 현재 심리 상태를 여러 차원에서 명확히 파악하고 싶을 때 권장됩니다." },
+      { icon: "🔁", title: "후속 세션", duration: "50분", desc: "초기 상담 또는 평가를 완료한 내담자를 위한 연속 세션입니다. 진행 상황을 추적하고 변화된 것을 재검토하며 지원 계획을 조정합니다. 기존 내담자에게만 제공됩니다." },
+      { icon: "🏢", title: "기관 상담", duration: "60분", desc: "Safe Mind 기관 프로그램에 관심 있는 에이전시, 레이블, 스튜디오 및 제작사를 위한 전략적 세션입니다. 팀의 요구사항을 논의하고 B2B 서비스를 소개합니다. 의사결정자와 HR 담당자를 위한 세션입니다." }
+    ],
+    select_option: "상담 유형 선택",
+    info: [
+      { icon: "🔒", title: "철저한 기밀", desc: "세션에서 공유된 모든 것은 귀하와 심리학자 사이에만 남습니다. Safe Mind는 고용주, 에이전시 또는 제3자와 임상 정보를 공유하지 않습니다." },
+      { icon: "🌍", title: "완전 원격", desc: "모든 상담은 보안 화상 통화로 진행됩니다. 세계 어디서든 가능합니다." },
+      { icon: "💬", title: "6개 언어", desc: "영어, 프랑스어, 한국어, 일본어, 중국어, 태국어로 세션 이용 가능. 생각하는 언어로 말하세요." }
+    ]
+  },
+  jp: {
+    eyebrow: "臨床相談",
+    title: "<em>相談を予約</em>する",
+    desc: "あなたの状況に合ったサポートの種類をお選びください。すべてのセッションは秘密厳守で、遠隔で行われ、クリエイティブ産業の現実に合わせて調整されます。",
+    s1_label: "ステップ1", s1_title: "<em>相談の種類</em>を選択",
+    s2_label: "ステップ2", s2_title: "<em>予約方法</em>を選択",
+    nl_home: "ホーム", nl_tests: "評価", nl_org: "組織向け", nl_book: "予約",
+    cal_title: "時間帯を選択",
+    cal_sub: "利用可能な時間帯を確認してカレンダーから直接予約してください。自動確認書が届きます。",
+    cal_placeholder: "以下をクリックして予約カレンダーを開き、都合の良い時間帯を選択してください。",
+    cal_btn: "カレンダーを開く",
+    form_title: "まずメッセージを送る",
+    form_sub: "予約前に状況を説明したいですか？ご記入いただければ48時間以内に連絡し、予約を確認します。",
+    fl_name: "氏名", fl_email: "メールアドレス", fl_type: "相談の種類",
+    fl_message: "メッセージ（任意）",
+    fi_name_ph: "お名前", fi_email_ph: "your@email.com",
+    fi_message_ph: "こちらに来た理由を簡単にお書きください...",
+    btn_submit: "リクエストを送信",
+    success: "ありがとうございます。リクエストを受け付けました。48時間以内にhellosafemindconnect@gmail.comからご連絡し、予約を確認します。",
+    consultations: [
+      { icon: "🌱", title: "個人相談", duration: "50分", desc: "心理士との一対一のセッションです。抱えていることを持ってきてください。聴き、評価し、一緒に取り組みます。職場関連の苦悩、燃え尽き症候群、不安、創造的なブロック、対人関係の困難を経験している方に適しています。" },
+      { icon: "🧠", title: "心理評価", duration: "90分", desc: "検証済みの心理測定ツールを使用した構造化された臨床評価です。結果は心理士が解釈し、書面による臨床レポートとして提供されます。現在の心理状態を複数の次元で明確に把握したい時に推奨されます。" },
+      { icon: "🔁", title: "フォローアップセッション", duration: "50分", desc: "初回相談または評価を完了したクライアントのための継続セッションです。進捗を追跡し、変化したことを再確認し、サポート計画を調整します。リピートクライアントのみ利用可能です。" },
+      { icon: "🏢", title: "組織相談", duration: "60分", desc: "Safe Mind組織プログラムに関心のあるエージェンシー、レーベル、スタジオ、制作会社向けの戦略セッションです。チームのニーズを議論し、B2Bサービスを紹介します。意思決定者とHR担当者向けです。" }
+    ],
+    select_option: "相談の種類を選択",
+    info: [
+      { icon: "🔒", title: "厳格な守秘義務", desc: "セッションで共有されたすべての内容はあなたと心理士の間にのみとどまります。Safe Mindは臨床情報を雇用主、エージェンシー、第三者と共有しません。" },
+      { icon: "🌍", title: "完全リモート", desc: "すべての相談はセキュアなビデオ通話で行われます。世界中どこからでも利用可能です。" },
+      { icon: "💬", title: "6言語対応", desc: "英語、フランス語、韓国語、日本語、中国語、タイ語でセッション利用可能。考える言語でお話しください。" }
+    ]
+  },
+  zh: {
+    eyebrow: "临床咨询",
+    title: "预约<em>咨询</em>",
+    desc: "选择适合您情况的支持类型。每次会话都是保密的，远程进行，并根据创意产业的现实情况量身定制。",
+    s1_label: "第1步", s1_title: "选择您的<em>咨询类型</em>",
+    s2_label: "第2步", s2_title: "选择<em>预约方式</em>",
+    nl_home: "主页", nl_tests: "评估", nl_org: "机构专区", nl_book: "预约",
+    cal_title: "选择时间段",
+    cal_sub: "浏览可用时间段并直接在日历中预约。您将收到自动确认。",
+    cal_placeholder: "点击下方打开预约日历，选择适合您的时间段。",
+    cal_btn: "打开日历",
+    form_title: "先发送消息",
+    form_sub: "更喜欢在预约前解释您的情况？给我们写信，我们将在48小时内回复确认您的预约。",
+    fl_name: "全名", fl_email: "电子邮件", fl_type: "咨询类型",
+    fl_message: "您的消息（可选）",
+    fi_name_ph: "您的姓名", fi_email_ph: "your@email.com",
+    fi_message_ph: "简短告诉我们您来这里的原因...",
+    btn_submit: "发送请求",
+    success: "感谢您。您的请求已收到。我们将在48小时内通过hellosafemindconnect@gmail.com联系您确认预约。",
+    consultations: [
+      { icon: "🌱", title: "个人咨询", duration: "50分钟", desc: "与心理学家的一对一会话。带来您正在承受的一切。我们倾听、评估，并共同努力。适合任何经历与工作相关的痛苦、倦怠、焦虑、创意障碍或关系困难的人。" },
+      { icon: "🧠", title: "心理评估", duration: "90分钟", desc: "使用我们评估库中经过验证的心理测量工具进行结构化临床评估。结果由心理学家解读并以书面临床报告形式提供。当您想清楚了解当前心理状态时推荐。" },
+      { icon: "🔁", title: "跟进会话", duration: "50分钟", desc: "已完成初始咨询或评估的客户的继续会话。我们跟踪进展，重新审视已发生变化的内容，并调整支持计划。仅对回头客开放。" },
+      { icon: "🏢", title: "机构咨询", duration: "60分钟", desc: "为对Safe Mind机构项目感兴趣的经纪公司、唱片公司、工作室和制作公司提供的战略会话。我们讨论团队需求并介绍B2B服务。面向决策者和HR负责人。" }
+    ],
+    select_option: "选择咨询类型",
+    info: [
+      { icon: "🔒", title: "严格保密", desc: "会话中分享的一切仅存在于您和心理学家之间。Safe Mind不与雇主、经纪公司或任何第三方分享临床信息。" },
+      { icon: "🌍", title: "完全远程", desc: "所有咨询通过安全视频通话进行。您可以在世界任何地方。" },
+      { icon: "💬", title: "6种语言", desc: "提供英语、法语、韩语、日语、中文和泰语会话。用您思考的语言交流。" }
+    ]
+  },
+  th: {
+    eyebrow: "การปรึกษาทางคลินิก",
+    title: "จอง<em>การปรึกษา</em>",
+    desc: "เลือกประเภทการสนับสนุนที่เหมาะกับสถานการณ์ของคุณ ทุกเซสชันเป็นความลับ ดำเนินการจากระยะไกล และปรับให้เข้ากับความเป็นจริงของงานในอุตสาหกรรมสร้างสรรค์",
+    s1_label: "ขั้นตอนที่ 1", s1_title: "เลือก<em>ประเภทการปรึกษา</em>",
+    s2_label: "ขั้นตอนที่ 2", s2_title: "เลือก<em>วิธีการจอง</em>",
+    nl_home: "หน้าหลัก", nl_tests: "การประเมิน", nl_org: "สำหรับองค์กร", nl_book: "จอง",
+    cal_title: "เลือกช่วงเวลา",
+    cal_sub: "ดูช่วงเวลาที่ว่างและจองโดยตรงในปฏิทินของคุณ คุณจะได้รับการยืนยันอัตโนมัติ",
+    cal_placeholder: "คลิกด้านล่างเพื่อเปิดปฏิทินการจองและเลือกช่วงเวลาที่เหมาะสม",
+    cal_btn: "เปิดปฏิทิน",
+    form_title: "ส่งข้อความก่อน",
+    form_sub: "ต้องการอธิบายสถานการณ์ก่อนจองไหม? เขียนถึงเราแล้วเราจะติดต่อกลับภายใน 48 ชั่วโมงเพื่อยืนยันการนัดหมาย",
+    fl_name: "ชื่อ-นามสกุล", fl_email: "ที่อยู่อีเมล", fl_type: "ประเภทการปรึกษา",
+    fl_message: "ข้อความของคุณ (ไม่บังคับ)",
+    fi_name_ph: "ชื่อของคุณ", fi_email_ph: "your@email.com",
+    fi_message_ph: "บอกเราสั้นๆ ว่าอะไรพาคุณมาที่นี่...",
+    btn_submit: "ส่งคำขอ",
+    success: "ขอบคุณ คำขอของคุณได้รับแล้ว เราจะติดต่อคุณภายใน 48 ชั่วโมงที่ hellosafemindconnect@gmail.com เพื่อยืนยันการนัดหมาย",
+    consultations: [
+      { icon: "🌱", title: "การปรึกษาส่วนตัว", duration: "50 นาที", desc: "เซสชันแบบตัวต่อตัวกับนักจิตวิทยา นำสิ่งที่คุณแบกรับมา เราฟัง ประเมิน และแก้ไขปัญหาร่วมกัน เหมาะสำหรับทุกคนที่ประสบกับความทุกข์ ความหมดไฟ ความวิตกกังวล การสร้างสรรค์ติดขัด หรือปัญหาความสัมพันธ์ที่เกี่ยวกับงาน" },
+      { icon: "🧠", title: "การประเมินทางจิตวิทยา", duration: "90 นาที", desc: "การประเมินทางคลินิกที่มีโครงสร้างโดยใช้เครื่องมือวัดทางจิตวิทยาที่ผ่านการตรวจสอบแล้ว ผลลัพธ์ตีความโดยนักจิตวิทยาและส่งมอบเป็นรายงานทางคลินิกเป็นลายลักษณ์อักษร แนะนำเมื่อต้องการภาพที่ชัดเจนของสภาพจิตใจปัจจุบัน" },
+      { icon: "🔁", title: "เซสชันติดตามผล", duration: "50 นาที", desc: "เซสชันต่อเนื่องสำหรับลูกค้าที่เสร็จสิ้นการปรึกษาหรือการประเมินเบื้องต้นแล้ว เราติดตามความคืบหน้า ทบทวนสิ่งที่เปลี่ยนแปลง และปรับแผนการสนับสนุน สำหรับลูกค้าเดิมเท่านั้น" },
+      { icon: "🏢", title: "การปรึกษาองค์กร", duration: "60 นาที", desc: "เซสชันเชิงกลยุทธ์สำหรับเอเจนซี่ ค่ายเพลง สตูดิโอ และบริษัทผลิตที่สนใจโปรแกรมองค์กรของ Safe Mind เราหารือความต้องการของทีมและนำเสนอบริการ B2B สำหรับผู้มีอำนาจตัดสินใจและ HR" }
+    ],
+    select_option: "เลือกประเภทการปรึกษา",
+    info: [
+      { icon: "🔒", title: "เป็นความลับอย่างเคร่งครัด", desc: "ทุกสิ่งที่แบ่งปันในเซสชันยังคงอยู่ระหว่างคุณและนักจิตวิทยาของคุณ Safe Mind ไม่แบ่งปันข้อมูลทางคลินิกกับนายจ้าง เอเจนซี่ หรือบุคคลที่สาม" },
+      { icon: "🌍", title: "ทำงานจากระยะไกลอย่างสมบูรณ์", desc: "การปรึกษาทั้งหมดดำเนินการผ่านวิดีโอคอลที่ปลอดภัย คุณสามารถอยู่ที่ไหนก็ได้ในโลก" },
+      { icon: "💬", title: "6 ภาษา", desc: "เซสชันให้บริการเป็นภาษาอังกฤษ ฝรั่งเศส เกาหลี ญี่ปุ่น จีน และไทย พูดในภาษาที่คุณคิด" }
+    ]
+  }
+};
+
+let lang = 'en';
+let selectedType = 0;
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+}
+
+function applyTranslations() {
+  const t = T[lang];
+  document.getElementById('h-eyebrow').textContent = t.eyebrow;
+  document.getElementById('h-title').innerHTML = t.title;
+  document.getElementById('h-desc').textContent = t.desc;
+  document.getElementById('s1-label').textContent = t.s1_label;
+  document.getElementById('s1-title').innerHTML = t.s1_title;
+  document.getElementById('s2-label').textContent = t.s2_label;
+  document.getElementById('s2-title').innerHTML = t.s2_title;
+  document.getElementById('nl-home').textContent = t.nl_home;
+  document.getElementById('nl-tests').textContent = t.nl_tests;
+  document.getElementById('nl-org').textContent = t.nl_org;
+  document.getElementById('nl-book').textContent = t.nl_book;
+  document.getElementById('cal-title').textContent = t.cal_title;
+  document.getElementById('cal-sub').textContent = t.cal_sub;
+  document.getElementById('cal-placeholder-text').textContent = t.cal_placeholder;
+  document.getElementById('cal-btn').textContent = t.cal_btn;
+  document.getElementById('form-title').textContent = t.form_title;
+  document.getElementById('form-sub').textContent = t.form_sub;
+  document.getElementById('fl-name').textContent = t.fl_name;
+  document.getElementById('fl-email').textContent = t.fl_email;
+  document.getElementById('fl-type').textContent = t.fl_type;
+  document.getElementById('fl-message').textContent = t.fl_message;
+  document.getElementById('fi-name').placeholder = t.fi_name_ph;
+  document.getElementById('fi-email').placeholder = t.fi_email_ph;
+  document.getElementById('fi-message').placeholder = t.fi_message_ph;
+  document.getElementById('btn-submit').textContent = t.btn_submit;
+  document.getElementById('success-text').textContent = t.success;
+  renderCards();
+  renderSelect();
+  renderInfo();
+}
+
+function renderCards() {
+  const t = T[lang];
+  document.getElementById('consultGrid').innerHTML = t.consultations.map((c, i) =>
+    `<div class="consult-card ${i === selectedType ? 'selected' : ''}" onclick="selectType(${i})">
+      <div class="card-select"></div>
+      <div class="card-icon">${c.icon}</div>
+      <div class="card-title">${c.title}</div>
+      <div class="card-desc">${c.desc}</div>
+      <div class="card-duration">⏱ ${c.duration}</div>
+    </div>`
+  ).join('');
+}
+
+function renderSelect() {
+  const t = T[lang];
+  document.getElementById('fi-type').innerHTML =
+    `<option value="">${t.select_option}</option>` +
+    t.consultations.map((c, i) => `<option value="${i}" ${i === selectedType ? 'selected' : ''}>${c.icon} ${c.title}</option>`).join('');
+}
+
+function renderInfo() {
+  const t = T[lang];
+  document.getElementById('infoStrip').innerHTML = t.info.map(item =>
+    `<div class="info-item">
+      <div class="ii-icon">${item.icon}</div>
+      <div class="ii-title">${item.title}</div>
+      <div class="ii-desc">${item.desc}</div>
+    </div>`
+  ).join('');
+}
+
+function selectType(i) {
+  selectedType = i;
+  renderCards();
+  document.getElementById('fi-type').value = i;
+}
+
+function submitForm() {
+  const name = document.getElementById('fi-name').value.trim();
+  const email = document.getElementById('fi-email').value.trim();
+  if (!name || !email) {
+    alert(lang === 'fr' ? 'Veuillez remplir votre nom et votre email.' :
+          lang === 'kr' ? '이름과 이메일을 입력해 주세요.' :
+          'Please fill in your name and email.');
+    return;
+  }
+  // In production: send to backend or Formspree
+  // mailto fallback for MVP
+  const t = T[lang];
+  const type = t.consultations[selectedType] ? t.consultations[selectedType].title : '';
+  const msg = document.getElementById('fi-message').value;
+ 

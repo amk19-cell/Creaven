@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSS  -  Perceived Stress Scale | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #3D8B8B; --teal-dark: #2A6464; --teal-light: #E0EEEE;
+    --violet: #7B6B8D; --violet-light: #EDE8F2;
+    --cream: #FAF8F4; --cream-dark: #F0EBE1;
+    --charcoal: #1E1E1E; --mid: #5A5A5A; --light: #999; --white: #fff;
+    --amber: #B7770D; --amber-light: #FEF3DC;
+    --orange: #E07B39; --orange-light: #FDF0E8;
+    --red: #C0392B; --red-light: #FDEAEA;
+    --green: #27AE60; --green-light: #E9F7EF;
+    --yellow: #D4AC0D; --yellow-light: #FEF9E7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--charcoal); min-height: 100vh; }
+
+  /* LANG BAR */
+  .lang-bar { background: var(--charcoal); padding: 7px 48px; display: flex; justify-content: flex-end; gap: 4px; align-items: center; }
+  .lang-bar span { color: var(--light); font-size: 11px; letter-spacing: 0.08em; margin-right: 8px; }
+  .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .lang-btn:hover, .lang-btn.active { background: var(--teal); border-color: var(--teal); color: white; }
+
+  nav { padding: 16px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(250,248,244,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { text-decoration: none; display: flex; flex-direction: column; }
+  .nav-logo .main { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal-dark); }
+  .nav-logo .sub { font-size: 10px; color: var(--light); letter-spacing: 0.14em; text-transform: uppercase; }
+  .nav-back { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--mid); font-size: 13px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--teal); }
+  .nav-back svg { width: 16px; height: 16px; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* INTRO */
+  .intro-wrap { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
+  .test-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--amber-light); color: var(--amber); padding: 5px 14px; border-radius: 30px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 24px; }
+  .intro-wrap h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px); font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 10px; }
+  .intro-wrap h1 em { font-style: italic; color: var(--teal); }
+  .intro-wrap .abbr { font-size: 13px; color: var(--light); letter-spacing: 0.1em; margin-bottom: 28px; }
+  .intro-desc { font-size: 15px; color: var(--mid); line-height: 1.8; margin-bottom: 36px; font-weight: 300; }
+
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+  .info-card { background: white; border-radius: 16px; padding: 20px 24px; border: 1px solid rgba(0,0,0,0.06); text-align: center; }
+  .info-card .ic-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: var(--teal); line-height: 1; margin-bottom: 4px; }
+  .info-card .ic-label { font-size: 11px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .info-box { border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; }
+  .info-box p { font-size: 13px; line-height: 1.7; }
+  .info-box strong { font-weight: 500; }
+  .info-box.amber { background: var(--amber-light); color: var(--amber); }
+  .info-box.teal { background: var(--teal-light); color: var(--teal-dark); }
+
+  .scale-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .scale-chip { background: white; border-radius: 20px; padding: 5px 14px; font-size: 11px; color: var(--teal-dark); border: 1px solid rgba(61,139,139,0.25); white-space: nowrap; }
+
+  .btn-start { background: var(--teal); color: white; padding: 16px 48px; border-radius: 40px; font-size: 15px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; letter-spacing: 0.03em; }
+  .btn-start:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(61,139,139,0.3); }
+
+  /* TEST */
+  .test-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+  .progress-bar-wrap { margin-bottom: 40px; }
+  .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .prog-label { font-size: 12px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .prog-count { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--teal); font-weight: 600; }
+  .prog-track { height: 4px; background: var(--cream-dark); border-radius: 2px; overflow: hidden; }
+  .prog-fill { height: 100%; background: linear-gradient(to right, var(--amber), var(--teal)); border-radius: 2px; transition: width 0.5s ease; }
+
+  .question-card { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 4px 30px rgba(0,0,0,0.06); margin-bottom: 32px; animation: fadeSlide 0.4s ease; }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .question-num { font-size: 11px; color: var(--light); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+  .question-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; line-height: 1.35; color: var(--charcoal); margin-bottom: 36px; }
+
+  .scale-options { display: flex; flex-direction: column; gap: 10px; }
+  .scale-option { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px; cursor: pointer; transition: all 0.2s; background: var(--cream); }
+  .scale-option:hover { border-color: var(--teal); background: var(--teal-light); }
+  .scale-option.selected { border-color: var(--teal); background: var(--teal-light); }
+  .scale-option input { display: none; }
+  .opt-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); flex-shrink: 0; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .scale-option.selected .opt-dot { background: var(--teal); border-color: var(--teal); }
+  .scale-option.selected .opt-dot::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
+  .opt-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--teal); width: 24px; text-align: center; }
+  .opt-label { font-size: 13px; color: var(--mid); }
+
+  .nav-btns { display: flex; justify-content: space-between; align-items: center; }
+  .btn-prev { background: transparent; border: 1px solid rgba(0,0,0,0.12); color: var(--mid); padding: 12px 28px; border-radius: 40px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-prev:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-next { background: var(--teal); color: white; padding: 12px 36px; border-radius: 40px; font-size: 13px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-next:hover { background: var(--teal-dark); }
+  .btn-next:disabled { background: var(--light); cursor: not-allowed; }
+
+  /* RESULTS */
+  .results-wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
+  .results-header { text-align: center; margin-bottom: 48px; }
+  .results-icon { font-size: 56px; margin-bottom: 16px; }
+  .results-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 300; color: var(--charcoal); margin-bottom: 10px; }
+  .results-header h2 em { font-style: italic; color: var(--teal); }
+  .results-header p { font-size: 14px; color: var(--mid); }
+
+  .total-score-card { background: white; border-radius: 24px; padding: 40px; text-align: center; margin-bottom: 28px; border: 1px solid rgba(0,0,0,0.06); }
+  .ts-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--light); margin-bottom: 16px; }
+  .ts-score { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 600; line-height: 1; margin-bottom: 8px; }
+  .ts-max { font-size: 14px; color: var(--light); margin-bottom: 20px; }
+  .ts-badge { display: inline-block; padding: 6px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; }
+  .severity-bar-wrap { margin-top: 24px; }
+  .severity-bar { height: 8px; background: linear-gradient(to right, #27AE60, #D4AC0D, #E07B39, #C0392B); border-radius: 4px; position: relative; }
+  .severity-marker { position: absolute; top: -6px; transform: translateX(-50%); width: 20px; height: 20px; background: white; border: 3px solid var(--charcoal); border-radius: 50%; transition: left 1s ease 0.3s; }
+  .severity-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; color: var(--light); }
+
+  .interpretation { background: white; border-radius: 20px; padding: 32px; margin-bottom: 28px; border: 1px solid rgba(0,0,0,0.06); }
+  .interpretation h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--charcoal); margin-bottom: 12px; }
+  .interpretation p { font-size: 14px; color: var(--mid); line-height: 1.8; }
+
+  .range-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  .range-table th { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .range-table td { padding: 10px 12px; font-size: 13px; color: var(--mid); border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .range-table tr.current-row td { font-weight: 500; color: var(--charcoal); }
+  .range-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+
+  .cta-results { background: linear-gradient(135deg, var(--teal-dark), var(--violet)); border-radius: 20px; padding: 36px; text-align: center; color: white; margin-bottom: 28px; }
+  .cta-results h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; margin-bottom: 10px; }
+  .cta-results p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 24px; line-height: 1.7; }
+  .btn-consult { background: white; color: var(--teal-dark); padding: 13px 36px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-consult:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  .disclaimer { background: var(--cream-dark); border-radius: 14px; padding: 20px 24px; font-size: 12px; color: var(--mid); line-height: 1.7; }
+  .disclaimer strong { color: var(--charcoal); }
+  .btn-retake { background: transparent; border: 1px solid rgba(0,0,0,0.12); color: var(--mid); padding: 10px 24px; border-radius: 30px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 16px; transition: all 0.2s; }
+  .btn-retake:hover { border-color: var(--teal); color: var(--teal); }
+
+  @media (max-width: 768px) {
+    .lang-bar, nav { padding-left: 20px; padding-right: 20px; }
+    .intro-wrap, .test-wrap, .results-wrap { padding-left: 20px; padding-right: 20px; }
+    .question-text { font-size: 20px; }
+    .info-grid { grid-template-columns: repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+
+<nav>
+  <a href="safemind.html" class="nav-logo">
+    <span class="main">Safe Mind</span>
+    <span class="sub"></span>
+  </a>
+  <a href="tests.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="nav-back-label">Back to Assessments</span>
+  </a>
+</nav>
+
+<!-- INTRO -->
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Work and Burnout</div>
+    <h1 id="i-title">Perceived <em>Stress</em> Scale</h1>
+    <div class="abbr">PSS-10  -  Cohen, Kamarck and Mermelstein, 1983</div>
+    <p class="intro-desc" id="i-desc">The Perceived Stress Scale is the most widely used psychological instrument for measuring the perception of stress. It assesses the degree to which situations in one's life are appraised as stressful  -  particularly relevant for entertainment industry workers facing unpredictable schedules, high performance demands, and intense interpersonal pressure.</p>
+
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">10</div><div class="ic-label" id="i-questions-label">Questions</div></div>
+      <div class="info-card"><div class="ic-val">5</div><div class="ic-label" id="i-minutes-label">Minutes</div></div>
+      <div class="info-card"><div class="ic-val" id="i-access-val">Free</div><div class="ic-label" id="i-access-label">Instant Results</div></div>
+    </div>
+
+    <div class="info-box amber" style="margin-bottom:28px">
+      <p id="i-timeframe"><strong>Time frame:</strong> The following questions ask about your feelings and thoughts during the last month. In each case, you will be asked to indicate how often you felt or thought a certain way.</p>
+    </div>
+
+    <div class="info-box teal">
+      <p id="i-instructions"><strong>Instructions:</strong> For each question, choose the option that best describes how often you have felt this way over the past month.</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">0  -  Never</span>
+        <span class="scale-chip">1  -  Almost never</span>
+        <span class="scale-chip">2  -  Sometimes</span>
+        <span class="scale-chip">3  -  Fairly often</span>
+        <span class="scale-chip">4  -  Very often</span>
+      </div>
+    </div>
+
+    <br>
+    <button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<!-- TEST -->
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span class="prog-label" id="t-progress-label">Progress</span>
+        <span class="prog-count" id="progCount">1 / 10</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:10%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum">Question 1 of 10</div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-icon">📊</div>
+      <h2 id="r-title">Your <em>PSS Results</em></h2>
+      <p id="r-subtitle">Based on your feelings over the past month</p>
+    </div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results">
+      <h3 id="r-cta-title">Would you like to talk about this?</h3>
+      <p id="r-cta-desc">High or low, our team is here. A consultation can help you understand your stress patterns and find concrete strategies tailored to your situation.</p>
+      <button class="btn-consult" onclick="window.location.href='contact.html'" id="r-cta-btn">Book a Consultation</button>
+    </div>
+    <div class="disclaimer" id="r-disclaimer">
+      <strong>Important notice:</strong> The PSS is a validated screening tool, not a clinical diagnosis. It measures perceived stress, not an objective measure of stress levels. Results should be considered in context. Safe Mind recommends discussing elevated scores with one of our team members.
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+      <button class="btn-retake" onclick="resetTest()" id="r-retake-btn">Retake Assessment</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- TRANSLATIONS ----
+const T = {
+  en: {
+    back: "Back to Assessments",
+    eyebrow: "Work and Burnout",
+    title_plain: "Perceived Stress Scale",
+    desc: "The Perceived Stress Scale is the most widely used psychological instrument for measuring the perception of stress. It assesses the degree to which situations in one\'s life are appraised as stressful  -  particularly relevant for entertainment industry workers facing unpredictable schedules, high performance demands, and intense interpersonal pressure.",
+    questions_label: "Questions", minutes_label: "Minutes", access_val: "Free", access_label: "Instant Results",
+    timeframe: "<strong>Time frame:</strong> The following questions ask about your feelings and thoughts during the last month.",
+    instructions: "<strong>Instructions:</strong> For each question, choose how often you have felt this way over the past month.",
+    scale: ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    btn_start: "Begin Assessment",
+    progress_label: "Progress",
+    q_of: "of",
+    btn_prev: "Previous", btn_next: "Next", btn_results: "See Results",
+    r_title_plain: "PSS Results",
+    r_subtitle: "Based on your feelings over the past month",
+    r_cta_title: "Would you like to talk about this?",
+    r_cta_desc: "High or low, our team is here. A consultation can help you understand your stress patterns and find concrete strategies tailored to your situation.",
+    r_cta_btn: "Book a Consultation",
+    r_disclaimer: "<strong>Important notice:</strong> The PSS is a validated screening tool, not a clinical diagnosis. Results should be considered in context. Safe Mind recommends discussing elevated scores with one of our team members.",
+    r_retake: "Retake Assessment",
+    out_of: "out of 40",
+    ranges: [
+      { min:0, max:13, label:"Low Stress",      color:"#27AE60", bg:"#E9F7EF", interp:"Your score suggests low perceived stress over the past month. You are managing the demands in your life well. Continue to monitor your stress levels, especially during high-intensity periods like tours, releases, or production deadlines." },
+      { min:14, max:26, label:"Moderate Stress", color:"#E07B39", bg:"#FDF0E8", interp:"Your score indicates moderate perceived stress. This is common in high-demand industries, but sustained moderate stress can impact your health, performance, and relationships over time. Consider exploring stress management strategies or speaking with one of our team members." },
+      { min:27, max:40, label:"High Stress",     color:"#C0392B", bg:"#FDEAEA", interp:"Your score indicates high perceived stress. At this level, stress may be significantly impacting your physical health, emotional well-being, and work performance. We strongly encourage you to book a consultation with one of our psychologists to discuss what you are experiencing and explore tailored support." }
+    ],
+    questions: [
+      "In the last month, how often have you been upset because of something that happened unexpectedly?",
+      "In the last month, how often have you felt that you were unable to control the important things in your life?",
+      "In the last month, how often have you felt nervous and stressed?",
+      "In the last month, how often have you felt confident about your ability to handle your personal problems?",
+      "In the last month, how often have you felt that things were going your way?",
+      "In the last month, how often have you found that you could not cope with all the things that you had to do?",
+      "In the last month, how often have you been able to control irritations in your life?",
+      "In the last month, how often have you felt that you were on top of things?",
+      "In the last month, how often have you been angered because of things that happened that were outside of your control?",
+      "In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?"
+    ]
+  },
+  fr: {
+    back: "Retour aux evaluations",
+    eyebrow: "Travail et epuisement",
+    title_plain: "Echelle de stress percu",
+    desc: "L\'echelle de stress percu (PSS) est l\'instrument psychologique le plus utilise pour mesurer la perception du stress. Elle evalue dans quelle mesure les situations de vie sont percues comme stressantes, particulierement pertinent pour les professionnels de l\'industrie du divertissement.",
+    questions_label: "Questions", minutes_label: "Minutes", access_val: "Gratuit", access_label: "Resultats immediats",
+    timeframe: "<strong>Periode :</strong> Les questions suivantes portent sur vos sentiments et pensees au cours du dernier mois.",
+    instructions: "<strong>Instructions :</strong> Pour chaque question, choisissez la frequence a laquelle vous vous etes senti ainsi au cours du dernier mois.",
+    scale: ["Jamais", "Presque jamais", "Parfois", "Assez souvent", "Tres souvent"],
+    btn_start: "Commencer l\'evaluation",
+    progress_label: "Progression",
+    q_of: "sur",
+    btn_prev: "Precedent", btn_next: "Suivant", btn_results: "Voir les resultats",
+    r_title_plain: "Resultats PSS",
+    r_subtitle: "Base sur vos sentiments au cours du dernier mois",
+    r_cta_title: "Vous souhaitez en parler ?",
+    r_cta_desc: "Eleve ou faible, notre equipe est la. Une consultation peut vous aider a comprendre vos patterns de stress.",
+    r_cta_btn: "Prendre rendez-vous",
+    r_disclaimer: "<strong>Note importante :</strong> Le PSS est un outil de depistage valide, pas un diagnostic clinique. Les resultats doivent etre consideres dans leur contexte.",
+    r_retake: "Repasser l\'evaluation",
+    out_of: "sur 40",
+    ranges: [
+      { min:0, max:13, label:"Stress faible",    color:"#27AE60", bg:"#E9F7EF", interp:"Votre score indique un faible niveau de stress percu au cours du dernier mois. Vous gerez bien les exigences de votre vie. Continuez a surveiller votre stress, surtout pendant les periodes intensives." },
+      { min:14, max:26, label:"Stress modere",   color:"#E07B39", bg:"#FDF0E8", interp:"Votre score indique un stress modere. C\'est courant dans les secteurs exigeants, mais un stress modere soutenu peut affecter votre sante et vos performances. Envisagez des strategies de gestion du stress ou consultez notre equipe." },
+      { min:27, max:40, label:"Stress eleve",    color:"#C0392B", bg:"#FDEAEA", interp:"Votre score indique un stress eleve. A ce niveau, le stress peut impacter significativement votre sante et votre bien-etre. Nous vous encourageons vivement a prendre rendez-vous avec l\'un de nos psychologues." }
+    ],
+    questions: [
+      "Au cours du dernier mois, combien de fois avez-vous ete bouleverse par quelque chose d\'inattendu ?",
+      "Au cours du dernier mois, combien de fois avez-vous eu le sentiment d\'etre incapable de controler les choses importantes de votre vie ?",
+      "Au cours du dernier mois, combien de fois vous etes-vous senti nerveux et stresse ?",
+      "Au cours du dernier mois, combien de fois avez-vous eu confiance en votre capacite a gerer vos problemes personnels ?",
+      "Au cours du dernier mois, combien de fois avez-vous eu le sentiment que les choses allaient dans votre sens ?",
+      "Au cours du dernier mois, combien de fois avez-vous constate que vous n\'arrivez pas a faire face a tout ce que vous deviez faire ?",
+      "Au cours du dernier mois, combien de fois avez-vous pu controler les irritations dans votre vie ?",
+      "Au cours du dernier mois, combien de fois avez-vous eu le sentiment de maitriser les choses ?",
+      "Au cours du dernier mois, combien de fois avez-vous ete en colere a cause de choses echappant a votre controle ?",
+      "Au cours du dernier mois, combien de fois avez-vous eu le sentiment que les difficultes s\'accumulaient a tel point que vous ne pouviez pas les surmonter ?"
+    ]
+  },
+  kr: {
+    back: "평가 목록으로 돌아가기",
+    eyebrow: "직업 스트레스",
+    title_plain: "지각된 스트레스 척도",
+    desc: "지각된 스트레스 척도(PSS)는 스트레스 인식을 측정하는 가장 널리 사용되는 심리 도구입니다. 예측 불가능한 일정, 높은 성과 요구, 강도 높은 대인 관계 압박을 겪는 엔터테인먼트 업계 종사자들에게 특히 관련이 있습니다.",
+    questions_label: "문항", minutes_label: "분", access_val: "무료", access_label: "즉시 결과",
+    timeframe: "<strong>기간:</strong> 다음 질문들은 지난 한 달 동안 귀하의 감정과 생각에 관한 것입니다.",
+    instructions: "<strong>지침:</strong> 각 문항에 대해 지난 한 달 동안 얼마나 자주 그렇게 느꼈는지 선택하세요.",
+    scale: ["전혀 없었다", "거의 없었다", "때때로 있었다", "자주 있었다", "매우 자주 있었다"],
+    btn_start: "평가 시작",
+    progress_label: "진행률",
+    q_of: "/",
+    btn_prev: "이전", btn_next: "다음", btn_results: "결과 보기",
+    r_title_plain: "PSS 결과",
+    r_subtitle: "지난 한 달간의 감정을 바탕으로",
+    r_cta_title: "이에 대해 이야기하고 싶으신가요?",
+    r_cta_desc: "점수와 관계없이 저희 팀이 함께합니다. 상담을 통해 스트레스 패턴을 이해하고 맞춤형 전략을 찾아드립니다.",
+    r_cta_btn: "상담 예약",
+    r_disclaimer: "<strong>중요 안내:</strong> PSS는 검증된 선별 도구이며 임상 진단이 아닙니다. 결과는 맥락을 고려하여 해석되어야 합니다.",
+    r_retake: "다시 평가하기",
+    out_of: "/ 40점",
+    ranges: [
+      { min:0, max:13, label:"낮은 스트레스",   color:"#27AE60", bg:"#E9F7EF", interp:"지난 한 달 동안 지각된 스트레스가 낮음을 나타냅니다. 삶의 요구를 잘 관리하고 있습니다. 투어, 음반 발매, 제작 마감 등 고강도 기간에는 스트레스 수준을 계속 모니터링하세요." },
+      { min:14, max:26, label:"보통 스트레스",  color:"#E07B39", bg:"#FDF0E8", interp:"보통 수준의 지각된 스트레스를 나타냅니다. 고요구 산업에서는 흔하지만, 지속적인 스트레스는 건강과 성과에 영향을 줄 수 있습니다. 스트레스 관리 전략을 탐색하거나 저희 팀과 상담해 보세요." },
+      { min:27, max:40, label:"높은 스트레스",  color:"#C0392B", bg:"#FDEAEA", interp:"높은 수준의 지각된 스트레스를 나타냅니다. 이 수준에서는 스트레스가 신체 건강, 정서적 안녕, 업무 성과에 상당한 영향을 미칠 수 있습니다. 저희 심리학자와 상담을 예약하시길 강력히 권장합니다." }
+    ],
+    questions: [
+      "지난 한 달 동안, 예기치 않게 발생한 일로 인해 얼마나 자주 속상했습니까?",
+      "지난 한 달 동안, 삶의 중요한 일들을 통제할 수 없다고 느낀 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 신경이 날카롭고 스트레스를 받는다고 느낀 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 개인적인 문제를 처리할 수 있다는 자신감을 느낀 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 일이 뜻대로 되고 있다고 느낀 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 해야 할 모든 일들을 감당할 수 없다고 느낀 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 삶의 짜증스러운 일들을 통제할 수 있었던 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 모든 것을 잘 통제하고 있다고 느낀 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 자신이 통제할 수 없는 일들로 인해 화가 난 적이 얼마나 자주 있었습니까?",
+      "지난 한 달 동안, 어려움이 너무 많이 쌓여서 극복할 수 없다고 느낀 적이 얼마나 자주 있었습니까?"
+    ]
+  },
+  jp: {
+    back: "評価一覧に戻る",
+    eyebrow: "職業ストレス",
+    title_plain: "知覚ストレス尺度",
+    desc: "知覚ストレス尺度（PSS）は、ストレスの知覚を測定する最も広く使用されている心理的ツールです。予測不可能なスケジュール、高い成果要求、強い対人プレッシャーに直面するエンターテインメント業界の従事者に特に関連しています。",
+    questions_label: "質問", minutes_label: "分", access_val: "無料", access_label: "即時結果",
+    timeframe: "<strong>期間：</strong>以下の質問は、先月の気持ちや考えについてです。",
+    instructions: "<strong>指示：</strong>各質問について、先月どのくらいの頻度でそのように感じたかを選んでください。",
+    scale: ["全くない", "ほとんどない", "ときどきある", "かなりある", "非常によくある"],
+    btn_start: "評価を開始する",
+    progress_label: "進捗",
+    q_of: "/",
+    btn_prev: "前へ", btn_next: "次へ", btn_results: "結果を見る",
+    r_title_plain: "PSS結果",
+    r_subtitle: "先月の気持ちに基づいて",
+    r_cta_title: "これについて話しませんか？",
+    r_cta_desc: "スコアに関わらず、私たちのチームがサポートします。",
+    r_cta_btn: "相談を予約する",
+    r_disclaimer: "<strong>重要なお知らせ：</strong>PSSは検証済みのスクリーニングツールであり、臨床診断ではありません。",
+    r_retake: "再評価する",
+    out_of: "/ 40点",
+    ranges: [
+      { min:0, max:13, label:"低ストレス",   color:"#27AE60", bg:"#E9F7EF", interp:"先月の知覚ストレスが低いことを示します。生活の要求をうまく管理できています。高強度の期間中も引き続きストレスレベルを監視してください。" },
+      { min:14, max:26, label:"中程度のストレス", color:"#E07B39", bg:"#FDF0E8", interp:"中程度の知覚ストレスを示します。高要求の業界では一般的ですが、継続的なストレスは健康とパフォーマンスに影響を与える可能性があります。" },
+      { min:27, max:40, label:"高ストレス",   color:"#C0392B", bg:"#FDEAEA", interp:"高い知覚ストレスを示します。このレベルでは、ストレスが身体的健康、感情的幸福、仕事のパフォーマンスに大きな影響を与える可能性があります。心理士との相談を強くお勧めします。" }
+    ],
+    questions: [
+      "先月、予期しないことが起きて、動揺したことがどのくらいありましたか？",
+      "先月、人生の重要なことをコントロールできないと感じたことがどのくらいありましたか？",
+      "先月、神経質でストレスを感じたことがどのくらいありましたか？",
+      "先月、個人的な問題に対処できるという自信を感じたことがどのくらいありましたか？",
+      "先月、物事が順調に進んでいると感じたことがどのくらいありましたか？",
+      "先月、しなければならないことすべてに対処できないと感じたことがどのくらいありましたか？",
+      "先月、生活の中のいらだちをコントロールできたことがどのくらいありましたか？",
+      "先月、物事をうまくコントロールできていると感じたことがどのくらいありましたか？",
+      "先月、自分のコントロール外の出来事のために怒りを感じたことがどのくらいありましたか？",
+      "先月、困難が積み重なって乗り越えられないと感じたことがどのくらいありましたか？"
+    ]
+  },
+  zh: {
+    back: "返回评估列表",
+    eyebrow: "工作压力",
+    title_plain: "感知压力量表",
+    desc: "感知压力量表（PSS）是测量压力感知的最广泛使用的心理工具。它评估生活中的情况被视为压力性的程度，对于面临不可预测的日程、高绩效要求和强烈人际压力的娱乐行业从业者尤为相关。",
+    questions_label: "问题", minutes_label: "分钟", access_val: "免费", access_label: "即时结果",
+    timeframe: "<strong>时间范围：</strong>以下问题询问您在过去一个月内的感受和想法。",
+    instructions: "<strong>说明：</strong>对于每个问题，请选择过去一个月内您感受如此的频率。",
+    scale: ["从不", "几乎从不", "有时", "相当频繁", "非常频繁"],
+    btn_start: "开始评估",
+    progress_label: "进度",
+    q_of: "/",
+    btn_prev: "上一题", btn_next: "下一题", btn_results: "查看结果",
+    r_title_plain: "PSS结果",
+    r_subtitle: "基于您过去一个月的感受",
+    r_cta_title: "您想谈谈这个问题吗？",
+    r_cta_desc: "无论分数高低，我们的团队都在这里。咨询可以帮助您了解压力模式并找到量身定制的策略。",
+    r_cta_btn: "预约咨询",
+    r_disclaimer: "<strong>重要提示：</strong>PSS是经过验证的筛查工具，而非临床诊断。结果应结合背景考虑。",
+    r_retake: "重新评估",
+    out_of: "/ 40分",
+    ranges: [
+      { min:0, max:13, label:"低压力",   color:"#27AE60", bg:"#E9F7EF", interp:"您的分数表明过去一个月感知压力较低。您正在很好地管理生活中的各种要求。继续监测您的压力水平，尤其是在高强度时期。" },
+      { min:14, max:26, label:"中等压力", color:"#E07B39", bg:"#FDF0E8", interp:"您的分数表明中等感知压力。这在高要求行业中很常见，但持续的中等压力会随时间影响您的健康和表现。考虑探索压力管理策略或与我们的团队交流。" },
+      { min:27, max:40, label:"高压力",   color:"#C0392B", bg:"#FDEAEA", interp:"您的分数表明高感知压力。在这个水平上，压力可能严重影响您的身体健康、情绪健康和工作表现。我们强烈建议您预约我们的心理学家进行咨询。" }
+    ],
+    questions: [
+      "在过去一个月中，您因意外发生的事情而感到不安的频率如何？",
+      "在过去一个月中，您感到无法控制生活中重要事情的频率如何？",
+      "在过去一个月中，您感到紧张和压力的频率如何？",
+      "在过去一个月中，您对自己处理个人问题的能力感到有信心的频率如何？",
+      "在过去一个月中，您感到事情顺心如意的频率如何？",
+      "在过去一个月中，您发现无法应对必须做的所有事情的频率如何？",
+      "在过去一个月中，您能够控制生活中烦恼的频率如何？",
+      "在过去一个月中，您感到掌控一切的频率如何？",
+      "在过去一个月中，您因超出控制范围的事情而感到愤怒的频率如何？",
+      "在过去一个月中，您感到困难堆积如山无法克服的频率如何？"
+    ]
+  },
+  th: {
+    back: "กลับไปยังรายการประเมิน",
+    eyebrow: "ความเครียดในการทำงาน",
+    title_plain: "มาตรวัดความเครียดที่รับรู้",
+    desc: "มาตรวัดความเครียดที่รับรู้ (PSS) เป็นเครื่องมือทางจิตวิทยาที่ใช้กันอย่างแพร่หลายที่สุดในการวัดการรับรู้ความเครียด มีความเกี่ยวข้องเป็นพิเศษสำหรับผู้ที่ทำงานในอุตสาหกรรมบันเทิงที่เผชิญกับตารางงานที่คาดเดาไม่ได้",
+    questions_label: "คำถาม", minutes_label: "นาที", access_val: "ฟรี", access_label: "ผลทันที",
+    timeframe: "<strong>ช่วงเวลา:</strong> คำถามต่อไปนี้เกี่ยวกับความรู้สึกและความคิดของคุณในเดือนที่ผ่านมา",
+    instructions: "<strong>คำแนะนำ:</strong> สำหรับแต่ละคำถาม เลือกว่าคุณรู้สึกเช่นนั้นบ่อยแค่ไหนในเดือนที่ผ่านมา",
+    scale: ["ไม่เลย", "แทบไม่เลย", "บางครั้ง", "บ่อยครั้ง", "บ่อยมาก"],
+    btn_start: "เริ่มการประเมิน",
+    progress_label: "ความคืบหน้า",
+    q_of: "/",
+    btn_prev: "ก่อนหน้า", btn_next: "ถัดไป", btn_results: "ดูผลลัพธ์",
+    r_title_plain: "ผลลัพธ์ PSS",
+    r_subtitle: "จากความรู้สึกของคุณในเดือนที่ผ่านมา",
+    r_cta_title: "คุณต้องการพูดคุยเรื่องนี้ไหม?",
+    r_cta_desc: "ไม่ว่าคะแนนจะสูงหรือต่ำ ทีมของเราพร้อมช่วยเหลือ การปรึกษาสามารถช่วยให้คุณเข้าใจรูปแบบความเครียดและหาแนวทางแก้ไขที่เหมาะกับคุณ",
+    r_cta_btn: "นัดหมายปรึกษา",
+    r_disclaimer: "<strong>หมายเหตุสำคัญ:</strong> PSS เป็นเครื่องมือคัดกรองที่ผ่านการตรวจสอบแล้ว ไม่ใช่การวินิจฉัยทางคลินิก",
+    r_retake: "ประเมินใหม่",
+    out_of: "/ 40 คะแนน",
+    ranges: [
+      { min:0, max:13, label:"ความเครียดต่ำ",    color:"#27AE60", bg:"#E9F7EF", interp:"คะแนนของคุณบ่งชี้ว่าความเครียดที่รับรู้ต่ำในเดือนที่ผ่านมา คุณจัดการความต้องการในชีวิตได้ดี" },
+      { min:14, max:26, label:"ความเครียดปานกลาง", color:"#E07B39", bg:"#FDF0E8", interp:"คะแนนของคุณบ่งชี้ว่าความเครียดที่รับรู้ปานกลาง เป็นเรื่องปกติในอุตสาหกรรมที่มีความต้องการสูง แต่ความเครียดอย่างต่อเนื่องอาจส่งผลต่อสุขภาพและประสิทธิภาพการทำงาน" },
+      { min:27, max:40, label:"ความเครียดสูง",    color:"#C0392B", bg:"#FDEAEA", interp:"คะแนนของคุณบ่งชี้ว่าความเครียดที่รับรู้สูง ในระดับนี้ ความเครียดอาจส่งผลกระทบอย่างมีนัยสำคัญต่อสุขภาพกายและจิตใจของคุณ เราขอแนะนำให้นัดหมายปรึกษากับนักจิตวิทยาของเรา" }
+    ],
+    questions: [
+      "ในเดือนที่ผ่านมา คุณรู้สึกหงุดหงิดเพราะเหตุการณ์ที่ไม่คาดคิดบ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณรู้สึกว่าไม่สามารถควบคุมสิ่งสำคัญในชีวิตได้บ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณรู้สึกประหม่าและเครียดบ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณรู้สึกมั่นใจในความสามารถในการจัดการปัญหาส่วนตัวบ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณรู้สึกว่าทุกอย่างเป็นไปตามที่ต้องการบ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณพบว่าไม่สามารถรับมือกับทุกสิ่งที่ต้องทำได้บ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณสามารถควบคุมความรำคาญในชีวิตได้บ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณรู้สึกว่าควบคุมทุกอย่างได้ดีบ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณโกรธเพราะเหตุการณ์ที่อยู่นอกเหนือการควบคุมของคุณบ่อยแค่ไหน?",
+      "ในเดือนที่ผ่านมา คุณรู้สึกว่าความยากลำบากสะสมมากจนไม่สามารถเอาชนะได้บ่อยแค่ไหน?"
+    ]
+  }
+};
+
+// Reversed items (positive questions scored in reverse): items 4, 5, 7, 8 (index 3,4,6,7)
+const reversedItems = [3, 4, 6, 7];
+
+let lang = 'en';
+let current = 0;
+let answers = new Array(10).fill(null);
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+  if (document.getElementById('view-test').classList.contains('active')) renderQ();
+}
+
+function applyTranslations() {
+  const t = T[lang];
+  document.getElementById('nav-back-label').textContent = t.back;
+  document.getElementById('i-eyebrow').textContent = t.eyebrow;
+  document.getElementById('i-desc').textContent = t.desc;
+  document.getElementById('i-questions-label').textContent = t.questions_label;
+  document.getElementById('i-minutes-label').textContent = t.minutes_label;
+  document.getElementById('i-access-val').textContent = t.access_val;
+  document.getElementById('i-access-label').textContent = t.access_label;
+  document.getElementById('i-timeframe').innerHTML = t.timeframe;
+  document.getElementById('i-instructions').innerHTML = t.instructions;
+  document.getElementById('i-btn-start').textContent = t.btn_start;
+
+  const scalePreview = document.getElementById('i-scale-preview');
+  scalePreview.innerHTML = t.scale.map(s => '<span class="scale-chip">' + s + '</span>').join('');
+
+  document.getElementById('t-progress-label').textContent = t.progress_label;
+  document.getElementById('r-subtitle').textContent = t.r_subtitle;
+  document.getElementById('r-cta-title').textContent = t.r_cta_title;
+  document.getElementById('r-cta-desc').textContent = t.r_cta_desc;
+  document.getElementById('r-cta-btn').textContent = t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML = t.r_disclaimer;
+  document.getElementById('r-retake-btn').textContent = t.r_retake;
+}
+
+function startTest() { showView('view-test'); renderQ(); }
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderQ() {
+  const t = T[lang];
+  document.getElementById('progCount').textContent = (current + 1) + ' ' + t.q_of + ' 10';
+  document.getElementById('progFill').style.width = ((current + 1) / 10 * 100) + '%';
+  document.getElementById('questionNum').textContent = (current + 1) + ' ' + t.q_of + ' 10';
+  document.getElementById('questionText').textContent = t.questions[current];
+
+  const opts = document.getElementById('scaleOptions');
+  opts.innerHTML = '';
+  for (let i = 0; i <= 4; i++) {
+    const div = document.createElement('label');
+    div.className = 'scale-option' + (answers[current] === i ? ' selected' : '');
+    div.innerHTML = '<input type="radio" name="q' + current + '" value="' + i + '"><div class="opt-dot"></div><div class="opt-val">' + i + '</div><div class="opt-label">' + t.scale[i] + '</div>';
+    div.onclick = (function(val, el) { return function() { selectOption(val, el); }; })(i, div);
+    opts.appendChild(div);
+  }
+
+  document.getElementById('btnPrev').textContent = t.btn_prev;
+  document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('btnNext');
+  btnNext.textContent = current === 9 ? t.btn_results : t.btn_next;
+  btnNext.disabled = answers[current] === null;
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none'; card.offsetHeight; card.style.animation = 'fadeSlide 0.4s ease';
+}
+
+function selectOption(val, el) {
+  answers[current] = val;
+  document.querySelectorAll('.scale-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled = false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+
+function nextQ() {
+  if (answers[current] === null) return;
+  if (current < 9) { current++; renderQ(); }
+  else showResults();
+}
+function prevQ() { if (current > 0) { current--; renderQ(); } }
+
+function showResults() {
+  const t = T[lang];
+  let total = 0;
+  answers.forEach((val, i) => {
+    if (reversedItems.includes(i)) total += (4 - val);
+    else total += val;
+  });
+
+  const range = t.ranges.find(r => total >= r.min && total <= r.max);
+  const pct = Math.round((total / 40) * 100);
+
+  document.getElementById('r-title').innerHTML = 'Your <em>' + t.r_title_plain + '</em>';
+
+  document.getElementById('totalScoreCard').innerHTML =
+    '<div class="ts-label">' + (lang === 'en' ? 'Total Score' : lang === 'fr' ? 'Score total' : lang === 'kr' ? '총점' : lang === 'jp' ? '合計スコア' : lang === 'zh' ? '总分' : 'คะแนนรวม') + '</div>' +
+    '<div class="ts-score" style="color:' + range.color + '">' + total + '</div>' +
+    '<div class="ts-max">' + t.out_of + '</div>' +
+    '<div class="ts-badge" style="background:' + range.bg + ';color:' + range.color + '">' + range.label + '</div>' +
+    '<div class="severity-bar-wrap">' +
+      '<div class="severity-bar"><div class="severity-marker" style="left:' + pct + '%"></div></div>' +
+      '<div class="severity-labels"><span>0' + (lang === 'en' ? ' Low' : '') + '</span><span>14</span><span>27</span><span>40</span></div>' +
+    '</div>';
+
+  document.getElementById('interpretationBox').innerHTML =
+    '<h3>' + range.label + '</h3><p>' + range.interp + '</p>' +
+    '<table class="range-table" style="margin-top:20px"><thead><tr><th>' +
+    (lang === 'en' ? 'Score' : lang === 'fr' ? 'Score' : lang === 'kr' ? '점수' : lang === 'jp' ? 'スコア' : lang === 'zh' ? '分数' : 'คะแนน') +
+    '</th><th>' + (lang === 'en' ? 'Level' : lang === 'fr' ? 'Niveau' : lang === 'kr' ? '수준' : lang === 'jp' ? 'レベル' : lang === 'zh' ? '水平' : 'ระดับ') +
+    '</th></tr></thead><tbody>' +
+    t.ranges.map(r =>
+      '<tr class="' + (total >= r.min && total <= r.max ? 'current-row' : '') + '">' +
+      '<td><span class="range-dot" style="background:' + r.color + '"></span>' + r.min + ' - ' + r.max + '</td>' +
+      '<td>' + r.label + (total >= r.min && total <= r.max ? ' \u2190' : '') + '</td></tr>'
+    ).join('') + '</tbody></table>';
+
+  showView('view-results');
+}
+
+function resetTest() {
+  current = 0;
+  answers = new Array(10).fill(null);
+  showView('view-intro');
+}
+
+applyTranslations();
+</script>
+</body>
+</html>

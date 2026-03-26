@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSQI  -  Pittsburgh Sleep Quality Index | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #3D8B8B; --teal-dark: #2A6464; --teal-light: #E0EEEE;
+    --violet: #7B6B8D; --violet-light: #EDE8F2;
+    --indigo: #4A5568; --indigo-light: #EBF4FF;
+    --navy: #2C3E6B; --navy-light: #E8ECF5;
+    --cream: #FAF8F4; --cream-dark: #F0EBE1;
+    --charcoal: #1E1E1E; --mid: #5A5A5A; --light: #999;
+    --green: #27AE60; --green-light: #E9F7EF;
+    --yellow: #D4AC0D; --yellow-light: #FEF9E7;
+    --orange: #E07B39; --orange-light: #FDF0E8;
+    --red: #C0392B; --red-light: #FDEAEA;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--charcoal); min-height: 100vh; }
+
+  .lang-bar { background: var(--charcoal); padding: 7px 48px; display: flex; justify-content: flex-end; gap: 4px; align-items: center; }
+  .lang-bar span { color: var(--light); font-size: 11px; letter-spacing: 0.08em; margin-right: 8px; }
+  .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .lang-btn:hover, .lang-btn.active { background: var(--teal); border-color: var(--teal); color: white; }
+
+  nav { padding: 16px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(250,248,244,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { text-decoration: none; display: flex; flex-direction: column; }
+  .nav-logo .main { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal-dark); }
+  .nav-logo .sub { font-size: 10px; color: var(--light); letter-spacing: 0.14em; text-transform: uppercase; }
+  .nav-back { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--mid); font-size: 13px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--teal); }
+  .nav-back svg { width: 16px; height: 16px; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .intro-wrap { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
+  .test-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--navy-light); color: var(--navy); padding: 5px 14px; border-radius: 30px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 24px; }
+  .intro-wrap h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 54px); font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 10px; }
+  .intro-wrap h1 em { font-style: italic; color: var(--teal); }
+  .abbr { font-size: 13px; color: var(--light); letter-spacing: 0.1em; margin-bottom: 28px; }
+  .intro-desc { font-size: 15px; color: var(--mid); line-height: 1.8; margin-bottom: 36px; font-weight: 300; }
+
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+  .info-card { background: white; border-radius: 16px; padding: 20px 24px; border: 1px solid rgba(0,0,0,0.06); text-align: center; }
+  .info-card .ic-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: var(--teal); line-height: 1; margin-bottom: 4px; }
+  .info-card .ic-label { font-size: 11px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .info-box { border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; }
+  .info-box p { font-size: 13px; line-height: 1.7; }
+  .info-box.navy { background: var(--navy-light); color: var(--navy); }
+  .info-box.teal { background: var(--teal-light); color: var(--teal-dark); }
+
+  .btn-start { background: var(--teal); color: white; padding: 16px 48px; border-radius: 40px; font-size: 15px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; }
+  .btn-start:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(61,139,139,0.3); }
+
+  .test-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+  .progress-bar-wrap { margin-bottom: 40px; }
+  .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .prog-label { font-size: 12px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .prog-count { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--teal); font-weight: 600; }
+  .prog-track { height: 4px; background: var(--cream-dark); border-radius: 2px; overflow: hidden; }
+  .prog-fill { height: 100%; background: linear-gradient(to right, var(--navy), var(--teal)); border-radius: 2px; transition: width 0.5s ease; }
+
+  .question-card { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 4px 30px rgba(0,0,0,0.06); margin-bottom: 32px; animation: fadeSlide 0.4s ease; }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .question-num { font-size: 11px; color: var(--light); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+  .question-context { font-size: 12px; color: var(--teal); background: var(--teal-light); padding: 8px 14px; border-radius: 8px; margin-bottom: 16px; display: none; }
+  .question-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; line-height: 1.35; color: var(--charcoal); margin-bottom: 36px; }
+
+  .scale-options { display: flex; flex-direction: column; gap: 10px; }
+  .scale-option { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px; cursor: pointer; transition: all 0.2s; background: var(--cream); }
+  .scale-option:hover { border-color: var(--teal); background: var(--teal-light); }
+  .scale-option.selected { border-color: var(--teal); background: var(--teal-light); }
+  .scale-option input { display: none; }
+  .opt-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .scale-option.selected .opt-dot { background: var(--teal); border-color: var(--teal); }
+  .scale-option.selected .opt-dot::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
+  .opt-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal); width: 24px; text-align: center; }
+  .opt-label { font-size: 13px; color: var(--mid); flex: 1; }
+
+  .time-input-wrap { display: flex; flex-direction: column; gap: 16px; }
+  .time-input-group { display: flex; flex-direction: column; gap: 8px; }
+  .time-input-label { font-size: 12px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .time-input { width: 100%; padding: 14px 20px; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px; background: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--charcoal); outline: none; transition: border-color 0.2s; }
+  .time-input:focus { border-color: var(--teal); }
+  .time-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+  .nav-btns { display: flex; justify-content: space-between; align-items: center; }
+  .btn-prev { background: transparent; border: 1px solid rgba(0,0,0,0.12); color: var(--mid); padding: 12px 28px; border-radius: 40px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-prev:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-next { background: var(--teal); color: white; padding: 12px 36px; border-radius: 40px; font-size: 13px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-next:hover { background: var(--teal-dark); }
+  .btn-next:disabled { background: var(--light); cursor: not-allowed; }
+
+  .results-wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
+  .results-header { text-align: center; margin-bottom: 48px; }
+  .results-icon { font-size: 56px; margin-bottom: 16px; }
+  .results-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 300; color: var(--charcoal); margin-bottom: 10px; }
+  .results-header h2 em { font-style: italic; color: var(--teal); }
+  .results-header p { font-size: 14px; color: var(--mid); }
+
+  .total-score-card { background: white; border-radius: 24px; padding: 40px; text-align: center; margin-bottom: 28px; border: 1px solid rgba(0,0,0,0.06); }
+  .ts-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--light); margin-bottom: 16px; }
+  .ts-score { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 600; line-height: 1; margin-bottom: 8px; }
+  .ts-max { font-size: 14px; color: var(--light); margin-bottom: 20px; }
+  .ts-badge { display: inline-block; padding: 6px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; }
+  .severity-bar-wrap { margin-top: 24px; }
+  .severity-bar { height: 8px; background: linear-gradient(to right, #27AE60, #D4AC0D, #E07B39, #C0392B); border-radius: 4px; position: relative; }
+  .severity-marker { position: absolute; top: -6px; transform: translateX(-50%); width: 20px; height: 20px; background: white; border: 3px solid var(--charcoal); border-radius: 50%; transition: left 1s ease 0.3s; }
+  .severity-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; color: var(--light); }
+
+  .components-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 28px; }
+  .component-card { background: white; border-radius: 16px; padding: 20px; border: 1px solid rgba(0,0,0,0.06); }
+  .comp-title { font-size: 11px; color: var(--light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .comp-score { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; margin-bottom: 4px; }
+  .comp-label { font-size: 12px; }
+  .comp-bar { height: 3px; border-radius: 2px; margin-top: 10px; background: var(--cream-dark); }
+  .comp-fill { height: 100%; border-radius: 2px; transition: width 1s ease 0.5s; }
+
+  .interpretation { background: white; border-radius: 20px; padding: 32px; margin-bottom: 28px; border: 1px solid rgba(0,0,0,0.06); }
+  .interpretation h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--charcoal); margin-bottom: 12px; }
+  .interpretation p { font-size: 14px; color: var(--mid); line-height: 1.8; }
+
+  .cta-results { background: linear-gradient(135deg, var(--navy), var(--violet)); border-radius: 20px; padding: 36px; text-align: center; color: white; margin-bottom: 28px; }
+  .cta-results h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; margin-bottom: 10px; }
+  .cta-results p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 24px; line-height: 1.7; }
+  .btn-consult { background: white; color: var(--navy); padding: 13px 36px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-consult:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  .disclaimer { background: var(--cream-dark); border-radius: 14px; padding: 20px 24px; font-size: 12px; color: var(--mid); line-height: 1.7; }
+  .disclaimer strong { color: var(--charcoal); }
+  .btn-retake { background: transparent; border: 1px solid rgba(0,0,0,0.12); color: var(--mid); padding: 10px 24px; border-radius: 30px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 16px; transition: all 0.2s; }
+  .btn-retake:hover { border-color: var(--teal); color: var(--teal); }
+
+  @media (max-width: 768px) {
+    .lang-bar, nav { padding-left: 20px; padding-right: 20px; }
+    .intro-wrap, .test-wrap, .results-wrap { padding-left: 20px; padding-right: 20px; }
+    .question-text { font-size: 20px; }
+    .components-grid { grid-template-columns: 1fr; }
+    .time-options { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+
+<nav>
+  <a href="safemind.html" class="nav-logo">
+    <span class="main">Safe Mind</span>
+    <span class="sub"></span>
+  </a>
+  <a href="tests.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="nav-back-label">Back to Assessments</span>
+  </a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Work and Burnout</div>
+    <h1 id="i-title">Pittsburgh <em>Sleep Quality</em> Index</h1>
+    <div class="abbr">PSQI  -  Buysse, Reynolds, Monk, Berman and Kupfer, 1989</div>
+    <p class="intro-desc" id="i-desc">The Pittsburgh Sleep Quality Index measures sleep quality and disturbances over the past month across 7 components. In the entertainment industry, irregular schedules, late-night rehearsals, international tours, and constant performance pressure make sleep disorders one of the most prevalent yet least addressed health issues.</p>
+
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">9</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">7</div><div class="ic-label" id="i-ml">Components</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+
+    <div class="info-box navy">
+      <p id="i-note"><strong>Time frame:</strong> The following questions relate to your usual sleep habits during the past month only. Your answers should indicate the most accurate reply for the majority of days and nights in the past month.</p>
+    </div>
+
+    <div class="info-box teal">
+      <p id="i-instructions"><strong>What is measured:</strong> Subjective sleep quality, sleep latency, sleep duration, habitual sleep efficiency, sleep disturbances, use of sleeping medication, and daytime dysfunction.</p>
+    </div>
+    <br>
+    <button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span class="prog-label" id="t-prog-label">Progress</span>
+        <span class="prog-count" id="progCount">1 / 9</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:11%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="question-context" id="questionContext"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-icon">🌙</div>
+      <h2 id="r-title">Your <em>Sleep Quality Results</em></h2>
+      <p id="r-subtitle">Based on your sleep patterns over the past month</p>
+    </div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="components-grid" id="componentsGrid"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results">
+      <h3 id="r-cta-h">Sleep is the foundation of everything.</h3>
+      <p id="r-cta-p">Poor sleep affects mood, cognitive performance, physical health, and emotional regulation. Our team can help you understand the root causes of your sleep difficulties and develop practical strategies tailored to your schedule and lifestyle.</p>
+      <button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button>
+    </div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The PSQI is a validated clinical instrument for assessing sleep quality. It is not a diagnosis of a sleep disorder. A score above 5 suggests clinically significant sleep problems that warrant professional evaluation.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back: "Back to Assessments", eyebrow: "Work and Burnout",
+    desc: "The Pittsburgh Sleep Quality Index measures sleep quality and disturbances over the past month across 7 components. In the entertainment industry, irregular schedules, late-night rehearsals, international tours, and constant performance pressure make sleep disorders one of the most prevalent yet least addressed health issues.",
+    ql: "Questions", ml: "Components", av: "Free", al: "Instant Results",
+    note: "<strong>Time frame:</strong> The following questions relate to your usual sleep habits during the past month only. Your answers should indicate the most accurate reply for the majority of days and nights.",
+    instructions: "<strong>What is measured:</strong> Subjective sleep quality, sleep latency, sleep duration, sleep efficiency, sleep disturbances, use of sleeping medication, and daytime dysfunction.",
+    btn_start: "Begin Assessment", prog_label: "Progress", q_of: "of",
+    btn_prev: "Previous", btn_next: "Next", btn_results: "See Results",
+    r_title_plain: "Sleep Quality Results",
+    r_subtitle: "Based on your sleep patterns over the past month",
+    r_cta_h: "Sleep is the foundation of everything.",
+    r_cta_p: "Poor sleep affects mood, cognitive performance, physical health, and emotional regulation. Our team can help you identify the root causes and develop practical strategies tailored to your schedule.",
+    r_cta_btn: "Book a Consultation",
+    r_disclaimer: "<strong>Important notice:</strong> The PSQI is a validated clinical instrument. A score above 5 suggests clinically significant sleep problems that warrant professional evaluation.",
+    r_retake: "Retake Assessment",
+    out_of: "out of 21", score_label: "Global Score",
+    comp_labels: ["Subjective Quality", "Sleep Latency", "Sleep Duration", "Sleep Efficiency", "Disturbances", "Sleep Medication", "Daytime Function"],
+    ranges: [
+      { min:0,  max:5,  label:"Good Sleep Quality",  color:"#27AE60", bg:"#E9F7EF", interp:"Your score indicates good overall sleep quality over the past month. Your sleep habits are supporting your health and performance. Continue to protect your sleep environment, especially during high-intensity periods such as tours or productions." },
+      { min:6,  max:10, label:"Poor Sleep Quality",  color:"#E07B39", bg:"#FDF0E8", interp:"Your score indicates poor sleep quality. This is extremely common in the entertainment industry and often goes unaddressed. Poor sleep at this level can impair memory, emotional regulation, immune function, and creative performance. Practical changes to your sleep schedule and environment can make a significant difference." },
+      { min:11, max:21, label:"Very Poor Sleep Quality", color:"#C0392B", bg:"#FDEAEA", interp:"Your score indicates very poor sleep quality. At this level, sleep disruption is likely having a significant impact on your physical and mental health, your performance, and your relationships. We strongly encourage you to book a consultation to discuss what is happening and explore targeted support." }
+    ],
+    questions: [
+      { text: "During the past month, what time have you usually gone to bed at night?", type: "time", component: 2, context: "Think about your most common bedtime over the past month." },
+      { text: "During the past month, how long has it usually taken you to fall asleep each night?", type: "latency", component: 2,
+        opts: ["15 minutes or less", "16 to 30 minutes", "31 to 60 minutes", "More than 60 minutes"] },
+      { text: "During the past month, what time have you usually gotten up in the morning?", type: "time", component: 2, context: "Think about your most common wake-up time over the past month." },
+      { text: "During the past month, how many hours of actual sleep did you get at night?", type: "hours", component: 3,
+        opts: ["More than 7 hours", "6 to 7 hours", "5 to 6 hours", "Less than 5 hours"] },
+      { text: "During the past month, how often have you had trouble sleeping because you cannot get to sleep within 30 minutes?", type: "freq", component: 2 },
+      { text: "During the past month, how often have you had trouble sleeping because you wake up in the middle of the night or early morning?", type: "freq", component: 5 },
+      { text: "During the past month, how often have you had trouble sleeping because you have to get up to use the bathroom?", type: "freq", component: 5 },
+      { text: "During the past month, how often have you taken medicine to help you sleep?", type: "freq", component: 6 },
+      { text: "During the past month, how often have you had trouble staying awake while driving, eating meals, or engaging in social activity?", type: "freq", component: 7 }
+    ],
+    freq_opts: ["Not during the past month", "Less than once a week", "Once or twice a week", "Three or more times a week"],
+    quality_q: "During the past month, how would you rate your sleep quality overall?",
+    quality_opts: ["Very good", "Fairly good", "Fairly bad", "Very bad"],
+    daytime_q: "During the past month, how much of a problem has it been for you to keep up enough enthusiasm to get things done?",
+    daytime_opts: ["No problem at all", "Only a very slight problem", "Somewhat of a problem", "A very big problem"]
+  },
+  fr: {
+    back: "Retour aux evaluations", eyebrow: "Travail et epuisement",
+    desc: "L'Indice de qualite du sommeil de Pittsburgh mesure la qualite du sommeil sur 7 composantes au cours du dernier mois. Dans l'industrie du divertissement, les horaires irreguliers, les repetitions tardives et les tournees internationales font des troubles du sommeil un probleme de sante tres frequent.",
+    ql: "Questions", ml: "Composantes", av: "Gratuit", al: "Resultats immediats",
+    note: "<strong>Periode :</strong> Les questions suivantes concernent vos habitudes de sommeil habituelles au cours du dernier mois seulement.",
+    instructions: "<strong>Ce qui est mesure :</strong> Qualite subjective du sommeil, latence, duree, efficacite, perturbations, medicaments et dysfonctionnement diurne.",
+    btn_start: "Commencer l'evaluation", prog_label: "Progression", q_of: "sur",
+    btn_prev: "Precedent", btn_next: "Suivant", btn_results: "Voir les resultats",
+    r_title_plain: "Resultats qualite du sommeil",
+    r_subtitle: "Base sur vos habitudes de sommeil au cours du dernier mois",
+    r_cta_h: "Le sommeil est la base de tout.",
+    r_cta_p: "Un mauvais sommeil affecte l'humeur, les performances cognitives, la sante physique et la regulation emotionnelle. Notre equipe peut vous aider a identifier les causes et developper des strategies adaptees.",
+    r_cta_btn: "Prendre rendez-vous",
+    r_disclaimer: "<strong>Note importante :</strong> Le PSQI est un instrument clinique valide. Un score superieur a 5 suggere des problemes de sommeil cliniquement significatifs.",
+    r_retake: "Repasser l'evaluation",
+    out_of: "sur 21", score_label: "Score global",
+    comp_labels: ["Qualite subjective", "Latence", "Duree", "Efficacite", "Perturbations", "Medicaments", "Fonction diurne"],
+    ranges: [
+      { min:0,  max:5,  label:"Bonne qualite de sommeil",       color:"#27AE60", bg:"#E9F7EF", interp:"Votre score indique une bonne qualite de sommeil globale au cours du dernier mois. Continuez a proteger votre environnement de sommeil, surtout pendant les periodes intensives." },
+      { min:6,  max:10, label:"Mauvaise qualite de sommeil",    color:"#E07B39", bg:"#FDF0E8", interp:"Votre score indique une mauvaise qualite de sommeil. C'est extremement courant dans l'industrie du divertissement. A ce niveau, le sommeil insuffisant peut affecter la memoire, la regulation emotionnelle et les performances creatives." },
+      { min:11, max:21, label:"Tres mauvaise qualite de sommeil", color:"#C0392B", bg:"#FDEAEA", interp:"Votre score indique une tres mauvaise qualite de sommeil. A ce niveau, les perturbations du sommeil ont probablement un impact significatif sur votre sante et vos performances. Nous vous encourageons vivement a prendre rendez-vous." }
+    ],
+    questions: [
+      { text: "Au cours du dernier mois, a quelle heure vous etes-vous habituellement couche(e) le soir ?", type: "time", component: 2, context: "Pensez a votre heure de coucher la plus courante au cours du dernier mois." },
+      { text: "Au cours du dernier mois, combien de temps vous faut-il habituellement pour vous endormir chaque nuit ?", type: "latency", component: 2,
+        opts: ["15 minutes ou moins", "16 a 30 minutes", "31 a 60 minutes", "Plus de 60 minutes"] },
+      { text: "Au cours du dernier mois, a quelle heure vous etes-vous habituellement leve(e) le matin ?", type: "time", component: 2, context: "Pensez a votre heure de lever la plus courante au cours du dernier mois." },
+      { text: "Au cours du dernier mois, combien d'heures de sommeil effectif avez-vous eu par nuit ?", type: "hours", component: 3,
+        opts: ["Plus de 7 heures", "6 a 7 heures", "5 a 6 heures", "Moins de 5 heures"] },
+      { text: "Au cours du dernier mois, combien de fois avez-vous eu des problemes de sommeil parce que vous n'arrivez pas a vous endormir dans les 30 minutes ?", type: "freq", component: 2 },
+      { text: "Au cours du dernier mois, combien de fois avez-vous eu des problemes de sommeil parce que vous vous reveillez au milieu de la nuit ou tot le matin ?", type: "freq", component: 5 },
+      { text: "Au cours du dernier mois, combien de fois avez-vous eu des problemes de sommeil parce que vous devez vous lever pour aller aux toilettes ?", type: "freq", component: 5 },
+      { text: "Au cours du dernier mois, combien de fois avez-vous pris des medicaments pour vous aider a dormir ?", type: "freq", component: 6 },
+      { text: "Au cours du dernier mois, combien de fois avez-vous eu du mal a rester eveille(e) en conduisant, en mangeant ou en socialisant ?", type: "freq", component: 7 }
+    ],
+    freq_opts: ["Pas au cours du dernier mois", "Moins d'une fois par semaine", "Une ou deux fois par semaine", "Trois fois ou plus par semaine"],
+    quality_q: "Au cours du dernier mois, comment evalueriez-vous globalement la qualite de votre sommeil ?",
+    quality_opts: ["Tres bonne", "Plutot bonne", "Plutot mauvaise", "Tres mauvaise"],
+    daytime_q: "Au cours du dernier mois, dans quelle mesure avez-vous eu du mal a garder suffisamment d'enthousiasme pour accomplir vos taches ?",
+    daytime_opts: ["Pas de probleme", "Tres leger probleme", "Quelque peu problematique", "Tres grand probleme"]
+  },
+  kr: {
+    back: "평가 목록으로 돌아가기", eyebrow: "직업 스트레스",
+    desc: "피츠버그 수면 질 지수는 지난 한 달 동안 7가지 요소에 걸쳐 수면의 질과 장애를 측정합니다. 엔터테인먼트 업계에서는 불규칙한 일정, 늦은 밤 리허설, 국제 투어로 인해 수면 장애가 매우 흔하게 발생합니다.",
+    ql: "문항", ml: "구성요소", av: "무료", al: "즉시 결과",
+    note: "<strong>기간:</strong> 다음 질문들은 지난 한 달 동안의 평소 수면 습관에 관한 것입니다.",
+    instructions: "<strong>측정 항목:</strong> 주관적 수면 질, 수면 잠복기, 수면 지속 시간, 수면 효율성, 수면 방해, 수면제 사용, 주간 기능 장애.",
+    btn_start: "평가 시작", prog_label: "진행률", q_of: "/",
+    btn_prev: "이전", btn_next: "다음", btn_results: "결과 보기",
+    r_title_plain: "수면 질 결과",
+    r_subtitle: "지난 한 달간의 수면 패턴을 바탕으로",
+    r_cta_h: "수면은 모든 것의 기초입니다.",
+    r_cta_p: "수면 부족은 기분, 인지 능력, 신체 건강, 감정 조절에 영향을 미칩니다. 저희 팀이 원인을 파악하고 맞춤형 전략을 개발하는 데 도움을 드릴 수 있습니다.",
+    r_cta_btn: "상담 예약",
+    r_disclaimer: "<strong>중요 안내:</strong> PSQI는 검증된 임상 도구입니다. 5점 이상의 점수는 전문적인 평가가 필요한 임상적으로 유의미한 수면 문제를 나타냅니다.",
+    r_retake: "다시 평가하기",
+    out_of: "/ 21점", score_label: "전체 점수",
+    comp_labels: ["주관적 질", "수면 잠복기", "수면 지속", "수면 효율", "수면 장애", "수면제", "주간 기능"],
+    ranges: [
+      { min:0,  max:5,  label:"양호한 수면 질",   color:"#27AE60", bg:"#E9F7EF", interp:"지난 한 달 동안 전반적으로 양호한 수면 질을 나타냅니다. 특히 투어나 제작 등 고강도 기간에 수면 환경을 계속 보호하세요." },
+      { min:6,  max:10, label:"불량한 수면 질",   color:"#E07B39", bg:"#FDF0E8", interp:"불량한 수면 질을 나타냅니다. 엔터테인먼트 업계에서 매우 흔하지만 종종 방치됩니다. 이 수준의 수면 부족은 기억력, 감정 조절, 면역 기능 및 창의적 성과에 영향을 줄 수 있습니다." },
+      { min:11, max:21, label:"매우 불량한 수면 질", color:"#C0392B", bg:"#FDEAEA", interp:"매우 불량한 수면 질을 나타냅니다. 이 수준에서는 수면 장애가 신체 및 정신 건강, 성과, 관계에 상당한 영향을 미치고 있을 가능성이 높습니다. 상담을 예약하시길 강력히 권장합니다." }
+    ],
+    questions: [
+      { text: "지난 한 달 동안 보통 몇 시에 잠자리에 들었습니까?", type: "time", component: 2, context: "지난 한 달 동안 가장 일반적인 취침 시간을 생각해보세요." },
+      { text: "지난 한 달 동안 밤에 잠들기까지 보통 얼마나 걸렸습니까?", type: "latency", component: 2,
+        opts: ["15분 이하", "16분에서 30분", "31분에서 60분", "60분 초과"] },
+      { text: "지난 한 달 동안 보통 몇 시에 일어났습니까?", type: "time", component: 2, context: "지난 한 달 동안 가장 일반적인 기상 시간을 생각해보세요." },
+      { text: "지난 한 달 동안 밤에 실제로 몇 시간이나 잠을 잤습니까?", type: "hours", component: 3,
+        opts: ["7시간 초과", "6시간에서 7시간", "5시간에서 6시간", "5시간 미만"] },
+      { text: "지난 한 달 동안 30분 안에 잠들지 못해서 수면 문제를 겪은 횟수는?", type: "freq", component: 2 },
+      { text: "지난 한 달 동안 밤중이나 이른 아침에 잠에서 깨어서 수면 문제를 겪은 횟수는?", type: "freq", component: 5 },
+      { text: "지난 한 달 동안 화장실을 가기 위해 일어나야 해서 수면 문제를 겪은 횟수는?", type: "freq", component: 5 },
+      { text: "지난 한 달 동안 잠을 자는 데 도움이 되는 약을 복용한 횟수는?", type: "freq", component: 6 },
+      { text: "지난 한 달 동안 운전, 식사 또는 사회 활동 중 깨어 있기가 힘들었던 횟수는?", type: "freq", component: 7 }
+    ],
+    freq_opts: ["지난 한 달 동안 없음", "일주일에 1번 미만", "일주일에 1-2번", "일주일에 3번 이상"],
+    quality_q: "지난 한 달 동안 전반적인 수면의 질을 어떻게 평가하겠습니까?",
+    quality_opts: ["매우 좋음", "꽤 좋음", "꽤 나쁨", "매우 나쁨"],
+    daytime_q: "지난 한 달 동안 일을 완수하기 위한 충분한 열의를 유지하는 데 얼마나 어려움을 겪었습니까?",
+    daytime_opts: ["전혀 문제 없음", "아주 약간의 문제", "어느 정도 문제", "매우 큰 문제"]
+  },
+  jp: {
+    back: "評価一覧に戻る", eyebrow: "職業ストレス",
+    desc: "ピッツバーグ睡眠質問票は、過去1ヶ月間の7つの要素にわたる睡眠の質と障害を測定します。エンターテインメント業界では、不規則なスケジュール、深夜のリハーサル、国際ツアーにより、睡眠障害が最も一般的な健康問題の一つです。",
+    ql: "質問", ml: "構成要素", av: "無料", al: "即時結果",
+    note: "<strong>期間：</strong>以下の質問は過去1ヶ月間の通常の睡眠習慣に関するものです。",
+    instructions: "<strong>測定内容：</strong>主観的睡眠の質、睡眠潜時、睡眠時間、睡眠効率、睡眠障害、睡眠薬の使用、日中の機能障害。",
+    btn_start: "評価を開始する", prog_label: "進捗", q_of: "/",
+    btn_prev: "前へ", btn_next: "次へ", btn_results: "結果を見る",
+    r_title_plain: "睡眠の質の結果",
+    r_subtitle: "過去1ヶ月間の睡眠パターンに基づいて",
+    r_cta_h: "睡眠はすべての基盤です。",
+    r_cta_p: "睡眠不足は気分、認知パフォーマンス、身体的健康、感情調節に影響します。私たちのチームが根本的な原因を特定し、あなたのスケジュールに合わせた戦略を立てます。",
+    r_cta_btn: "相談を予約する",
+    r_disclaimer: "<strong>重要なお知らせ：</strong>PSQIは検証済みの臨床ツールです。5点以上のスコアは専門的な評価が必要な睡眠問題を示しています。",
+    r_retake: "再評価する",
+    out_of: "/ 21点", score_label: "総合スコア",
+    comp_labels: ["主観的質", "睡眠潜時", "睡眠時間", "睡眠効率", "睡眠障害", "睡眠薬", "日中機能"],
+    ranges: [
+      { min:0,  max:5,  label:"良好な睡眠の質",     color:"#27AE60", bg:"#E9F7EF", interp:"過去1ヶ月間の全体的な睡眠の質が良好であることを示します。特に高強度の期間中も睡眠環境を保護し続けてください。" },
+      { min:6,  max:10, label:"睡眠の質が低い",    color:"#E07B39", bg:"#FDF0E8", interp:"睡眠の質が低いことを示します。エンターテインメント業界では非常に一般的です。このレベルの睡眠不足は記憶、感情調節、免疫機能に影響する可能性があります。" },
+      { min:11, max:21, label:"睡眠の質が非常に低い", color:"#C0392B", bg:"#FDEAEA", interp:"睡眠の質が非常に低いことを示します。このレベルでは、睡眠障害が身体的・精神的健康に大きな影響を与えている可能性があります。相談を強くお勧めします。" }
+    ],
+    questions: [
+      { text: "過去1ヶ月間、通常何時に就寝しましたか？", type: "time", component: 2, context: "過去1ヶ月間で最も一般的な就寝時間を考えてください。" },
+      { text: "過去1ヶ月間、夜に眠りにつくまで通常どのくらいかかりましたか？", type: "latency", component: 2,
+        opts: ["15分以内", "16〜30分", "31〜60分", "60分以上"] },
+      { text: "過去1ヶ月間、通常何時に起床しましたか？", type: "time", component: 2, context: "過去1ヶ月間で最も一般的な起床時間を考えてください。" },
+      { text: "過去1ヶ月間、夜に実際に何時間眠りましたか？", type: "hours", component: 3,
+        opts: ["7時間以上", "6〜7時間", "5〜6時間", "5時間未満"] },
+      { text: "過去1ヶ月間、30分以内に眠れないために睡眠に問題があったのは何回ですか？", type: "freq", component: 2 },
+      { text: "過去1ヶ月間、夜中や早朝に目が覚めるために睡眠に問題があったのは何回ですか？", type: "freq", component: 5 },
+      { text: "過去1ヶ月間、トイレに行くために起きなければならないために睡眠に問題があったのは何回ですか？", type: "freq", component: 5 },
+      { text: "過去1ヶ月間、眠るために薬を服用したのは何回ですか？", type: "freq", component: 6 },
+      { text: "過去1ヶ月間、運転中、食事中、または社会活動中に眠気を感じたのは何回ですか？", type: "freq", component: 7 }
+    ],
+    freq_opts: ["過去1ヶ月間なし", "週1回未満", "週1〜2回", "週3回以上"],
+    quality_q: "過去1ヶ月間、全体的な睡眠の質をどう評価しますか？",
+    quality_opts: ["とても良い", "かなり良い", "かなり悪い", "とても悪い"],
+    daytime_q: "過去1ヶ月間、物事をこなすための十分な意欲を維持するのにどの程度困難でしたか？",
+    daytime_opts: ["全く問題なし", "ごく軽微な問題", "ある程度の問題", "非常に大きな問題"]
+  },
+  zh: {
+    back: "返回评估列表", eyebrow: "工作压力",
+    desc: "匹兹堡睡眠质量指数通过7个成分测量过去一个月的睡眠质量和障碍。在娱乐行业中，不规律的日程、深夜排练和国际巡演使睡眠障碍成为最普遍但最少受到关注的健康问题之一。",
+    ql: "问题", ml: "组成部分", av: "免费", al: "即时结果",
+    note: "<strong>时间范围：</strong>以下问题仅涉及您过去一个月的通常睡眠习惯。",
+    instructions: "<strong>测量内容：</strong>主观睡眠质量、睡眠潜伏期、睡眠时长、睡眠效率、睡眠障碍、睡眠药物使用和日间功能障碍。",
+    btn_start: "开始评估", prog_label: "进度", q_of: "/",
+    btn_prev: "上一题", btn_next: "下一题", btn_results: "查看结果",
+    r_title_plain: "睡眠质量结果",
+    r_subtitle: "基于您过去一个月的睡眠模式",
+    r_cta_h: "睡眠是一切的基础。",
+    r_cta_p: "睡眠不足会影响情绪、认知表现、身体健康和情绪调节。我们的团队可以帮助您找出根本原因并制定适合您时间表的实用策略。",
+    r_cta_btn: "预约咨询",
+    r_disclaimer: "<strong>重要提示：</strong>PSQI是经过验证的临床工具。分数高于5分表明需要专业评估的临床显著睡眠问题。",
+    r_retake: "重新评估",
+    out_of: "/ 21分", score_label: "总分",
+    comp_labels: ["主观质量", "睡眠潜伏", "睡眠时长", "睡眠效率", "睡眠障碍", "睡眠药物", "日间功能"],
+    ranges: [
+      { min:0,  max:5,  label:"良好睡眠质量",     color:"#27AE60", bg:"#E9F7EF", interp:"您的分数表明过去一个月整体睡眠质量良好。继续保护您的睡眠环境，尤其是在高强度时期。" },
+      { min:6,  max:10, label:"较差睡眠质量",     color:"#E07B39", bg:"#FDF0E8", interp:"您的分数表明睡眠质量较差。这在娱乐行业极为常见。这种程度的睡眠不足会损害记忆力、情绪调节和创意表现。" },
+      { min:11, max:21, label:"很差睡眠质量",     color:"#C0392B", bg:"#FDEAEA", interp:"您的分数表明睡眠质量很差。在这个水平上，睡眠障碍可能对您的身心健康产生重大影响。我们强烈建议您预约咨询。" }
+    ],
+    questions: [
+      { text: "在过去一个月中，您通常在几点上床睡觉？", type: "time", component: 2, context: "想想您过去一个月最常见的就寝时间。" },
+      { text: "在过去一个月中，每晚入睡通常需要多长时间？", type: "latency", component: 2,
+        opts: ["15分钟或更少", "16到30分钟", "31到60分钟", "超过60分钟"] },
+      { text: "在过去一个月中，您通常在几点起床？", type: "time", component: 2, context: "想想您过去一个月最常见的起床时间。" },
+      { text: "在过去一个月中，您每晚实际睡了几个小时？", type: "hours", component: 3,
+        opts: ["超过7小时", "6到7小时", "5到6小时", "不足5小时"] },
+      { text: "在过去一个月中，您有多少次因无法在30分钟内入睡而出现睡眠问题？", type: "freq", component: 2 },
+      { text: "在过去一个月中，您有多少次因在夜间或清晨醒来而出现睡眠问题？", type: "freq", component: 5 },
+      { text: "在过去一个月中，您有多少次因需要起床上厕所而出现睡眠问题？", type: "freq", component: 5 },
+      { text: "在过去一个月中，您有多少次服用药物来帮助入睡？", type: "freq", component: 6 },
+      { text: "在过去一个月中，您有多少次在驾驶、进食或社交活动中难以保持清醒？", type: "freq", component: 7 }
+    ],
+    freq_opts: ["过去一个月没有", "每周少于一次", "每周一到两次", "每周三次或更多"],
+    quality_q: "在过去一个月中，您如何评价您的整体睡眠质量？",
+    quality_opts: ["非常好", "相当好", "相当差", "非常差"],
+    daytime_q: "在过去一个月中，您在保持足够的热情来完成事情方面遇到了多大困难？",
+    daytime_opts: ["完全没有问题", "只有很小的问题", "有些问题", "非常大的问题"]
+  },
+  th: {
+    back: "กลับไปยังรายการประเมิน", eyebrow: "ความเครียดในการทำงาน",
+    desc: "ดัชนีคุณภาพการนอนหลับพิตต์สเบิร์กวัดคุณภาพการนอนหลับและความผิดปกติใน 7 องค์ประกอบในช่วงเดือนที่ผ่านมา ในอุตสาหกรรมบันเทิง ตารางงานที่ไม่สม่ำเสมอและการซ้อมดึกทำให้ความผิดปกติของการนอนหลับเป็นปัญหาสุขภาพที่พบบ่อยที่สุด",
+    ql: "คำถาม", ml: "องค์ประกอบ", av: "ฟรี", al: "ผลทันที",
+    note: "<strong>ช่วงเวลา:</strong> คำถามต่อไปนี้เกี่ยวกับนิสัยการนอนหลับปกติของคุณในเดือนที่ผ่านมาเท่านั้น",
+    instructions: "<strong>สิ่งที่วัด:</strong> คุณภาพการนอนหลับเชิงอัตนัย ระยะเวลาแฝงของการนอนหลับ ระยะเวลาการนอนหลับ ประสิทธิภาพการนอนหลับ ความรบกวนการนอนหลับ การใช้ยานอนหลับ และการทำงานในเวลากลางวัน",
+    btn_start: "เริ่มการประเมิน", prog_label: "ความคืบหน้า", q_of: "/",
+    btn_prev: "ก่อนหน้า", btn_next: "ถัดไป", btn_results: "ดูผลลัพธ์",
+    r_title_plain: "ผลลัพธ์คุณภาพการนอนหลับ",
+    r_subtitle: "จากรูปแบบการนอนหลับของคุณในเดือนที่ผ่านมา",
+    r_cta_h: "การนอนหลับคือรากฐานของทุกสิ่ง",
+    r_cta_p: "การนอนหลับไม่ดีส่งผลต่ออารมณ์ ประสิทธิภาพการรับรู้ สุขภาพกาย และการควบคุมอารมณ์ ทีมของเราสามารถช่วยระบุสาเหตุและพัฒนาแนวทางที่เหมาะกับตารางงานของคุณ",
+    r_cta_btn: "นัดหมายปรึกษา",
+    r_disclaimer: "<strong>หมายเหตุสำคัญ:</strong> PSQI เป็นเครื่องมือทางคลินิกที่ผ่านการตรวจสอบแล้ว คะแนนเกิน 5 บ่งชี้ถึงปัญหาการนอนหลับที่มีนัยสำคัญทางคลินิก",
+    r_retake: "ประเมินใหม่",
+    out_of: "/ 21 คะแนน", score_label: "คะแนนรวม",
+    comp_labels: ["คุณภาพเชิงอัตนัย", "ระยะแฝง", "ระยะเวลา", "ประสิทธิภาพ", "ความรบกวน", "ยานอนหลับ", "การทำงานกลางวัน"],
+    ranges: [
+      { min:0,  max:5,  label:"คุณภาพการนอนหลับดี",        color:"#27AE60", bg:"#E9F7EF", interp:"คะแนนของคุณบ่งชี้ว่าคุณภาพการนอนหลับโดยรวมดีในเดือนที่ผ่านมา ดูแลรักษาสภาพแวดล้อมการนอนหลับของคุณต่อไป" },
+      { min:6,  max:10, label:"คุณภาพการนอนหลับไม่ดี",      color:"#E07B39", bg:"#FDF0E8", interp:"คะแนนของคุณบ่งชี้ว่าคุณภาพการนอนหลับไม่ดี เป็นเรื่องปกติมากในอุตสาหกรรมบันเทิง การนอนหลับไม่เพียงพอในระดับนี้อาจส่งผลต่อความจำและการควบคุมอารมณ์" },
+      { min:11, max:21, label:"คุณภาพการนอนหลับแย่มาก",    color:"#C0392B", bg:"#FDEAEA", interp:"คะแนนของคุณบ่งชี้ว่าคุณภาพการนอนหลับแย่มาก ในระดับนี้ ความผิดปกติของการนอนหลับมีแนวโน้มที่จะส่งผลกระทบอย่างมีนัยสำคัญต่อสุขภาพและประสิทธิภาพของคุณ เราขอแนะนำให้นัดหมายปรึกษา" }
+    ],
+    questions: [
+      { text: "ในเดือนที่ผ่านมา คุณปกติเข้านอนกี่โมง?", type: "time", component: 2, context: "นึกถึงเวลาเข้านอนที่พบบ่อยที่สุดของคุณในเดือนที่ผ่านมา" },
+      { text: "ในเดือนที่ผ่านมา ปกติต้องใช้เวลานานแค่ไหนในการหลับแต่ละคืน?", type: "latency", component: 2,
+        opts: ["15 นาทีหรือน้อยกว่า", "16 ถึง 30 นาที", "31 ถึง 60 นาที", "มากกว่า 60 นาที"] },
+      { text: "ในเดือนที่ผ่านมา คุณปกติตื่นนอนกี่โมง?", type: "time", component: 2, context: "นึกถึงเวลาตื่นนอนที่พบบ่อยที่สุดของคุณในเดือนที่ผ่านมา" },
+      { text: "ในเดือนที่ผ่านมา คุณนอนหลับได้จริงๆ กี่ชั่วโมงต่อคืน?", type: "hours", component: 3,
+        opts: ["มากกว่า 7 ชั่วโมง", "6 ถึง 7 ชั่วโมง", "5 ถึง 6 ชั่วโมง", "น้อยกว่า 5 ชั่วโมง"] },
+      { text: "ในเดือนที่ผ่านมา คุณมีปัญหาในการนอนหลับเพราะไม่สามารถหลับได้ภายใน 30 นาทีบ่อยแค่ไหน?", type: "freq", component: 2 },
+      { text: "ในเดือนที่ผ่านมา คุณมีปัญหาในการนอนหลับเพราะตื่นกลางดึกหรือเช้าตรู่บ่อยแค่ไหน?", type: "freq", component: 5 },
+      { text: "ในเดือนที่ผ่านมา คุณมีปัญหาในการนอนหลับเพราะต้องลุกไปห้องน้ำบ่อยแค่ไหน?", type: "freq", component: 5 },
+      { text: "ในเดือนที่ผ่านมา คุณทานยาเพื่อช่วยให้นอนหลับบ่อยแค่ไหน?", type: "freq", component: 6 },
+      { text: "ในเดือนที่ผ่านมา คุณมีปัญหาในการตื่นตัวขณะขับรถ รับประทานอาหาร หรือทำกิจกรรมทางสังคมบ่อยแค่ไหน?", type: "freq", component: 7 }
+    ],
+    freq_opts: ["ไม่เลยในเดือนที่ผ่านมา", "น้อยกว่าสัปดาห์ละครั้ง", "สัปดาห์ละ 1-2 ครั้ง", "สัปดาห์ละ 3 ครั้งขึ้นไป"],
+    quality_q: "ในเดือนที่ผ่านมา คุณจะให้คะแนนคุณภาพการนอนหลับโดยรวมของคุณอย่างไร?",
+    quality_opts: ["ดีมาก", "ค่อนข้างดี", "ค่อนข้างแย่", "แย่มาก"],
+    daytime_q: "ในเดือนที่ผ่านมา การรักษาความกระตือรือร้นเพียงพอในการทำสิ่งต่างๆ เป็นปัญหาแค่ไหนสำหรับคุณ?",
+    daytime_opts: ["ไม่มีปัญหาเลย", "ปัญหาเล็กน้อยมาก", "ปัญหาพอสมควร", "ปัญหาใหญ่มาก"]
+  }
+};
+
+// PSQI has 9 main questions + 2 extra (quality and daytime)
+// We build an 11-item flow: 9 regular + quality + daytime
+let lang = 'en';
+let current = 0;
+let answers = new Array(11).fill(null);
+// answers[0]=bedtime(text), answers[1]=latency(0-3), answers[2]=waketime(text)
+// answers[3]=hours(0-3), answers[4-8]=freq(0-3), answers[9]=quality(0-3), answers[10]=daytime(0-3)
+const TOTAL_Q = 11;
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+  if (document.getElementById('view-test').classList.contains('active')) renderQ();
+}
+
+function applyTranslations() {
+  const t = T[lang];
+  document.getElementById('nav-back-label').textContent = t.back;
+  document.getElementById('i-eyebrow').textContent = t.eyebrow;
+  document.getElementById('i-desc').textContent = t.desc;
+  document.getElementById('i-ql').textContent = t.ql;
+  document.getElementById('i-ml').textContent = t.ml;
+  document.getElementById('i-av').textContent = t.av;
+  document.getElementById('i-al').textContent = t.al;
+  document.getElementById('i-note').innerHTML = t.note;
+  document.getElementById('i-instructions').innerHTML = t.instructions;
+  document.getElementById('i-btn-start').textContent = t.btn_start;
+  document.getElementById('t-prog-label').textContent = t.prog_label;
+  document.getElementById('r-subtitle').textContent = t.r_subtitle;
+  document.getElementById('r-cta-h').textContent = t.r_cta_h;
+  document.getElementById('r-cta-p').textContent = t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent = t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML = t.r_disclaimer;
+  document.getElementById('r-retake').textContent = t.r_retake;
+}
+
+function startTest() { showView('view-test'); renderQ(); }
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function getQuestion(idx) {
+  const t = T[lang];
+  if (idx < 9) return t.questions[idx];
+  if (idx === 9) return { text: t.quality_q, type: 'freq', opts: t.quality_opts };
+  return { text: t.daytime_q, type: 'freq', opts: t.daytime_opts };
+}
+
+function renderQ() {
+  const t = T[lang];
+  const q = getQuestion(current);
+  document.getElementById('progCount').textContent = (current + 1) + ' ' + t.q_of + ' ' + TOTAL_Q;
+  document.getElementById('progFill').style.width = ((current + 1) / TOTAL_Q * 100) + '%';
+  document.getElementById('questionNum').textContent = (current + 1) + ' ' + t.q_of + ' ' + TOTAL_Q;
+  document.getElementById('questionText').textContent = q.text;
+
+  const ctx = document.getElementById('questionContext');
+  if (q.context) { ctx.textContent = q.context; ctx.style.display = 'block'; }
+  else { ctx.style.display = 'none'; }
+
+  const opts = document.getElementById('scaleOptions');
+  opts.innerHTML = '';
+
+  if (q.type === 'time') {
+    const wrap = document.createElement('div');
+    wrap.className = 'time-input-wrap';
+    const inp = document.createElement('input');
+    inp.type = 'time'; inp.className = 'time-input';
+    inp.value = answers[current] || '';
+    inp.oninput = function() {
+      answers[current] = inp.value;
+      document.getElementById('btnNext').disabled = !inp.value;
+    };
+    wrap.appendChild(inp);
+    opts.appendChild(wrap);
+    document.getElementById('btnNext').disabled = !answers[current];
+  } else {
+    const options = q.opts || t.freq_opts;
+    options.forEach(function(label, i) {
+      const div = document.createElement('label');
+      div.className = 'scale-option' + (answers[current] === i ? ' selected' : '');
+      div.innerHTML = '<input type="radio" name="q' + current + '" value="' + i + '"><div class="opt-dot"></div><div class="opt-val">' + i + '</div><div class="opt-label">' + label + '</div>';
+      div.onclick = (function(val, el) { return function() { selectOption(val, el); }; })(i, div);
+      opts.appendChild(div);
+    });
+    document.getElementById('btnNext').disabled = answers[current] === null;
+  }
+
+  document.getElementById('btnPrev').textContent = t.btn_prev;
+  document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('btnNext');
+  btnNext.textContent = current === TOTAL_Q - 1 ? t.btn_results : t.btn_next;
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none'; card.offsetHeight; card.style.animation = 'fadeSlide 0.4s ease';
+}
+
+function selectOption(val, el) {
+  answers[current] = val;
+  document.querySelectorAll('.scale-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled = false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+
+function nextQ() {
+  if (answers[current] === null && getQuestion(current).type !== 'time') return;
+  if (current < TOTAL_Q - 1) { current++; renderQ(); }
+  else showResults();
+}
+function prevQ() { if (current > 0) { current--; renderQ(); } }
+
+function calcSleepEfficiency() {
+  // Estimate hours in bed from bedtime and waketime
+  const bed = answers[0]; const wake = answers[2];
+  if (!bed || !wake) return 1;
+  const bedParts = bed.split(':'); const wakeParts = wake.split(':');
+  let bedMin = parseInt(bedParts[0]) * 60 + parseInt(bedParts[1]);
+  let wakeMin = parseInt(wakeParts[0]) * 60 + parseInt(wakeParts[1]);
+  if (wakeMin <= bedMin) wakeMin += 24 * 60;
+  const hoursInBed = (wakeMin - bedMin) / 60;
+  const actualHours = [7.5, 6.5, 5.5, 4.5][answers[3] || 0]; // Midpoints: >7h, 6-7h, 5-6h, <5h
+  const efficiency = actualHours / hoursInBed * 100;
+  if (efficiency >= 85) return 0;
+  if (efficiency >= 75) return 1;
+  if (efficiency >= 65) return 2;
+  return 3;
+}
+
+function showResults() {
+  const t = T[lang];
+
+  // Component scores
+  const c1 = answers[9] || 0; // Subjective quality
+  const c2 = Math.min(3, (answers[1] || 0) + (answers[4] || 0) > 3 ? 3 : Math.floor(((answers[1] || 0) + (answers[4] || 0)) / 2)); // Latency
+  const c3 = answers[3] || 0; // Duration
+  const c4 = calcSleepEfficiency(); // Efficiency
+  const c5 = Math.min(3, Math.round(((answers[5] || 0) + (answers[6] || 0)) / 2)); // Disturbances
+  const c6 = answers[7] || 0; // Medication
+  const c7 = Math.min(3, Math.round(((answers[8] || 0) + (answers[10] || 0)) / 2)); // Daytime
+
+  const components = [c1, c2, c3, c4, c5, c6, c7];
+  const total = components.reduce(function(a, b) { return a + b; }, 0);
+  const range = t.ranges.find(function(r) { return total >= r.min && total <= r.max; });
+  const pct = Math.round((total / 21) * 100);
+
+  const compColors = ['#27AE60','#D4AC0D','#E07B39','#C0392B'];
+
+  document.getElementById('r-title').innerHTML = 'Your <em>' + t.r_title_plain + '</em>';
+  document.getElementById('totalScoreCard').innerHTML =
+    '<div class="ts-label">' + t.score_label + '</div>' +
+    '<div class="ts-score" style="color:' + range.color + '">' + total + '</div>' +
+    '<div class="ts-max">' + t.out_of + '</div>' +
+    '<div class="ts-badge" style="background:' + range.bg + ';color:' + range.color + '">' + range.label + '</div>' +
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:' + pct + '%"></div></div>' +
+    '<div class="severity-labels"><span>0</span><span>5</span><span>10</span><span>21</span></div></div>';
+
+  const grid = document.getElementById('componentsGrid');
+  grid.innerHTML = components.map(function(score, i) {
+    const color = compColors[Math.min(score, 3)];
+    const labels = ['Good','Fair','Poor','Very Poor'];
+    return '<div class="component-card">' +
+      '<div class="comp-title">' + t.comp_labels[i] + '</div>' +
+      '<div class="comp-score" style="color:' + color + '">' + score + '<span style="font-size:16px;color:var(--light)"> / 3</span></div>' +
+      '<div class="comp-label" style="color:' + color + '">' + labels[score] + '</div>' +
+      '<div class="comp-bar"><div class="comp-fill" style="width:' + (score/3*100) + '%;background:' + color + '"></div></div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('interpretationBox').innerHTML =
+    '<h3>' + range.label + '</h3><p>' + range.interp + '</p>';
+
+  showView('view-results');
+}
+
+function resetTest() {
+  current = 0; answers = new Array(11).fill(null);
+  showView('view-intro');
+}
+
+applyTranslations();
+</script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAGE  -  Alcohol Dependence Screening | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#3D8B8B;--teal-dark:#2A6464;--teal-light:#E0EEEE;--violet:#7B6B8D;--amber:#8B6914;--amber-light:#FEF3DC;--cream:#FAF8F4;--cream-dark:#F0EBE1;--charcoal:#1E1E1E;--mid:#5A5A5A;--light:#999;--green:#27AE60;--green-light:#E9F7EF;--orange:#E07B39;--orange-light:#FDF0E8;--red:#C0392B;--red-light:#FDEAEA}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh}
+.lang-bar{background:var(--charcoal);padding:7px 48px;display:flex;justify-content:flex-end;gap:4px;align-items:center}
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-btn:hover,.lang-btn.active{background:var(--teal);border-color:var(--teal);color:white}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.nav-logo{text-decoration:none;display:flex;flex-direction:column}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark)}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase}
+.nav-back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s}
+.nav-back:hover{color:var(--teal)}.nav-back svg{width:16px;height:16px}
+.view{display:none}.view.active{display:block}
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--amber-light);color:var(--amber);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,54px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px}
+.intro-wrap h1 em{font-style:italic;color:var(--teal)}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.info-card .ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:4px}
+.info-card .ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px}
+.info-box p{font-size:13px;line-height:1.7}
+.info-box.amber{background:var(--amber-light);color:var(--amber)}
+.info-box.teal{background:var(--teal-light);color:var(--teal-dark)}
+.acronym-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.acronym-card{background:white;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.acronym-letter{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--teal);width:32px;text-align:center}
+.acronym-text{font-size:12px;color:var(--mid)}
+.btn-start{background:var(--teal);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+.btn-start:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(61,139,139,.3)}
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.progress-bar-wrap{margin-bottom:40px}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--teal);font-weight:600}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--amber),var(--teal));border-radius:2px;transition:width .5s ease}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(0,0,0,.06);margin-bottom:32px;animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.question-letter{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:14px}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px}
+.yn-options{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.yn-option{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:20px;cursor:pointer;transition:all .2s;background:var(--cream);gap:8px}
+.yn-option:hover{border-color:var(--teal);background:var(--teal-light)}
+.yn-option.selected{border-color:var(--teal);background:var(--teal-light)}
+.yn-option input{display:none}
+.yn-val{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--teal)}
+.yn-label{font-size:13px;color:var(--mid)}
+.nav-btns{display:flex;justify-content:space-between;align-items:center}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-prev:hover{border-color:var(--teal);color:var(--teal)}
+.btn-next{background:var(--teal);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-next:hover{background:var(--teal-dark)}.btn-next:disabled{background:var(--light);cursor:not-allowed}
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px}
+.results-header{text-align:center;margin-bottom:48px}
+.results-icon{font-size:56px;margin-bottom:16px}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px}
+.results-header h2 em{font-style:italic;color:var(--teal)}
+.results-header p{font-size:14px;color:var(--mid)}
+.total-score-card{background:white;border-radius:24px;padding:40px;text-align:center;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.ts-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px}
+.ts-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;line-height:1;margin-bottom:8px}
+.ts-max{font-size:14px;color:var(--light);margin-bottom:20px}
+.ts-badge{display:inline-block;padding:6px 20px;border-radius:30px;font-size:14px;font-weight:500}
+.answers-review{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+.answer-card{background:white;border-radius:16px;padding:18px 20px;border:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:14px}
+.ans-letter{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--teal);width:28px}
+.ans-detail{flex:1}
+.ans-q{font-size:12px;color:var(--mid);margin-bottom:4px}
+.ans-val{font-size:13px;font-weight:500}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8}
+.cta-results{background:linear-gradient(135deg,var(--teal-dark),var(--violet));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7}
+.btn-consult{background:white;color:var(--teal-dark);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7}
+.disclaimer strong{color:var(--charcoal)}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s}
+.btn-retake:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:768px){.lang-bar,nav{padding-left:20px;padding-right:20px}.intro-wrap,.test-wrap,.results-wrap{padding-left:20px;padding-right:20px}.question-text{font-size:20px}.yn-options{grid-template-columns:1fr 1fr}.answers-review{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+<nav>
+  <a href="safemind.html" class="nav-logo"><span class="main">Safe Mind</span></a>
+  <a href="tests.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><span id="nav-back-label">Back to Assessments</span></a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Addiction Screening</div>
+    <h1 id="i-title">CAGE <em>Alcohol</em><br>Dependence Screen</h1>
+    <div class="abbr">CAGE  -  Ewing, 1984. Validated in 50+ countries</div>
+    <p class="intro-desc" id="i-desc">The CAGE questionnaire is one of the most widely used and validated tools for detecting alcohol dependence in clinical settings. Its four questions cut through denial and social desirability bias by focusing on the emotional and behavioral consequences of drinking rather than quantity consumed. Particularly relevant for creative industry workers who use alcohol to manage performance anxiety, social fatigue, or irregular sleep patterns.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">4</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">1</div><div class="ic-label" id="i-ml">Minute</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+    <div class="info-box amber">
+      <p id="i-note"><strong>About this tool:</strong> CAGE is an acronym. Each letter represents one question.</p>
+      <div class="acronym-grid" id="i-acronym">
+        <div class="acronym-card"><div class="acronym-letter">C</div><div class="acronym-text">Cut down  -  Have you felt you should cut down?</div></div>
+        <div class="acronym-card"><div class="acronym-letter">A</div><div class="acronym-text">Annoyed  -  Have people annoyed you by criticizing?</div></div>
+        <div class="acronym-card"><div class="acronym-letter">G</div><div class="acronym-text">Guilty  -  Have you felt guilty about drinking?</div></div>
+        <div class="acronym-card"><div class="acronym-letter">E</div><div class="acronym-text">Eye-opener  -  Have you needed a drink to start the day?</div></div>
+      </div>
+    </div>
+    <div class="info-box teal"><p id="i-instructions"><strong>Instructions:</strong> Please answer Yes or No to each question. Your answers are completely confidential.</p></div>
+    <br><button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta"><span class="prog-label" id="t-prog-label">Progress</span><span class="prog-count" id="progCount">1 / 4</span></div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:25%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="question-letter" id="questionLetter"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="yn-options" id="ynOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header"><div class="results-icon">🔍</div><h2 id="r-title">Your <em>CAGE Results</em></h2><p id="r-subtitle">A quick but clinically validated screening</p></div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="answers-review" id="answersReview"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results"><h3 id="r-cta-h">There is no judgment here.</h3><p id="r-cta-p">If your score raises a concern, a confidential consultation with one of our psychologists can help you explore your relationship with alcohol in a safe, non-judgmental space. Asking for help is a sign of strength.</p><button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button></div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The CAGE is a validated screening tool. A score of 2 or more suggests a clinically significant alcohol problem that warrants further evaluation. It is not a diagnosis of alcohol dependence.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back:"Back to Assessments", eyebrow:"Addiction Screening",
+    desc:"The CAGE questionnaire is one of the most validated tools for detecting alcohol dependence. Its four questions focus on the emotional and behavioral consequences of drinking rather than quantity consumed.",
+    ql:"Questions", ml:"Minute", av:"Free", al:"Instant Results",
+    note:"<strong>About this tool:</strong> CAGE is an acronym. Each letter represents one question.",
+    acronym:[
+      {l:"C", t:"Cut down  -  Have you felt you should cut down?"},
+      {l:"A", t:"Annoyed  -  Have people annoyed you by criticizing?"},
+      {l:"G", t:"Guilty  -  Have you felt guilty about drinking?"},
+      {l:"E", t:"Eye-opener  -  Have you needed a drink to start the day?"}
+    ],
+    instructions:"<strong>Instructions:</strong> Please answer Yes or No to each question. Your answers are completely confidential.",
+    btn_start:"Begin Assessment", prog_label:"Progress", q_of:"of",
+    btn_prev:"Previous", btn_next:"Next", btn_results:"See Results",
+    yes:"Yes", no:"No",
+    r_title_plain:"CAGE Results", r_subtitle:"A quick but clinically validated screening",
+    r_cta_h:"There is no judgment here.",
+    r_cta_p:"If your score raises a concern, a confidential consultation can help you explore your relationship with alcohol in a safe, non-judgmental space.",
+    r_cta_btn:"Book a Consultation",
+    r_disclaimer:"<strong>Important notice:</strong> The CAGE is a validated screening tool. A score of 2 or more suggests a clinically significant alcohol problem. It is not a diagnosis of alcohol dependence.",
+    r_retake:"Retake Assessment", out_of:"out of 4", score_label:"Total Score",
+    ranges:[
+      {min:0, max:1, label:"Low concern",          color:"#27AE60", bg:"#E9F7EF", interp:"Your score suggests low concern for alcohol dependence. A score of 0 or 1 on the CAGE does not indicate a clinically significant problem with alcohol. If you answered Yes to any question, it may still be worth reflecting on your relationship with alcohol, particularly during high-stress periods."},
+      {min:2, max:3, label:"Clinically significant", color:"#E07B39", bg:"#FDF0E8", interp:"A score of 2 or more on the CAGE is considered clinically significant and suggests a probable alcohol problem. This result does not diagnose dependence, but it does indicate that a professional evaluation is warranted. Many people in the creative industry use alcohol to cope with pressure, loneliness, or irregular schedules. Support is available and effective."},
+      {min:4, max:4, label:"High concern",          color:"#C0392B", bg:"#FDEAEA", interp:"A score of 4 indicates high concern for alcohol dependence. All four questions related to cutting down, others' criticism, personal guilt, and morning drinking were answered positively. We strongly encourage you to speak with one of our psychologists or another healthcare professional as soon as possible. Recovery is possible and treatment is highly effective."}
+    ],
+    letters:["C","A","G","E"],
+    questions:[
+      {text:"Have you ever felt you needed to Cut down on your drinking?", letter:"C"},
+      {text:"Have people Annoyed you by criticizing your drinking?", letter:"A"},
+      {text:"Have you ever felt Guilty about drinking?", letter:"G"},
+      {text:"Have you ever felt you needed a drink first thing in the morning (Eye-opener) to steady your nerves or to get rid of a hangover?", letter:"E"}
+    ]
+  },
+  fr: {
+    back:"Retour aux evaluations", eyebrow:"Depistage Addiction",
+    desc:"Le questionnaire CAGE est l'un des outils les plus valides pour detecter la dependance a l'alcool. Ses quatre questions se concentrent sur les consequences emotionnelles et comportementales de la consommation.",
+    ql:"Questions", ml:"Minute", av:"Gratuit", al:"Resultats immediats",
+    note:"<strong>A propos de cet outil :</strong> CAGE est un acronyme. Chaque lettre represente une question.",
+    acronym:[
+      {l:"C", t:"Cut down  -  Avez-vous pense devoir reduire votre consommation ?"},
+      {l:"A", t:"Annoyed  -  Des personnes vous ont-elles irrite en critiquant votre consommation ?"},
+      {l:"G", t:"Guilty  -  Vous etes-vous senti(e) coupable de boire ?"},
+      {l:"E", t:"Eye-opener  -  Avez-vous eu besoin d'un verre le matin pour vous sentir en forme ?"}
+    ],
+    instructions:"<strong>Instructions :</strong> Repondez Oui ou Non a chaque question. Vos reponses sont entierement confidentielles.",
+    btn_start:"Commencer l'evaluation", prog_label:"Progression", q_of:"sur",
+    btn_prev:"Precedent", btn_next:"Suivant", btn_results:"Voir les resultats",
+    yes:"Oui", no:"Non",
+    r_title_plain:"Resultats CAGE", r_subtitle:"Un depistage rapide mais cliniquement valide",
+    r_cta_h:"Il n'y a pas de jugement ici.",
+    r_cta_p:"Si votre score souleve une preoccupation, une consultation confidentielle peut vous aider a explorer votre relation avec l'alcool dans un espace sur et sans jugement.",
+    r_cta_btn:"Prendre rendez-vous",
+    r_disclaimer:"<strong>Note importante :</strong> Le CAGE est un outil de depistage valide. Un score de 2 ou plus suggere un probleme d'alcool cliniquement significatif.",
+    r_retake:"Repasser l'evaluation", out_of:"sur 4", score_label:"Score total",
+    ranges:[
+      {min:0, max:1, label:"Faible preoccupation",          color:"#27AE60", bg:"#E9F7EF", interp:"Votre score suggere peu de preoccupation pour la dependance a l'alcool. Un score de 0 ou 1 n'indique pas de probleme cliniquement significatif. Si vous avez repondu Oui a une question, il peut quand meme valoir la peine de reflechir a votre relation avec l'alcool."},
+      {min:2, max:3, label:"Cliniquement significatif",     color:"#E07B39", bg:"#FDF0E8", interp:"Un score de 2 ou plus est cliniquement significatif et suggere un probleme probable avec l'alcool. Ce resultat ne diagnostique pas la dependance, mais indique qu'une evaluation professionnelle est justifiee. Un soutien est disponible et efficace."},
+      {min:4, max:4, label:"Preoccupation elevee",          color:"#C0392B", bg:"#FDEAEA", interp:"Un score de 4 indique une forte preoccupation pour la dependance a l'alcool. Nous vous encourageons vivement a parler a l'un de nos psychologues ou a un autre professionnel de sante des que possible."}
+    ],
+    letters:["C","A","G","E"],
+    questions:[
+      {text:"Avez-vous deja pense que vous devriez reduire votre consommation d'alcool ?", letter:"C"},
+      {text:"Votre entourage vous a-t-il deja irrite en critiquant votre consommation d'alcool ?", letter:"A"},
+      {text:"Vous etes-vous deja senti(e) coupable vis-a-vis de votre consommation d'alcool ?", letter:"G"},
+      {text:"Avez-vous deja eu besoin de prendre un verre le matin pour vous remettre d'aplomb ou pour vous debarrasser d'une gueule de bois ?", letter:"E"}
+    ]
+  },
+  kr: {
+    back:"평가 목록으로 돌아가기", eyebrow:"중독 선별",
+    desc:"CAGE 설문지는 임상 환경에서 알코올 의존을 감지하기 위해 가장 널리 사용되고 검증된 도구 중 하나입니다. 네 가지 질문은 소비량보다 음주의 감정적, 행동적 결과에 초점을 맞춥니다.",
+    ql:"문항", ml:"분", av:"무료", al:"즉시 결과",
+    note:"<strong>이 도구에 대해:</strong> CAGE는 두문자어입니다. 각 문자는 하나의 질문을 나타냅니다.",
+    acronym:[
+      {l:"C", t:"Cut down  -  음주를 줄여야 한다고 느꼈습니까?"},
+      {l:"A", t:"Annoyed  -  음주를 비판해서 화가 난 적이 있습니까?"},
+      {l:"G", t:"Guilty  -  음주에 대해 죄책감을 느낀 적이 있습니까?"},
+      {l:"E", t:"Eye-opener  -  아침에 술이 필요했던 적이 있습니까?"}
+    ],
+    instructions:"<strong>지침:</strong> 각 질문에 예 또는 아니오로 답하세요. 귀하의 답변은 완전히 기밀입니다.",
+    btn_start:"평가 시작", prog_label:"진행률", q_of:"/",
+    btn_prev:"이전", btn_next:"다음", btn_results:"결과 보기",
+    yes:"예", no:"아니오",
+    r_title_plain:"CAGE 결과", r_subtitle:"빠르지만 임상적으로 검증된 선별 검사",
+    r_cta_h:"여기에는 판단이 없습니다.",
+    r_cta_p:"점수가 우려를 제기하면 기밀 상담을 통해 안전하고 비판 없는 공간에서 알코올과의 관계를 탐색하는 데 도움을 받을 수 있습니다.",
+    r_cta_btn:"상담 예약",
+    r_disclaimer:"<strong>중요 안내:</strong> CAGE는 검증된 선별 도구입니다. 2점 이상의 점수는 임상적으로 유의미한 알코올 문제를 시사합니다.",
+    r_retake:"다시 평가하기", out_of:"/ 4점", score_label:"총점",
+    ranges:[
+      {min:0, max:1, label:"낮은 우려",            color:"#27AE60", bg:"#E9F7EF", interp:"귀하의 점수는 알코올 의존에 대한 낮은 우려를 시사합니다. 0점 또는 1점은 임상적으로 유의미한 문제를 나타내지 않습니다. 어느 질문에든 예라고 답했다면 알코올과의 관계를 반영해볼 가치가 있습니다."},
+      {min:2, max:3, label:"임상적으로 유의미함",  color:"#E07B39", bg:"#FDF0E8", interp:"2점 이상은 임상적으로 유의미하며 알코올 문제 가능성을 시사합니다. 이 결과가 의존성을 진단하지는 않지만 전문적인 평가가 필요함을 나타냅니다. 지원이 가능하고 효과적입니다."},
+      {min:4, max:4, label:"높은 우려",            color:"#C0392B", bg:"#FDEAEA", interp:"4점은 알코올 의존에 대한 높은 우려를 나타냅니다. 가능한 빨리 저희 심리학자 또는 다른 의료 전문가와 상담하시길 강력히 권장합니다."}
+    ],
+    letters:["C","A","G","E"],
+    questions:[
+      {text:"음주를 줄여야 한다고 느낀 적이 있습니까?", letter:"C"},
+      {text:"귀하의 음주를 비판해서 다른 사람들이 귀하를 짜증나게 한 적이 있습니까?", letter:"A"},
+      {text:"음주에 대해 죄책감을 느낀 적이 있습니까?", letter:"G"},
+      {text:"숙취를 없애거나 신경을 안정시키기 위해 아침 첫 번째 일로 술이 필요하다고 느낀 적이 있습니까?", letter:"E"}
+    ]
+  },
+  jp: {
+    back:"評価一覧に戻る", eyebrow:"依存症スクリーニング",
+    desc:"CAGEアンケートはアルコール依存を検出するための最も検証されたツールの一つです。4つの質問は消費量よりも飲酒の感情的・行動的影響に焦点を当てています。",
+    ql:"質問", ml:"分", av:"無料", al:"即時結果",
+    note:"<strong>このツールについて：</strong>CAGEは頭字語です。各文字が一つの質問を表しています。",
+    acronym:[
+      {l:"C", t:"Cut down  -  飲酒を減らすべきと感じたことがありますか？"},
+      {l:"A", t:"Annoyed  -  批判されて腹が立ったことがありますか？"},
+      {l:"G", t:"Guilty  -  飲酒に罪悪感を感じたことがありますか？"},
+      {l:"E", t:"Eye-opener  -  朝一番に飲酒が必要だったことがありますか？"}
+    ],
+    instructions:"<strong>指示：</strong>各質問にはいまたはいいえで答えてください。回答は完全に秘密が守られます。",
+    btn_start:"評価を開始する", prog_label:"進捗", q_of:"/",
+    btn_prev:"前へ", btn_next:"次へ", btn_results:"結果を見る",
+    yes:"はい", no:"いいえ",
+    r_title_plain:"CAGE結果", r_subtitle:"迅速だが臨床的に検証されたスクリーニング",
+    r_cta_h:"ここには判断がありません。",
+    r_cta_p:"スコアに懸念がある場合、秘密厳守の相談でアルコールとの関係を安全に探ることができます。",
+    r_cta_btn:"相談を予約する",
+    r_disclaimer:"<strong>重要なお知らせ：</strong>CAGEは検証済みスクリーニングツールです。2点以上は臨床的に重要なアルコール問題を示唆します。",
+    r_retake:"再評価する", out_of:"/ 4点", score_label:"合計スコア",
+    ranges:[
+      {min:0, max:1, label:"懸念低い",     color:"#27AE60", bg:"#E9F7EF", interp:"アルコール依存への懸念が低いことを示しています。"},
+      {min:2, max:3, label:"臨床的に重要", color:"#E07B39", bg:"#FDF0E8", interp:"2点以上は臨床的に重要であり、アルコール問題の可能性を示しています。専門的な評価が必要です。"},
+      {min:4, max:4, label:"懸念高い",     color:"#C0392B", bg:"#FDEAEA", interp:"4点はアルコール依存への高い懸念を示しています。できるだけ早く専門家に相談することを強くお勧めします。"}
+    ],
+    letters:["C","A","G","E"],
+    questions:[
+      {text:"飲酒を減らすべきだと感じたことはありますか？", letter:"C"},
+      {text:"あなたの飲酒を批判されて腹が立ったことはありますか？", letter:"A"},
+      {text:"飲酒に罪悪感を感じたことはありますか？", letter:"G"},
+      {text:"二日酔いを解消したり、神経を落ち着かせるために朝一番に飲酒が必要だと感じたことはありますか？", letter:"E"}
+    ]
+  },
+  zh: {
+    back:"返回评估列表", eyebrow:"成瘾筛查",
+    desc:"CAGE问卷是检测酒精依赖最广泛使用和验证的工具之一。其四个问题关注饮酒的情感和行为后果，而不是消费量。",
+    ql:"问题", ml:"分钟", av:"免费", al:"即时结果",
+    note:"<strong>关于此工具：</strong>CAGE是一个首字母缩写词。每个字母代表一个问题。",
+    acronym:[
+      {l:"C", t:"Cut down  -  您曾感到应该减少饮酒吗？"},
+      {l:"A", t:"Annoyed  -  有人因批评您饮酒而让您恼怒吗？"},
+      {l:"G", t:"Guilty  -  您曾对饮酒感到内疚吗？"},
+      {l:"E", t:"Eye-opener  -  您曾需要早晨喝酒来镇定神经吗？"}
+    ],
+    instructions:"<strong>说明：</strong>请对每个问题回答是或否。您的回答完全保密。",
+    btn_start:"开始评估", prog_label:"进度", q_of:"/",
+    btn_prev:"上一题", btn_next:"下一题", btn_results:"查看结果",
+    yes:"是", no:"否",
+    r_title_plain:"CAGE结果", r_subtitle:"快速但经临床验证的筛查",
+    r_cta_h:"这里没有判断。",
+    r_cta_p:"如果您的分数引起担忧，保密咨询可以帮助您在安全、无判断的空间探索您与酒精的关系。",
+    r_cta_btn:"预约咨询",
+    r_disclaimer:"<strong>重要提示：</strong>CAGE是经过验证的筛查工具。2分或以上表明有临床上重要的酒精问题。",
+    r_retake:"重新评估", out_of:"/ 4分", score_label:"总分",
+    ranges:[
+      {min:0, max:1, label:"低度关注",     color:"#27AE60", bg:"#E9F7EF", interp:"您的分数表明对酒精依赖的关注度较低。"},
+      {min:2, max:3, label:"临床上显著",   color:"#E07B39", bg:"#FDF0E8", interp:"2分或以上具有临床意义，表明可能存在酒精问题，需要专业评估。"},
+      {min:4, max:4, label:"高度关注",     color:"#C0392B", bg:"#FDEAEA", interp:"4分表明对酒精依赖高度关注。我们强烈建议您尽快与我们的心理学家或其他医疗专业人员交流。"}
+    ],
+    letters:["C","A","G","E"],
+    questions:[
+      {text:"您是否曾感到需要减少饮酒？", letter:"C"},
+      {text:"有人批评您的饮酒而让您感到恼怒吗？", letter:"A"},
+      {text:"您是否曾对饮酒感到内疚？", letter:"G"},
+      {text:"您是否曾需要在早晨第一件事就喝酒来稳定神经或消除宿醉？", letter:"E"}
+    ]
+  },
+  th: {
+    back:"กลับไปยังรายการประเมิน", eyebrow:"การคัดกรองการติดสาร",
+    desc:"แบบสอบถาม CAGE เป็นหนึ่งในเครื่องมือที่ใช้กันอย่างแพร่หลายและผ่านการตรวจสอบแล้วสำหรับการตรวจหาการติดสุรา คำถามสี่ข้อมุ่งเน้นไปที่ผลทางอารมณ์และพฤติกรรมของการดื่ม",
+    ql:"คำถาม", ml:"นาที", av:"ฟรี", al:"ผลทันที",
+    note:"<strong>เกี่ยวกับเครื่องมือนี้:</strong> CAGE เป็นตัวย่อ แต่ละตัวอักษรแทนคำถามหนึ่งข้อ",
+    acronym:[
+      {l:"C", t:"Cut down  -  คุณเคยรู้สึกว่าควรลดการดื่มสุราไหม?"},
+      {l:"A", t:"Annoyed  -  คนอื่นเคยทำให้คุณหงุดหงิดด้วยการวิจารณ์การดื่มไหม?"},
+      {l:"G", t:"Guilty  -  คุณเคยรู้สึกผิดเกี่ยวกับการดื่มไหม?"},
+      {l:"E", t:"Eye-opener  -  คุณเคยต้องการดื่มตอนเช้าเพื่อให้รู้สึกดีขึ้นไหม?"}
+    ],
+    instructions:"<strong>คำแนะนำ:</strong> กรุณาตอบใช่หรือไม่ใช่สำหรับแต่ละคำถาม คำตอบของคุณเป็นความลับอย่างสมบูรณ์",
+    btn_start:"เริ่มการประเมิน", prog_label:"ความคืบหน้า", q_of:"/",
+    btn_prev:"ก่อนหน้า", btn_next:"ถัดไป", btn_results:"ดูผลลัพธ์",
+    yes:"ใช่", no:"ไม่ใช่",
+    r_title_plain:"ผลลัพธ์ CAGE", r_subtitle:"การคัดกรองที่รวดเร็วแต่ผ่านการตรวจสอบทางคลินิก",
+    r_cta_h:"ไม่มีการตัดสินที่นี่",
+    r_cta_p:"หากคะแนนของคุณก่อให้เกิดความกังวล การปรึกษาแบบเป็นความลับสามารถช่วยให้คุณสำรวจความสัมพันธ์กับแอลกอฮอล์ในพื้นที่ที่ปลอดภัย",
+    r_cta_btn:"นัดหมายปรึกษา",
+    r_disclaimer:"<strong>หมายเหตุสำคัญ:</strong> CAGE เป็นเครื่องมือคัดกรองที่ผ่านการตรวจสอบแล้ว คะแนน 2 ขึ้นไปบ่งชี้ถึงปัญหาแอลกอฮอล์ที่มีนัยสำคัญทางคลินิก",
+    r_retake:"ประเมินใหม่", out_of:"/ 4 คะแนน", score_label:"คะแนนรวม",
+    ranges:[
+      {min:0, max:1, label:"ความกังวลต่ำ",            color:"#27AE60", bg:"#E9F7EF", interp:"คะแนนของคุณบ่งชี้ถึงความกังวลต่ำสำหรับการติดแอลกอฮอล์"},
+      {min:2, max:3, label:"มีนัยสำคัญทางคลินิก",    color:"#E07B39", bg:"#FDF0E8", interp:"คะแนน 2 ขึ้นไปมีนัยสำคัญทางคลินิก บ่งชี้ถึงปัญหาแอลกอฮอล์ที่น่าจะเป็น ต้องการการประเมินจากผู้เชี่ยวชาญ"},
+      {min:4, max:4, label:"ความกังวลสูง",             color:"#C0392B", bg:"#FDEAEA", interp:"คะแนน 4 บ่งชี้ถึงความกังวลสูงสำหรับการติดแอลกอฮอล์ เราขอแนะนำอย่างยิ่งให้พูดคุยกับผู้เชี่ยวชาญโดยเร็วที่สุด"}
+    ],
+    letters:["C","A","G","E"],
+    questions:[
+      {text:"คุณเคยรู้สึกว่าคุณจำเป็นต้องลดการดื่มสุราไหม?", letter:"C"},
+      {text:"คนอื่นเคยทำให้คุณหงุดหงิดโดยการวิจารณ์การดื่มของคุณไหม?", letter:"A"},
+      {text:"คุณเคยรู้สึกผิดเกี่ยวกับการดื่มไหม?", letter:"G"},
+      {text:"คุณเคยรู้สึกว่าต้องการดื่มเป็นสิ่งแรกในตอนเช้าเพื่อให้ประสาทสงบหรือกำจัดอาการเมาค้างไหม?", letter:"E"}
+    ]
+  }
+};
+
+let lang='en', current=0, answers=new Array(4).fill(null);
+
+function setLang(l,btn){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+  if(document.getElementById('view-test').classList.contains('active'))renderQ();
+}
+
+function applyTranslations(){
+  const t=T[lang];
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-av').textContent=t.av;
+  document.getElementById('i-al').textContent=t.al;
+  document.getElementById('i-note').innerHTML=t.note+'<div class="acronym-grid">'+t.acronym.map(a=>'<div class="acronym-card"><div class="acronym-letter">'+a.l+'</div><div class="acronym-text">'+a.t+'</div></div>').join('')+'</div>';
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+}
+
+function startTest(){showView('view-test');renderQ();}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+function renderQ(){
+  const t=T[lang];
+  const q=t.questions[current];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' 4';
+  document.getElementById('progFill').style.width=((current+1)/4*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' 4';
+  document.getElementById('questionLetter').textContent=q.letter;
+  document.getElementById('questionText').textContent=q.text;
+  const opts=document.getElementById('ynOptions');
+  opts.innerHTML='';
+  [{val:1,label:t.yes},{val:0,label:t.no}].forEach(function(opt){
+    const div=document.createElement('label');
+    div.className='yn-option'+(answers[current]===opt.val?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+opt.val+'"><div class="yn-val">'+opt.label+'</div>';
+    div.onclick=(function(v,el){return function(){selectOption(v,el);};})(opt.val,div);
+    opts.appendChild(div);
+  });
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  const bn=document.getElementById('btnNext');
+  bn.textContent=current===3?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  const card=document.getElementById('questionCard');
+  card.style.animation='none';card.offsetHeight;card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(val,el){
+  answers[current]=val;
+  document.querySelectorAll('.yn-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+function nextQ(){if(answers[current]===null)return;if(current<3){current++;renderQ();}else showResults();}
+function prevQ(){if(current>0){current--;renderQ();}}
+
+function showResults(){
+  const t=T[lang];
+  const total=answers.reduce((a,b)=>a+(b||0),0);
+  const range=t.ranges.find(r=>total>=r.min&&total<=r.max);
+  const pct=Math.round((total/4)*100);
+
+  document.getElementById('r-title').innerHTML='Your <em>'+t.r_title_plain+'</em>';
+  document.getElementById('totalScoreCard').innerHTML=
+    '<div class="ts-label">'+t.score_label+'</div>'+
+    '<div class="ts-score" style="color:'+range.color+'">'+total+'</div>'+
+    '<div class="ts-max">'+t.out_of+'</div>'+
+    '<div class="ts-badge" style="background:'+range.bg+';color:'+range.color+'">'+range.label+'</div>'+
+    '<div style="margin-top:16px;height:8px;background:linear-gradient(to right,#27AE60,#E07B39,#C0392B);border-radius:4px;position:relative">'+
+    '<div style="position:absolute;top:-6px;left:'+pct+'%;transform:translateX(-50%);width:20px;height:20px;background:white;border:3px solid #1E1E1E;border-radius:50%;transition:left 1s ease .3s"></div></div>'+
+    '<div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:#999"><span>0</span><span>2</span><span>4</span></div>';
+
+  document.getElementById('answersReview').innerHTML=t.questions.map((q,i)=>
+    '<div class="answer-card">'+
+    '<div class="ans-letter">'+q.letter+'</div>'+
+    '<div class="ans-detail">'+
+    '<div class="ans-q">'+q.text.substring(0,50)+'...</div>'+
+    '<div class="ans-val" style="color:'+(answers[i]===1?'#C0392B':'#27AE60')+'">'+(answers[i]===1?t.yes:t.no)+'</div>'+
+    '</div></div>'
+  ).join('');
+
+  document.getElementById('interpretationBox').innerHTML='<h3>'+range.label+'</h3><p>'+range.interp+'</p>';
+  showView('view-results');
+}
+
+function resetTest(){current=0;answers=new Array(4).fill(null);showView('view-intro');}
+applyTranslations();
+</script>
+</body>
+</html>

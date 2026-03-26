@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosenberg Self-Esteem Scale | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #3D8B8B; --teal-dark: #2A6464; --teal-light: #E0EEEE;
+    --violet: #7B6B8D; --violet-light: #EDE8F2;
+    --rose: #B5566A; --rose-light: #F9EEF1;
+    --cream: #FAF8F4; --cream-dark: #F0EBE1;
+    --charcoal: #1E1E1E; --mid: #5A5A5A; --light: #999;
+    --green: #27AE60; --green-light: #E9F7EF;
+    --yellow: #D4AC0D; --yellow-light: #FEF9E7;
+    --orange: #E07B39; --orange-light: #FDF0E8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--charcoal); min-height: 100vh; }
+
+  .lang-bar { background: var(--charcoal); padding: 7px 48px; display: flex; justify-content: flex-end; gap: 4px; align-items: center; }
+  .lang-bar span { color: var(--light); font-size: 11px; letter-spacing: 0.08em; margin-right: 8px; }
+  .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); padding: 3px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .lang-btn:hover, .lang-btn.active { background: var(--teal); border-color: var(--teal); color: white; }
+
+  nav { padding: 16px 48px; display: flex; justify-content: space-between; align-items: center; background: rgba(250,248,244,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { text-decoration: none; display: flex; flex-direction: column; }
+  .nav-logo .main { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal-dark); }
+  .nav-logo .sub { font-size: 10px; color: var(--light); letter-spacing: 0.14em; text-transform: uppercase; }
+  .nav-back { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--mid); font-size: 13px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--teal); }
+  .nav-back svg { width: 16px; height: 16px; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .intro-wrap { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
+  .test-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--rose-light); color: var(--rose); padding: 5px 14px; border-radius: 30px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 24px; }
+  .intro-wrap h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 54px); font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 10px; }
+  .intro-wrap h1 em { font-style: italic; color: var(--teal); }
+  .abbr { font-size: 13px; color: var(--light); letter-spacing: 0.1em; margin-bottom: 28px; }
+  .intro-desc { font-size: 15px; color: var(--mid); line-height: 1.8; margin-bottom: 36px; font-weight: 300; }
+
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+  .info-card { background: white; border-radius: 16px; padding: 20px 24px; border: 1px solid rgba(0,0,0,0.06); text-align: center; }
+  .info-card .ic-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: var(--teal); line-height: 1; margin-bottom: 4px; }
+  .info-card .ic-label { font-size: 11px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .info-box { border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; }
+  .info-box p { font-size: 13px; line-height: 1.7; }
+  .info-box.rose { background: var(--rose-light); color: var(--rose); }
+  .info-box.teal { background: var(--teal-light); color: var(--teal-dark); }
+
+  .scale-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .scale-chip { background: white; border-radius: 20px; padding: 5px 14px; font-size: 11px; color: var(--teal-dark); border: 1px solid rgba(61,139,139,0.25); }
+
+  .btn-start { background: var(--teal); color: white; padding: 16px 48px; border-radius: 40px; font-size: 15px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; }
+  .btn-start:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(61,139,139,0.3); }
+
+  .test-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+  .progress-bar-wrap { margin-bottom: 40px; }
+  .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .prog-label { font-size: 12px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .prog-count { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--teal); font-weight: 600; }
+  .prog-track { height: 4px; background: var(--cream-dark); border-radius: 2px; overflow: hidden; }
+  .prog-fill { height: 100%; background: linear-gradient(to right, var(--rose), var(--teal)); border-radius: 2px; transition: width 0.5s ease; }
+
+  .question-card { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 4px 30px rgba(0,0,0,0.06); margin-bottom: 32px; animation: fadeSlide 0.4s ease; }
+  @keyframes fadeSlide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .question-num { font-size: 11px; color: var(--light); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+  .question-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; line-height: 1.35; color: var(--charcoal); margin-bottom: 36px; }
+
+  .scale-options { display: flex; flex-direction: column; gap: 10px; }
+  .scale-option { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px; cursor: pointer; transition: all 0.2s; background: var(--cream); }
+  .scale-option:hover { border-color: var(--teal); background: var(--teal-light); }
+  .scale-option.selected { border-color: var(--teal); background: var(--teal-light); }
+  .scale-option input { display: none; }
+  .opt-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .scale-option.selected .opt-dot { background: var(--teal); border-color: var(--teal); }
+  .scale-option.selected .opt-dot::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
+  .opt-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal); width: 24px; text-align: center; }
+  .opt-label { font-size: 13px; color: var(--mid); flex: 1; }
+
+  .nav-btns { display: flex; justify-content: space-between; align-items: center; }
+  .btn-prev { background: transparent; border: 1px solid rgba(0,0,0,0.12); color: var(--mid); padding: 12px 28px; border-radius: 40px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-prev:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-next { background: var(--teal); color: white; padding: 12px 36px; border-radius: 40px; font-size: 13px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-next:hover { background: var(--teal-dark); }
+  .btn-next:disabled { background: var(--light); cursor: not-allowed; }
+
+  .results-wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
+  .results-header { text-align: center; margin-bottom: 48px; }
+  .results-icon { font-size: 56px; margin-bottom: 16px; }
+  .results-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 300; color: var(--charcoal); margin-bottom: 10px; }
+  .results-header h2 em { font-style: italic; color: var(--teal); }
+  .results-header p { font-size: 14px; color: var(--mid); }
+
+  .total-score-card { background: white; border-radius: 24px; padding: 40px; text-align: center; margin-bottom: 28px; border: 1px solid rgba(0,0,0,0.06); }
+  .ts-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--light); margin-bottom: 16px; }
+  .ts-score { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 600; line-height: 1; margin-bottom: 8px; }
+  .ts-max { font-size: 14px; color: var(--light); margin-bottom: 20px; }
+  .ts-badge { display: inline-block; padding: 6px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; }
+  .severity-bar-wrap { margin-top: 24px; }
+  .severity-bar { height: 8px; background: linear-gradient(to right, #C0392B, #E07B39, #D4AC0D, #27AE60); border-radius: 4px; position: relative; }
+  .severity-marker { position: absolute; top: -6px; transform: translateX(-50%); width: 20px; height: 20px; background: white; border: 3px solid var(--charcoal); border-radius: 50%; transition: left 1s ease 0.3s; }
+  .severity-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; color: var(--light); }
+
+  .interpretation { background: white; border-radius: 20px; padding: 32px; margin-bottom: 28px; border: 1px solid rgba(0,0,0,0.06); }
+  .interpretation h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--charcoal); margin-bottom: 12px; }
+  .interpretation p { font-size: 14px; color: var(--mid); line-height: 1.8; }
+
+  .range-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  .range-table th { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .range-table td { padding: 10px 12px; font-size: 13px; color: var(--mid); border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .range-table tr.current-row td { font-weight: 500; color: var(--charcoal); }
+  .range-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+
+  .cta-results { background: linear-gradient(135deg, var(--teal-dark), var(--violet)); border-radius: 20px; padding: 36px; text-align: center; color: white; margin-bottom: 28px; }
+  .cta-results h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; margin-bottom: 10px; }
+  .cta-results p { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 24px; line-height: 1.7; }
+  .btn-consult { background: white; color: var(--teal-dark); padding: 13px 36px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-consult:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  .disclaimer { background: var(--cream-dark); border-radius: 14px; padding: 20px 24px; font-size: 12px; color: var(--mid); line-height: 1.7; }
+  .disclaimer strong { color: var(--charcoal); }
+  .btn-retake { background: transparent; border: 1px solid rgba(0,0,0,0.12); color: var(--mid); padding: 10px 24px; border-radius: 30px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 16px; transition: all 0.2s; }
+  .btn-retake:hover { border-color: var(--teal); color: var(--teal); }
+
+  @media (max-width: 768px) {
+    .lang-bar, nav { padding-left: 20px; padding-right: 20px; }
+    .intro-wrap, .test-wrap, .results-wrap { padding-left: 20px; padding-right: 20px; }
+    .question-text { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+
+<nav>
+  <a href="safemind.html" class="nav-logo">
+    <span class="main">Safe Mind</span>
+    <span class="sub"></span>
+  </a>
+  <a href="tests.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span id="nav-back-label">Back to Assessments</span>
+  </a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Personal Development</div>
+    <h1 id="i-title">Rosenberg <em>Self-Esteem</em> Scale</h1>
+    <div class="abbr">RSES  -  Morris Rosenberg, 1965</div>
+    <p class="intro-desc" id="i-desc">The Rosenberg Self-Esteem Scale is the most widely used measure of global self-esteem worldwide. It evaluates your overall sense of self-worth and personal value. In the entertainment industry, self-esteem is constantly tested by public scrutiny, comparison culture, rejection, and the pressure to maintain a public image that may differ greatly from one's true self.</p>
+
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">10</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">3</div><div class="ic-label" id="i-ml">Minutes</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+
+    <div class="info-box rose">
+      <p id="i-note"><strong>A note before you start:</strong> Self-esteem naturally fluctuates. This scale measures how you feel about yourself right now, not a fixed or permanent trait. There is no good or bad result, only information that can help you understand yourself better.</p>
+    </div>
+
+    <div class="info-box teal">
+      <p id="i-instructions"><strong>Instructions:</strong> For each statement, indicate how strongly you agree or disagree based on how you genuinely feel right now.</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">3 Strongly agree</span>
+        <span class="scale-chip">2 Agree</span>
+        <span class="scale-chip">1 Disagree</span>
+        <span class="scale-chip">0 Strongly disagree</span>
+      </div>
+    </div>
+    <br>
+    <button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span class="prog-label" id="t-prog-label">Progress</span>
+        <span class="prog-count" id="progCount">1 / 10</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:10%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-icon">🌱</div>
+      <h2 id="r-title">Your <em>Self-Esteem Results</em></h2>
+      <p id="r-subtitle">A reflection of how you see yourself right now</p>
+    </div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results">
+      <h3 id="r-cta-h">Would you like to explore this further?</h3>
+      <p id="r-cta-p">Self-esteem is at the core of well-being, performance, and relationships. Whether your score is high or low, a consultation can help you understand your patterns and build a more grounded sense of self.</p>
+      <button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button>
+    </div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The RSES is a validated research instrument for measuring global self-esteem. It is not a clinical diagnosis. Self-esteem exists on a continuum and can change with time, circumstances, and support.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back: "Back to Assessments", eyebrow: "Personal Development",
+    desc: "The Rosenberg Self-Esteem Scale is the most widely used measure of global self-esteem worldwide. In the entertainment industry, self-esteem is constantly tested by public scrutiny, comparison culture, rejection, and the pressure to maintain a public image that may differ greatly from one's true self.",
+    ql: "Questions", ml: "Minutes", av: "Free", al: "Instant Results",
+    note: "<strong>A note before you start:</strong> Self-esteem naturally fluctuates. This scale measures how you feel about yourself right now, not a fixed trait. There is no good or bad result, only information.",
+    instructions: "<strong>Instructions:</strong> For each statement, indicate how strongly you agree or disagree based on how you genuinely feel right now.",
+    scale: ["Strongly disagree", "Disagree", "Agree", "Strongly agree"],
+    btn_start: "Begin Assessment", prog_label: "Progress", q_of: "of",
+    btn_prev: "Previous", btn_next: "Next", btn_results: "See Results",
+    r_title_plain: "Self-Esteem Results",
+    r_subtitle: "A reflection of how you see yourself right now",
+    r_cta_h: "Would you like to explore this further?",
+    r_cta_p: "Self-esteem is at the core of well-being, performance, and relationships. A consultation can help you understand your patterns and build a more grounded sense of self.",
+    r_cta_btn: "Book a Consultation",
+    r_disclaimer: "<strong>Important notice:</strong> The RSES is a validated research instrument. It is not a clinical diagnosis. Self-esteem can change with time, circumstances, and support.",
+    r_retake: "Retake Assessment", out_of: "out of 40", score_label: "Total Score",
+    ranges: [
+      { min:10, max:20, label:"Low Self-Esteem",      color:"#C0392B", bg:"#FDEAEA", interp:"Your score suggests low self-esteem at this time. This may be showing up as self-doubt, difficulty accepting compliments, or a tendency to focus on your perceived flaws. Low self-esteem is very common in high-performance environments where worth becomes tied to output and public opinion. This is something that can genuinely improve with support." },
+      { min:21, max:30, label:"Moderate Self-Esteem", color:"#E07B39", bg:"#FDF0E8", interp:"Your score suggests moderate self-esteem. You have a functional sense of self-worth but may experience periods of self-doubt, especially under pressure. This is the most common range and often reflects the natural tension between confidence and vulnerability in high-demand environments." },
+      { min:31, max:40, label:"High Self-Esteem",     color:"#27AE60", bg:"#E9F7EF", interp:"Your score suggests healthy self-esteem. You have a generally positive view of yourself and your value. High self-esteem supports resilience, healthy relationships, and sustained performance. Continue to nurture the conditions that allow this to flourish, including rest, meaningful connection, and honest self-reflection." }
+    ],
+    questions: [
+      { text: "On the whole, I am satisfied with myself.", reversed: false },
+      { text: "At times I think I am no good at all.", reversed: true },
+      { text: "I feel that I have a number of good qualities.", reversed: false },
+      { text: "I am able to do things as well as most other people.", reversed: false },
+      { text: "I feel I do not have much to be proud of.", reversed: true },
+      { text: "I certainly feel useless at times.", reversed: true },
+      { text: "I feel that I am a person of worth, at least on an equal plane with others.", reversed: false },
+      { text: "I wish I could have more respect for myself.", reversed: true },
+      { text: "All in all, I am inclined to feel that I am a failure.", reversed: true },
+      { text: "I take a positive attitude toward myself.", reversed: false }
+    ]
+  },
+  fr: {
+    back: "Retour aux evaluations", eyebrow: "Developpement personnel",
+    desc: "L'echelle d'estime de soi de Rosenberg est la mesure de l'estime de soi globale la plus utilisee au monde. Dans l'industrie du divertissement, l'estime de soi est constamment mise a l'epreuve par le regard public, la culture de la comparaison et la pression de maintenir une image qui peut differer de sa vraie personnalite.",
+    ql: "Questions", ml: "Minutes", av: "Gratuit", al: "Resultats immediats",
+    note: "<strong>Note avant de commencer :</strong> L'estime de soi fluctue naturellement. Cette echelle mesure comment vous vous sentez en ce moment, pas un trait fixe. Il n'y a pas de bon ou mauvais resultat.",
+    instructions: "<strong>Instructions :</strong> Pour chaque affirmation, indiquez dans quelle mesure vous etes d'accord ou en desaccord selon ce que vous ressentez vraiment en ce moment.",
+    scale: ["Pas du tout d'accord", "Pas d'accord", "D'accord", "Tout a fait d'accord"],
+    btn_start: "Commencer l'evaluation", prog_label: "Progression", q_of: "sur",
+    btn_prev: "Precedent", btn_next: "Suivant", btn_results: "Voir les resultats",
+    r_title_plain: "Resultats Estime de soi",
+    r_subtitle: "Un reflet de la facon dont vous vous voyez en ce moment",
+    r_cta_h: "Vous souhaitez explorer cela davantage ?",
+    r_cta_p: "L'estime de soi est au coeur du bien-etre, de la performance et des relations. Une consultation peut vous aider a comprendre vos schemas et construire un sens de soi plus ancre.",
+    r_cta_btn: "Prendre rendez-vous",
+    r_disclaimer: "<strong>Note importante :</strong> Le RSES est un instrument de recherche valide. Ce n'est pas un diagnostic clinique. L'estime de soi peut changer avec le temps et le soutien.",
+    r_retake: "Repasser l'evaluation", out_of: "sur 40", score_label: "Score total",
+    ranges: [
+      { min:10, max:20, label:"Faible estime de soi",    color:"#C0392B", bg:"#FDEAEA", interp:"Votre score suggere une faible estime de soi en ce moment. Cela peut se manifester par des doutes sur soi, une difficulte a accepter les compliments ou une tendance a se concentrer sur ses defauts. C'est tres courant dans les environnements de haute performance. C'est quelque chose qui peut s'ameliorer avec du soutien." },
+      { min:21, max:30, label:"Estime de soi moderee",   color:"#E07B39", bg:"#FDF0E8", interp:"Votre score suggere une estime de soi moderee. Vous avez un sens fonctionnel de votre valeur mais pouvez vivre des periodes de doute, surtout sous pression. C'est la plage la plus courante et reflète souvent la tension naturelle entre confiance et vulnerabilite." },
+      { min:31, max:40, label:"Bonne estime de soi",     color:"#27AE60", bg:"#E9F7EF", interp:"Votre score suggere une bonne estime de soi. Vous avez une vision generalement positive de vous-meme et de votre valeur. Une bonne estime de soi soutient la resilience, des relations saines et des performances durables. Continuez a cultiver les conditions qui permettent cela." }
+    ],
+    questions: [
+      { text: "Dans l'ensemble, je suis satisfait(e) de moi.", reversed: false },
+      { text: "Parfois je pense que je ne vaux rien du tout.", reversed: true },
+      { text: "Je pense que j'ai un certain nombre de bonnes qualites.", reversed: false },
+      { text: "Je suis capable de faire les choses aussi bien que la plupart des autres personnes.", reversed: false },
+      { text: "Je sens qu'il n'y a pas grand chose en moi dont je puisse etre fier(e).", reversed: true },
+      { text: "Je me sens parfois vraiment inutile.", reversed: true },
+      { text: "Je pense que je suis quelqu'un de valable, au moins autant que les autres.", reversed: false },
+      { text: "J'aimerais avoir plus de respect pour moi-meme.", reversed: true },
+      { text: "Tout bien considere, je suis porte(e) a penser que je suis un(e) rate(e).", reversed: true },
+      { text: "J'ai une attitude positive vis-a-vis de moi-meme.", reversed: false }
+    ]
+  },
+  kr: {
+    back: "평가 목록으로 돌아가기", eyebrow: "자기 개발",
+    desc: "로젠버그 자아존중감 척도는 전 세계에서 가장 널리 사용되는 자아존중감 측정 도구입니다. 엔터테인먼트 업계에서는 대중의 시선, 비교 문화, 거절, 그리고 실제 자아와 다를 수 있는 공적 이미지를 유지해야 하는 압박으로 인해 자아존중감이 끊임없이 시험받습니다.",
+    ql: "문항", ml: "분", av: "무료", al: "즉시 결과",
+    note: "<strong>시작 전 안내:</strong> 자아존중감은 자연스럽게 변동합니다. 이 척도는 고정된 특성이 아니라 지금 이 순간 당신이 자신에 대해 어떻게 느끼는지를 측정합니다.",
+    instructions: "<strong>지침:</strong> 각 문항에 대해 지금 실제로 느끼는 것을 바탕으로 동의하거나 동의하지 않는 정도를 표시하세요.",
+    scale: ["전혀 동의하지 않음", "동의하지 않음", "동의함", "매우 동의함"],
+    btn_start: "평가 시작", prog_label: "진행률", q_of: "/",
+    btn_prev: "이전", btn_next: "다음", btn_results: "결과 보기",
+    r_title_plain: "자아존중감 결과",
+    r_subtitle: "지금 이 순간 당신이 자신을 바라보는 방식의 반영",
+    r_cta_h: "더 깊이 탐구하고 싶으신가요?",
+    r_cta_p: "자아존중감은 웰빙, 성과, 관계의 핵심입니다. 상담을 통해 자신의 패턴을 이해하고 더 탄탄한 자아감을 쌓을 수 있습니다.",
+    r_cta_btn: "상담 예약",
+    r_disclaimer: "<strong>중요 안내:</strong> RSES는 검증된 연구 도구입니다. 임상 진단이 아닙니다. 자아존중감은 시간, 환경, 지원에 따라 변할 수 있습니다.",
+    r_retake: "다시 평가하기", out_of: "/ 40점", score_label: "총점",
+    ranges: [
+      { min:10, max:20, label:"낮은 자아존중감",   color:"#C0392B", bg:"#FDEAEA", interp:"현재 자아존중감이 낮음을 시사합니다. 이는 자기 의심, 칭찬을 받아들이기 어려움, 또는 자신의 결점에 집중하는 경향으로 나타날 수 있습니다. 고성과 환경에서는 매우 흔한 일입니다. 적절한 지원으로 개선될 수 있습니다." },
+      { min:21, max:30, label:"보통 자아존중감",  color:"#E07B39", bg:"#FDF0E8", interp:"보통 수준의 자아존중감을 시사합니다. 기능적인 자아가치감을 갖고 있지만 특히 압박감이 있을 때 자기 의심의 시기를 경험할 수 있습니다. 이는 가장 일반적인 범위입니다." },
+      { min:31, max:40, label:"높은 자아존중감",   color:"#27AE60", bg:"#E9F7EF", interp:"건강한 자아존중감을 시사합니다. 자신과 자신의 가치에 대해 일반적으로 긍정적인 시각을 갖고 있습니다. 높은 자아존중감은 회복력, 건강한 관계, 지속적인 성과를 지원합니다." }
+    ],
+    questions: [
+      { text: "전반적으로 나는 나 자신에 만족한다.", reversed: false },
+      { text: "때때로 나는 내가 전혀 쓸모없다고 생각한다.", reversed: true },
+      { text: "나는 내가 여러 가지 좋은 자질을 가지고 있다고 생각한다.", reversed: false },
+      { text: "나는 대부분의 다른 사람들만큼 잘 할 수 있다.", reversed: false },
+      { text: "나는 자랑스러워할 것이 별로 없다고 느낀다.", reversed: true },
+      { text: "나는 때때로 정말 쓸모없다고 느낀다.", reversed: true },
+      { text: "나는 적어도 다른 사람들과 동등한 수준의 가치 있는 사람이라고 생각한다.", reversed: false },
+      { text: "나 자신에 대해 더 많은 존중을 가질 수 있으면 좋겠다.", reversed: true },
+      { text: "전체적으로 나는 내가 실패자라고 느끼는 경향이 있다.", reversed: true },
+      { text: "나는 나 자신에 대해 긍정적인 태도를 가지고 있다.", reversed: false }
+    ]
+  },
+  jp: {
+    back: "評価一覧に戻る", eyebrow: "自己成長",
+    desc: "ローゼンバーグ自尊感情尺度は、世界で最も広く使用されている全般的自尊感情の測定ツールです。エンターテインメント業界では、大衆の目、比較文化、拒絶、そして真の自己と大きく異なる可能性のある公的イメージを維持するプレッシャーによって、自尊感情は常に試されています。",
+    ql: "質問", ml: "分", av: "無料", al: "即時結果",
+    note: "<strong>開始前の注意：</strong>自尊感情は自然に変動します。この尺度は固定された特性ではなく、今この瞬間の自己感覚を測定します。",
+    instructions: "<strong>指示：</strong>各文について、今実際に感じていることを基に、どの程度同意するか示してください。",
+    scale: ["全く同意しない", "同意しない", "同意する", "強く同意する"],
+    btn_start: "評価を開始する", prog_label: "進捗", q_of: "/",
+    btn_prev: "前へ", btn_next: "次へ", btn_results: "結果を見る",
+    r_title_plain: "自尊感情の結果",
+    r_subtitle: "今この瞬間の自己認識の反映",
+    r_cta_h: "さらに深く探求したいですか？",
+    r_cta_p: "自尊感情は幸福、パフォーマンス、関係の核心です。相談を通じてパターンを理解し、より確かな自己感覚を築くことができます。",
+    r_cta_btn: "相談を予約する",
+    r_disclaimer: "<strong>重要なお知らせ：</strong>RESは検証済みの研究ツールです。臨床診断ではありません。",
+    r_retake: "再評価する", out_of: "/ 40点", score_label: "合計スコア",
+    ranges: [
+      { min:10, max:20, label:"低い自尊感情",   color:"#C0392B", bg:"#FDEAEA", interp:"現時点で自尊感情が低いことを示しています。自己不信、褒め言葉を受け入れにくいこと、または自分の欠点に集中する傾向として現れる可能性があります。高パフォーマンス環境では非常に一般的です。" },
+      { min:21, max:30, label:"中程度の自尊感情", color:"#E07B39", bg:"#FDF0E8", interp:"中程度の自尊感情を示しています。機能的な自己価値感はありますが、特にプレッシャー下で自己不信の時期を経験する可能性があります。最も一般的な範囲です。" },
+      { min:31, max:40, label:"高い自尊感情",   color:"#27AE60", bg:"#E9F7EF", interp:"健全な自尊感情を示しています。自分自身と自分の価値について概ね肯定的な見方をしています。高い自尊感情は回復力、健全な関係、持続的なパフォーマンスをサポートします。" }
+    ],
+    questions: [
+      { text: "全体的に、私は自分自身に満足している。", reversed: false },
+      { text: "時々、自分はまったく駄目だと思う。", reversed: true },
+      { text: "私はいくつかの良い資質を持っていると思う。", reversed: false },
+      { text: "私はほとんどの人と同じくらいうまく物事をこなすことができる。", reversed: false },
+      { text: "誇れるものがあまりないと感じる。", reversed: true },
+      { text: "時々、自分は本当に役に立たないと感じる。", reversed: true },
+      { text: "私は少なくとも他者と同等の価値のある人間だと思う。", reversed: false },
+      { text: "もっと自分を尊重できればよいと思う。", reversed: true },
+      { text: "全体的に見て、私は失敗者だと感じがちだ。", reversed: true },
+      { text: "私は自分自身に対して肯定的な態度をとっている。", reversed: false }
+    ]
+  },
+  zh: {
+    back: "返回评估列表", eyebrow: "个人发展",
+    desc: "罗森伯格自尊量表是全球使用最广泛的整体自尊测量工具。在娱乐行业中，自尊心不断受到公众审视、比较文化、拒绝以及维持可能与真实自我大相径庭的公众形象的压力的考验。",
+    ql: "问题", ml: "分钟", av: "免费", al: "即时结果",
+    note: "<strong>开始前的提示：</strong>自尊心自然会波动。这个量表测量的是您现在对自己的感受，而非固定特质。没有好坏之分，只有帮助您更好了解自己的信息。",
+    instructions: "<strong>说明：</strong>对于每个陈述，请根据您现在真实的感受，表明您同意或不同意的程度。",
+    scale: ["强烈不同意", "不同意", "同意", "强烈同意"],
+    btn_start: "开始评估", prog_label: "进度", q_of: "/",
+    btn_prev: "上一题", btn_next: "下一题", btn_results: "查看结果",
+    r_title_plain: "自尊结果",
+    r_subtitle: "反映您现在对自己的看法",
+    r_cta_h: "您想进一步探索吗？",
+    r_cta_p: "自尊是幸福、表现和关系的核心。咨询可以帮助您了解自己的模式并建立更扎实的自我感。",
+    r_cta_btn: "预约咨询",
+    r_disclaimer: "<strong>重要提示：</strong>RSES是经过验证的研究工具，不是临床诊断。自尊可以随时间、环境和支持而改变。",
+    r_retake: "重新评估", out_of: "/ 40分", score_label: "总分",
+    ranges: [
+      { min:10, max:20, label:"低自尊",   color:"#C0392B", bg:"#FDEAEA", interp:"您的分数表明目前自尊心较低。这可能表现为自我怀疑、难以接受赞美或倾向于关注自己的缺点。在高绩效环境中这很常见，可以通过支持得到改善。" },
+      { min:21, max:30, label:"中等自尊", color:"#E07B39", bg:"#FDF0E8", interp:"您的分数表明中等自尊。您有基本的自我价值感，但在压力下可能会经历自我怀疑时期。这是最常见的范围。" },
+      { min:31, max:40, label:"高自尊",   color:"#27AE60", bg:"#E9F7EF", interp:"您的分数表明健康的自尊心。您对自己和自己的价值持总体积极的看法。高自尊支持韧性、健康的关系和持续的表现。" }
+    ],
+    questions: [
+      { text: "总体来说，我对自己感到满意。", reversed: false },
+      { text: "有时我认为自己一无是处。", reversed: true },
+      { text: "我觉得我有很多好的品质。", reversed: false },
+      { text: "我能像大多数人一样把事情做好。", reversed: false },
+      { text: "我觉得自己没有什么值得骄傲的。", reversed: true },
+      { text: "我有时确实感到自己毫无用处。", reversed: true },
+      { text: "我认为我是个有价值的人，至少与他人处于同等地位。", reversed: false },
+      { text: "我希望我能更加尊重自己。", reversed: true },
+      { text: "总的来说，我倾向于认为自己是个失败者。", reversed: true },
+      { text: "我对自己持积极的态度。", reversed: false }
+    ]
+  },
+  th: {
+    back: "กลับไปยังรายการประเมิน", eyebrow: "การพัฒนาตนเอง",
+    desc: "มาตรวัดความนับถือตนเองของโรเซนเบิร์กเป็นเครื่องมือวัดความนับถือตนเองโดยรวมที่ใช้กันอย่างแพร่หลายที่สุดในโลก ในอุตสาหกรรมบันเทิง ความนับถือตนเองถูกทดสอบอย่างต่อเนื่องด้วยการจับตามองของสาธารณะ วัฒนธรรมการเปรียบเทียบ และแรงกดดัน",
+    ql: "คำถาม", ml: "นาที", av: "ฟรี", al: "ผลทันที",
+    note: "<strong>หมายเหตุก่อนเริ่ม:</strong> ความนับถือตนเองเปลี่ยนแปลงได้ตามธรรมชาติ มาตรวัดนี้วัดความรู้สึกของคุณในขณะนี้ ไม่ใช่ลักษณะที่ตายตัว",
+    instructions: "<strong>คำแนะนำ:</strong> สำหรับแต่ละข้อความ ระบุว่าคุณเห็นด้วยหรือไม่เห็นด้วยมากแค่ไหนตามความรู้สึกที่แท้จริงของคุณในขณะนี้",
+    scale: ["ไม่เห็นด้วยอย่างยิ่ง", "ไม่เห็นด้วย", "เห็นด้วย", "เห็นด้วยอย่างยิ่ง"],
+    btn_start: "เริ่มการประเมิน", prog_label: "ความคืบหน้า", q_of: "/",
+    btn_prev: "ก่อนหน้า", btn_next: "ถัดไป", btn_results: "ดูผลลัพธ์",
+    r_title_plain: "ผลลัพธ์ความนับถือตนเอง",
+    r_subtitle: "สะท้อนมุมมองของคุณต่อตัวเองในขณะนี้",
+    r_cta_h: "คุณต้องการสำรวจเรื่องนี้เพิ่มเติมไหม?",
+    r_cta_p: "ความนับถือตนเองเป็นแกนหลักของความเป็นอยู่ที่ดี ประสิทธิภาพ และความสัมพันธ์ การปรึกษาสามารถช่วยให้คุณเข้าใจรูปแบบของตัวเองและสร้างความรู้สึกมั่นคงในตนเองมากขึ้น",
+    r_cta_btn: "นัดหมายปรึกษา",
+    r_disclaimer: "<strong>หมายเหตุสำคัญ:</strong> RSES เป็นเครื่องมือวิจัยที่ผ่านการตรวจสอบแล้ว ไม่ใช่การวินิจฉัยทางคลินิก",
+    r_retake: "ประเมินใหม่", out_of: "/ 40 คะแนน", score_label: "คะแนนรวม",
+    ranges: [
+      { min:10, max:20, label:"ความนับถือตนเองต่ำ",    color:"#C0392B", bg:"#FDEAEA", interp:"คะแนนของคุณบ่งชี้ว่าความนับถือตนเองต่ำในขณะนี้ อาจแสดงออกมาเป็นความสงสัยในตนเอง ยากที่จะรับคำชม หรือมีแนวโน้มที่จะมุ่งเน้นไปที่จุดอ่อนของตนเอง" },
+      { min:21, max:30, label:"ความนับถือตนเองปานกลาง", color:"#E07B39", bg:"#FDF0E8", interp:"คะแนนของคุณบ่งชี้ว่าความนับถือตนเองปานกลาง คุณมีความรู้สึกคุณค่าในตนเองพื้นฐาน แต่อาจประสบช่วงเวลาของความสงสัยในตนเอง โดยเฉพาะภายใต้ความกดดัน" },
+      { min:31, max:40, label:"ความนับถือตนเองสูง",     color:"#27AE60", bg:"#E9F7EF", interp:"คะแนนของคุณบ่งชี้ว่ามีความนับถือตนเองที่ดี คุณมีมุมมองเชิงบวกโดยทั่วไปต่อตัวเองและคุณค่าของตนเอง ความนับถือตนเองสูงสนับสนุนความยืดหยุ่น ความสัมพันธ์ที่ดี และประสิทธิภาพที่ยั่งยืน" }
+    ],
+    questions: [
+      { text: "โดยรวมแล้ว ฉันพอใจกับตัวเอง", reversed: false },
+      { text: "บางครั้งฉันคิดว่าตัวเองไม่มีประโยชน์เลย", reversed: true },
+      { text: "ฉันรู้สึกว่าตัวเองมีคุณสมบัติที่ดีหลายอย่าง", reversed: false },
+      { text: "ฉันสามารถทำสิ่งต่างๆ ได้ดีพอๆ กับคนส่วนใหญ่", reversed: false },
+      { text: "ฉันรู้สึกว่าไม่มีอะไรให้ภูมิใจมากนัก", reversed: true },
+      { text: "บางครั้งฉันรู้สึกว่าตัวเองไร้ประโยชน์จริงๆ", reversed: true },
+      { text: "ฉันรู้สึกว่าตัวเองเป็นคนมีคุณค่า อย่างน้อยก็เทียบเท่ากับผู้อื่น", reversed: false },
+      { text: "ฉันอยากให้ตัวเองมีความเคารพตนเองมากกว่านี้", reversed: true },
+      { text: "โดยรวมแล้ว ฉันมีแนวโน้มที่จะรู้สึกว่าตัวเองเป็นคนล้มเหลว", reversed: true },
+      { text: "ฉันมีทัศนคติเชิงบวกต่อตัวเอง", reversed: false }
+    ]
+  }
+};
+
+let lang = 'en';
+let current = 0;
+let answers = new Array(10).fill(null);
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+  if (document.getElementById('view-test').classList.contains('active')) renderQ();
+}
+
+function applyTranslations() {
+  const t = T[lang];
+  document.getElementById('nav-back-label').textContent = t.back;
+  document.getElementById('i-eyebrow').textContent = t.eyebrow;
+  document.getElementById('i-desc').textContent = t.desc;
+  document.getElementById('i-ql').textContent = t.ql;
+  document.getElementById('i-ml').textContent = t.ml;
+  document.getElementById('i-av').textContent = t.av;
+  document.getElementById('i-al').textContent = t.al;
+  document.getElementById('i-note').innerHTML = t.note;
+  document.getElementById('i-instructions').innerHTML = t.instructions;
+  document.getElementById('i-scale-preview').innerHTML = t.scale.map(function(s,i) {
+    return '<span class="scale-chip">' + i + ' ' + s + '</span>';
+  }).reverse().join('');
+  document.getElementById('i-btn-start').textContent = t.btn_start;
+  document.getElementById('t-prog-label').textContent = t.prog_label;
+  document.getElementById('r-subtitle').textContent = t.r_subtitle;
+  document.getElementById('r-cta-h').textContent = t.r_cta_h;
+  document.getElementById('r-cta-p').textContent = t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent = t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML = t.r_disclaimer;
+  document.getElementById('r-retake').textContent = t.r_retake;
+}
+
+function startTest() { showView('view-test'); renderQ(); }
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderQ() {
+  const t = T[lang];
+  const q = t.questions[current];
+  document.getElementById('progCount').textContent = (current + 1) + ' ' + t.q_of + ' 10';
+  document.getElementById('progFill').style.width = ((current + 1) / 10 * 100) + '%';
+  document.getElementById('questionNum').textContent = (current + 1) + ' ' + t.q_of + ' 10';
+  document.getElementById('questionText').textContent = q.text;
+
+  const opts = document.getElementById('scaleOptions');
+  opts.innerHTML = '';
+  // Display scale from highest to lowest (3 to 0)
+  [4, 3, 2, 1].forEach(function(displayVal) {
+    const div = document.createElement('label');
+    div.className = 'scale-option' + (answers[current] === displayVal ? ' selected' : '');
+    div.innerHTML = '<input type="radio" name="q' + current + '" value="' + displayVal + '"><div class="opt-dot"></div><div class="opt-val">' + displayVal + '</div><div class="opt-label">' + t.scale[displayVal - 1] + '</div>';
+    div.onclick = (function(val, el) { return function() { selectOption(val, el); }; })(displayVal, div);
+    opts.appendChild(div);
+  });
+
+  document.getElementById('btnPrev').textContent = t.btn_prev;
+  document.getElementById('btnPrev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('btnNext');
+  btnNext.textContent = current === 9 ? t.btn_results : t.btn_next;
+  btnNext.disabled = answers[current] === null;
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none'; card.offsetHeight; card.style.animation = 'fadeSlide 0.4s ease';
+}
+
+function selectOption(val, el) {
+  answers[current] = val;
+  document.querySelectorAll('.scale-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled = false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+
+function nextQ() {
+  if (answers[current] === null) return;
+  if (current < 9) { current++; renderQ(); }
+  else showResults();
+}
+function prevQ() { if (current > 0) { current--; renderQ(); } }
+
+function showResults() {
+  const t = T[lang];
+  // Reversed items: indices 1,4,5,7,8 (0-based)
+  // Official RSES: items 2,5,6,8,9 (1-based) = indices 1,4,5,7,8 (0-based) are negative/reversed
+  // Scale 1 to 4: Strongly disagree=1, Disagree=2, Agree=3, Strongly agree=4
+  // Reversed scoring: score = 5 - val. Total range: 10 to 40
+  const reversed = [1, 4, 5, 7, 8];
+  let total = 0;
+  answers.forEach(function(val, i) {
+    if (reversed.includes(i)) total += (5 - val);
+    else total += val;
+  });
+
+  const range = t.ranges.find(function(r) { return total >= r.min && total <= r.max; });
+  const pct = Math.round(((total - 10) / 30) * 100);
+
+  document.getElementById('r-title').innerHTML = 'Your <em>' + t.r_title_plain + '</em>';
+  document.getElementById('totalScoreCard').innerHTML =
+    '<div class="ts-label">' + t.score_label + '</div>' +
+    '<div class="ts-score" style="color:' + range.color + '">' + total + '</div>' +
+    '<div class="ts-max">' + t.out_of + '</div>' +
+    '<div class="ts-badge" style="background:' + range.bg + ';color:' + range.color + '">' + range.label + '</div>' +
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:' + pct + '%"></div></div>' +
+    '<div class="severity-labels"><span>10</span><span>20</span><span>30</span><span>40</span></div></div>';
+
+  document.getElementById('interpretationBox').innerHTML =
+    '<h3>' + range.label + '</h3><p>' + range.interp + '</p>' +
+    '<table class="range-table" style="margin-top:20px"><thead><tr>' +
+    '<th>Score</th><th>Level</th></tr></thead><tbody>' +
+    t.ranges.map(function(r) {
+      return '<tr class="' + (total >= r.min && total <= r.max ? 'current-row' : '') + '">' +
+        '<td><span class="range-dot" style="background:' + r.color + '"></span>' + r.min + ' - ' + r.max + '</td>' +
+        '<td>' + r.label + (total >= r.min && total <= r.max ? ' \u2190' : '') + '</td></tr>';
+    }).join('') + '</tbody></table>';
+
+  showView('view-results');
+}
+
+function resetTest() {
+  current = 0; answers = new Array(10).fill(null);
+  showView('view-intro');
+}
+
+applyTranslations();
+</script>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBI  -  Copenhagen Burnout Inventory | Safe Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#3D8B8B;--teal-dark:#2A6464;--teal-light:#E0EEEE;--violet:#7B6B8D;--burnt:#8B4513;--burnt-light:#FDF0E0;--cream:#FAF8F4;--cream-dark:#F0EBE1;--charcoal:#1E1E1E;--mid:#5A5A5A;--light:#999;--green:#27AE60;--green-light:#E9F7EF;--yellow:#D4AC0D;--yellow-light:#FEF9E7;--orange:#E07B39;--orange-light:#FDF0E8;--red:#C0392B;--red-light:#FDEAEA}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh}
+.lang-bar{background:var(--charcoal);padding:7px 48px;display:flex;justify-content:flex-end;gap:4px;align-items:center}
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.lang-btn:hover,.lang-btn.active{background:var(--teal);border-color:var(--teal);color:white}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.nav-logo{text-decoration:none;display:flex;flex-direction:column}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark)}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase}
+.nav-back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s}
+.nav-back:hover{color:var(--teal)}.nav-back svg{width:16px;height:16px}
+.view{display:none}.view.active{display:block}
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--burnt-light);color:var(--burnt);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,54px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px}
+.intro-wrap h1 em{font-style:italic;color:var(--teal)}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.info-card .ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--teal);line-height:1;margin-bottom:4px}
+.info-card .ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px}
+.info-box p{font-size:13px;line-height:1.7}
+.info-box.burnt{background:var(--burnt-light);color:var(--burnt)}
+.info-box.teal{background:var(--teal-light);color:var(--teal-dark)}
+.subscale-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.subscale-pill{background:white;border-radius:20px;padding:5px 14px;font-size:11px;color:var(--burnt);border:1px solid rgba(139,69,19,.2)}
+.scale-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.scale-chip{background:white;border-radius:20px;padding:5px 14px;font-size:11px;color:var(--teal-dark);border:1px solid rgba(61,139,139,.25)}
+.btn-start{background:var(--teal);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+.btn-start:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(61,139,139,.3)}
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.progress-bar-wrap{margin-bottom:40px}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--teal);font-weight:600}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--burnt),var(--teal));border-radius:2px;transition:width .5s ease}
+.subscale-tag{display:inline-block;background:var(--burnt-light);color:var(--burnt);padding:3px 10px;border-radius:20px;font-size:11px;letter-spacing:.08em;margin-bottom:14px}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(0,0,0,.06);margin-bottom:32px;animation:fadeSlide .4s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px}
+.scale-options{display:flex;flex-direction:column;gap:10px}
+.scale-option{display:flex;align-items:center;gap:16px;padding:14px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--cream)}
+.scale-option:hover,.scale-option.selected{border-color:var(--teal);background:var(--teal-light)}
+.scale-option input{display:none}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.scale-option.selected .opt-dot{background:var(--teal);border-color:var(--teal)}
+.scale-option.selected .opt-dot::after{content:'';width:8px;height:8px;background:white;border-radius:50%}
+.opt-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal);width:24px;text-align:center}
+.opt-label{font-size:13px;color:var(--mid);flex:1}
+.nav-btns{display:flex;justify-content:space-between;align-items:center}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-prev:hover{border-color:var(--teal);color:var(--teal)}
+.btn-next{background:var(--teal);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-next:hover{background:var(--teal-dark)}.btn-next:disabled{background:var(--light);cursor:not-allowed}
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px}
+.results-header{text-align:center;margin-bottom:48px}
+.results-icon{font-size:56px;margin-bottom:16px}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px}
+.results-header h2 em{font-style:italic;color:var(--teal)}
+.results-header p{font-size:14px;color:var(--mid)}
+.subscales-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.sub-card{background:white;border-radius:16px;padding:22px;border:1px solid rgba(0,0,0,.06);text-align:center}
+.sub-title{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.sub-score{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;margin-bottom:4px}
+.sub-max{font-size:12px;color:var(--light)}
+.sub-bar{height:4px;background:var(--cream-dark);border-radius:2px;margin-top:10px}
+.sub-fill{height:100%;border-radius:2px;transition:width 1s ease .3s}
+.sub-level{font-size:11px;margin-top:6px;font-weight:500}
+.total-score-card{background:white;border-radius:24px;padding:40px;text-align:center;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.ts-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px}
+.ts-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;line-height:1;margin-bottom:8px}
+.ts-max{font-size:14px;color:var(--light);margin-bottom:20px}
+.ts-badge{display:inline-block;padding:6px 20px;border-radius:30px;font-size:14px;font-weight:500}
+.severity-bar-wrap{margin-top:24px}
+.severity-bar{height:8px;background:linear-gradient(to right,#27AE60,#D4AC0D,#E07B39,#C0392B);border-radius:4px;position:relative}
+.severity-marker{position:absolute;top:-6px;transform:translateX(-50%);width:20px;height:20px;background:white;border:3px solid var(--charcoal);border-radius:50%;transition:left 1s ease .3s}
+.severity-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--light)}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(0,0,0,.06)}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8}
+.cta-results{background:linear-gradient(135deg,var(--burnt),var(--violet));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7}
+.btn-consult{background:white;color:var(--burnt);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7}
+.disclaimer strong{color:var(--charcoal)}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s}
+.btn-retake:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:768px){.lang-bar,nav{padding-left:20px;padding-right:20px}.intro-wrap,.test-wrap,.results-wrap{padding-left:20px;padding-right:20px}.question-text{font-size:20px}.subscales-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+  <button class="lang-btn" onclick="setLang('kr',this)">한국어</button>
+  <button class="lang-btn" onclick="setLang('jp',this)">日本語</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn" onclick="setLang('th',this)">ไทย</button>
+</div>
+<nav>
+  <a href="safemind.html" class="nav-logo"><span class="main">Safe Mind</span></a>
+  <a href="tests.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg><span id="nav-back-label">Back to Assessments</span></a>
+</nav>
+
+<div class="view active" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Work and Burnout</div>
+    <h1 id="i-title">Copenhagen <em>Burnout</em> Inventory</h1>
+    <div class="abbr">CBI  -  Kristensen, Borritz, Villadsen and Christensen, 2005</div>
+    <p class="intro-desc" id="i-desc">The Copenhagen Burnout Inventory measures burnout across three dimensions: personal, work-related, and client-related exhaustion. Unlike the MBI, it does not require a specific profession and is validated for any type of worker. In the creative industry, burnout often manifests differently in each dimension  -  a performer may score high on personal exhaustion but low on client-related burnout, while a manager may show the opposite pattern.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">19</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">10</div><div class="ic-label" id="i-ml">Minutes</div></div>
+      <div class="info-card"><div class="ic-val" id="i-av">Free</div><div class="ic-label" id="i-al">Instant Results</div></div>
+    </div>
+    <div class="info-box burnt">
+      <p id="i-note"><strong>Three dimensions measured:</strong></p>
+      <div class="subscale-pills" id="i-subscales">
+        <span class="subscale-pill">Personal Burnout (6 items)</span>
+        <span class="subscale-pill">Work Burnout (7 items)</span>
+        <span class="subscale-pill">Client Burnout (6 items)</span>
+      </div>
+    </div>
+    <div class="info-box teal">
+      <p id="i-instructions"><strong>Instructions:</strong> Please answer each question based on how you have been feeling over the past month.</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">Always</span>
+        <span class="scale-chip">Often</span>
+        <span class="scale-chip">Sometimes</span>
+        <span class="scale-chip">Seldom</span>
+        <span class="scale-chip">Never / Almost never</span>
+      </div>
+    </div>
+    <br><button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta"><span class="prog-label" id="t-prog-label">Progress</span><span class="prog-count" id="progCount">1 / 19</span></div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:5%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="subscale-tag" id="subscaleTag"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header"><div class="results-icon">🔥</div><h2 id="r-title">Your <em>CBI Results</em></h2><p id="r-subtitle">Burnout across three dimensions</p></div>
+    <div class="subscales-grid" id="subscalesGrid"></div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results"><h3 id="r-cta-h">Burnout is not a personal failure.</h3><p id="r-cta-p">Burnout is a systemic response to prolonged exposure to demands that exceed resources. It is common, it is treatable, and you do not need to push through it alone. Our team can help you understand your burnout profile and build a path toward recovery.</p><button class="btn-consult" id="r-cta-btn" onclick="window.location.href='contact.html'">Book a Consultation</button></div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important notice:</strong> The CBI is a validated research and clinical tool. Scores are presented as percentages where higher means more burnout. A score above 50 on any subscale warrants attention. This is not a clinical diagnosis.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+const T = {
+  en: {
+    back:"Back to Assessments", eyebrow:"Work and Burnout",
+    desc:"The CBI measures burnout across three dimensions: personal, work-related, and client-related. Unlike the MBI, it is validated for any type of worker regardless of profession.",
+    ql:"Questions", ml:"Minutes", av:"Free", al:"Instant Results",
+    note:"<strong>Three dimensions measured:</strong>",
+    subscale_pills:["Personal Burnout (6 items)","Work Burnout (7 items)","Client Burnout (6 items)"],
+    instructions:"<strong>Instructions:</strong> Please answer each question based on how you have been feeling over the past month.",
+    scale:["Always","Often","Sometimes","Seldom","Never / Almost never"],
+    scale_vals:[100,75,50,25,0],
+    btn_start:"Begin Assessment", prog_label:"Progress", q_of:"of",
+    btn_prev:"Previous", btn_next:"Next", btn_results:"See Results",
+    r_title_plain:"CBI Results", r_subtitle:"Burnout across three dimensions",
+    r_cta_h:"Burnout is not a personal failure.",
+    r_cta_p:"Burnout is a systemic response to prolonged demands that exceed resources. It is common, treatable, and you do not need to push through it alone.",
+    r_cta_btn:"Book a Consultation",
+    r_disclaimer:"<strong>Important notice:</strong> CBI scores are presented as percentages where higher means more burnout. A score above 50 on any subscale warrants attention.",
+    r_retake:"Retake Assessment",
+    sub_names:["Personal Burnout","Work Burnout","Client Burnout"],
+    level_labels:["Low","Moderate","High","Severe"],
+    ranges:[
+      {min:0,  max:49, label:"Low burnout",      color:"#27AE60", bg:"#E9F7EF", interp:"Your overall burnout levels are low across the three dimensions. You are managing the demands of your work and personal life reasonably well. Continue to monitor your energy levels, especially during high-intensity periods, and maintain the conditions that support your well-being."},
+      {min:50, max:74, label:"Moderate burnout", color:"#D4AC0D", bg:"#FEF9E7", interp:"Your score indicates moderate burnout. You are beginning to show signs of depletion in one or more dimensions. This is a signal worth taking seriously. At this stage, targeted interventions can prevent progression to severe burnout. Consider speaking with one of our team members about what is driving your exhaustion."},
+      {min:75, max:99, label:"High burnout",     color:"#E07B39", bg:"#FDF0E8", interp:"Your score indicates high burnout. At this level, burnout is likely affecting your performance, relationships, and physical health. Recovery is possible but requires deliberate action. We encourage you to book a consultation to explore what changes are needed in your work and personal life."},
+      {min:100, max:100,label:"Severe burnout",   color:"#C0392B", bg:"#FDEAEA", interp:"Your score indicates severe burnout. This level of exhaustion requires urgent attention. Continuing without support risks serious consequences for your health and career. Please reach out to our team or another professional as soon as possible. Recovery from severe burnout is possible with the right support."}
+    ],
+    questions:[
+      // Personal burnout (0-5)
+      {text:"How often do you feel tired?", sub:0, freq:true},
+      {text:"How often are you physically exhausted?", sub:0, freq:true},
+      {text:"How often are you emotionally exhausted?", sub:0, freq:true},
+      {text:"How often do you think: I cannot take it anymore?", sub:0, freq:true},
+      {text:"How often do you feel worn out?", sub:0, freq:true},
+      {text:"How often do you feel weak and susceptible to illness?", sub:0, freq:true},
+      // Work burnout (6-12)
+      {text:"Is your work emotionally exhausting?", sub:1, freq:false},
+      {text:"Do you feel burnt out because of your work?", sub:1, freq:false},
+      {text:"Does your work frustrate you?", sub:1, freq:false},
+      {text:"Do you feel worn out at the end of the working day?", sub:1, freq:true},
+      {text:"Are you exhausted in the morning at the thought of another day at work?", sub:1, freq:true},
+      {text:"Do you feel that every working hour is tiring for you?", sub:1, freq:false},
+      {text:"Do you have enough energy for family and friends during leisure time?", sub:1, freq:true, reversed:true},
+      // Client burnout (13-18)
+      {text:"Do you find it hard to work with clients?", sub:2, freq:false},
+      {text:"Does it drain your energy to work with clients?", sub:2, freq:false},
+      {text:"Do you find it frustrating to work with clients?", sub:2, freq:false},
+      {text:"Do you feel that you give more than you get back when you work with clients?", sub:2, freq:false},
+      {text:"Are you tired of working with clients?", sub:2, freq:true},
+      {text:"Do you sometimes wonder how long you will be able to continue working with clients?", sub:2, freq:false}
+    ]
+  },
+  fr: {
+    back:"Retour aux evaluations", eyebrow:"Travail et epuisement",
+    desc:"Le CBI mesure l'epuisement professionnel selon trois dimensions : personnel, professionnel et lie aux clients. Valide pour tout type de travailleur quelle que soit la profession.",
+    ql:"Questions", ml:"Minutes", av:"Gratuit", al:"Resultats immediats",
+    note:"<strong>Trois dimensions mesurees :</strong>",
+    subscale_pills:["Epuisement personnel (6 items)","Epuisement professionnel (7 items)","Epuisement lie aux clients (6 items)"],
+    instructions:"<strong>Instructions :</strong> Repondez a chaque question en vous basant sur votre ressenti au cours du dernier mois.",
+    scale:["Toujours","Souvent","Parfois","Rarement","Jamais / Presque jamais"],
+    scale_vals:[100,75,50,25,0],
+    btn_start:"Commencer l'evaluation", prog_label:"Progression", q_of:"sur",
+    btn_prev:"Precedent", btn_next:"Suivant", btn_results:"Voir les resultats",
+    r_title_plain:"Resultats CBI", r_subtitle:"Epuisement selon trois dimensions",
+    r_cta_h:"L'epuisement professionnel n'est pas un echec personnel.",
+    r_cta_p:"C'est une reponse systemique a des exigences prolongees depassant les ressources disponibles. Notre equipe peut vous aider a comprendre votre profil d'epuisement.",
+    r_cta_btn:"Prendre rendez-vous",
+    r_disclaimer:"<strong>Note importante :</strong> Les scores CBI sont exprimes en pourcentages, un score plus eleve indiquant plus d'epuisement. Un score superieur a 50 sur toute sous-echelle merite attention.",
+    r_retake:"Repasser l'evaluation",
+    sub_names:["Epuisement personnel","Epuisement professionnel","Epuisement clients"],
+    level_labels:["Faible","Modere","Eleve","Severe"],
+    ranges:[
+      {min:0,  max:49, label:"Epuisement faible",    color:"#27AE60", bg:"#E9F7EF", interp:"Vos niveaux d'epuisement globaux sont faibles. Vous gerez raisonnablement bien les exigences de votre travail et de votre vie personnelle. Continuez a surveiller votre energie, surtout pendant les periodes intensives."},
+      {min:50, max:74, label:"Epuisement modere",    color:"#D4AC0D", bg:"#FEF9E7", interp:"Votre score indique un epuisement modere. Vous commencez a montrer des signes de depletion dans une ou plusieurs dimensions. A ce stade, des interventions ciblees peuvent prevenir la progression vers un epuisement severe."},
+      {min:75, max:99, label:"Epuisement eleve",     color:"#E07B39", bg:"#FDF0E8", interp:"Votre score indique un epuisement eleve. La recuperation est possible mais necessite une action deliberee. Nous vous encourageons a prendre rendez-vous pour explorer les changements necessaires."},
+      {min:100, max:100,label:"Epuisement severe",    color:"#C0392B", bg:"#FDEAEA", interp:"Votre score indique un epuisement severe. Ce niveau d'epuisement necessite une attention urgente. Contactez notre equipe ou un autre professionnel des que possible."}
+    ],
+    questions:[
+      {text:"A quelle frequence vous sentez-vous fatigue(e) ?", sub:0, freq:true},
+      {text:"A quelle frequence etes-vous physiquement epuise(e) ?", sub:0, freq:true},
+      {text:"A quelle frequence etes-vous emotionnellement epuise(e) ?", sub:0, freq:true},
+      {text:"A quelle frequence pensez-vous : je n'en peux plus ?", sub:0, freq:true},
+      {text:"A quelle frequence vous sentez-vous a bout ?", sub:0, freq:true},
+      {text:"A quelle frequence vous sentez-vous faible et vulnerable a la maladie ?", sub:0, freq:true},
+      {text:"Votre travail est-il emotionnellement epuisant ?", sub:1, freq:false},
+      {text:"Vous sentez-vous epuise(e) a cause de votre travail ?", sub:1, freq:false},
+      {text:"Votre travail vous frustre-t-il ?", sub:1, freq:false},
+      {text:"Vous sentez-vous a bout au terme d'une journee de travail ?", sub:1, freq:true},
+      {text:"Etes-vous epuise(e) le matin a l'idee d'une nouvelle journee de travail ?", sub:1, freq:true},
+      {text:"Avez-vous l'impression que chaque heure de travail vous est penible ?", sub:1, freq:false},
+      {text:"Avez-vous suffisamment d'energie pour votre famille et vos amis pendant vos loisirs ?", sub:1, freq:true, reversed:true},
+      {text:"Est-il difficile de travailler avec vos clients ?", sub:2, freq:false},
+      {text:"Travailler avec des clients draine-t-il votre energie ?", sub:2, freq:false},
+      {text:"Trouvez-vous frustrant de travailler avec des clients ?", sub:2, freq:false},
+      {text:"Avez-vous le sentiment de donner plus que vous ne recevez lorsque vous travaillez avec des clients ?", sub:2, freq:false},
+      {text:"Etes-vous fatigue(e) de travailler avec des clients ?", sub:2, freq:true},
+      {text:"Vous demandez-vous parfois combien de temps encore vous pourrez continuer a travailler avec des clients ?", sub:2, freq:false}
+    ]
+  },
+  kr: {
+    back:"평가 목록으로 돌아가기", eyebrow:"직업 스트레스",
+    desc:"코펜하겐 소진 척도는 세 가지 차원에서 소진을 측정합니다: 개인적, 직업 관련, 클라이언트 관련 탈진. MBI와 달리 직종에 관계없이 모든 유형의 근로자에게 적용됩니다.",
+    ql:"문항", ml:"분", av:"무료", al:"즉시 결과",
+    note:"<strong>세 가지 차원 측정:</strong>",
+    subscale_pills:["개인 소진 (6개 항목)","직업 소진 (7개 항목)","클라이언트 소진 (6개 항목)"],
+    instructions:"<strong>지침:</strong> 지난 한 달 동안 어떻게 느꼈는지를 바탕으로 각 질문에 답하세요.",
+    scale:["항상","자주","때때로","드물게","전혀/거의 없음"],
+    scale_vals:[100,75,50,25,0],
+    btn_start:"평가 시작", prog_label:"진행률", q_of:"/",
+    btn_prev:"이전", btn_next:"다음", btn_results:"결과 보기",
+    r_title_plain:"CBI 결과", r_subtitle:"세 가지 차원의 소진",
+    r_cta_h:"소진은 개인적인 실패가 아닙니다.",
+    r_cta_p:"소진은 자원을 초과하는 장기적인 요구에 대한 체계적인 반응입니다. 저희 팀이 소진 프로필을 이해하고 회복 경로를 구축하는 데 도움을 드릴 수 있습니다.",
+    r_cta_btn:"상담 예약",
+    r_disclaimer:"<strong>중요 안내:</strong> CBI 점수는 백분율로 표시되며 높을수록 더 많은 소진을 의미합니다. 어떤 하위 척도에서든 50점 이상이면 주의가 필요합니다.",
+    r_retake:"다시 평가하기",
+    sub_names:["개인 소진","직업 소진","클라이언트 소진"],
+    level_labels:["낮음","보통","높음","심각"],
+    ranges:[
+      {min:0,  max:49, label:"낮은 소진",   color:"#27AE60", bg:"#E9F7EF", interp:"전반적인 소진 수준이 낮습니다. 업무와 개인 생활의 요구를 합리적으로 잘 관리하고 있습니다."},
+      {min:50, max:74, label:"보통 소진",   color:"#D4AC0D", bg:"#FEF9E7", interp:"보통 수준의 소진을 나타냅니다. 하나 이상의 차원에서 고갈 징후를 보이기 시작하고 있습니다. 이 단계에서 개입하면 심각한 소진으로의 진행을 예방할 수 있습니다."},
+      {min:75, max:99, label:"높은 소진",   color:"#E07B39", bg:"#FDF0E8", interp:"높은 수준의 소진을 나타냅니다. 소진이 성과, 관계, 신체 건강에 영향을 미치고 있을 가능성이 높습니다. 필요한 변화를 탐색하기 위해 상담을 예약하시길 권장합니다."},
+      {min:100, max:100,label:"심각한 소진", color:"#C0392B", bg:"#FDEAEA", interp:"심각한 소진을 나타냅니다. 이 수준의 탈진은 긴급한 주의가 필요합니다. 가능한 빨리 저희 팀이나 다른 전문가에게 연락하세요."}
+    ],
+    questions:[
+      {text:"얼마나 자주 피곤함을 느끼십니까?", sub:0, freq:true},
+      {text:"얼마나 자주 신체적으로 지쳐있습니까?", sub:0, freq:true},
+      {text:"얼마나 자주 감정적으로 지쳐있습니까?", sub:0, freq:true},
+      {text:"얼마나 자주 '더 이상 못 하겠다'라고 생각하십니까?", sub:0, freq:true},
+      {text:"얼마나 자주 소진된 느낌이 드십니까?", sub:0, freq:true},
+      {text:"얼마나 자주 기력이 없고 병에 걸리기 쉬운 느낌이 드십니까?", sub:0, freq:true},
+      {text:"귀하의 업무가 감정적으로 소진됩니까?", sub:1, freq:false},
+      {text:"업무 때문에 소진된 느낌이 드십니까?", sub:1, freq:false},
+      {text:"업무가 귀하를 좌절시킵니까?", sub:1, freq:false},
+      {text:"업무일 끝에 소진된 느낌이 드십니까?", sub:1, freq:true},
+      {text:"다음날 아침 또 다른 업무일을 생각하면 지쳐있습니까?", sub:1, freq:true},
+      {text:"모든 업무 시간이 힘들다고 느끼십니까?", sub:1, freq:false},
+      {text:"여가 시간에 가족과 친구를 위한 충분한 에너지가 있습니까?", sub:1, freq:true, reversed:true},
+      {text:"클라이언트와 함께 일하는 것이 어렵다고 생각하십니까?", sub:2, freq:false},
+      {text:"클라이언트와 함께 일하는 것이 에너지를 소진시킵니까?", sub:2, freq:false},
+      {text:"클라이언트와 함께 일하는 것이 좌절스럽습니까?", sub:2, freq:false},
+      {text:"클라이언트와 함께 일할 때 받는 것보다 주는 것이 더 많다고 느끼십니까?", sub:2, freq:false},
+      {text:"클라이언트와 함께 일하는 것에 지쳐있습니까?", sub:2, freq:true},
+      {text:"클라이언트와 함께 일하는 것을 얼마나 더 계속할 수 있을지 때때로 의문이 드십니까?", sub:2, freq:false}
+    ]
+  },
+  jp: {
+    back:"評価一覧に戻る", eyebrow:"職業ストレス",
+    desc:"コペンハーゲン燃え尽き症候群尺度は3つの次元で燃え尽き症候群を測定します：個人的、仕事関連、クライアント関連の疲弊。職種に関係なくあらゆる種類の労働者に適用されます。",
+    ql:"質問", ml:"分", av:"無料", al:"即時結果",
+    note:"<strong>3つの次元を測定：</strong>",
+    subscale_pills:["個人的燃え尽き(6項目)","仕事の燃え尽き(7項目)","クライアントの燃え尽き(6項目)"],
+    instructions:"<strong>指示：</strong>過去1ヶ月間どのように感じていたかに基づいて各質問に答えてください。",
+    scale:["常に","よく","時々","めったに","全く/ほとんどない"],
+    scale_vals:[100,75,50,25,0],
+    btn_start:"評価を開始する", prog_label:"進捗", q_of:"/",
+    btn_prev:"前へ", btn_next:"次へ", btn_results:"結果を見る",
+    r_title_plain:"CBI結果", r_subtitle:"3つの次元での燃え尽き症候群",
+    r_cta_h:"燃え尽き症候群は個人的な失敗ではありません。",
+    r_cta_p:"燃え尽き症候群はリソースを超える長期的な要求への体系的な反応です。私たちのチームが回復への道を見つけるお手伝いをします。",
+    r_cta_btn:"相談を予約する",
+    r_disclaimer:"<strong>重要なお知らせ：</strong>CBIスコアはパーセンテージで表示され、高いほど燃え尽き症候群が多いことを意味します。",
+    r_retake:"再評価する",
+    sub_names:["個人的燃え尽き","仕事の燃え尽き","クライアントの燃え尽き"],
+    level_labels:["低い","中程度","高い","重篤"],
+    ranges:[
+      {min:0,  max:49, label:"低い燃え尽き",   color:"#27AE60", bg:"#E9F7EF", interp:"全体的な燃え尽き症候群のレベルは低いです。仕事と個人生活の要求をうまく管理できています。"},
+      {min:50, max:74, label:"中程度の燃え尽き", color:"#D4AC0D", bg:"#FEF9E7", interp:"中程度の燃え尽き症候群を示しています。このレベルでは、適切な介入で重篤な燃え尽き症候群への進行を防ぐことができます。"},
+      {min:75, max:99, label:"高い燃え尽き",   color:"#E07B39", bg:"#FDF0E8", interp:"高い燃え尽き症候群を示しています。回復は可能ですが、意図的な行動が必要です。"},
+      {min:100, max:100,label:"重篤な燃え尽き", color:"#C0392B", bg:"#FDEAEA", interp:"重篤な燃え尽き症候群を示しています。このレベルの疲弊は緊急の注意が必要です。"}
+    ],
+    questions:[
+      {text:"どのくらいの頻度で疲れを感じますか？", sub:0, freq:true},
+      {text:"どのくらいの頻度で身体的に疲弊していますか？", sub:0, freq:true},
+      {text:"どのくらいの頻度で感情的に疲弊していますか？", sub:0, freq:true},
+      {text:"どのくらいの頻度で「もう無理だ」と思いますか？", sub:0, freq:true},
+      {text:"どのくらいの頻度で消耗していると感じますか？", sub:0, freq:true},
+      {text:"どのくらいの頻度で弱くて病気にかかりやすいと感じますか？", sub:0, freq:true},
+      {text:"あなたの仕事は感情的に疲弊させますか？", sub:1, freq:false},
+      {text:"仕事のせいで燃え尽きたと感じますか？", sub:1, freq:false},
+      {text:"仕事があなたをイライラさせますか？", sub:1, freq:false},
+      {text:"業務終了時に消耗していると感じますか？", sub:1, freq:true},
+      {text:"翌日の仕事を考えると朝から疲れていますか？", sub:1, freq:true},
+      {text:"すべての業務時間が疲れると感じますか？", sub:1, freq:false},
+      {text:"余暇に家族や友人のためのエネルギーが十分ありますか？", sub:1, freq:true, reversed:true},
+      {text:"クライアントと仕事をするのが難しいと思いますか？", sub:2, freq:false},
+      {text:"クライアントと仕事をするとエネルギーが消耗されますか？", sub:2, freq:false},
+      {text:"クライアントと仕事をすることがフラストレーティングですか？", sub:2, freq:false},
+      {text:"クライアントと仕事をする時、受け取るより多くを与えていると感じますか？", sub:2, freq:false},
+      {text:"クライアントと仕事をすることに疲れていますか？", sub:2, freq:true},
+      {text:"クライアントとの仕事をどのくらい続けられるか疑問に思うことがありますか？", sub:2, freq:false}
+    ]
+  },
+  zh: {
+    back:"返回评估列表", eyebrow:"工作压力",
+    desc:"哥本哈根职业倦怠量表测量三个维度的倦怠：个人、工作相关和客户相关的疲竭。与MBI不同，它适用于任何职业的工作者。",
+    ql:"问题", ml:"分钟", av:"免费", al:"即时结果",
+    note:"<strong>测量三个维度：</strong>",
+    subscale_pills:["个人倦怠 (6项)","工作倦怠 (7项)","客户倦怠 (6项)"],
+    instructions:"<strong>说明：</strong>请根据您过去一个月的感受回答每个问题。",
+    scale:["总是","经常","有时","很少","从不/几乎从不"],
+    scale_vals:[100,75,50,25,0],
+    btn_start:"开始评估", prog_label:"进度", q_of:"/",
+    btn_prev:"上一题", btn_next:"下一题", btn_results:"查看结果",
+    r_title_plain:"CBI结果", r_subtitle:"三个维度的职业倦怠",
+    r_cta_h:"职业倦怠不是个人失败。",
+    r_cta_p:"职业倦怠是对超过资源的长期需求的系统性反应。我们的团队可以帮助您了解倦怠状况并建立恢复路径。",
+    r_cta_btn:"预约咨询",
+    r_disclaimer:"<strong>重要提示：</strong>CBI分数以百分比表示，分数越高表示倦怠越严重。任何分量表得分超过50分都需要关注。",
+    r_retake:"重新评估",
+    sub_names:["个人倦怠","工作倦怠","客户倦怠"],
+    level_labels:["低","中等","高","严重"],
+    ranges:[
+      {min:0,  max:49, label:"低倦怠",   color:"#27AE60", bg:"#E9F7EF", interp:"您的整体倦怠水平较低。您在合理管理工作和个人生活的需求。"},
+      {min:50, max:74, label:"中等倦怠", color:"#D4AC0D", bg:"#FEF9E7", interp:"您的分数表明中等倦怠。在这个阶段，有针对性的干预可以防止发展为严重倦怠。"},
+      {min:75, max:99, label:"高度倦怠", color:"#E07B39", bg:"#FDF0E8", interp:"您的分数表明高度倦怠。恢复是可能的，但需要有意识的行动。我们鼓励您预约咨询。"},
+      {min:100, max:100,label:"严重倦怠", color:"#C0392B", bg:"#FDEAEA", interp:"您的分数表明严重倦怠。这种程度的疲竭需要紧急关注。请尽快联系我们的团队或其他专业人士。"}
+    ],
+    questions:[
+      {text:"您多久感到疲倦一次？", sub:0, freq:true},
+      {text:"您多久感到身体上精疲力竭一次？", sub:0, freq:true},
+      {text:"您多久感到情绪上精疲力竭一次？", sub:0, freq:true},
+      {text:"您多久会想到「我再也承受不了了」？", sub:0, freq:true},
+      {text:"您多久感到精疲力竭一次？", sub:0, freq:true},
+      {text:"您多久感到虚弱和容易生病一次？", sub:0, freq:true},
+      {text:"您的工作在情感上令人精疲力竭吗？", sub:1, freq:false},
+      {text:"您是否因工作而感到精疲力竭？", sub:1, freq:false},
+      {text:"您的工作让您感到沮丧吗？", sub:1, freq:false},
+      {text:"在工作日结束时您是否感到精疲力竭？", sub:1, freq:true},
+      {text:"早上想到又是一个工作日时您是否感到疲惫？", sub:1, freq:true},
+      {text:"您是否觉得每个工作小时对您来说都很累？", sub:1, freq:false},
+      {text:"在业余时间您是否有足够的精力陪伴家人和朋友？", sub:1, freq:true, reversed:true},
+      {text:"您觉得与客户一起工作很困难吗？", sub:2, freq:false},
+      {text:"与客户一起工作会消耗您的精力吗？", sub:2, freq:false},
+      {text:"与客户一起工作让您感到沮丧吗？", sub:2, freq:false},
+      {text:"与客户一起工作时您感到付出比得到的多吗？", sub:2, freq:false},
+      {text:"您是否厌倦了与客户一起工作？", sub:2, freq:true},
+      {text:"您是否有时会想知道您还能与客户一起工作多长时间？", sub:2, freq:false}
+    ]
+  },
+  th: {
+    back:"กลับไปยังรายการประเมิน", eyebrow:"ความเครียดในการทำงาน",
+    desc:"มาตรวัดความหมดไฟโคเปนเฮเกนวัดความหมดไฟใน 3 มิติ: ส่วนตัว เกี่ยวกับงาน และเกี่ยวกับลูกค้า ใช้ได้กับผู้ทำงานทุกประเภทโดยไม่คำนึงถึงอาชีพ",
+    ql:"คำถาม", ml:"นาที", av:"ฟรี", al:"ผลทันที",
+    note:"<strong>วัดสามมิติ:</strong>",
+    subscale_pills:["ความหมดไฟส่วนตัว (6 ข้อ)","ความหมดไฟจากงาน (7 ข้อ)","ความหมดไฟจากลูกค้า (6 ข้อ)"],
+    instructions:"<strong>คำแนะนำ:</strong> กรุณาตอบแต่ละคำถามตามความรู้สึกของคุณในเดือนที่ผ่านมา",
+    scale:["เสมอ","บ่อย","บางครั้ง","นานๆ ครั้ง","ไม่เลย/แทบไม่เลย"],
+    scale_vals:[100,75,50,25,0],
+    btn_start:"เริ่มการประเมิน", prog_label:"ความคืบหน้า", q_of:"/",
+    btn_prev:"ก่อนหน้า", btn_next:"ถัดไป", btn_results:"ดูผลลัพธ์",
+    r_title_plain:"ผลลัพธ์ CBI", r_subtitle:"ความหมดไฟในสามมิติ",
+    r_cta_h:"ความหมดไฟไม่ใช่ความล้มเหลวส่วนตัว",
+    r_cta_p:"ความหมดไฟเป็นการตอบสนองเชิงระบบต่อความต้องการที่ยาวนานเกินทรัพยากร ทีมของเราสามารถช่วยให้คุณเข้าใจรูปแบบความหมดไฟและสร้างเส้นทางสู่การฟื้นตัว",
+    r_cta_btn:"นัดหมายปรึกษา",
+    r_disclaimer:"<strong>หมายเหตุสำคัญ:</strong> คะแนน CBI แสดงเป็นเปอร์เซ็นต์ โดยคะแนนสูงกว่าหมายถึงความหมดไฟมากกว่า คะแนนเกิน 50 ในมาตรวัดย่อยใดๆ ควรได้รับความสนใจ",
+    r_retake:"ประเมินใหม่",
+    sub_names:["ความหมดไฟส่วนตัว","ความหมดไฟจากงาน","ความหมดไฟจากลูกค้า"],
+    level_labels:["ต่ำ","ปานกลาง","สูง","รุนแรง"],
+    ranges:[
+      {min:0,  max:49, label:"ความหมดไฟต่ำ",      color:"#27AE60", bg:"#E9F7EF", interp:"ระดับความหมดไฟโดยรวมของคุณต่ำ คุณจัดการความต้องการจากงานและชีวิตส่วนตัวได้อย่างสมเหตุสมผล"},
+      {min:50, max:74, label:"ความหมดไฟปานกลาง",  color:"#D4AC0D", bg:"#FEF9E7", interp:"คะแนนของคุณบ่งชี้ถึงความหมดไฟปานกลาง ในขั้นนี้ การแทรกแซงที่มุ่งเป้าสามารถป้องกันการพัฒนาไปสู่ความหมดไฟรุนแรงได้"},
+      {min:75, max:99, label:"ความหมดไฟสูง",      color:"#E07B39", bg:"#FDF0E8", interp:"คะแนนของคุณบ่งชี้ถึงความหมดไฟสูง การฟื้นตัวเป็นไปได้แต่ต้องการการดำเนินการโดยเจตนา เราขอแนะนำให้นัดหมายปรึกษา"},
+      {min:100, max:100,label:"ความหมดไฟรุนแรง",   color:"#C0392B", bg:"#FDEAEA", interp:"คะแนนของคุณบ่งชี้ถึงความหมดไฟรุนแรง ระดับความอ่อนล้านี้ต้องการความสนใจเร่งด่วน โปรดติดต่อทีมของเราหรือผู้เชี่ยวชาญคนอื่นโดยเร็วที่สุด"}
+    ],
+    questions:[
+      {text:"คุณรู้สึกเหนื่อยบ่อยแค่ไหน?", sub:0, freq:true},
+      {text:"คุณรู้สึกเหนื่อยล้าทางร่างกายบ่อยแค่ไหน?", sub:0, freq:true},
+      {text:"คุณรู้สึกเหนื่อยล้าทางอารมณ์บ่อยแค่ไหน?", sub:0, freq:true},
+      {text:"คุณคิดว่า 'ฉันทนไม่ไหวอีกแล้ว' บ่อยแค่ไหน?", sub:0, freq:true},
+      {text:"คุณรู้สึกหมดแรงบ่อยแค่ไหน?", sub:0, freq:true},
+      {text:"คุณรู้สึกอ่อนแอและเสี่ยงต่อการเจ็บป่วยบ่อยแค่ไหน?", sub:0, freq:true},
+      {text:"งานของคุณทำให้คุณเหนื่อยล้าทางอารมณ์ไหม?", sub:1, freq:false},
+      {text:"คุณรู้สึกหมดไฟเพราะงานไหม?", sub:1, freq:false},
+      {text:"งานทำให้คุณหงุดหงิดไหม?", sub:1, freq:false},
+      {text:"คุณรู้สึกหมดแรงในตอนสิ้นวันทำงานไหม?", sub:1, freq:true},
+      {text:"ตอนเช้าคุณเหนื่อยล้าเมื่อนึกถึงวันทำงานอีกวันไหม?", sub:1, freq:true},
+      {text:"คุณรู้สึกว่าทุกชั่วโมงทำงานเหนื่อยสำหรับคุณไหม?", sub:1, freq:false},
+      {text:"คุณมีพลังงานเพียงพอสำหรับครอบครัวและเพื่อนในเวลาว่างไหม?", sub:1, freq:true, reversed:true},
+      {text:"คุณพบว่ายากที่จะทำงานกับลูกค้าไหม?", sub:2, freq:false},
+      {text:"การทำงานกับลูกค้าดูดพลังงานของคุณไหม?", sub:2, freq:false},
+      {text:"คุณพบว่าการทำงานกับลูกค้าน่าหงุดหงิดไหม?", sub:2, freq:false},
+      {text:"คุณรู้สึกว่าให้มากกว่าที่ได้รับเมื่อทำงานกับลูกค้าไหม?", sub:2, freq:false},
+      {text:"คุณเบื่อหน่ายการทำงานกับลูกค้าไหม?", sub:2, freq:true},
+      {text:"คุณเคยสงสัยบ้างไหมว่าจะทำงานกับลูกค้าได้นานแค่ไหน?", sub:2, freq:false}
+    ]
+  }
+};
+
+let lang='en', current=0, answers=new Array(19).fill(null);
+
+function setLang(l,btn){lang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyTranslations();if(document.getElementById('view-test').classList.contains('active'))renderQ();}
+
+function applyTranslations(){
+  const t=T[lang];
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-av').textContent=t.av;
+  document.getElementById('i-al').textContent=t.al;
+  document.getElementById('i-note').innerHTML=t.note+'<div class="subscale-pills">'+t.subscale_pills.map(p=>'<span class="subscale-pill">'+p+'</span>').join('')+'</div>';
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('i-scale-preview').innerHTML=t.scale.map(s=>'<span class="scale-chip">'+s+'</span>').join('');
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+}
+
+function startTest(){showView('view-test');renderQ();}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+function getSubName(sub){return T[lang].sub_names[sub];}
+
+function renderQ(){
+  const t=T[lang];
+  const q=t.questions[current];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' 19';
+  document.getElementById('progFill').style.width=((current+1)/19*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' 19';
+  document.getElementById('subscaleTag').textContent=t.sub_names[q.sub];
+  document.getElementById('questionText').textContent=q.text;
+  const opts=document.getElementById('scaleOptions');
+  opts.innerHTML='';
+  t.scale.forEach(function(label,i){
+    const div=document.createElement('label');
+    div.className='scale-option'+(answers[current]===i?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+i+'"><div class="opt-dot"></div><div class="opt-label">'+label+'</div>';
+    div.onclick=(function(val,el){return function(){selectOption(val,el);};})(i,div);
+    opts.appendChild(div);
+  });
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  const bn=document.getElementById('btnNext');
+  bn.textContent=current===18?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  const card=document.getElementById('questionCard');
+  card.style.animation='none';card.offsetHeight;card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(val,el){
+  answers[current]=val;
+  document.querySelectorAll('.scale-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){
+    var bn=document.getElementById('btnNext');
+    if(bn&&!bn.disabled) bn.click();
+  }, 400);
+}
+function nextQ(){if(answers[current]===null)return;if(current<18){current++;renderQ();}else showResults();}
+function prevQ(){if(current>0){current--;renderQ();}}
+
+function calcSubScore(subIdx){
+  const t=T[lang];
+  const qs=t.questions.map((q,i)=>({...q,i})).filter(q=>q.sub===subIdx);
+  const total=qs.reduce((sum,q)=>{
+    const raw=T[lang].scale_vals[answers[q.i]||0];
+    return sum+(q.reversed?(100-raw):raw);
+  },0);
+  return Math.round(total/qs.length);
+}
+
+function showResults(){
+  const t=T[lang];
+  const subScores=[calcSubScore(0),calcSubScore(1),calcSubScore(2)];
+  const overall=Math.round(subScores.reduce((a,b)=>a+b,0)/3);
+  const range=t.ranges.find(r=>overall>=r.min&&overall<=r.max);
+  const pct=overall;
+  const levelColors=['#27AE60','#D4AC0D','#E07B39','#C0392B'];
+
+  function getLevel(score){
+    if(score<35)return 0;if(score<50)return 1;if(score<75)return 2;return 3;
+  }
+
+  document.getElementById('r-title').innerHTML='Your <em>'+t.r_title_plain+'</em>';
+  document.getElementById('subscalesGrid').innerHTML=subScores.map((s,i)=>{
+    const lv=getLevel(s);
+    return '<div class="sub-card">'+
+      '<div class="sub-title">'+t.sub_names[i]+'</div>'+
+      '<div class="sub-score" style="color:'+levelColors[lv]+'">'+s+'<span style="font-size:14px;color:var(--light)">%</span></div>'+
+      '<div class="sub-level" style="color:'+levelColors[lv]+'">'+t.level_labels[lv]+'</div>'+
+      '<div class="sub-bar"><div class="sub-fill" style="width:'+s+'%;background:'+levelColors[lv]+'"></div></div>'+
+      '</div>';
+  }).join('');
+
+  document.getElementById('totalScoreCard').innerHTML=
+    '<div class="ts-label">Overall Burnout Score</div>'+
+    '<div class="ts-score" style="color:'+range.color+'">'+overall+'<span style="font-size:32px;color:var(--light)">%</span></div>'+
+    '<div class="ts-badge" style="background:'+range.bg+';color:'+range.color+'">'+range.label+'</div>'+
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:'+pct+'%"></div></div>'+
+    '<div class="severity-labels"><span>0%</span><span>35%</span><span>50%</span><span>75%</span><span>100%</span></div></div>';
+
+  document.getElementById('interpretationBox').innerHTML='<h3>'+range.label+'</h3><p>'+range.interp+'</p>';
+  showView('view-results');
+}
+
+function resetTest(){current=0;answers=new Array(19).fill(null);showView('view-intro');}
+applyTranslations();
+</script>
+</body>
+</html>
