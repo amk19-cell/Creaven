@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Safe Mind - Psychological Well-being for the Creative Industry</title>
+<title>Safe Mind  -  Psychological Well-being for the Creative Industry</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -33,9 +33,6 @@
     --mid: #4A5A4A;
     --light: #8A9A8A;
     --white: #FFFFFF;
-    --coral: #E47A6B;
-    --coral-dark: #C45A4B;
-    --coral-light: #FFE8E5;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,6 +46,7 @@
     overflow-x: hidden;
   }
 
+  /* ─── NAV ─── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -131,27 +129,7 @@
   }
   .nav-links .nav-cta:hover { background: var(--teal-dark); color: white; }
 
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .nav-account-link {
-    text-decoration: none;
-    font-size: 13px;
-    color: var(--mid);
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .nav-account-link:hover {
-    color: var(--teal);
-  }
-  .nav-account-link .account-icon {
-    font-size: 14px;
-  }
-
+  /* ─── LANGUAGE SWITCHER DROPDOWN ─── */
   .lang-switcher {
     position: relative;
   }
@@ -204,6 +182,7 @@
   .lang-dropdown button:last-child { border-bottom: none; }
   .lang-dropdown button:hover { background: var(--teal-light); color: var(--teal-dark); }
 
+  /* ─── HERO CAROUSEL ─── */
   .hero-carousel {
     position: relative;
     height: 100vh;
@@ -370,14 +349,307 @@
     0% { top: 5px; opacity: 1; }
     100% { top: 18px; opacity: 0; }
   }
+  .nav-logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+  }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo .sub-name {
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--mid);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    background: var(--teal);
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal-dark) !important; color: white !important; }
 
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-image: url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1600&q=80&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(250,248,244,0.97) 0%, rgba(240,235,225,0.93) 40%, rgba(224,238,238,0.82) 100%);
+    z-index: 0;
+  }
+  .hero-content, .hero-visual { position: relative; z-index: 1; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(61,139,139,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(123,107,141,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal);
+  }
+  .hero h1 strong {
+    font-weight: 600;
+    display: block;
+  }
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--mid);
+    margin-bottom: 40px;
+    max-width: 480px;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--teal-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(61,139,139,0.25);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--charcoal);
+    padding: 14px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid rgba(0,0,0,0.15);
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+    display: inline-block;
+  }
+  .btn-secondary:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    transform: translateY(-2px);
+  }
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-card-main {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 400px;
+  }
+  .hero-card-main .card-icon {
+    width: 52px; height: 52px;
+    background: var(--teal-light);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .hero-card-main h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+  .hero-card-main p {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .stat-item .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1;
+  }
+  .stat-item .stat-label {
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+  .floating-badge {
+    position: absolute;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--charcoal);
+    animation: float 4s ease-in-out infinite;
+  }
+  .floating-badge.b1 { top: -20px; right: -30px; animation-delay: 0s; }
+  .floating-badge.b2 { bottom: 20px; left: -40px; animation-delay: 2s; }
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .badge-dot.green { background: #6BCB77; }
+  .badge-dot.violet { background: var(--violet); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ─── PHOTO STRIP ─── */
+  .photo-strip {
+    background: var(--charcoal);
+    padding: 32px 48px;
+    overflow: hidden;
+  }
+  .photo-strip-inner {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .photo-strip-inner::-webkit-scrollbar { display: none; }
+  .photo-item {
+    flex-shrink: 0;
+    position: relative;
+    width: 200px;
+    height: 140px;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .3s;
+  }
+  .photo-item:hover { transform: scale(1.04); }
+  .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(.85) saturate(.9);
+    transition: filter .3s;
+  }
+  .photo-item:hover img { filter: brightness(.95) saturate(1); }
+  .photo-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+    color: rgba(255,255,255,.85);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 12px 12px 10px;
+  }
+
+  /* ─── STATS STRIP ─── */
   .stats-strip {
     background: var(--charcoal);
     padding: 48px;
     border-top: 3px solid var(--gold);
   }
   .stats-inner {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -388,28 +660,28 @@
   .stat-block {
     text-align: center;
     flex: 1;
-    min-width: 130px;
+    min-width: 140px;
   }
   .stat-big {
     font-family: "Cormorant Garamond", serif;
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 600;
     color: var(--gold);
     line-height: 1;
     margin-bottom: 4px;
   }
   .stat-unit {
-    font-size: 10px;
+    font-size: 11px;
     color: rgba(255,255,255,0.45);
     letter-spacing: .1em;
     text-transform: uppercase;
     margin-bottom: 6px;
   }
   .stat-label {
-    font-size: 11px;
+    font-size: 12px;
     color: rgba(255,255,255,0.65);
     line-height: 1.4;
-    max-width: 150px;
+    max-width: 140px;
     margin: 0 auto;
   }
   .stat-divider {
@@ -419,24 +691,7 @@
     flex-shrink: 0;
   }
 
-  .alert-banner {
-    background: var(--coral-light);
-    border-left: 4px solid var(--coral);
-    padding: 24px 48px;
-    text-align: center;
-  }
-  .alert-banner p {
-    font-size: 14px;
-    color: var(--charcoal);
-    max-width: 900px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-  .alert-banner strong {
-    color: var(--coral-dark);
-    font-weight: 600;
-  }
-
+  /* ─── MARQUEE ─── */
   .marquee-section {
     background: var(--charcoal);
     padding: 18px 0;
@@ -459,7 +714,7 @@
     flex-shrink: 0;
   }
   .marquee-item::before {
-    content: '\2726';
+    content: '✦';
     color: var(--teal);
     font-size: 10px;
   }
@@ -468,6 +723,7 @@
     100% { transform: translateX(-50%); }
   }
 
+  /* ─── SECTION BASE ─── */
   section { padding: 100px 48px; }
   .section-tag {
     display: inline-block;
@@ -495,6 +751,7 @@
     font-weight: 300;
   }
 
+  /* ─── MISSION SECTION ─── */
   .mission {
     background: var(--cream-dark);
     display: grid;
@@ -559,6 +816,7 @@
     line-height: 1.5;
   }
 
+  /* ─── SERVICES ─── */
   .services { background: var(--cream); }
   .services-header {
     display: grid;
@@ -603,6 +861,7 @@
     color: var(--gold);
     line-height: 1;
     margin-bottom: 16px;
+    opacity: 1;
   }
   .service-card h3 {
     font-family: 'Cormorant Garamond', serif;
@@ -632,6 +891,7 @@
     letter-spacing: 0.03em;
   }
 
+  /* ─── WHO WE SERVE ─── */
   .who {
     background: var(--teal-dark);
     color: white;
@@ -684,7 +944,22 @@
     line-height: 1.7;
     margin-top: 8px;
   }
+  .who-card ul { list-style: none; }
+  .who-card ul li {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .who-card ul li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--sage-light);
+  }
 
+  /* ─── TESTS ─── */
   .tests { background: var(--cream-dark); }
   .tests-header {
     display: grid;
@@ -710,6 +985,18 @@
     transform: translateY(-4px);
     box-shadow: 0 16px 40px rgba(0,0,0,0.08);
   }
+  .test-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .test-badge.free { background: #E8F5E9; color: #388E3C; }
+  .test-badge.paid { background: var(--violet-light); color: var(--violet); }
   .test-card h4 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 17px;
@@ -737,6 +1024,7 @@
     line-height: 1.55;
   }
 
+  /* ─── ABOUT ─── */
   .about {
     background: white;
     display: grid;
@@ -761,6 +1049,13 @@
     display: block;
     border-radius: 24px;
   }
+  .about-img-frame::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(42,100,100,0.3), transparent);
+  }
   .about-tag-float {
     position: absolute;
     bottom: -16px;
@@ -772,7 +1067,12 @@
     font-size: 12px;
     line-height: 1.5;
   }
-  .about-tag-float strong { display: block; font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .about-tag-float strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
   .about-tag-float span { color: var(--sage-light); font-size: 11px; }
   .about h2 { margin-bottom: 24px; }
   .about-body {
@@ -782,7 +1082,32 @@
     margin-bottom: 20px;
     font-weight: 300;
   }
+  .about-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .spec-item {
+    padding: 16px;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+  .spec-item .spec-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+  .spec-item .spec-val {
+    font-size: 13px;
+    color: var(--charcoal);
+    font-weight: 500;
+    line-height: 1.4;
+  }
 
+  /* ─── CTA BAND ─── */
   .cta-band {
     background: linear-gradient(135deg, var(--teal-dark) 0%, var(--violet) 100%);
     padding: 80px 48px;
@@ -834,6 +1159,7 @@
     box-shadow: 0 16px 40px rgba(0,0,0,0.2);
   }
 
+  /* ─── FOOTER ─── */
   footer {
     background: var(--charcoal);
     color: rgba(255,255,255,0.6);
@@ -892,7 +1218,14 @@
     font-size: 11px;
     color: rgba(255,255,255,0.25);
   }
+  .footer-bottom a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bottom a:hover { color: var(--sage-light); }
 
+  /* ─── ANIMATIONS ─── */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -906,6 +1239,8 @@
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
     .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 140px 24px 80px; gap: 40px; }
+    .hero-visual { display: none; }
     section { padding: 70px 24px; }
     .mission, .about { grid-template-columns: 1fr; gap: 40px; }
     .services-header, .tests-header, .who-header { grid-template-columns: 1fr; gap: 24px; }
@@ -913,20 +1248,16 @@
     .tests-grid { grid-template-columns: repeat(2, 1fr); }
     .who-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-grid { grid-template-columns: 1fr 1fr; }
-    .stats-inner { flex-direction: column; gap: 32px; }
-    .stat-divider { display: none; }
-    .alert-banner { padding: 20px 24px; }
-    .nav-right { gap: 12px; }
-    .nav-account-link .account-text { display: none; }
-    .nav-account-link .account-icon { font-size: 18px; }
+    .lang-bar { padding: 8px 24px; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav id="mainNav">
   <a href="index.html" class="nav-logo">
-    <img src="logo-safemind.png" alt="Safe Mind" class="nav-logo-img" onerror="this.style.display='none'">
+    <img src="logo-safemind.png" alt="Safe Mind" class="nav-logo-img">
     <div class="nav-logo-text">
       <span class="main-name">Safe Mind</span>
       <span class="sub-name">Psychological Well-being</span>
@@ -939,29 +1270,25 @@
     <li><a href="about.html" data-i18n="nav_about">About</a></li>
     <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
     <li><a href="consultation-demo.html" class="nav-session" data-i18n="nav_session">My Session</a></li>
+    <li><a href="account.html" style="font-size:13px;color:var(--mid);text-decoration:none;transition:color .2s;">My Account</a></li>
     <li><a href="booking.html" class="nav-cta" data-i18n="nav_book">Book a Consultation</a></li>
   </ul>
-  <div class="nav-right">
-    <a href="account.html" class="nav-account-link" data-i18n="nav_account">
-      <span class="account-icon">👤</span>
-      <span class="account-text" data-i18n="nav_account_text">Sign In</span>
-    </a>
-    <div class="lang-switcher">
-      <button class="lang-toggle" id="langToggle">EN</button>
-      <div class="lang-dropdown" id="langDropdown">
-        <button data-lang="en" data-label="EN">English</button>
-        <button data-lang="fr" data-label="FR">Français</button>
-        <button data-lang="kr" data-label="한국어">한국어</button>
-        <button data-lang="jp" data-label="日本語">日本語</button>
-        <button data-lang="zh" data-label="中文">中文</button>
-        <button data-lang="th" data-label="ไทย">ไทย</button>
-        <button data-lang="de" data-label="DE">Deutsch</button>
-        <button data-lang="es" data-label="ES">Español</button>
-      </div>
+  <div class="lang-switcher">
+    <button class="lang-toggle" onclick="toggleLangMenu()" id="langToggle">EN</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button onclick="selectLang('en','EN')">English</button>
+      <button onclick="selectLang('fr','FR')">Français</button>
+      <button onclick="selectLang('kr','한국어')">한국어</button>
+      <button onclick="selectLang('jp','日本語')">日本語</button>
+      <button onclick="selectLang('zh','中文')">中文</button>
+      <button onclick="selectLang('th','ไทย')">ไทย</button>
+      <button onclick="selectLang('de','DE')">Deutsch</button>
+      <button onclick="selectLang('es','ES')">Español</button>
     </div>
   </div>
 </nav>
 
+<!-- HERO CAROUSEL -->
 <section class="hero-carousel" id="home">
   <div class="carousel-slides" id="carouselSlides">
     <div class="carousel-slide active" style="background-image:url('https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1600&q=80&auto=format&fit=crop')"></div>
@@ -973,7 +1300,7 @@
   <div class="carousel-content">
     <div class="carousel-eyebrow" data-i18n="hero_eyebrow">Psychological Well-being for the Creative Industry</div>
     <h1 class="carousel-title">
-       data-i18n="hero_h1_a">Every person behind the work<br>
+      <span data-i18n="hero_h1_a">Every person behind the work</span><br>
       <em data-i18n="hero_h1_b">deserves care.</em>
     </h1>
     <p class="carousel-desc" data-i18n="hero_desc">Safe Mind provides professional psychological well-being support for everyone in the creative and cultural industries. From the headliner to the janitor who cleans the stage.</p>
@@ -994,72 +1321,71 @@
   </div>
 </section>
 
+<!-- Korea Stats Strip -->
 <div class="stats-strip">
   <div class="stats-inner">
     <div class="stat-block">
-      <div class="stat-big" data-i18n-stat="stat1">86%</div>
-      <div class="stat-unit" data-i18n="stat1_unit">of musicians</div>
-      <div class="stat-label" data-i18n="stat1_label">Experience burnout or significant mental strain</div>
+      <div class="stat-big">40.8</div>
+      <div class="stat-unit">per day</div>
+      <div class="stat-label">Suicides in South Korea (2024)</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-block">
-      <div class="stat-big" data-i18n-stat="stat2">40.8</div>
-      <div class="stat-unit" data-i18n="stat2_unit">per day</div>
-      <div class="stat-label" data-i18n="stat2_label">Suicides in creative industries globally (2024 estimate)</div>
+      <div class="stat-big">26.2</div>
+      <div class="stat-unit">per 100,000</div>
+      <div class="stat-label">Suicide rate — highest in the OECD</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-block">
-      <div class="stat-big" data-i18n-stat="stat3">3x</div>
-      <div class="stat-unit" data-i18n="stat3_unit">higher risk</div>
-      <div class="stat-label" data-i18n="stat3_label">Musicians face depression vs. general population</div>
+      <div class="stat-big">7/10</div>
+      <div class="stat-unit">people</div>
+      <div class="stat-label">Experienced mental health issues in 2023</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-block">
-      <div class="stat-big" data-i18n-stat="stat4">70%</div>
-      <div class="stat-unit" data-i18n="stat4_unit">of creative leaders</div>
-      <div class="stat-label" data-i18n="stat4_label">Report experiencing burnout</div>
+      <div class="stat-big">40%</div>
+      <div class="stat-unit">of workers</div>
+      <div class="stat-label">Report burnout symptoms</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-block">
-      <div class="stat-big" data-i18n-stat="stat5">86%</div>
-      <div class="stat-unit" data-i18n="stat5_unit">of creative teams</div>
-      <div class="stat-label" data-i18n="stat5_label">Are at or over capacity</div>
+      <div class="stat-big">68%</div>
+      <div class="stat-unit">of artists</div>
+      <div class="stat-label">Show anxiety or depression symptoms</div>
     </div>
   </div>
 </div>
 
-<div class="alert-banner">
-  <p data-i18n="alert_text"><strong>Every day, 40 workers in the creative industry die by suicide.</strong> Musicians are 3 times more likely to experience depression than the general public. 70% of creative professionals report burnout. This is not an individual failure — it is a systemic crisis. And we are here to change that.</p>
-</div>
-
+<!-- Marquee -->
 <div class="marquee-section">
   <div class="marquee-track" id="marquee">
-    <span class="marquee-item" data-i18n="marquee1">Prevention & Psychoeducation</span>
-    <span class="marquee-item" data-i18n="marquee2">Individual Support</span>
-    <span class="marquee-item" data-i18n="marquee3">Team Training</span>
-    <span class="marquee-item" data-i18n="marquee4">Crisis Protocols</span>
-    <span class="marquee-item" data-i18n="marquee5">Burnout Assessment</span>
-    <span class="marquee-item" data-i18n="marquee6">Secure Messaging</span>
-    <span class="marquee-item" data-i18n="marquee7">Multilingual Care</span>
-    <span class="marquee-item" data-i18n="marquee8">Creative Industry Expertise</span>
-    <span class="marquee-item" data-i18n="marquee1">Prevention & Psychoeducation</span>
-    <span class="marquee-item" data-i18n="marquee2">Individual Support</span>
-    <span class="marquee-item" data-i18n="marquee3">Team Training</span>
-    <span class="marquee-item" data-i18n="marquee4">Crisis Protocols</span>
-    <span class="marquee-item" data-i18n="marquee5">Burnout Assessment</span>
-    <span class="marquee-item" data-i18n="marquee6">Secure Messaging</span>
-    <span class="marquee-item" data-i18n="marquee7">Multilingual Care</span>
-    <span class="marquee-item" data-i18n="marquee8">Creative Industry Expertise</span>
+    <span class="marquee-item">Prevention & Psychoeducation</span>
+    <span class="marquee-item">Individual Support</span>
+    <span class="marquee-item">Team Training</span>
+    <span class="marquee-item">Crisis Protocols</span>
+    <span class="marquee-item">Burnout Assessment</span>
+    <span class="marquee-item">Secure Messaging</span>
+    <span class="marquee-item">Multilingual Care</span>
+    <span class="marquee-item">Creative Industry Expertise</span>
+    <span class="marquee-item">Prevention & Psychoeducation</span>
+    <span class="marquee-item">Individual Support</span>
+    <span class="marquee-item">Team Training</span>
+    <span class="marquee-item">Crisis Protocols</span>
+    <span class="marquee-item">Burnout Assessment</span>
+    <span class="marquee-item">Secure Messaging</span>
+    <span class="marquee-item">Multilingual Care</span>
+    <span class="marquee-item">Creative Industry Expertise</span>
   </div>
 </div>
 
+<!-- Mission -->
 <section class="mission reveal" id="mission">
   <div class="mission-left">
     <span class="section-tag" data-i18n="mission_tag">Our Philosophy</span>
     <blockquote class="mission-quote" data-i18n="mission_quote">
-      "The creative industry shines because of <span>thousands of invisible hands.</span> They deserve more than acknowledgment- they deserve care."
+      "The creative industry shines because of <span>thousands of invisible hands.</span> They deserve more than acknowledgment  -  they deserve care."
     </blockquote>
-    <p style="margin-top:24px;font-size:13px;color:var(--mid);" data-i18n="mission_author"> - Amakon Grace Daniella, Founder, Safe Mind</p>
+    <p style="margin-top:24px;font-size:13px;color:var(--mid);" data-i18n="mission_author"> -  Amakon Grace Daniella, Founder, Safe Mind</p>
   </div>
   <div class="mission-right">
     <div class="mission-pill">
@@ -1080,12 +1406,13 @@
       <div class="pill-icon violet">🌍</div>
       <div class="pill-text">
         <h4 data-i18n="mp3_title">Globally Accessible</h4>
-        <p data-i18n="mp3_desc">100% remote, multilingual, and culturally sensitive - available to teams across the world.</p>
+        <p data-i18n="mp3_desc">100% remote, multilingual, and culturally sensitive  -  available to teams across the world.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Services -->
 <section class="services" id="services">
   <div class="services-header reveal">
     <div>
@@ -1098,21 +1425,21 @@
     <div class="service-card">
       <div class="service-num">01</div>
       <h3 data-i18n="s1_title">Prevention & Psychoeducation</h3>
-      <p data-i18n="s1_desc">Building psychological literacy and awareness across the entire organization - from mental health basics to addiction, harassment, and identity.</p>
+      <p data-i18n="s1_desc">Building psychological literacy and awareness across the entire organization  -  from mental health basics to addiction, harassment, and identity.</p>
       <div class="service-tags">
-        <span class="service-tag" data-i18n="tag_workshops">Workshops</span>
-        <span class="service-tag" data-i18n="tag_webinars">Webinars</span>
-        <span class="service-tag" data-i18n="tag_resources">Resources</span>
+        <span class="service-tag">Workshops</span>
+        <span class="service-tag">Webinars</span>
+        <span class="service-tag">Resources</span>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">02</div>
       <h3 data-i18n="s2_title">Listening & Individual Support</h3>
-      <p data-i18n="s2_desc">Confidential individual sessions providing a safe space to be heard, assessed, and guided - with referral to clinical professionals when needed.</p>
+      <p data-i18n="s2_desc">Confidential individual sessions providing a safe space to be heard, assessed, and guided  -  with referral to clinical professionals when needed.</p>
       <div class="service-tags">
-        <span class="service-tag" data-i18n="tag_1on1">1-on-1 Sessions</span>
-        <span class="service-tag" data-i18n="tag_followup">Follow-up</span>
-        <span class="service-tag" data-i18n="tag_referral">Referral</span>
+        <span class="service-tag">1-on-1 Sessions</span>
+        <span class="service-tag">Follow-up</span>
+        <span class="service-tag">Referral</span>
       </div>
     </div>
     <div class="service-card">
@@ -1120,139 +1447,144 @@
       <h3 data-i18n="s3_title">Team & Management Training</h3>
       <p data-i18n="s3_desc">Equipping managers and team leaders with tools to recognize distress signals, respond appropriately, and build a culture of psychological safety.</p>
       <div class="service-tags">
-        <span class="service-tag" data-i18n="tag_leadership">Leadership
-        <span class="service-tag" data-i18n="tag_eq">EQ Training
-        <span class="service-tag" data-i18n="tag_protocols">Protocols
+        <span class="service-tag">Leadership</span>
+        <span class="service-tag">EQ Training</span>
+        <span class="service-tag">Protocols</span>
       </div>
     </div>
     <div class="service-card">
       <div class="service-num">04</div>
       <h3 data-i18n="s4_title">Protocols & Organizational Safety</h3>
-      <p data-i18n="s4_desc">Designing robust systems - from minor protection to crisis management and suicide prevention procedures — that protect employees at the structural level.</p>
+      <p data-i18n="s4_desc">Designing robust systems  -  from minor protection to crisis management and suicide prevention procedures  -  that protect employees at the structural level.</p>
       <div class="service-tags">
-        <span class="service-tag" data-i18n="tag_audit">Risk Audit
-        <span class="service-tag" data-i18n="tag_policy">Policy Design
-        <span class="service-tag" data-i18n="tag_crisis">Crisis Plans
+        <span class="service-tag">Risk Audit</span>
+        <span class="service-tag">Policy Design</span>
+        <span class="service-tag">Crisis Plans</span>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Who We Serve -->
 <section class="who" id="who">
   <div class="who-header reveal">
     <div>
-      <span class="section-tag" data-i18n="who_tag">Our People
-      <h2 class="section-title"><em data-i18n="who_h2a">Everyone</em> <span data-i18n="who_h2b">matters here</h2>
+      <span class="section-tag" data-i18n="who_tag">Our People</span>
+      <h2 class="section-title"><em data-i18n="who_h2a">Everyone</em> <span data-i18n="who_h2b">matters here</span></h2>
     </div>
-    <p class="section-desc" data-i18n="who_desc">If you work for the organization, you are included. No role too small, no position too junior. From CEO to intern — Safe Mind is for all of you.</p>
+    <p class="section-desc" data-i18n="who_desc">If you work for the organization, you are included. No role too small, no position too junior. From CEO to intern  -  Safe Mind is for all of you.</p>
   </div>
   <div class="who-grid reveal">
     <div class="who-card">
       <div class="who-icon">🎤</div>
-      <h4 data-i18n="wc1_title">Artists & Performers</h4>
-      <p class="who-desc" data-i18n="wc1_desc">Singers, dancers, actors, musicians. Those who give everything on stage and carry what no one sees when the lights go off.</p>
+      <h4>Artists & Performers</h4>
+      <p class="who-desc">Singers, dancers, actors, musicians. Those who give everything on stage and carry what no one sees when the lights go off.</p>
     </div>
     <div class="who-card">
       <div class="who-icon">🎬</div>
-      <h4 data-i18n="wc2_title">Production & Technical</h4>
-      <p class="who-desc" data-i18n="wc2_desc">Camera crews, sound engineers, lighting teams, stage builders. The hands that make the show exist, invisible in the applause.</p>
+      <h4>Production & Technical</h4>
+      <p class="who-desc">Camera crews, sound engineers, lighting teams, stage builders. The hands that make the show exist, invisible in the applause.</p>
     </div>
     <div class="who-card">
       <div class="who-icon">📋</div>
-      <h4 data-i18n="wc3_title">Management & Coordination</h4>
-      <p class="who-desc" data-i18n="wc3_desc">Managers, coordinators, schedulers. The people who absorb every pressure so others can perform, with no one asking how they are.</p>
+      <h4>Management & Coordination</h4>
+      <p class="who-desc">Managers, coordinators, schedulers. The people who absorb every pressure so others can perform, with no one asking how they are.</p>
     </div>
     <div class="who-card">
       <div class="who-icon">✍️</div>
-      <h4 data-i18n="wc4_title">Creative & Media</h4>
-      <p class="who-desc" data-i18n="wc4_desc">Designers, photographers, content creators, social media teams. Building culture daily, often alone, often without recognition.</p>
+      <h4>Creative & Media</h4>
+      <p class="who-desc">Designers, photographers, content creators, social media teams. Building culture daily, often alone, often without recognition.</p>
     </div>
     <div class="who-card">
       <div class="who-icon">🛠️</div>
-      <h4 data-i18n="wc5_title">Support & Operations</h4>
-      <p class="who-desc" data-i18n="wc5_desc">Drivers, catering staff, logistics, administration. Without them nothing moves. They are the foundation no one photographs.</p>
+      <h4>Support & Operations</h4>
+      <p class="who-desc">Drivers, catering staff, logistics, administration. Without them nothing moves. They are the foundation no one photographs.</p>
     </div>
     <div class="who-card">
       <div class="who-icon">🌱</div>
-      <h4 data-i18n="wc6_title">Interns & Early Careers</h4>
-      <p class="who-desc" data-i18n="wc6_desc">Those just starting, carrying the most while having the least protection. Their passion deserves the same care as anyone else's.</p>
+      <h4>Interns & Early Careers</h4>
+      <p class="who-desc">Those just starting, carrying the most while having the least protection. Their passion deserves the same care as anyone else's.</p>
     </div>
   </div>
 </section>
 
+<!-- Assessments -->
 <section class="tests" id="tests">
   <div class="tests-header reveal">
     <div>
       <span class="section-tag" data-i18n="tests_tag">Psychological Assessments</span>
       <h2 class="section-title"><em data-i18n="tests_h2a">Know</em> <span data-i18n="tests_h2b">where you stand</span></h2>
     </div>
-    <p class="section-desc" data-i18n="tests_desc">Validated psychological assessments — from quick screenings with instant results to comprehensive evaluations reviewed by our team.</p>
+    <p class="section-desc" data-i18n="tests_desc">Validated psychological assessments  -  from quick screenings with instant results to comprehensive evaluations reviewed by our team.</p>
   </div>
   <div class="tests-grid reveal">
-    <div class="test-card" onclick="window.location.href='test-phq9.html'">
-      <h4 data-i18n="test1_name">Depression</h4>
+    <div class="test-card" onclick="window.location.href='test-phq9.html'" style="cursor:pointer">
+      <h4>Depression</h4>
       <div class="test-abbr">PHQ-9</div>
-      <p data-i18n="test1_desc">9-item screening tool used globally. Instant automated results.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>9-item screening tool used globally. Instant automated results.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='test-gad7.html'">
-      <h4 data-i18n="test2_name">Anxiety</h4>
+    <div class="test-card" onclick="window.location.href='test-gad7.html'" style="cursor:pointer">
+      <h4>Anxiety</h4>
       <div class="test-abbr">GAD-7</div>
-      <p data-i18n="test2_desc">7-item generalized anxiety disorder screening with instant results.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>7-item generalized anxiety disorder screening with instant results.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='test-cbi.html'">
-      <h4 data-i18n="test3_name">Burnout</h4>
+    <div class="test-card" onclick="window.location.href='test-cbi.html'" style="cursor:pointer">
+      <h4>Burnout</h4>
       <div class="test-abbr">CBI</div>
-      <p data-i18n="test3_desc">Measures personal, work-related, and client burnout across three dimensions.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>Measures personal, work-related, and client burnout across three dimensions.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='test-pcl5.html'">
-      <h4 data-i18n="test4_name">PTSD</h4>
+    <div class="test-card" onclick="window.location.href='test-pcl5.html'" style="cursor:pointer">
+      <h4>PTSD</h4>
       <div class="test-abbr">PCL-5</div>
-      <p data-i18n="test4_desc">Validated PTSD checklist based on DSM-5 criteria.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>Validated PTSD checklist based on DSM-5 criteria.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='test-psqi.html'">
-      <h4 data-i18n="test5_name">Sleep Quality</h4>
+    <div class="test-card" onclick="window.location.href='test-psqi.html'" style="cursor:pointer">
+      <h4>Sleep Quality</h4>
       <div class="test-abbr">PSQI</div>
-      <p data-i18n="test5_desc">Evaluates sleep quality and disturbances over one month.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>Evaluates sleep quality and disturbances over one month.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='test-rosenberg.html'">
-      <h4 data-i18n="test6_name">Self-Esteem</h4>
+    <div class="test-card" onclick="window.location.href='test-rosenberg.html'" style="cursor:pointer">
+      <h4>Self-Esteem</h4>
       <div class="test-abbr">Rosenberg Scale</div>
-      <p data-i18n="test6_desc">Gold standard 10-item measure of global self-esteem and self-worth.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>Gold standard 10-item measure of global self-esteem and self-worth.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='test-audit.html'">
-      <h4 data-i18n="test7_name">Alcohol Use</h4>
+    <div class="test-card" onclick="window.location.href='test-audit.html'" style="cursor:pointer">
+      <h4>Alcohol Use</h4>
       <div class="test-abbr">AUDIT</div>
-      <p data-i18n="test7_desc">WHO-validated screening for alcohol use disorders.</p>
-      <div class="test-arrow" data-i18n="test_take">Take the assessment →</div>
+      <p>WHO-validated screening for alcohol use disorders.</p>
+      <div class="test-arrow">Take the assessment →</div>
     </div>
-    <div class="test-card" onclick="window.location.href='tests.html'">
-      <h4 data-i18n="test8_name">See All Assessments</h4>
-      <div class="test-abbr" data-i18n="test8_abbr">Full Library</div>
-      <p data-i18n="test8_desc">12 validated psychometric tools covering all major dimensions of psychological well-being.</p>
-      <div class="test-arrow" data-i18n="test_view">View full library →</div>
+    <div class="test-card" onclick="window.location.href='tests.html'" style="cursor:pointer">
+      <h4>See All Assessments</h4>
+      <div class="test-abbr">Full Library</div>
+      <p>12 validated psychometric tools covering all major dimensions of psychological well-being.</p>
+      <div class="test-arrow">View full library →</div>
     </div>
   </div>
 </section>
 
+
+<!-- CTA Band -->
 <div class="cta-band" id="contact">
   <h2 data-i18n="cta_h2">Ready to bring care to your team?</h2>
-  <p data-i18n="cta_p">Whether you represent an agency, a studio, or you're an individual looking for support — we're here. Let's talk.</p>
+  <p data-i18n="cta_p">Whether you represent an agency, a studio, or you're an individual looking for support  -  we're here. Let's talk.</p>
   <a href="contact.html" class="btn-white" data-i18n="cta_btn">Get in Touch</a>
 </div>
 
+<!-- Footer -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="brand-name">Safe Mind</div>
       <p data-i18n="footer_desc">Psychological well-being for the creative industry. Accessible to everyone, regardless of role or rank.</p>
       <div class="footer-contact">
-        <a href="/cdn-cgi/l/email-protection#d9b1bcb5b5b6aab8bfbcb4b0b7bdbab6b7b7bcbaad99beb4b8b0b5f7bab6b4"><span class="__cf_email__" data-cfemail="274f424b4b48544641424a4e4943424e4f4f444255674048444c490944484a">[email&#160;protected]</span></a>
+        <a href="/cdn-cgi/l/email-protection#cba3aea7a7a4b8aaadaea6a2a5afa8a4a5a5aea8bf8baca6aaa2a7e5a8a4a6"><span class="__cf_email__" data-cfemail="731b161f1f1c001215161e1a1d17101c1d1d16100733141e121a1f5d101c1e">[email&#160;protected]</span></a>
         <a href="https://www.linkedin.com/in/grace-daniella-amakon-976380362" target="_blank">LinkedIn</a>
         <a href="about.html" data-i18n="footer_about">About Safe Mind</a>
       </div>
@@ -1269,14 +1601,14 @@
       <a href="#tests">GAD-7</a>
       <a href="#tests">PHQ-9</a>
       <a href="#tests">CBI Burnout</a>
-      <a href="#tests">PCL-5 PTSD</a>
+      <a href="#tests">PHQ-9 Depression</a>
     </div>
     <div class="footer-col">
       <h5 data-i18n="footer_col3">Company</h5>
       <a href="#about" data-i18n="fc3_1">About</a>
       <a href="#contact" data-i18n="fc3_2">Contact</a>
       <a href="#" data-i18n="fc3_3">Blog</a>
-      <a href="account.html" data-i18n="fc3_4">My Account</a>
+      <a href="#" data-i18n="fc3_4">My Account</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1285,152 +1617,394 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─── TRANSLATIONS ───
 const i18n = {
   en: {
     nav_services: "Services", nav_who: "Who We Serve", nav_tests: "Assessments",
     nav_about: "About", nav_contact: "Contact", nav_account: "My Account",
-    nav_account_text: "Sign In", nav_session: "My Session", nav_book: "Book a Consultation",
-    hero_eyebrow: "Psychological Well-being for the Creative Industry",
-    hero_h1_a: "Every person behind the work", hero_h1_b: "deserves care.",
-    hero_desc: "Safe Mind provides professional psychological well-being support for everyone in the creative and cultural industries. From the headliner to the janitor who cleans the stage.",
-    hero_cta1: "Explore Our Services", hero_cta2: "Book a Consultation",
-    stat1_unit: "of musicians", stat1_label: "Experience burnout or significant mental strain",
-    stat2_unit: "per day", stat2_label: "Suicides in creative industries globally (2024 estimate)",
-    stat3_unit: "higher risk", stat3_label: "Musicians face depression vs. general population",
-    stat4_unit: "of creative leaders", stat4_label: "Report experiencing burnout",
-    stat5_unit: "of creative teams", stat5_label: "Are at or over capacity",
-    alert_text: "<strong>Every day, 40 workers in the creative industry die by suicide.</strong> Musicians are 3 times more likely to experience depression than the general public. 70% of creative professionals report burnout. This is not an individual failure — it is a systemic crisis. And we are here to change that.",
-    marquee1: "Prevention & Psychoeducation", marquee2: "Individual Support", marquee3: "Team Training",
-    marquee4: "Crisis Protocols", marquee5: "Burnout Assessment", marquee6: "Secure Messaging",
-    marquee7: "Multilingual Care", marquee8: "Creative Industry Expertise",
+    hero_eyebrow: "Psychological Well-Being Program",
+    hero_h1_a: "Every person behind the work", hero_h1_b: "deserves care.", hero_h1_c: "",
+    hero_desc: "Safe Mind provides professional psychological well-being support for the creative and cultural industries. For everyone  -  from the headliner to the janitor who cleans the stage. No HR required.",
+    hero_cta1: "Explore Our Services", hero_cta2: "Get in Touch",
+    badge1: "100% Remote Worldwide", badge2: "Prevention  -  Not Just Crisis",
+    card_title: "Your well-being matters",
+    card_desc: "Whether you're a manager, camera operator, security staff, or intern  -  Safe Mind is here for you.",
+    stat1: "Languages", stat2: "Confidential",
     mission_tag: "Our Philosophy",
-    mission_quote: '"The creative industry shines because of <span>thousands of invisible hands.</span> They deserve more than acknowledgment — they deserve care."',
-    mission_author: " — Amakon Grace Daniella, Founder, Safe Mind",
+    mission_quote: "\"The creative industry shines because of thousands of invisible hands. They deserve more than acknowledgment  -  they deserve care.\"",
+    mission_author: " -  Amakon Grace Daniella, Founder, Safe Mind",
     mp1_title: "Prevention First", mp1_desc: "We act before crises occur. Our approach is proactive, continuous, and deeply human.",
     mp2_title: "Holistic & Non-Stigmatizing", mp2_desc: "Mental health is not weakness. We create spaces where every person feels safe to speak.",
-    mp3_title: "Globally Accessible", mp3_desc: "100% remote, multilingual, and culturally sensitive — available to teams across the world.",
+    mp3_title: "Globally Accessible", mp3_desc: "100% remote, multilingual, and culturally sensitive  -  available to teams across the world.",
     services_tag: "What We Offer", services_h2a: "Four pillars", services_h2b: "of care",
     services_desc: "Every service is delivered 100% remotely and tailored to your organization's culture and specific needs.",
-    s1_title: "Prevention & Psychoeducation", s1_desc: "Building psychological literacy and awareness across the entire organization — from mental health basics to addiction, harassment, and identity.",
-    s2_title: "Listening & Individual Support", s2_desc: "Confidential individual sessions providing a safe space to be heard, assessed, and guided — with referral to clinical professionals when needed.",
-    s3_title: "Team & Management Training", s3_desc: "Equipping managers and team leaders with tools to recognize distress signals, respond appropriately, and build a culture of psychological safety.",
-    s4_title: "Protocols & Organizational Safety", s4_desc: "Designing robust systems — from minor protection to crisis management and suicide prevention procedures — that protect employees at the structural level.",
-    tag_workshops: "Workshops", tag_webinars: "Webinars", tag_resources: "Resources",
-    tag_1on1: "1-on-1 Sessions", tag_followup: "Follow-up", tag_referral: "Referral",
-    tag_leadership: "Leadership", tag_eq: "EQ Training", tag_protocols: "Protocols",
-    tag_audit: "Risk Audit", tag_policy: "Policy Design", tag_crisis: "Crisis Plans",
+    s1_title: "Prevention & Psychoeducation", s1_desc: "Building psychological literacy and awareness across the entire organization.",
+    s2_title: "Listening & Individual Support", s2_desc: "Confidential individual sessions providing a safe space to be heard, assessed, and guided.",
+    s3_title: "Team & Management Training", s3_desc: "Equipping managers and team leaders with tools to recognize distress signals.",
+    s4_title: "Protocols & Organizational Safety", s4_desc: "Designing robust systems to protect employees at the structural level.",
     who_tag: "Our People", who_h2a: "Everyone", who_h2b: "matters here",
-    who_desc: "If you work for the organization, you are included. No role too small, no position too junior. From CEO to intern — Safe Mind is for all of you.",
-    wc1_title: "Artists & Performers", wc1_desc: "Singers, dancers, actors, musicians. Those who give everything on stage and carry what no one sees when the lights go off.",
-    wc2_title: "Production & Technical", wc2_desc: "Camera crews, sound engineers, lighting teams, stage builders. The hands that make the show exist, invisible in the applause.",
-    wc3_title: "Management & Coordination", wc3_desc: "Managers, coordinators, schedulers. The people who absorb every pressure so others can perform, with no one asking how they are.",
-    wc4_title: "Creative & Media", wc4_desc: "Designers, photographers, content creators, social media teams. Building culture daily, often alone, often without recognition.",
-    wc5_title: "Support & Operations", wc5_desc: "Drivers, catering staff, logistics, administration. Without them nothing moves. They are the foundation no one photographs.",
-    wc6_title: "Interns & Early Careers", wc6_desc: "Those just starting, carrying the most while having the least protection. Their passion deserves the same care as anyone else's.",
+    who_desc: "If you work for the organization, you are included. No role too small  -  from CEO to intern, Safe Mind is for all of you.",
+    wc1_title: "Production & Technical", wc1_1: "Camera operators", wc1_2: "Video & sound editors", wc1_3: "Lighting & stage crew", wc1_4: "IT & tech support",
+    wc2_title: "Management & Coordination", wc2_1: "Tour & artist managers", wc2_2: "HR & recruitment", wc2_3: "Project coordinators", wc2_4: "Scheduling teams",
+    wc3_title: "Creative & Media", wc3_1: "Social media managers", wc3_2: "Graphic designers", wc3_3: "Photographers", wc3_4: "Content creators",
+    wc4_title: "Support & Operations", wc4_1: "Administrative staff", wc4_2: "Drivers & logistics", wc4_3: "Catering & hospitality", wc4_4: "Maintenance teams",
+    wc5_title: "Security & Safety", wc5_1: "Security personnel", wc5_2: "Bodyguards", wc5_3: "Event safety officers", wc5_4: "Crowd management",
+    wc6_title: "Interns & Early Careers", wc6_1: "Interns (all departments)", wc6_2: "Apprentices & trainees", wc6_3: "Junior staff", wc6_4: "Students on placement",
     tests_tag: "Psychological Assessments", tests_h2a: "Know", tests_h2b: "where you stand",
-    tests_desc: "Validated psychological assessments — from quick screenings with instant results to comprehensive evaluations reviewed by our team.",
-    test1_name: "Depression", test1_desc: "9-item screening tool used globally. Instant automated results.",
-    test2_name: "Anxiety", test2_desc: "7-item generalized anxiety disorder screening with instant results.",
-    test3_name: "Burnout", test3_desc: "Measures personal, work-related, and client burnout across three dimensions.",
-    test4_name: "PTSD", test4_desc: "Validated PTSD checklist based on DSM-5 criteria.",
-    test5_name: "Sleep Quality", test5_desc: "Evaluates sleep quality and disturbances over one month.",
-    test6_name: "Self-Esteem", test6_desc: "Gold standard 10-item measure of global self-esteem and self-worth.",
-    test7_name: "Alcohol Use", test7_desc: "WHO-validated screening for alcohol use disorders.",
-    test8_name: "See All Assessments", test8_abbr: "Full Library", test8_desc: "12 validated psychometric tools covering all major dimensions of psychological well-being.",
-    test_take: "Take the assessment →", test_view: "View full library →",
-    cta_h2: "Ready to bring care to your team?", cta_p: "Whether you represent an agency, a studio, or you're an individual looking for support — we're here. Let's talk.", cta_btn: "Get in Touch",
+    tests_desc: "Validated assessments  -  from quick screenings with instant results to comprehensive evaluations reviewed by our team.",
+    t1_desc: "Measures emotional exhaustion, depersonalization, and personal accomplishment.",
+    t2_desc: "7-item generalized anxiety disorder screening with instant automated results.",
+    t3_desc: "9-item depression screening tool used globally by mental health professionals.",
+    t4_desc: "Measures perceived stress levels and how situations are appraised as stressful.",
+    t5_desc: "Evaluates sleep quality and disturbances over one month.",
+    t6_desc: "The gold standard 10-item measure of global self-esteem and self-worth.",
+    t7_desc: "Comprehensive suicidal risk assessment. Results reviewed and delivered by our team.",
+    t8_desc: "In-depth personality and psychological assessments. Full expert analysis included.",
+    about_tag: "About the Founder", about_h2a: "Rooted in care.", about_h2b: "Built for impact.",
+    about_p1: "I am a psychosocial support specialist with over four years of field experience in suicide prevention, burnout accompaniment, and survivor support through NGO work. Safe Mind was born from a simple observation: in the creative industry, psychological support exists for those at the top. Rarely for everyone else.",
+    about_p2: "The managers who work through the night, the camera operators on endless tours, the interns carrying impossible loads  -  they are the ones who make everything possible. And they deserve care too.",
+    about_linkedin: "View LinkedIn Profile →",
+    cta_h2: "Ready to bring care to your team?", cta_p: "Whether you represent an agency, a studio, or you're an individual looking for support  -  we're here. Let's talk.", cta_btn: "Get in Touch",
     footer_desc: "Psychological well-being for the creative industry. Accessible to everyone, regardless of role or rank.",
     footer_about: "About Safe Mind", footer_col1: "Services", footer_col2: "Assessments", footer_col3: "Company",
     fc1_1: "Prevention", fc1_2: "Individual Support", fc1_3: "Team Training", fc1_4: "Protocols",
     fc3_1: "About", fc3_2: "Contact", fc3_3: "Blog", fc3_4: "My Account",
-    footer_rights: "All rights reserved.", footer_tagline: '"Psychological well-being for everyone in the creative industry."'
+    footer_rights: "All rights reserved.", footer_tagline: "\"Psychological well-being for everyone in the creative industry.\""
   },
   fr: {
     nav_services: "Services", nav_who: "Notre Public", nav_tests: "Évaluations",
-    nav_about: "À Propos", nav_contact: "Contact", nav_account: "Mon Compte",
-    nav_account_text: "Se Connecter", nav_session: "Ma Séance", nav_book: "Réserver une Consultation",
-    hero_eyebrow: "Bien-être Psychologique pour l'Industrie Créative",
-    hero_h1_a: "Chaque personne derrière le travail", hero_h1_b: "mérite des soins.",
-    hero_desc: "Safe Mind offre un soutien professionnel en bien-être psychologique pour tous dans les industries créatives et culturelles. De la tête d'affiche à l'agent d'entretien.",
-    hero_cta1: "Découvrir nos Services", hero_cta2: "Réserver une Consultation",
-    stat1_unit: "des musiciens", stat1_label: "Souffrent d'épuisement ou de détresse mentale",
-    stat2_unit: "par jour", stat2_label: "Suicides dans les industries créatives (estimation 2024)",
-    stat3_unit: "plus élevé", stat3_label: "Les musiciens souffrent de dépression vs. population générale",
-    stat4_unit: "des leaders créatifs", stat4_label: "Signalent souffrir d'épuisement",
-    stat5_unit: "des équipes créatives", stat5_label: "Sont à ou au-delà de leur capacité",
-    alert_text: "<strong>Chaque jour, 40 travailleurs de l'industrie créative meurent par suicide.</strong> Les musiciens sont 3 fois plus susceptibles de souffrir de dépression que la population générale. 70% des professionnels créatifs souffrent d'épuisement. Ce n'est pas un échec individuel — c'est une crise systémique. Et nous sommes ici pour changer cela.",
-    marquee1: "Prévention & Psychoéducation", marquee2: "Soutien Individuel", marquee3: "Formation d'Équipe",
-    marquee4: "Protocoles de Crise", marquee5: "Évaluation du Burnout", marquee6: "Messagerie Sécurisée",
-    marquee7: "Soins Multilingues", marquee8: "Expertise en Industrie Créative",
+    nav_about: "À Propos", nav_contact: "Contact", nav_account: "Espace Client",
+    hero_eyebrow: "Programme de Bien-Être Psychologique",
+    hero_h1_a: "Protéger les esprits", hero_h1_b: "dans l'ombre des projecteurs.", hero_h1_c: "",
+    hero_desc: "Safe Mind propose un soutien professionnel en bien-être psychologique pour les industries créatives et culturelles. Pour tout le monde  -  de la tête d'affiche à l'agent d'entretien. Sans RH requis.",
+    hero_cta1: "Nos Services", hero_cta2: "Nous Contacter",
+    badge1: "100% Remote, Mondial", badge2: "Prévention  -  Pas Seulement la Crise",
+    card_title: "Votre bien-être compte",
+    card_desc: "Que vous soyez manager, caméraman, agent de sécurité ou stagiaire  -  Safe Mind est là pour vous.",
+    stat1: "Langues", stat2: "Confidentiel",
     mission_tag: "Notre Philosophie",
-    mission_quote: '"L\'industrie créative brille grâce à <span>des milliers de mains invisibles.</span> Elles méritent plus que la reconnaissance — elles méritent des soins."',
-    mission_author: " — Amakon Grace Daniella, Fondatrice, Safe Mind",
+    mission_quote: "\"L'industrie créative brille grâce à des milliers de mains invisibles. Elles méritent plus que la reconnaissance  -  elles méritent du soin.\"",
+    mission_author: " -  Amakon Grace Daniella, Fondatrice, Safe Mind",
     mp1_title: "La Prévention d'Abord", mp1_desc: "Nous agissons avant les crises. Notre approche est proactive, continue et profondément humaine.",
-    mp2_title: "Holistique & Non-Stigmatisant", mp2_desc: "La santé mentale n'est pas une faiblesse. Nous créons des espaces où chacun se sent en sécurité pour parler.",
-    mp3_title: "Accessible Mondialement", mp3_desc: "100% à distance, multilingue et sensible aux cultures — disponible pour les équipes du monde entier.",
+    mp2_title: "Holistique et Non-Stigmatisant", mp2_desc: "La santé mentale n'est pas une faiblesse. Nous créons des espaces où chacun se sent en sécurité pour parler.",
+    mp3_title: "Accessible Mondialement", mp3_desc: "100% remote, multilingue et sensible aux cultures  -  disponible pour les équipes du monde entier.",
     services_tag: "Ce Que Nous Offrons", services_h2a: "Quatre piliers", services_h2b: "de soin",
-    services_desc: "Chaque service est fourni 100% à distance et adapté à la culture et aux besoins spécifiques de votre organisation.",
-    s1_title: "Prévention & Psychoéducation", s1_desc: "Développer la culture de santé mentale dans toute l'organisation — des bases aux addictions, harcèlement et identité.",
-    s2_title: "Écoute & Soutien Individuel", s2_desc: "Sessions individuelles confidentielles pour être entendu, évalué et orienté — avec orientation vers des professionnels cliniques si nécessaire.",
-    s3_title: "Formation des Équipes & Management", s3_desc: "Outiller les managers et chefs d'équipe pour reconnaître les signaux de détresse, répondre adéquatement et construire une culture de sécurité psychologique.",
-    s4_title: "Protocoles & Sécurité Organisationnelle", s4_desc: "Concevoir des systèmes robustes — de la protection mineure à la gestion de crise et aux procédures de prévention du suicide — qui protègent les employés au niveau structurel.",
-    tag_workshops: "Ateliers", tag_webinars: "Webinaires", tag_resources: "Ressources",
-    tag_1on1: "Sessions Individuelles", tag_followup: "Suivi", tag_referral: "Orientation",
-    tag_leadership: "Leadership", tag_eq: "Formation EQ", tag_protocols: "Protocoles",
-    tag_audit: "Audit des Risques", tag_policy: "Conception de Politiques", tag_crisis: "Plans de Crise",
-    who_tag: "Notre Public", who_h2a: "Tout le monde", who_h2b: "compte ici",
-    who_desc: "Si vous travaillez dans l'industrie créative, vous êtes inclus. Aucun rôle trop petit, aucun poste trop junior. Du PDG au stagiaire — Safe Mind est pour vous tous.",
-    wc1_title: "Artistes & Interprètes", wc1_desc: "Chanteurs, danseurs, acteurs, musiciens. Ceux qui donnent tout sur scène et portent ce que personne ne voit quand les lumières s'éteignent.",
-    wc2_title: "Production & Technique", wc2_desc: "Équipes de tournage, ingénieurs du son, éclairagistes, constructeurs de scène. Les mains qui font exister le spectacle, invisibles dans les applaudissements.",
-    wc3_title: "Management & Coordination", wc3_desc: "Managers, coordinateurs, planificateurs. Ceux qui absorbent toutes les pressions pour que les autres puissent performer, sans que personne ne demande comment ils vont.",
-    wc4_title: "Créatif & Médias", wc4_desc: "Designers, photographes, créateurs de contenu, équipes réseaux sociaux. Construire la culture quotidiennement, souvent seul, souvent sans reconnaissance.",
-    wc5_title: "Support & Opérations", wc5_desc: "Chauffeurs, équipes de restauration, logistique, administration. Sans eux rien ne bouge. Ils sont la fondation que personne ne photographie.",
-    wc6_title: "Stagiaires & Débuts de Carrière", wc6_desc: "Ceux qui commencent, portant le plus tout en ayant le moins de protection. Leur passion mérite les mêmes soins que celle des autres.",
+    services_desc: "Chaque service est fourni à 100% à distance et adapté à la culture et aux besoins spécifiques de votre organisation.",
+    s1_title: "Prévention & Psychoéducation", s1_desc: "Développer la culture de santé mentale dans toute l'organisation.",
+    s2_title: "Écoute & Soutien Individuel", s2_desc: "Sessions individuelles confidentielles pour être entendu, évalué et orienté.",
+    s3_title: "Formation des Équipes", s3_desc: "Outiller les managers pour reconnaître les signaux de détresse.",
+    s4_title: "Protocoles & Sécurité Organisationnelle", s4_desc: "Concevoir des systèmes robustes pour protéger les employés.",
+    who_tag: "Notre Public", who_h2a: "Tout le monde", who_h2b: "est concerné",
+    who_desc: "Si vous travaillez dans l'industrie créative, vous êtes inclus. Aucun rôle trop petit, aucun contrat trop précaire. Safe Mind est pour vous tous.",
+    wc1_title: "Production & Technique", wc1_1: "Caméramans", wc1_2: "Monteurs vidéo & son", wc1_3: "Éclairage & scène", wc1_4: "Support IT",
+    wc2_title: "Management & Coordination", wc2_1: "Managers d'artistes", wc2_2: "RH & recrutement", wc2_3: "Coordinateurs de projet", wc2_4: "Équipes planning",
+    wc3_title: "Créatif & Médias", wc3_1: "Community managers", wc3_2: "Graphistes", wc3_3: "Photographes", wc3_4: "Créateurs de contenu",
+    wc4_title: "Support & Opérations", wc4_1: "Assistants administratifs", wc4_2: "Chauffeurs & logistique", wc4_3: "Restauration & accueil", wc4_4: "Maintenance",
+    wc5_title: "Sécurité", wc5_1: "Agents de sécurité", wc5_2: "Gardes du corps", wc5_3: "Responsables sécurité événement", wc5_4: "Gestion des foules",
+    wc6_title: "Stagiaires & Débuts de Carrière", wc6_1: "Stagiaires (tous départements)", wc6_2: "Apprentis", wc6_3: "Juniors", wc6_4: "Étudiants en stage",
     tests_tag: "Évaluations Psychologiques", tests_h2a: "Savoir", tests_h2b: "où vous en êtes",
-    tests_desc: "Évaluations psychologiques validées — du dépistage rapide avec résultats immédiats aux évaluations complètes analysées par notre équipe.",
-    test1_name: "Dépression", test1_desc: "Outil de dépistage en 9 items utilisé mondialement. Résultats automatiques instantanés.",
-    test2_name: "Anxiété", test2_desc: "Dépistage du trouble anxieux généralisé en 7 items avec résultats immédiats.",
-    test3_name: "Épuisement", test3_desc: "Mesure l'épuisement personnel, professionnel et lié aux clients sur trois dimensions.",
-    test4_name: "TSPT", test4_desc: "Liste de contrôle TSPT validée basée sur les critères du DSM-5.",
-    test5_name: "Qualité du Sommeil", test5_desc: "Évalue la qualité du sommeil et les perturbations sur un mois.",
-    test6_name: "Estime de Soi", test6_desc: "L'étalon-or en 10 items pour mesurer l'estime de soi globale.",
-    test7_name: "Consommation d'Alcool", test7_desc: "Dépistage validé par l'OMS des troubles liés à l'usage de l'alcool.",
-    test8_name: "Voir Toutes les Évaluations", test8_abbr: "Bibliothèque Complète", test8_desc: "12 outils psychométriques validés couvrant toutes les dimensions majeures du bien-être psychologique.",
-    test_take: "Faire l'évaluation →", test_view: "Voir la bibliothèque complète →",
-    cta_h2: "Prêt à apporter des soins à votre équipe ?", cta_p: "Que vous représentiez une agence, un studio, ou que vous cherchiez un soutien individuel — nous sommes là. Parlons-en.", cta_btn: "Nous Contacter",
+    tests_desc: "Évaluations validées  -  du dépistage rapide avec résultats immédiats aux évaluations complètes analysées par notre équipe.",
+    t1_desc: "Mesure l'épuisement émotionnel, la dépersonnalisation et l'accomplissement personnel.",
+    t2_desc: "Dépistage de l'anxiété généralisée en 7 questions avec résultats automatiques.",
+    t3_desc: "Outil de dépistage de la dépression en 9 items utilisé mondialement.",
+    t4_desc: "Mesure le niveau de stress perçu et la perception des situations stressantes.",
+    t5_desc: "Évalue la qualité du sommeil et les perturbations sur un mois.",
+    t6_desc: "L'échelle de référence mondiale d'estime de soi en 10 items.",
+    t7_desc: "Évaluation complète du risque suicidaire. Résultats analysés par notre équipe.",
+    t8_desc: "Évaluations approfondies de la personnalité. Analyse experte complète incluse.",
+    about_tag: "La Fondatrice", about_h2a: "Ancrée dans le soin.", about_h2b: "Construite pour l'impact.",
+    about_p1: "Je suis spécialiste en soutien psychosocial avec plus de quatre ans d'expérience de terrain en prévention du suicide, accompagnement du burnout et soutien des survivants via des ONG. Safe Mind est né d'une observation simple : dans l'industrie créative, le soutien psychologique existe pour ceux du sommet. Rarement pour tous les autres.",
+    about_p2: "Les managers qui travaillent toute la nuit, les caméramans en tournée interminable, les stagiaires sous pression impossible  -  ce sont eux qui rendent tout possible. Eux aussi méritent d'être pris en charge.",
+    about_linkedin: "Voir le profil LinkedIn →",
+    cta_h2: "Prêt à prendre soin de votre équipe ?", cta_p: "Que vous représentiez une agence, un studio, ou que vous cherchiez un soutien individuel  -  nous sommes là. Parlons-en.", cta_btn: "Nous Contacter",
     footer_desc: "Bien-être psychologique pour l'industrie créative. Accessible à tous, quel que soit le rôle ou le rang.",
     footer_about: "À propos de Safe Mind", footer_col1: "Services", footer_col2: "Évaluations", footer_col3: "Société",
     fc1_1: "Prévention", fc1_2: "Soutien Individuel", fc1_3: "Formation d'Équipe", fc1_4: "Protocoles",
-    fc3_1: "À Propos", fc3_2: "Contact", fc3_3: "Blog", fc3_4: "Mon Compte",
-    footer_rights: "Tous droits réservés.", footer_tagline: '"Bien-être psychologique pour tous dans l\'industrie créative."'
+    fc3_1: "À Propos", fc3_2: "Contact", fc3_3: "Blog", fc3_4: "Espace Client",
+    footer_rights: "Tous droits réservés.", footer_tagline: "\"Protéger les esprits dans l'ombre des projecteurs.\""
+  },
+  kr: {
+    nav_services: "서비스", nav_who: "대상", nav_tests: "심리검사",
+    nav_about: "소개", nav_contact: "문의", nav_account: "고객 로그인",
+    hero_eyebrow: "심리 웰빙 프로그램",
+    hero_h1_a: "무대 뒤의 마음을", hero_h1_b: "지켜드립니다.", hero_h1_c: "",
+    hero_desc: "Safe Mind는 창작 및 문화 산업의 모든 사람을 위한 전문적인 심리 웰빙 지원 서비스입니다. 헤드라이너부터 청소부까지. HR 없이도 이용 가능합니다.",
+    hero_cta1: "서비스 보기", hero_cta2: "문의하기",
+    badge1: "100% 원격 전 세계", badge2: "예방 중심 케어",
+    card_title: "당신의 웰빙이 중요합니다",
+    card_desc: "매니저, 카메라 감독, 경비원, 인턴  -  누구든지 Safe Mind가 함께합니다.",
+    stat1: "언어", stat2: "비밀 보장",
+    mission_tag: "우리의 철학",
+    mission_quote: "\"엔터테인먼트 산업은 수천 개의 보이지 않는 손들 덕분에 빛납니다. 그들은 인정 이상의 것을 받을 자격이 있습니다  -  바로 돌봄입니다.\"",
+    mission_author: " -  Amakon Grace Daniella, Safe Mind 설립자",
+    mp1_title: "예방 우선", mp1_desc: "위기가 발생하기 전에 행동합니다. 우리의 접근 방식은 선제적이고 지속적입니다.",
+    mp2_title: "전인적 & 비낙인화", mp2_desc: "정신 건강은 약점이 아닙니다. 모든 사람이 안전하게 말할 수 있는 공간을 만듭니다.",
+    mp3_title: "전 세계 접근 가능", mp3_desc: "100% 원격, 다국어, 문화적 감수성  -  전 세계 팀을 위해 제공됩니다.",
+    services_tag: "제공 서비스", services_h2a: "네 가지 케어", services_h2b: "기둥",
+    services_desc: "모든 서비스는 100% 원격으로 제공되며 조직의 문화와 특정 요구에 맞게 맞춤화됩니다.",
+    s1_title: "예방 & 심리교육", s1_desc: "조직 전체에 걸쳐 심리적 리터러시와 인식을 구축합니다.",
+    s2_title: "경청 & 개인 지원", s2_desc: "경청되고, 평가받고, 안내받을 수 있는 안전한 공간을 제공하는 기밀 개인 세션.",
+    s3_title: "팀 & 관리자 교육", s3_desc: "관리자와 팀 리더들이 심리적 어려움의 신호를 인식할 수 있도록 도구를 제공합니다.",
+    s4_title: "프로토콜 & 조직 안전", s4_desc: "구조적 수준에서 직원을 보호하기 위한 강력한 시스템을 설계합니다.",
+    who_tag: "우리의 대상", who_h2a: "모든 사람이", who_h2b: "중요합니다",
+    who_desc: "창작 산업에서 일한다면 모두 포함됩니다. 역할이 아무리 작아도, 계약이 아무리 짧아도  -  Safe Mind는 여러분 모두를 위한 것입니다.",
+    wc1_title: "제작 & 기술", wc1_1: "카메라 감독", wc1_2: "영상 & 음향 편집자", wc1_3: "조명 & 무대 스태프", wc1_4: "IT & 기술 지원",
+    wc2_title: "경영 & 조정", wc2_1: "투어 & 아티스트 매니저", wc2_2: "HR & 채용", wc2_3: "프로젝트 코디네이터", wc2_4: "스케줄링 팀",
+    wc3_title: "크리에이티브 & 미디어", wc3_1: "소셜 미디어 매니저", wc3_2: "그래픽 디자이너", wc3_3: "사진작가", wc3_4: "콘텐츠 크리에이터",
+    wc4_title: "지원 & 운영", wc4_1: "행정 직원", wc4_2: "운전 & 물류", wc4_3: "케이터링 & 환대", wc4_4: "유지보수 팀",
+    wc5_title: "보안 & 안전", wc5_1: "보안 요원", wc5_2: "경호원", wc5_3: "이벤트 안전 담당자", wc5_4: "군중 관리",
+    wc6_title: "인턴 & 초기 경력", wc6_1: "인턴 (전 부서)", wc6_2: "견습생 & 훈련생", wc6_3: "주니어 직원", wc6_4: "실습 학생",
+    tests_tag: "심리 검사", tests_h2a: "나의 상태를", tests_h2b: "파악하세요",
+    tests_desc: "검증된 심리 평가  -  즉각적인 결과를 제공하는 빠른 선별 검사부터 전문가가 검토하는 종합 평가까지.",
+    t1_desc: "감정적 소진, 비인격화, 개인적 성취감을 측정합니다.",
+    t2_desc: "즉각적인 자동 결과를 제공하는 7문항 범불안장애 선별 검사.",
+    t3_desc: "전 세계 정신건강 전문가들이 사용하는 9문항 우울증 선별 도구.",
+    t4_desc: "인지된 스트레스 수준과 상황에 대한 스트레스 평가를 측정합니다.",
+    t5_desc: "한 달 동안의 수면 질과 장애를 평가합니다.",
+    t6_desc: "전 세계 표준 10문항 자존감 측정 도구.",
+    t7_desc: "종합적인 자살 위험 평가. 결과는 전문 팀이 검토하여 전달합니다.",
+    t8_desc: "심층 성격 및 심리 평가. 전문가 분석 포함.",
+    about_tag: "창립자 소개", about_h2a: "케어에 뿌리를 두고.", about_h2b: "임팩트를 위해 만들어졌습니다.",
+    about_p1: "저는 NGO 활동을 통해 자살 예방, 번아웃 동반 및 생존자 지원 분야에서 4년 이상의 현장 경험을 가진 심리사회적 지원 전문가입니다. Safe Mind는 간단한 관찰에서 탄생했습니다: 창작 산업에서 심리적 지원은 최상위층에만 존재합니다. 그 외 모든 사람들에게는 거의 없습니다.",
+    about_p2: "밤새 일하는 매니저들, 끝없는 투어를 다니는 카메라 감독들, 불가능한 부담을 지는 인턴들  -  이들이 모든 것을 가능하게 하는 사람들입니다. 그들도 보살핌을 받을 자격이 있습니다.",
+    about_linkedin: "LinkedIn 프로필 보기 →",
+    cta_h2: "팀에 케어를 가져올 준비가 되셨나요?", cta_p: "에이전시나 스튜디오를 대표하시든, 개인 지원을 찾고 계시든  -  저희가 여기 있습니다. 이야기해요.", cta_btn: "문의하기",
+    footer_desc: "창작 산업을 위한 심리적 웰빙. 역할이나 직급에 관계없이 모든 사람이 이용 가능합니다.",
+    footer_about: "Safe Mind 소개", footer_col1: "서비스", footer_col2: "검사", footer_col3: "회사",
+    fc1_1: "예방", fc1_2: "개인 지원", fc1_3: "팀 교육", fc1_4: "프로토콜",
+    fc3_1: "소개", fc3_2: "문의", fc3_3: "블로그", fc3_4: "고객 로그인",
+    footer_rights: "모든 권리 보유.", footer_tagline: "\"무대 뒤의 마음을 지켜드립니다.\""
+  },
+  jp: {
+    nav_services: "サービス", nav_who: "対象者", nav_tests: "心理検査",
+    nav_about: "について", nav_contact: "お問い合わせ", nav_account: "ログイン",
+    hero_eyebrow: "心理的ウェルビーイングプログラム",
+    hero_h1_a: "スポットライトの裏にある", hero_h1_b: "心を守ります。", hero_h1_c: "",
+    hero_desc: "Safe Mindは、クリエイティブ・文化産業のすべての人のための専門的な心理的ウェルビーイングサポートです。ヘッドライナーから清掃員まで。HR不要。",
+    hero_cta1: "サービスを見る", hero_cta2: "お問い合わせ",
+    badge1: "100% リモート・世界中", badge2: "予防重視のケア",
+    card_title: "あなたのウェルビーイングが大切です",
+    card_desc: "マネージャー、カメラマン、警備員、インターン  -  誰でもSafe Mindがサポートします。",
+    stat1: "言語", stat2: "機密保持",
+    mission_tag: "私たちの哲学",
+    mission_quote: "「クリエイティブ産業は、何千もの見えない手によって支えられています。彼らは認められる以上のもの、ケアを受ける資格があります。」",
+    mission_author: " -  Amakon Grace Daniella, Safe Mind創業者",
+    mp1_title: "予防優先", mp1_desc: "危機が起こる前に行動します。私たちのアプローチは積極的で継続的です。",
+    mp2_title: "ホリスティック & スティグマなし", mp2_desc: "メンタルヘルスは弱さではありません。誰もが安全に話せる空間を作ります。",
+    mp3_title: "グローバルにアクセス可能", mp3_desc: "100% リモート、多言語対応、文化的感受性  -  世界中のチームに提供。",
+    services_tag: "提供サービス", services_h2a: "ケアの", services_h2b: "4つの柱",
+    services_desc: "すべてのサービスは100% リモートで提供され、組織の文化とニーズに合わせてカスタマイズされます。",
+    s1_title: "予防 & 心理教育", s1_desc: "組織全体で心理的リテラシーと認識を構築します。",
+    s2_title: "傾聴 & 個人サポート", s2_desc: "聴いてもらい、評価され、ガイドされる安全な空間を提供する機密個人セッション。",
+    s3_title: "チーム & マネジメント研修", s3_desc: "マネージャーとチームリーダーが苦悩のサインを認識するためのツールを提供します。",
+    s4_title: "プロトコル & 組織的安全", s4_desc: "構造的レベルで従業員を守る堅牢なシステムを設計します。",
+    who_tag: "私たちの対象者", who_h2a: "全員が", who_h2b: "大切です",
+    who_desc: "クリエイティブ産業で働くなら、全員が対象です。役割がいかに小さくても  -  Safe Mindは皆さんのためにあります。",
+    wc1_title: "制作 & 技術", wc1_1: "カメラマン", wc1_2: "映像 & 音響編集者", wc1_3: "照明 & ステージスタッフ", wc1_4: "IT & 技術サポート",
+    wc2_title: "マネジメント & コーディネーション", wc2_1: "ツアー & アーティストマネージャー", wc2_2: "HR & 採用", wc2_3: "プロジェクトコーディネーター", wc2_4: "スケジューリングチーム",
+    wc3_title: "クリエイティブ & メディア", wc3_1: "ソーシャルメディアマネージャー", wc3_2: "グラフィックデザイナー", wc3_3: "フォトグラファー", wc3_4: "コンテンツクリエイター",
+    wc4_title: "サポート & 運営", wc4_1: "事務スタッフ", wc4_2: "ドライバー & 物流", wc4_3: "ケータリング & ホスピタリティ", wc4_4: "メンテナンスチーム",
+    wc5_title: "セキュリティ & 安全", wc5_1: "警備員", wc5_2: "ボディガード", wc5_3: "イベント安全担当者", wc5_4: "群衆管理",
+    wc6_title: "インターン & 早期キャリア", wc6_1: "インターン (全部署)", wc6_2: "見習い & 研修生", wc6_3: "ジュニアスタッフ", wc6_4: "実習学生",
+    tests_tag: "心理評価", tests_h2a: "自分の状態を", tests_h2b: "把握しましょう",
+    tests_desc: "検証済みの心理評価  -  即時結果の迅速なスクリーニングから専門家がレビューする包括的評価まで。",
+    t1_desc: "感情的疲弊、脱人格化、個人的達成感を測定します。", t2_desc: "自動結果付きの7項目全般性不安障害スクリーニング。",
+    t3_desc: "世界中の精神保健専門家が使用する9項目うつ病スクリーニングツール。", t4_desc: "知覚されたストレスレベルを測定します。",
+    t5_desc: "1ヶ月間の睡眠の質と障害を評価します。", t6_desc: "世界標準の10項目自尊感情測定ツール。",
+    t7_desc: "包括的な自殺リスク評価。結果はチームがレビューして提供します。", t8_desc: "詳細な性格 & 心理評価。専門家による完全分析が含まれます。",
+    about_tag: "創設者について", about_h2a: "ケアに根ざして。", about_h2b: "インパクトのために作られました。",
+    about_p1: "私はNGO活動を通じて自殺予防、バーンアウト支援、サバイバーサポートで4年以上の現場経験を持つ心理社会的支援専門家です。Safe Mindはシンプルな観察から生まれました：クリエイティブ産業では心理的サポートはトップにのみ存在します。他のすべての人にはほとんどありません。",
+    about_p2: "夜通し働くマネージャー、終わりのないツアーのカメラマン、不可能な負担を抱えるインターン  -  彼らがすべてを可能にしている人たちです。彼らもケアを受ける資格があります。",
+    about_linkedin: "LinkedInプロフィールを見る →",
+    cta_h2: "チームにケアをもたらす準備はできましたか？", cta_p: "エージェンシーやスタジオを代表している方も、個人サポートを求めている方も  -  私たちがここにいます。話しましょう。", cta_btn: "お問い合わせ",
+    footer_desc: "クリエイティブ産業のための心理的ウェルビーイング。役割や地位に関わらず、すべての人が利用可能。",
+    footer_about: "Safe Mindについて", footer_col1: "サービス", footer_col2: "検査", footer_col3: "会社",
+    fc1_1: "予防", fc1_2: "個人サポート", fc1_3: "チーム研修", fc1_4: "プロトコル",
+    fc3_1: "について", fc3_2: "お問い合わせ", fc3_3: "ブログ", fc3_4: "ログイン",
+    footer_rights: "全著作権所有。", footer_tagline: "「スポットライトの裏にある心を守ります。」"
+  },
+  zh: {
+    nav_services: "服务", nav_who: "服务对象", nav_tests: "心理评估",
+    nav_about: "关于我们", nav_contact: "联系我们", nav_account: "客户登录",
+    hero_eyebrow: "心理健康项目",
+    hero_h1_a: "守护聚光灯背后", hero_h1_b: "的每一颗心。", hero_h1_c: "",
+    hero_desc: "Safe Mind为创意和文化产业的所有人提供专业的心理健康支持。从头牌到清洁工。无需HR。",
+    hero_cta1: "了解我们的服务", hero_cta2: "联系我们",
+    badge1: "100% 远程全球服务", badge2: "预防为主，不仅仅是危机",
+    card_title: "您的健康至关重要",
+    card_desc: "无论您是经理、摄影师、保安还是实习生 -  - Safe Mind都在这里为您服务。",
+    stat1: "语言", stat2: "完全保密",
+    mission_tag: "我们的理念",
+    mission_quote: "\"创意产业因无数双无形的手而闪耀。他们值得的不仅仅是认可 -  - 他们值得被关爱。\"",
+    mission_author: " -  Amakon Grace Daniella，Safe Mind 创始人",
+    mp1_title: "预防优先", mp1_desc: "在危机发生之前采取行动。我们的方法是积极主动、持续不断的。",
+    mp2_title: "整体且非污名化", mp2_desc: "心理健康不是弱点。我们创造每个人都能安全倾诉的空间。",
+    mp3_title: "全球可访问", mp3_desc: "100% 远程、多语言、文化敏感 -  - 为全球团队提供服务。",
+    services_tag: "我们提供什么", services_h2a: "四大关爱", services_h2b: "支柱",
+    services_desc: "所有服务均以100%远程方式提供，并根据您组织的文化和具体需求量身定制。",
+    s1_title: "预防与心理教育", s1_desc: "在整个组织中建立心理健康意识和知识。",
+    s2_title: "倾听与个人支持", s2_desc: "提供保密个人会话，为被倾听、评估和指导提供安全空间。",
+    s3_title: "团队与管理层培训", s3_desc: "为管理者和团队领导提供识别心理困扰信号的工具。",
+    s4_title: "协议与组织安全", s4_desc: "设计强有力的系统，在结构层面保护员工。",
+    who_tag: "我们的服务对象", who_h2a: "每一个人", who_h2b: "都很重要",
+    who_desc: "只要您在组织工作，您就在服务范围内。从CEO到实习生 -  - Safe Mind为您所有人而存在。",
+    wc1_title: "制作与技术", wc1_1: "摄影师", wc1_2: "视频与音频编辑", wc1_3: "灯光与舞台", wc1_4: "IT与技术支持",
+    wc2_title: "管理与协调", wc2_1: "巡演与艺人经纪", wc2_2: "人力资源", wc2_3: "项目协调员", wc2_4: "排期团队",
+    wc3_title: "创意与媒体", wc3_1: "社交媒体经理", wc3_2: "平面设计师", wc3_3: "摄影师", wc3_4: "内容创作者",
+    wc4_title: "支持与运营", wc4_1: "行政人员", wc4_2: "司机与物流", wc4_3: "餐饮与接待", wc4_4: "维护团队",
+    wc5_title: "安保与安全", wc5_1: "安保人员", wc5_2: "保镖", wc5_3: "活动安全官员", wc5_4: "人群管理",
+    wc6_title: "实习生与早期职业", wc6_1: "实习生（所有部门）", wc6_2: "学徒与受训者", wc6_3: "初级员工", wc6_4: "实习学生",
+    tests_tag: "心理评估", tests_h2a: "了解", tests_h2b: "您的状态",
+    tests_desc: "经过验证的心理评估 -  - 从即时结果的快速筛查到由我们团队审查的综合评估。",
+    t1_desc: "衡量情绪耗竭、去人格化和个人成就感。", t2_desc: "7项广泛性焦虑障碍筛查，即时自动结果。",
+    t3_desc: "全球心理健康专业人员使用的9项抑郁症筛查工具。", t4_desc: "衡量感知压力水平。",
+    t5_desc: "评估一个月内的睡眠质量和障碍。", t6_desc: "全球标准10项自尊量表。",
+    t7_desc: "综合自杀风险评估。结果由我们的团队审查后提供。", t8_desc: "深度性格与心理评估，包括完整专家分析。",
+    about_tag: "创始人介绍", about_h2a: "植根于关爱。", about_h2b: "为影响力而生。",
+    about_p1: "我是一位心理社会支持专家，通过NGO工作在自杀预防、倦怠陪伴和幸存者支持方面有4年以上的实地经验。Safe Mind源于一个简单的观察：在创意产业中，心理支持只存在于顶层。对其他所有人来说几乎没有。",
+    about_p2: "通宵工作的经纪人、无休止巡演的摄影师、承受不可能压力的实习生 -  - 正是他们让一切成为可能。他们也值得被关爱。",
+    about_linkedin: "查看LinkedIn主页 →",
+    cta_h2: "准备好为您的团队带来关爱了吗？", cta_p: "无论您代表经纪公司、工作室，还是寻求个人支持 -  - 我们在这里。让我们谈谈。", cta_btn: "联系我们",
+    footer_desc: "面向创意产业的心理健康。无论角色或级别，对所有人开放。",
+    footer_elle: "→ 访问Safe Mind", footer_col1: "服务", footer_col2: "评估", footer_col3: "公司",
+    fc1_1: "预防", fc1_2: "个人支持", fc1_3: "团队培训", fc1_4: "协议",
+    fc3_1: "关于我们", fc3_2: "联系我们", fc3_3: "博客", fc3_4: "客户登录",
+    footer_rights: "版权所有。", footer_tagline: "\"守护聚光灯背后的每一颗心。\""
+  },
+  th: {
+    nav_services: "บริการ", nav_who: "กลุ่มเป้าหมาย", nav_tests: "การประเมิน",
+    nav_about: "เกี่ยวกับเรา", nav_contact: "ติดต่อ", nav_account: "เข้าสู่ระบบ",
+    hero_eyebrow: "โปรแกรมสุขภาพจิตและความเป็นอยู่ที่ดี",
+    hero_h1_a: "ปกป้องจิตใจ", hero_h1_b: "เบื้องหลังแสงไฟ", hero_h1_c: "",
+    hero_desc: "Safe Mind ให้การสนับสนุนด้านสุขภาวะทางจิตอย่างมืออาชีพสำหรับอุตสาหกรรมสร้างสรรค์และวัฒนธรรม สำหรับทุกคน ตั้งแต่นักแสดงหลักไปจนถึงพนักงานทำความสะอาด ไม่ต้องการ HR",
+    hero_cta1: "ดูบริการของเรา", hero_cta2: "ติดต่อเรา",
+    badge1: "100% ออนไลน์ทั่วโลก", badge2: "การป้องกัน ไม่ใช่แค่วิกฤต",
+    card_title: "ความเป็นอยู่ที่ดีของคุณสำคัญ",
+    card_desc: "ไม่ว่าคุณจะเป็นผู้จัดการ ช่างกล้อง เจ้าหน้าที่รักษาความปลอดภัย หรือนักศึกษาฝึกงาน  -  Safe Mind อยู่ที่นี่เพื่อคุณ",
+    stat1: "ภาษา", stat2: "เป็นความลับ",
+    mission_tag: "ปรัชญาของเรา",
+    mission_quote: "\"อุตสาหกรรมสร้างสรรค์เปล่งประกายด้วยมือที่มองไม่เห็นนับพันคู่ พวกเขาสมควรได้รับมากกว่าการยอมรับ  -  พวกเขาสมควรได้รับการดูแล\"",
+    mission_author: " -  Amakon Grace Daniella ผู้ก่อตั้ง Safe Mind",
+    mp1_title: "ป้องกันก่อน", mp1_desc: "เราลงมือก่อนวิกฤตจะเกิดขึ้น แนวทางของเราเชิงรุกและต่อเนื่อง",
+    mp2_title: "องค์รวมและไม่ตีตรา", mp2_desc: "สุขภาพจิตไม่ใช่ความอ่อนแอ เราสร้างพื้นที่ที่ทุกคนรู้สึกปลอดภัยที่จะพูด",
+    mp3_title: "เข้าถึงได้ทั่วโลก", mp3_desc: "100% ออนไลน์ หลายภาษา และคำนึงถึงวัฒนธรรม  -  สำหรับทีมทั่วโลก",
+    services_tag: "สิ่งที่เราเสนอ", services_h2a: "สี่เสาหลัก", services_h2b: "แห่งการดูแล",
+    services_desc: "ทุกบริการให้บริการ 100% ออนไลน์และปรับแต่งให้เหมาะกับวัฒนธรรมและความต้องการขององค์กรของคุณ",
+    s1_title: "การป้องกันและจิตศึกษา", s1_desc: "สร้างความตระหนักและความรู้ด้านสุขภาพจิตทั่วทั้งองค์กร",
+    s2_title: "การฟังและการสนับสนุนส่วนบุคคล", s2_desc: "เซสชั่นส่วนบุคคลที่เป็นความลับเพื่อพื้นที่ปลอดภัยในการพูด ประเมิน และรับคำแนะนำ",
+    s3_title: "การฝึกอบรมทีมและผู้จัดการ", s3_desc: "ให้เครื่องมือแก่ผู้จัดการในการรับรู้สัญญาณความทุกข์",
+    s4_title: "โปรโตคอลและความปลอดภัยองค์กร", s4_desc: "ออกแบบระบบที่แข็งแกร่งเพื่อปกป้องพนักงานในระดับโครงสร้าง",
+    who_tag: "กลุ่มเป้าหมาย", who_h2a: "ทุกคน", who_h2b: "มีความสำคัญ",
+    who_desc: "หากคุณทำงานในองค์กร คุณอยู่ในขอบเขต ไม่มีบทบาทใดเล็กเกินไป  -  จาก CEO ถึงนักศึกษาฝึกงาน Safe Mind เพื่อพวกคุณทุกคน",
+    wc1_title: "การผลิตและเทคนิค", wc1_1: "ช่างกล้อง", wc1_2: "ตัดต่อวิดีโอและเสียง", wc1_3: "ทีมแสงและเวที", wc1_4: "ไอทีและเทคนิค",
+    wc2_title: "การจัดการและประสานงาน", wc2_1: "ผู้จัดการทัวร์และศิลปิน", wc2_2: "HR และการสรรหา", wc2_3: "ผู้ประสานงานโครงการ", wc2_4: "ทีมจัดตาราง",
+    wc3_title: "ครีเอทีฟและมีเดีย", wc3_1: "ผู้จัดการโซเชียลมีเดีย", wc3_2: "นักออกแบบกราฟิก", wc3_3: "ช่างภาพ", wc3_4: "ผู้สร้างเนื้อหา",
+    wc4_title: "สนับสนุนและปฏิบัติการ", wc4_1: "เจ้าหน้าที่ธุรการ", wc4_2: "คนขับและโลจิสติกส์", wc4_3: "การจัดเลี้ยงและการต้อนรับ", wc4_4: "ทีมซ่อมบำรุง",
+    wc5_title: "ความปลอดภัย", wc5_1: "เจ้าหน้าที่รักษาความปลอดภัย", wc5_2: "บอดี้การ์ด", wc5_3: "เจ้าหน้าที่ความปลอดภัยงาน", wc5_4: "การจัดการฝูงชน",
+    wc6_title: "นักศึกษาฝึกงานและเริ่มต้นอาชีพ", wc6_1: "นักศึกษาฝึกงาน (ทุกแผนก)", wc6_2: "ผู้ฝึกงาน", wc6_3: "พนักงานระดับจูเนียร์", wc6_4: "นักศึกษาฝึกงาน",
+    tests_tag: "การประเมินทางจิตวิทยา", tests_h2a: "รู้จัก", tests_h2b: "สถานะของคุณ",
+    tests_desc: "การประเมินทางจิตวิทยาที่ผ่านการตรวจสอบ  -  ตั้งแต่การคัดกรองด่วนพร้อมผลลัพธ์ทันทีไปจนถึงการประเมินที่ครอบคลุมโดยทีมของเรา",
+    t1_desc: "วัดความเหนื่อยล้าทางอารมณ์ การปลดบุคลิกภาพ และความรู้สึกสำเร็จส่วนบุคคล",
+    t2_desc: "การคัดกรองความวิตกกังวลทั่วไป 7 ข้อพร้อมผลลัพธ์อัตโนมัติทันที",
+    t3_desc: "เครื่องมือคัดกรองภาวะซึมเศร้า 9 ข้อที่ใช้ทั่วโลก",
+    t4_desc: "วัดระดับความเครียดที่รับรู้",
+    t5_desc: "ประเมินคุณภาพการนอนหลับในช่วงหนึ่งเดือน",
+    t6_desc: "มาตรฐานโลก 10 ข้อสำหรับวัดความนับถือตนเอง",
+    t7_desc: "การประเมินความเสี่ยงการฆ่าตัวตายอย่างครอบคลุม ผลลัพธ์ตรวจสอบโดยทีมของเรา",
+    t8_desc: "การประเมินบุคลิกภาพและจิตวิทยาเชิงลึก รวมการวิเคราะห์ผู้เชี่ยวชาญอย่างสมบูรณ์",
+    about_tag: "เกี่ยวกับผู้ก่อตั้ง", about_h2a: "หยั่งรากในการดูแล", about_h2b: "สร้างเพื่อผลกระทบ",
+    about_p1: "ฉันเป็นผู้เชี่ยวชาญด้านการสนับสนุนทางจิตสังคมที่มีประสบการณ์ภาคสนามกว่า 4 ปีในการป้องกันการฆ่าตัวตาย การดูแลภาวะหมดไฟ และการสนับสนุนผู้รอดชีวิตผ่านงาน NGO Safe Mind เกิดจากการสังเกตง่ายๆ: ในอุตสาหกรรมสร้างสรรค์ การสนับสนุนทางจิตวิทยามีอยู่สำหรับผู้ที่อยู่บนสุด แทบไม่มีสำหรับคนอื่นๆ",
+    about_p2: "ผู้จัดการที่ทำงานตลอดคืน ช่างกล้องในทัวร์ไม่รู้จบ นักศึกษาฝึกงานที่แบกรับภาระที่เป็นไปไม่ได้  -  พวกเขาคือคนที่ทำให้ทุกอย่างเป็นไปได้ พวกเขาก็สมควรได้รับการดูแลเช่นกัน",
+    about_linkedin: "ดูโปรไฟล์ LinkedIn →",
+    cta_h2: "พร้อมนำการดูแลมาสู่ทีมของคุณหรือยัง?", cta_p: "ไม่ว่าคุณจะเป็นตัวแทนเอเจนซี่ สตูดิโอ หรือบุคคลที่ต้องการการสนับสนุน  -  เราอยู่ที่นี่ มาคุยกัน", cta_btn: "ติดต่อเรา",
+    footer_desc: "สุขภาวะทางจิตสำหรับอุตสาหกรรมสร้างสรรค์ เข้าถึงได้สำหรับทุกคนไม่ว่าบทบาทหรือระดับใด",
+    footer_elle: "→ เยี่ยมชม Safe Mind", footer_col1: "บริการ", footer_col2: "การประเมิน", footer_col3: "บริษัท",
+    fc1_1: "การป้องกัน", fc1_2: "การสนับสนุนส่วนบุคคล", fc1_3: "การฝึกอบรมทีม", fc1_4: "โปรโตคอล",
+    fc3_1: "เกี่ยวกับเรา", fc3_2: "ติดต่อ", fc3_3: "บล็อก", fc3_4: "เข้าสู่ระบบ",
+    footer_rights: "สงวนลิขสิทธิ์", footer_tagline: "\"สุขภาวะทางจิตสำหรับทุกคนในอุตสาหกรรมสร้างสรรค์\""
+  },
+  de: {
+    nav_services: "Leistungen", nav_who: "Unsere Zielgruppe", nav_tests: "Assessments",
+    nav_about: "Uber uns", nav_contact: "Kontakt", nav_account: "Mein Konto",
+    nav_session: "Meine Sitzung", nav_book: "Beratung buchen",
+    hero_eyebrow: "Psychologisches Wohlbefinden fur die Kreativbranche",
+    hero_h1_a: "Jede Person hinter der Arbeit", hero_h1_b: "verdient Fursorge.", hero_h1_c: "",
+    hero_desc: "Safe Mind bietet professionelle Unterstutzung fur das psychische Wohlbefinden aller Menschen in der Kreativ- und Kulturindustrie. Vom Headliner bis zum Reinigungspersonal.",
+    hero_cta1: "Unsere Leistungen entdecken", hero_cta2: "Beratung buchen",
+    mission_tag: "Unsere Philosophie",
+    mission_quote: "\"Die Kreativbranche leuchtet durch Tausende unsichtbarer Hande. Sie verdienen mehr als Anerkennung - sie verdienen Fursorge.\"",
+    mission_author: "- Amakon Grace Daniella, Grunderin von Safe Mind",
+    mp1_title: "Pravention zuerst", mp1_desc: "Wir handeln, bevor Krisen entstehen. Unser Ansatz ist proaktiv, kontinuierlich und zutiefst menschlich.",
+    mp2_title: "Ganzheitlich und entstigmatisierend", mp2_desc: "Psychische Gesundheit ist keine Schwache. Wir schaffen Raume, in denen sich jeder sicher fuhlt zu sprechen.",
+    mp3_title: "Global zuganglich", mp3_desc: "100% remote, mehrsprachig und kultursensibel - fur Teams weltweit.",
+    services_tag: "Unser Angebot", services_h2a: "Vier Saulen", services_h2b: "der Fursorge",
+    services_desc: "Alle Leistungen werden 100% remote erbracht und auf die Kultur und Bedurfnisse Ihrer Organisation abgestimmt.",
+    s1_title: "Pravention & Psychoedukation", s1_desc: "Aufbau von psychologischem Wissen und Bewusstsein in der gesamten Organisation.",
+    s2_title: "Zuhoren & Individuelle Unterstutzung", s2_desc: "Vertrauliche Einzelsitzungen, die einen sicheren Raum bieten, um gehort, bewertet und begleitet zu werden.",
+    s3_title: "Team- & Managementschulung", s3_desc: "Fuhrungskrafte mit Werkzeugen ausstatten, um Belastungssignale zu erkennen und darauf zu reagieren.",
+    s4_title: "Protokolle & Organisationssicherheit", s4_desc: "Robuste Systeme entwerfen, die Mitarbeiter auf struktureller Ebene schutzen.",
+    who_tag: "Unsere Zielgruppe", who_h2a: "Jeder", who_h2b: "zahlt hier",
+    who_desc: "Wenn Sie in der Kreativbranche arbeiten, gehoren Sie dazu. Keine Rolle ist zu klein, kein Vertrag zu kurz. Safe Mind ist fur Sie alle.",
+    tests_tag: "Psychologische Assessments", tests_h2a: "Erfahren Sie", tests_h2b: "wo Sie stehen",
+    tests_desc: "Validierte psychologische Assessments - von schnellen Screenings mit sofortigen Ergebnissen bis hin zu umfassenden Evaluierungen.",
+    t1_desc: "Misst personliche, arbeitsbezogene und klientenbezogene Erschopfung.",
+    t2_desc: "7-Punkte-Screening auf generalisierte Angststorung mit sofortigen Ergebnissen.",
+    t3_desc: "9-Punkte-Depressions-Screening-Tool, weltweit von Fachleuten verwendet.",
+    t4_desc: "Misst wahrgenommene Stresslevel und Stressbewertung.",
+    t5_desc: "Bewertet Schlafqualitat und -storungen uber einen Monat.",
+    t6_desc: "Der Goldstandard fur globales Selbstwertgefuhl in 10 Punkten.",
+    t7_desc: "Umfassende Suizidrisikobewertung. Ergebnisse werden von unserem Team uberpruft.",
+    t8_desc: "Tiefgreifende Personlichkeits- und psychologische Assessments.",
+    cta_h2: "Bereit, Fursorge in Ihr Team zu bringen?", cta_p: "Ob Agentur, Studio oder Einzelperson - wir sind hier. Lassen Sie uns sprechen.", cta_btn: "Kontakt aufnehmen",
+    footer_desc: "Psychisches Wohlbefinden fur die Kreativbranche. Fur alle zuganglich, unabhangig von Rolle oder Rang.",
+    footer_about: "Uber Safe Mind", footer_col1: "Leistungen", footer_col2: "Assessments", footer_col3: "Unternehmen",
+    fc1_1: "Pravention", fc1_2: "Individuelle Unterstutzung", fc1_3: "Teamschulung", fc1_4: "Protokolle",
+    fc3_1: "Uber uns", fc3_2: "Kontakt", fc3_3: "Blog", fc3_4: "Anmelden",
+    footer_rights: "Alle Rechte vorbehalten.", footer_tagline: "\"Psychisches Wohlbefinden fur jeden in der Kreativbranche.\""
+  },
+  es: {
+    nav_services: "Servicios", nav_who: "A quien servimos", nav_tests: "Evaluaciones",
+    nav_about: "Sobre nosotros", nav_contact: "Contacto", nav_account: "Mi cuenta",
+    nav_session: "Mi sesion", nav_book: "Reservar consulta",
+    hero_eyebrow: "Bienestar psicologico para la industria creativa",
+    hero_h1_a: "Cada persona detras del trabajo", hero_h1_b: "merece cuidado.", hero_h1_c: "",
+    hero_desc: "Safe Mind ofrece apoyo profesional al bienestar psicologico para todos en las industrias creativas y culturales. Desde el artista principal hasta el personal de limpieza.",
+    hero_cta1: "Explorar nuestros servicios", hero_cta2: "Reservar una consulta",
+    mission_tag: "Nuestra filosofia",
+    mission_quote: "\"La industria creativa brilla gracias a miles de manos invisibles. Merecen mas que reconocimiento - merecen cuidado.\"",
+    mission_author: "- Amakon Grace Daniella, Fundadora de Safe Mind",
+    mp1_title: "Prevencion primero", mp1_desc: "Actuamos antes de que ocurran las crisis. Nuestro enfoque es proactivo, continuo y profundamente humano.",
+    mp2_title: "Holistico y sin estigma", mp2_desc: "La salud mental no es debilidad. Creamos espacios donde cada persona se siente segura para hablar.",
+    mp3_title: "Globalmente accesible", mp3_desc: "100% remoto, multilingue y culturalmente sensible - disponible para equipos en todo el mundo.",
+    services_tag: "Lo que ofrecemos", services_h2a: "Cuatro pilares", services_h2b: "de cuidado",
+    services_desc: "Todos los servicios se prestan 100% de forma remota y adaptados a la cultura y necesidades de su organizacion.",
+    s1_title: "Prevencion y psicoeducacion", s1_desc: "Construyendo conocimiento y conciencia psicologica en toda la organizacion.",
+    s2_title: "Escucha y apoyo individual", s2_desc: "Sesiones individuales confidenciales que proporcionan un espacio seguro para ser escuchado, evaluado y orientado.",
+    s3_title: "Formacion de equipos y gestion", s3_desc: "Equipar a gerentes y lideres con herramientas para reconocer senales de angustia psicologica.",
+    s4_title: "Protocolos y seguridad organizacional", s4_desc: "Disenar sistemas robustos que protejan a los empleados a nivel estructural.",
+    who_tag: "A quien servimos", who_h2a: "Todos", who_h2b: "importan aqui",
+    who_desc: "Si trabajas en la industria creativa, estas incluido. Ningun rol es demasiado pequeno, ningun contrato demasiado corto. Safe Mind es para todos ustedes.",
+    tests_tag: "Evaluaciones psicologicas", tests_h2a: "Conoce", tests_h2b: "tu estado",
+    tests_desc: "Evaluaciones psicologicas validadas - desde cribados rapidos con resultados inmediatos hasta evaluaciones completas revisadas por nuestro equipo.",
+    t1_desc: "Mide el agotamiento personal, laboral y relacionado con clientes.",
+    t2_desc: "Cribado de trastorno de ansiedad generalizada de 7 items con resultados automaticos inmediatos.",
+    t3_desc: "Herramienta de cribado de depresion de 9 items utilizada globalmente.",
+    t4_desc: "Mide los niveles de estres percibido.",
+    t5_desc: "Evalua la calidad del sueno y las perturbaciones durante un mes.",
+    t6_desc: "El estandar de oro de 10 items para la autoestima global.",
+    t7_desc: "Evaluacion integral del riesgo suicida. Resultados revisados por nuestro equipo.",
+    t8_desc: "Evaluaciones psicologicas y de personalidad en profundidad.",
+    cta_h2: "Listo para llevar el cuidado a su equipo?", cta_p: "Ya sea que represente una agencia, estudio o sea un individuo que busca apoyo - estamos aqui. Hablemos.", cta_btn: "Ponerse en contacto",
+    footer_desc: "Bienestar psicologico para la industria creativa. Accesible para todos, independientemente del rol o rango.",
+    footer_about: "Sobre Safe Mind", footer_col1: "Servicios", footer_col2: "Evaluaciones", footer_col3: "Empresa",
+    fc1_1: "Prevencion", fc1_2: "Apoyo individual", fc1_3: "Formacion de equipos", fc1_4: "Protocolos",
+    fc3_1: "Sobre nosotros", fc3_2: "Contacto", fc3_3: "Blog", fc3_4: "Iniciar sesion",
+    footer_rights: "Todos los derechos reservados.", footer_tagline: "\"Bienestar psicologico para todos en la industria creativa.\""
   }
 };
 
-const langs = ['kr', 'jp', 'zh', 'th', 'de', 'es'];
-langs.forEach(lang => {
-  if (!i18n[lang]) i18n[lang] = { ...i18n.en };
-});
-
 let currentLang = 'en';
-
-function updateStats(lang) {
-  const statValues = {
-    en: { stat1: "86%", stat2: "40.8", stat3: "3x", stat4: "70%", stat5: "86%" },
-    fr: { stat1: "86%", stat2: "40,8", stat3: "3x", stat4: "70%", stat5: "86%" },
-    kr: { stat1: "86%", stat2: "40.8명", stat3: "3배", stat4: "70%", stat5: "86%" },
-    jp: { stat1: "86%", stat2: "40.8人", stat3: "3倍", stat4: "70%", stat5: "86%" },
-    zh: { stat1: "86%", stat2: "40.8人", stat3: "3倍", stat4: "70%", stat5: "86%" },
-    th: { stat1: "86%", stat2: "40.8 คน", stat3: "3 เท่า", stat4: "70%", stat5: "86%" },
-    de: { stat1: "86%", stat2: "40,8", stat3: "3x", stat4: "70%", stat5: "86%" },
-    es: { stat1: "86%", stat2: "40,8", stat3: "3x", stat4: "70%", stat5: "86%" }
-  };
-  const values = statValues[lang] || statValues.en;
-  document.querySelectorAll('[data-i18n-stat]').forEach(el => {
-    const key = el.getAttribute('data-i18n-stat');
-    if (values[key]) el.textContent = values[key];
-  });
-}
 
 function setLang(lang) {
   currentLang = lang;
@@ -1438,29 +2012,24 @@ function setLang(lang) {
   if (!t) return;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) {
-      if (key === 'alert_text') el.innerHTML = t[key];
-      else el.textContent = t[key];
-    }
+    if (t[key] !== undefined) el.textContent = t[key];
   });
-  updateStats(lang);
   document.documentElement.lang = lang === 'kr' ? 'ko' : lang === 'jp' ? 'ja' : lang === 'zh' ? 'zh' : lang === 'th' ? 'th' : lang === 'de' ? 'de' : lang === 'es' ? 'es' : 'en';
 }
 
+// Language dropdown
 function toggleLangMenu() {
   const dd = document.getElementById('langDropdown');
   const btn = document.getElementById('langToggle');
   dd.classList.toggle('open');
   btn.classList.toggle('open');
 }
-
 function selectLang(lang, label) {
   setLang(lang);
   document.getElementById('langToggle').textContent = label;
   document.getElementById('langDropdown').classList.remove('open');
   document.getElementById('langToggle').classList.remove('open');
 }
-
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.lang-switcher')) {
     document.getElementById('langDropdown').classList.remove('open');
@@ -1468,15 +2037,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
-document.querySelectorAll('.lang-dropdown button').forEach(btn => {
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const lang = this.getAttribute('data-lang');
-    const label = this.textContent;
-    selectLang(lang, label);
-  });
-});
-
+// Carousel
 let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel-slide');
 const dots = document.querySelectorAll('.cdot');
@@ -1489,20 +2050,29 @@ function goToSlide(n) {
   dots[currentSlide].classList.add('active');
 }
 
-function nextSlide() { goToSlide((currentSlide + 1) % slides.length); }
+function nextSlide() {
+  goToSlide((currentSlide + 1) % slides.length);
+}
+
 setInterval(nextSlide, 5000);
 
+// Nav scroll effect
 window.addEventListener('scroll', function() {
   const nav = document.getElementById('mainNav');
-  if (window.scrollY > 60) nav.classList.add('scrolled');
-  else nav.classList.remove('scrolled');
+  if (window.scrollY > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
 });
 
+// Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// Init
 setLang('en');
 </script>
 </body>
