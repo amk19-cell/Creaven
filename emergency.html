@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Mind - Emergency Resources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{--green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--green-pale:#F2F8F2;--blue:#2B5FA8;--blue-light:#E8EFF8;--gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;--cream:#FAFCFA;--cream-dark:#F0F5F0;--charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;--red:#C0392B;--red-dark:#922B21;--red-light:#FDEAEA;--orange:#E67E22;--orange-light:#FEF5EC;--white:#FFFFFF;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-back{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-back:hover{color:var(--green);}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:100;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover{background:var(--green-light);color:var(--green-dark);}
+.hero{background:linear-gradient(135deg,var(--red-dark),var(--red));padding:60px 48px;text-align:center;}
+.hero-eyebrow{display:inline-block;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);padding:5px 16px;border-radius:30px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:300;color:white;line-height:1.2;margin-bottom:14px;}
+.hero h1 em{font-style:italic;}
+.hero p{font-size:14px;color:rgba(255,255,255,.75);max-width:620px;margin:0 auto;line-height:1.7;}
+.notice{background:var(--orange-light);border-left:4px solid var(--orange);border-radius:0 16px 16px 0;padding:20px 28px;margin:32px 48px;display:flex;gap:16px;}
+.notice-icon{font-size:24px;flex-shrink:0;}
+.notice-title{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.notice-text{font-size:13px;color:var(--mid);line-height:1.6;}
+.main{max-width:1100px;margin:0 auto;padding:48px 24px;}
+.section-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:10px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,36px);font-weight:300;color:var(--charcoal);margin-bottom:28px;line-height:1.2;}
+.section-title em{font-style:italic;color:var(--red);}
+.clarif{background:var(--green-light);border-radius:20px;padding:32px;margin-bottom:48px;display:flex;gap:20px;align-items:flex-start;}
+.clarif-icon{font-size:36px;flex-shrink:0;}
+.clarif-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--green-dark);margin-bottom:10px;}
+.clarif-text{font-size:14px;color:var(--mid);line-height:1.7;}
+.clarif-text strong{color:var(--green-dark);}
+.consult-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:56px;}
+.ct-card{background:white;border-radius:16px;padding:24px;border:1px solid rgba(0,0,0,.06);}
+.ct-icon{font-size:28px;margin-bottom:12px;}
+.ct-title{font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.ct-desc{font-size:13px;color:var(--mid);line-height:1.6;}
+.ct-badge{display:inline-block;margin-top:10px;font-size:10px;padding:3px 10px;border-radius:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.badge-urgent{background:var(--red-light);color:var(--red);}
+.badge-regular{background:var(--green-light);color:var(--green-dark);}
+.badge-assess{background:var(--blue-light);color:var(--blue);}
+.countries-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px;}
+.cc{background:white;border-radius:20px;padding:28px;border:1px solid rgba(0,0,0,.06);transition:all .25s;}
+.cc:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.08);}
+.cc-flag{font-size:32px;margin-bottom:10px;}
+.cc-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);margin-bottom:16px;}
+.num-item{margin-bottom:12px;}
+.num-type{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--light);font-weight:600;margin-bottom:3px;}
+.num-row{display:flex;align-items:center;gap:8px;}
+.num-row a{font-size:18px;font-weight:600;color:var(--red);text-decoration:none;font-family:'Cormorant Garamond',serif;}
+.num-row a:hover{color:var(--red-dark);}
+.num-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;}
+.tag-24{background:var(--red-light);color:var(--red);}
+.tag-mental{background:var(--blue-light);color:var(--blue);}
+.tag-crisis{background:var(--orange-light);color:var(--orange);}
+.num-note{font-size:11px;color:var(--light);margin-top:3px;line-height:1.4;}
+.cc-global{border:1.5px solid var(--gold);background:var(--gold-light);}
+.global-res{background:var(--green-dark);border-radius:24px;padding:40px;margin-bottom:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.gr-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:white;margin-bottom:10px;}
+.gr-title em{font-style:italic;color:var(--gold);}
+.gr-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;}
+.gr-links{display:flex;flex-direction:column;gap:12px;}
+.gr-link{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;transition:background .2s;}
+.gr-link:hover{background:rgba(255,255,255,.14);}
+.gr-link-name{font-size:14px;font-weight:500;color:white;}
+.gr-link-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px;}
+.gr-arrow{color:var(--gold);font-size:16px;}
+.quote-box{background:var(--charcoal);border-radius:24px;padding:48px;text-align:center;margin-bottom:48px;}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,28px);font-weight:300;color:white;line-height:1.5;font-style:italic;margin-bottom:14px;}
+.quote-text em{color:var(--gold);}
+.quote-sub{font-size:13px;color:rgba(255,255,255,.4);}
+.page-cta{background:var(--green);border-radius:20px;padding:36px;text-align:center;}
+.page-cta h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:white;margin-bottom:8px;}
+.page-cta p{font-size:14px;color:rgba(255,255,255,.7);margin-bottom:20px;}
+.btn-w{background:white;color:var(--green-dark);padding:12px 28px;border-radius:40px;font-size:14px;font-weight:600;text-decoration:none;display:inline-block;transition:all .2s;margin:4px;}
+.btn-w:hover{background:var(--green-light);}
+.btn-ow{background:none;color:white;padding:12px 28px;border-radius:40px;font-size:14px;text-decoration:none;display:inline-block;border:1.5px solid rgba(255,255,255,.4);transition:all .2s;margin:4px;}
+.btn-ow:hover{background:rgba(255,255,255,.1);}
+footer{background:var(--charcoal);padding:24px 48px;text-align:center;margin-top:40px;}
+footer p{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;}
+@media(max-width:900px){nav{padding:12px 20px;}.hero,.main{padding-left:20px;padding-right:20px;}.notice{margin:20px;}.countries-grid,.consult-grid{grid-template-columns:1fr;}.global-res{grid-template-columns:1fr;}footer{padding:20px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-safemind.png" alt="Safe Mind" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      <span class="main-name">Safe Mind</span>
+      <span class="sub-name">Psychological Well-being</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" id="nav-back">Back to site</a>
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')">English</button>
+        <button onclick="selectLang('fr','FR')">Francais</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('th','TH')">ไทย</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Espanol</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow" id="h-eyebrow">Psychological Crisis Resources</div>
+  <h1 id="h-title">If you are in danger right now,<br><em>please call emergency services.</em></h1>
+  <p id="h-desc">Safe Mind is an online platform. We cannot replace physical emergency services. If someone is in immediate physical danger, call your country's emergency number first. We are here for what comes after.</p>
+</div>
+
+<div class="notice">
+  <div class="notice-icon">⚠️</div>
+  <div>
+    <div class="notice-title" id="n-title">Important: Safe Mind is an online psychological well-being service</div>
+    <div class="notice-text" id="n-text">We provide prevention, support, and consultations through our platform. In cases of acute crisis involving a risk to life such as a suicide attempt, self-harm, or a psychiatric emergency requiring physical intervention, please contact your local emergency services immediately. Safe Mind psychologists can support you before and after a crisis, but physical emergencies require physical responders.</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="clarif">
+    <div class="clarif-icon">💚</div>
+    <div>
+      <div class="clarif-title" id="clarif-title">What Safe Mind can do for you</div>
+      <div class="clarif-text" id="clarif-text">Safe Mind is available for <strong>crisis consultations</strong> when you are in psychological distress but not in immediate physical danger. If you feel overwhelmed, anxious, on the edge, or simply need to talk to someone right now, book an emergency consultation. We will connect you with a psychologist as quickly as possible. <strong>We are one call away.</strong></div>
+    </div>
+  </div>
+
+  <div class="section-label" id="ct-label">Safe Mind Consultations</div>
+  <div class="section-title" id="ct-title">Five ways we <em>can help</em></div>
+
+  <div class="consult-grid">
+    <div class="ct-card">
+      <div class="ct-icon">🚨</div>
+      <div class="ct-title" id="ct1-t">Emergency Consultation</div>
+      <div class="ct-desc" id="ct1-d">You are in crisis but not in physical danger. You need to speak to someone right now. We connect you with a psychologist as quickly as possible.</div>
+      <span class="ct-badge badge-urgent" id="ct1-b">Priority</span>
+    </div>
+    <div class="ct-card">
+      <div class="ct-icon">🔄</div>
+      <div class="ct-title" id="ct2-t">Follow-up Session</div>
+      <div class="ct-desc" id="ct2-d">Regular sessions for ongoing accompaniment. Your psychologist follows your journey after a difficult period or for continuous support.</div>
+      <span class="ct-badge badge-regular" id="ct2-b">Ongoing</span>
+    </div>
+    <div class="ct-card">
+      <div class="ct-icon">📋</div>
+      <div class="ct-title" id="ct3-t">Psychological Assessment</div>
+      <div class="ct-desc" id="ct3-d">A comprehensive evaluation with a full written report. Understand your situation and what support is most adapted to you.</div>
+      <span class="ct-badge badge-assess" id="ct3-b">Evaluation</span>
+    </div>
+    <div class="ct-card">
+      <div class="ct-icon">🔥</div>
+      <div class="ct-title" id="ct4-t">Burnout Accompaniment</div>
+      <div class="ct-desc" id="ct4-d">Specialized support for professional exhaustion. Recognizing, understanding, and recovering from burnout in the creative industry context.</div>
+      <span class="ct-badge badge-regular" id="ct4-b">Specialized</span>
+    </div>
+    <div class="ct-card">
+      <div class="ct-icon">👋</div>
+      <div class="ct-title" id="ct5-t">First Consultation</div>
+      <div class="ct-desc" id="ct5-d">20 to 30 minutes to meet your psychologist and define together the support that is right for you. No commitment required.</div>
+      <span class="ct-badge badge-assess" id="ct5-b">Discovery</span>
+    </div>
+    <div class="ct-card">
+      <div class="ct-icon">🏢</div>
+      <div class="ct-title" id="ct6-t">Organizational Consultation</div>
+      <div class="ct-desc" id="ct6-d">For agencies and studios. Assess the psychological climate of your team and co-design a well-being program for your structure.</div>
+      <span class="ct-badge badge-regular" id="ct6-b">B2B</span>
+    </div>
+  </div>
+
+  <div class="section-label" id="em-label">Emergency Numbers</div>
+  <div class="section-title" id="em-title">Physical emergencies <em>by country</em></div>
+
+  <div class="countries-grid">
+
+    <div class="cc">
+      <div class="cc-flag">🇰🇷</div>
+      <div class="cc-name">South Korea</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:119">119</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Police</div><div class="num-row"><a href="tel:112">112</a></div></div>
+      <div class="num-item"><div class="num-type">Suicide prevention</div><div class="num-row"><a href="tel:109">109</a><span class="num-tag tag-mental">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Mental health hotline</div><div class="num-row"><a href="tel:1393">1393</a><span class="num-tag tag-mental">24/7</span></div><div class="num-note">Ministry of Health and Welfare</div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇫🇷</div>
+      <div class="cc-name">France</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:112">112</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">SAMU medical</div><div class="num-row"><a href="tel:15">15</a></div></div>
+      <div class="num-item"><div class="num-type">Suicide prevention</div><div class="num-row"><a href="tel:3114">3114</a><span class="num-tag tag-mental">24/7</span></div><div class="num-note">Numero National de Prevention du Suicide</div></div>
+      <div class="num-item"><div class="num-type">Cyberbullying / distress</div><div class="num-row"><a href="tel:3018">3018</a><span class="num-tag tag-crisis">Youth</span></div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇯🇵</div>
+      <div class="cc-name">Japan</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:119">119</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Police</div><div class="num-row"><a href="tel:110">110</a></div></div>
+      <div class="num-item"><div class="num-type">Suicide prevention</div><div class="num-row"><a href="tel:0120-783-556">0120-783-556</a><span class="num-tag tag-mental">24/7</span></div><div class="num-note">Inochi no Denwa - free</div></div>
+      <div class="num-item"><div class="num-type">Mental health line</div><div class="num-row"><a href="tel:0570-064-556">0570-064-556</a></div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇩🇪</div>
+      <div class="cc-name">Germany</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:112">112</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Police</div><div class="num-row"><a href="tel:110">110</a></div></div>
+      <div class="num-item"><div class="num-type">Crisis counseling free</div><div class="num-row"><a href="tel:08001110111">0800 111 0 111</a><span class="num-tag tag-mental">24/7</span></div><div class="num-note">Telefonseelsorge</div></div>
+      <div class="num-item"><div class="num-type">Alternative line</div><div class="num-row"><a href="tel:08001110222">0800 111 0 222</a><span class="num-tag tag-mental">24/7</span></div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇪🇸</div>
+      <div class="cc-name">Spain</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:112">112</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Suicide prevention</div><div class="num-row"><a href="tel:024">024</a><span class="num-tag tag-mental">24/7</span></div><div class="num-note">Linea de Atencion a la Conducta Suicida</div></div>
+      <div class="num-item"><div class="num-type">General mental health</div><div class="num-row"><a href="tel:900720720">900 720 720</a></div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇹🇭</div>
+      <div class="cc-name">Thailand</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:1669">1669</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Police</div><div class="num-row"><a href="tel:191">191</a></div></div>
+      <div class="num-item"><div class="num-type">Mental health hotline</div><div class="num-row"><a href="tel:1323">1323</a><span class="num-tag tag-mental">24/7</span></div><div class="num-note">Department of Mental Health</div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇨🇳</div>
+      <div class="cc-name">China</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:120">120</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">Police</div><div class="num-row"><a href="tel:110">110</a></div></div>
+      <div class="num-item"><div class="num-type">Lifeline Shanghai</div><div class="num-row"><a href="tel:02162258120">021-62258120</a><span class="num-tag tag-mental">EN</span></div><div class="num-note">English available, 10am-10pm</div></div>
+    </div>
+
+    <div class="cc">
+      <div class="cc-flag">🇨🇮</div>
+      <div class="cc-name">Cote d'Ivoire</div>
+      <div class="num-item"><div class="num-type">All emergencies</div><div class="num-row"><a href="tel:112">112</a><span class="num-tag tag-24">24/7</span></div></div>
+      <div class="num-item"><div class="num-type">SAMU medical</div><div class="num-row"><a href="tel:185">185</a></div></div>
+      <div class="num-item"><div class="num-type">Police</div><div class="num-row"><a href="tel:111">111</a></div></div>
+      <div class="num-item"><div class="num-type">GBV and psychosocial</div><div class="num-row"><a href="tel:1303">1303</a><span class="num-tag tag-crisis">Free</span></div><div class="num-note">Ligne nationale contre les violences</div></div>
+    </div>
+
+    <div class="cc cc-global">
+      <div class="cc-flag">🌍</div>
+      <div class="cc-name">Other countries</div>
+      <div class="num-item"><div class="num-type">Universal emergency</div><div class="num-row"><a href="tel:112">112</a><span class="num-tag tag-24">Works worldwide</span></div><div class="num-note">Works in most countries on mobile without a SIM card</div></div>
+      <div class="num-item" style="margin-top:16px;"><div class="num-type">Find your local helpline</div><div style="margin-top:6px;"><a href="https://findahelpline.com" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:14px;font-weight:500;text-decoration:none;">findahelpline.com →</a><div class="num-note">175+ countries, verified 24/7</div></div></div>
+      <div class="num-item"><div class="num-type">Befrienders worldwide</div><div style="margin-top:6px;"><a href="https://www.befrienders.org" target="_blank" rel="noopener" style="color:var(--green-dark);font-size:14px;font-weight:500;text-decoration:none;">befrienders.org →</a></div></div>
+    </div>
+
+  </div>
+
+  <div class="global-res">
+    <div>
+      <div class="gr-title">Global resources <em>always available</em></div>
+      <div class="gr-desc">These organizations operate worldwide and provide support regardless of where you are. Many offer multilingual services and online chat.</div>
+    </div>
+    <div class="gr-links">
+      <a href="https://findahelpline.com" target="_blank" rel="noopener" class="gr-link">
+        <div><div class="gr-link-name">Find A Helpline</div><div class="gr-link-sub">175+ countries, verified crisis lines</div></div>
+        <span class="gr-arrow">→</span>
+      </a>
+      <a href="https://www.befrienders.org" target="_blank" rel="noopener" class="gr-link">
+        <div><div class="gr-link-name">Befrienders Worldwide</div><div class="gr-link-sub">Emotional support, volunteer network</div></div>
+        <span class="gr-arrow">→</span>
+      </a>
+      <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" rel="noopener" class="gr-link">
+        <div><div class="gr-link-name">IASP Crisis Centers</div><div class="gr-link-sub">International Association for Suicide Prevention</div></div>
+        <span class="gr-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="quote-box">
+    <div class="quote-text">"Fantasy and fame, yeah the things we choose.<br>But what about <em>exhaustion, hate, hard work,<br>pressure, self-hate</em> and other negative stuff?"</div>
+    <div class="quote-sub">The other side of the spotlight. Safe Mind is here for everything that does not make it into the highlight reel.</div>
+  </div>
+
+  <div class="page-cta">
+    <h3>You do not have to wait for a crisis to ask for help.</h3>
+    <p>Safe Mind is here before, during, and after difficult moments. Talk to a psychologist today.</p>
+    <a href="consultation.html" class="btn-w">Book an Emergency Consultation</a>
+    <a href="booking.html" class="btn-ow">Schedule a Session</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>Safe Mind 2026 - Psychological Well-being for the Creative Industry - All rights reserved.<br>Safe Mind is not a physical emergency service. In case of immediate danger to life, call 112 or your local emergency number.</p>
+</footer>
+
+<script>
+const T = {
+  en:{
+    "nav-back":"Back to site","h-eyebrow":"Psychological Crisis Resources",
+    "h-title":"If you are in danger right now, please call emergency services.",
+    "h-desc":"Safe Mind is an online platform. We cannot replace physical emergency services. If someone is in immediate physical danger, call your country emergency number first. We are here for what comes after.",
+    "n-title":"Important: Safe Mind is an online psychological well-being service",
+    "n-text":"We provide prevention, support, and consultations through our platform. In cases of acute crisis involving a risk to life such as a suicide attempt, self-harm, or a psychiatric emergency requiring physical intervention, please contact your local emergency services immediately. Safe Mind psychologists can support you before and after a crisis, but physical emergencies require physical responders.",
+    "clarif-title":"What Safe Mind can do for you",
+    "clarif-text":"Safe Mind is available for crisis consultations when you are in psychological distress but not in immediate physical danger. If you feel overwhelmed, anxious, on the edge, or simply need to talk to someone right now, book an emergency consultation. We will connect you with a psychologist as quickly as possible. We are one call away.",
+    "ct-label":"Safe Mind Consultations","ct-title":"Five ways we can help",
+    "ct1-t":"Emergency Consultation","ct1-d":"You are in crisis but not in physical danger. You need to speak to someone right now. We connect you with a psychologist as quickly as possible.","ct1-b":"Priority",
+    "ct2-t":"Follow-up Session","ct2-d":"Regular sessions for ongoing accompaniment. Your psychologist follows your journey after a difficult period or for continuous support.","ct2-b":"Ongoing",
+    "ct3-t":"Psychological Assessment","ct3-d":"A comprehensive evaluation with a full written report. Understand your situation and what support is most adapted to you.","ct3-b":"Evaluation",
+    "ct4-t":"Burnout Accompaniment","ct4-d":"Specialized support for professional exhaustion. Recognizing, understanding, and recovering from burnout in the creative industry context.","ct4-b":"Specialized",
+    "ct5-t":"First Consultation","ct5-d":"20 to 30 minutes to meet your psychologist and define together the support that is right for you. No commitment required.","ct5-b":"Discovery",
+    "ct6-t":"Organizational Consultation","ct6-d":"For agencies and studios. Assess the psychological climate of your team and co-design a well-being program for your structure.","ct6-b":"B2B",
+    "em-label":"Emergency Numbers","em-title":"Physical emergencies by country"
+  },
+  fr:{
+    "nav-back":"Retour au site","h-eyebrow":"Ressources en cas de crise psychologique",
+    "h-title":"Si vous etes en danger maintenant, appelez les secours.",
+    "h-desc":"Safe Mind est une plateforme en ligne. Nous ne pouvons pas remplacer les services d'urgence physiques. Si quelqu'un est en danger immediat, appelez d'abord le numero d'urgence de votre pays. Nous sommes la pour ce qui vient apres.",
+    "n-title":"Important : Safe Mind est un service de bien-etre psychologique en ligne",
+    "n-text":"Nous proposons de la prevention, du soutien et des consultations via notre plateforme. En cas de crise aigue impliquant un risque pour la vie, comme une tentative de suicide, une automutilation ou une urgence psychiatrique necessitant une intervention physique, contactez immediatement les services d'urgence locaux.",
+    "clarif-title":"Ce que Safe Mind peut faire pour vous",
+    "clarif-text":"Safe Mind est disponible pour les consultations de crise lorsque vous etes en detresse psychologique mais pas en danger physique immediat. Si vous vous sentez submerge, anxieux, au bord du gouffre, ou si vous avez simplement besoin de parler a quelqu'un maintenant, reservez une consultation d'urgence. Nous ferons tout pour vous connecter rapidement. Nous sommes a un appel.",
+    "ct-label":"Consultations Safe Mind","ct-title":"Cinq facons dont nous pouvons aider",
+    "ct1-t":"Consultation d'urgence","ct1-d":"Vous etes en crise mais pas en danger physique. Vous avez besoin de parler a quelqu'un maintenant. Nous vous connectons avec un psychologue aussi rapidement que possible.","ct1-b":"Prioritaire",
+    "ct2-t":"Seance de suivi","ct2-d":"Seances regulieres pour un accompagnement continu. Votre psychologue suit votre parcours apres une periode difficile ou pour un soutien continu.","ct2-b":"Continu",
+    "ct3-t":"Bilan psychologique","ct3-d":"Une evaluation complete avec un rapport ecrit complet. Comprendre votre situation et quel soutien est le plus adapte.","ct3-b":"Evaluation",
+    "ct4-t":"Accompagnement burnout","ct4-d":"Soutien specialise pour l'epuisement professionnel dans le contexte de l'industrie creative.","ct4-b":"Specialise",
+    "ct5-t":"Premiere consultation","ct5-d":"20 a 30 minutes pour rencontrer votre psychologue et definir ensemble le soutien qui vous convient. Sans engagement.","ct5-b":"Decouverte",
+    "ct6-t":"Consultation organisationnelle","ct6-d":"Pour les agences et studios. Evaluez le climat psychologique de votre equipe et co-construisez un programme de bien-etre.","ct6-b":"B2B",
+    "em-label":"Numeros d'urgence","em-title":"Urgences physiques par pays"
+  },
+  kr:{
+    "nav-back":"사이트로 돌아가기","h-eyebrow":"심리적 위기 자원",
+    "h-title":"지금 위험에 처해 있다면 응급 서비스에 전화하세요.",
+    "h-desc":"Safe Mind는 온라인 플랫폼입니다. 즉각적인 신체적 위험이 있다면 먼저 해당 국가의 응급 번호에 전화하세요. 그 이후를 위해 우리가 여기 있습니다.",
+    "n-title":"중요: Safe Mind는 온라인 심리적 웰빙 서비스입니다",
+    "n-text":"우리는 플랫폼을 통해 예방, 지원 및 상담을 제공합니다. 자살 시도, 자해 또는 물리적 개입이 필요한 정신과적 응급 상황과 같은 생명 위험을 수반하는 급성 위기의 경우 즉시 지역 응급 서비스에 연락하십시오.",
+    "clarif-title":"Safe Mind가 당신을 위해 할 수 있는 것",
+    "clarif-text":"Safe Mind는 즉각적인 신체적 위험은 없지만 심리적 고통을 겪고 있을 때 위기 상담을 제공합니다. 지금 누군가와 이야기해야 한다면 긴급 상담을 예약하세요. 가능한 한 빨리 연결해 드리겠습니다. 한 통화면 됩니다.",
+    "ct-label":"Safe Mind 상담","ct-title":"도울 수 있는 다섯 가지 방법",
+    "ct1-t":"긴급 상담","ct1-d":"위기 상황이지만 신체적 위험은 없습니다. 지금 바로 심리학자와 연결해 드리겠습니다.","ct1-b":"우선순위",
+    "ct2-t":"추적 세션","ct2-d":"지속적인 동반을 위한 정기 세션.","ct2-b":"지속",
+    "ct3-t":"심리 평가","ct3-d":"전체 보고서가 포함된 종합 평가.","ct3-b":"평가",
+    "ct4-t":"번아웃 동반","ct4-d":"창의 산업 맥락에서 번아웃을 인식하고 회복하기 위한 전문 지원.","ct4-b":"전문",
+    "ct5-t":"첫 번째 상담","ct5-d":"심리학자를 만나고 함께 적합한 지원을 정의하는 20-30분.","ct5-b":"발견",
+    "ct6-t":"조직 상담","ct6-d":"에이전시 및 스튜디오를 위한 팀 웰빙 프로그램.","ct6-b":"B2B",
+    "em-label":"응급 번호","em-title":"국가별 신체적 응급 상황"
+  }
+};
+
+// Fill other languages with EN as fallback
+['jp','zh','th','de','es'].forEach(l => T[l] = {...T.en});
+T.jp["nav-back"]="サイトに戻る"; T.jp["h-eyebrow"]="心理的危機リソース"; T.jp["em-title"]="国別の身体的緊急事態";
+T.zh["nav-back"]="返回网站"; T.zh["h-eyebrow"]="心理危机资源"; T.zh["em-title"]="各国身体紧急情况";
+T.th["nav-back"]="กลับไปยังเว็บไซต์"; T.th["h-eyebrow"]="ทรัพยากรวิกฤตทางจิตวิทยา";
+T.de["nav-back"]="Zuruck zur Website"; T.de["h-eyebrow"]="Ressourcen fur psychologische Krisen"; T.de["ct1-t"]="Notfallberatung"; T.de["ct4-t"]="Burnout-Begleitung";
+T.es["nav-back"]="Volver al sitio"; T.es["h-eyebrow"]="Recursos para crisis psicologicas"; T.es["ct1-t"]="Consulta de emergencia"; T.es["ct4-t"]="Acompanamiento burnout";
+
+const IDS = ["nav-back","h-eyebrow","h-title","h-desc","n-title","n-text","clarif-title","clarif-text","ct-label","ct-title","ct1-t","ct1-d","ct1-b","ct2-t","ct2-d","ct2-b","ct3-t","ct3-d","ct3-b","ct4-t","ct4-d","ct4-b","ct5-t","ct5-d","ct5-b","ct6-t","ct6-d","ct6-b","em-label","em-title"];
+
+function applyLang(l) {
+  const t = T[l] || T.en;
+  IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && t[id]) el.textContent = t[id];
+  });
+  document.documentElement.lang = {kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es'}[l] || 'en';
+}
+
+function toggleLangMenu() {
+  document.getElementById('langDropdown').classList.toggle('open');
+}
+function selectLang(l, label) {
+  applyLang(l);
+  document.getElementById('langToggle').textContent = label;
+  document.getElementById('langDropdown').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open');
+});
+
+applyLang('en');
+</script>
+</body>
+</html>
