@@ -149,8 +149,35 @@
     .question-text { font-size: 20px; }
   }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
+
+<script>
+(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+      window.location.href = 'account.html?redirect=' + encodeURIComponent(window.location.pathname.split('/').pop());
+    }
+  });
+})();
+</script>
+
+<!-- AUTH GUARD -->
+<div id="auth-guard" style="display:none;position:fixed;inset:0;background:rgba(250,252,250,.97);z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;font-family:'DM Sans',sans-serif;">
+  <img src="logo-safemind.png" alt="Safe Mind" style="height:64px;margin-bottom:20px;" onerror="this.style.display='none'">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#1A2A1A;margin-bottom:10px;">Sign in to access assessments</h2>
+  <p style="font-size:14px;color:#4A5A4A;max-width:400px;line-height:1.6;margin-bottom:28px;">Psychological assessments are available to Safe Mind members. Create a free account or sign in to continue.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a href="account.html" style="background:#3A6B3A;color:white;padding:13px 32px;border-radius:40px;font-size:14px;font-weight:600;text-decoration:none;">Sign In</a>
+    <a href="account.html#signup" style="background:none;border:1.5px solid #3A6B3A;color:#3A6B3A;padding:13px 32px;border-radius:40px;font-size:14px;font-weight:500;text-decoration:none;">Create Account</a>
+  </div>
+  <p style="margin-top:20px;font-size:12px;color:#8A9A8A;">Already registered? <a href="account.html" style="color:#3A6B3A;">Sign in here</a></p>
+</div>
+
+<div id="main-content" style="display:none;">
+
 
 <nav>
   <a href="safemind.html" class="nav-logo">
@@ -411,5 +438,29 @@ function showResults() {
 
 function resetTest() { current = 0; answers = new Array(9).fill(null); showView('view-intro'); }
 </script>
+
+<script>
+// ─── AUTH GUARD ───
+(function() {
+  var cfg = {
+    apiKey:"AIzaSyDQsBvVIPG8MeaLf1sjWVSgXMOuOhoOi1U",
+    authDomain:"safemind-f96ad.firebaseapp.com",
+    projectId:"safemind-f96ad"
+  };
+  if (!firebase.apps.length) firebase.initializeApp(cfg);
+  firebase.auth().onAuthStateChanged(function(user) {
+    var guard = document.getElementById('auth-guard');
+    var content = document.getElementById('main-content');
+    if (user) {
+      if (guard) guard.style.display = 'none';
+      if (content) content.style.display = 'block';
+    } else {
+      if (guard) guard.style.display = 'flex';
+      if (content) content.style.display = 'none';
+    }
+  });
+})();
+</script>
+</div>
 </body>
 </html>
