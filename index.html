@@ -126,6 +126,17 @@
     font-weight: 500;
   }
   .nav-links .nav-account:hover { color: var(--green); }
+  .nav-links .nav-signin {
+    background: var(--green);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .nav-links .nav-signin:hover { background: var(--green-dark); }
   .nav-links .nav-cta {
     background: var(--teal);
     color: white;
@@ -1279,8 +1290,11 @@
     <li><a href="about.html" data-i18n="nav_about">About</a></li>
     <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
     <li><a href="account.html" data-i18n="nav_account" class="nav-account">My Account</a></li>
+    <li><a href="account.html" class="nav-signin" id="nav-signin-btn" data-i18n="nav_signin">Sign In</a></li>
     <li><a href="booking.html" class="nav-cta" data-i18n="nav_book">Book a Consultation</a></li>
   </ul>
+  <a href="account.html" class="nav-signin" id="nav-signin-btn" data-i18n="nav_signin">Sign In</a>
+  <a href="account.html?tab=signup" class="nav-signup" id="nav-signup-btn" data-i18n="nav_signup">Sign Up</a>
   <div class="lang-switcher">
     <button class="lang-toggle" onclick="toggleLangMenu()" id="langToggle">EN</button>
     <div class="lang-dropdown" id="langDropdown">
@@ -1311,7 +1325,7 @@
       <span data-i18n="hero_h1_a">Every person behind the work</span><br>
       <em data-i18n="hero_h1_b">deserves care.</em>
     </h1>
-    <p class="carousel-desc" data-i18n="hero_desc">Safe Mind provides professional psychological well-being support for everyone in the creative and cultural industries. From artists to HR teams, from headliners to the people who build the stage.</p>
+    <p class="carousel-desc" data-i18n="hero_desc">The industry sees the art. Safe Mind sees the person behind it. For those who built everything they were told to want, and still feel lost. For those who are struggling in silence, searching for a way out or a way back to themselves. You don't have to be falling apart to deserve support. You just have to be human. Fame is loud. Pain is quiet. Safe Mind listens.</p>
     <div class="carousel-actions">
       <a href="#services" class="btn-primary" data-i18n="hero_cta1">Explore Our Services</a>
       <a href="booking.html" class="btn-secondary" data-i18n="hero_cta2">Book a Consultation</a>
@@ -1636,5 +1650,31 @@
 </footer>
 
 <script src="safemind-i18n.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey:"AIzaSyDQsBvVIPG8MeaLf1sjWVSgXMOuOhoOi1U",
+        authDomain:"safemind-f96ad.firebaseapp.com",
+        projectId:"safemind-f96ad"
+      });
+    }
+    firebase.auth().onAuthStateChanged(function(user) {
+      var btn = document.getElementById('nav-signin-btn');
+      if (!btn) return;
+      if (user) {
+        var name = user.displayName || user.email.split('@')[0];
+        btn.textContent = name;
+        btn.style.background = 'var(--gold)';
+      } else {
+        btn.textContent = 'Sign In';
+      }
+    });
+  } catch(e) {}
+});
+</script>
 </body>
-  </html>
+</html>
