@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Organizations | Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#3A6B3A;--teal-dark:#2A4A2A;--teal-light:#E8F2E8;--teal-xlight:#F0F8F8;
+  --violet:#7B6B8D;--violet-light:#EDE8F2;
+  --charcoal:#1E1E1E;--charcoal-mid:#2E2E2E;
+  --cream:#FAF8F4;--cream-dark:#F0EBE1;
+  --mid:#5A5A5A;--light:#999;--white:#FFFFFF;
+  --green:#27AE60;--green-light:#E9F7EF;
+  --red:#C0392B;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px;}
+
+
+
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;flex-direction:row;align-items:center;gap:10px;}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark);}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-link{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-link:hover{color:var(--teal);}
+.nav-link.active{color:var(--teal);font-weight:500;}
+.nav-cta{background:var(--teal);color:white;padding:8px 20px;border-radius:30px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--teal-dark);}
+
+/* HERO */
+.hero{
+  background:var(--charcoal);
+  padding:96px 48px 80px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%, rgba(61,139,139,.15) 0%, transparent 60%),
+             radial-gradient(ellipse at 20% 80%, rgba(123,107,141,.1) 0%, transparent 50%);
+}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hero-eyebrow{display:inline-block;background:rgba(61,139,139,.2);color:var(--teal-light);padding:5px 16px;border-radius:30px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,4.5vw,60px);font-weight:300;color:white;line-height:1.1;margin-bottom:20px;}
+.hero h1 em{font-style:italic;color:var(--teal-light);}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:32px;font-weight:300;}
+.btn-hero-primary{background:var(--teal);color:white;padding:14px 36px;border-radius:40px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;transition:all .25s;margin-right:12px;}
+.btn-hero-primary:hover{background:#4A9E9E;transform:translateY(-2px);box-shadow:0 12px 32px rgba(61,139,139,.4);}
+.btn-hero-sec{color:rgba(255,255,255,.6);font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .2s;}
+.btn-hero-sec:hover{color:white;}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;}
+.stat-card .sv{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--teal-light);line-height:1;margin-bottom:4px;}
+.stat-card .sl{font-size:12px;color:rgba(255,255,255,.45);line-height:1.4;}
+
+/* SECTIONS */
+.section{padding:80px 48px;max-width:1100px;margin:0 auto;}
+.section-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:16px;line-height:1.15;}
+.section-title em{font-style:italic;color:var(--teal);}
+.section-sub{font-size:15px;color:var(--mid);line-height:1.8;max-width:640px;margin-bottom:56px;font-weight:300;}
+
+/* WHO IT'S FOR */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:0;}
+.who-card{background:white;border-radius:20px;padding:28px;border:1px solid rgba(0,0,0,.06);transition:all .25s;}
+.who-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.08);border-color:var(--teal-light);}
+.who-icon{font-size:32px;margin-bottom:14px;}
+.who-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
+.who-desc{font-size:13px;color:var(--mid);line-height:1.7;}
+.who-examples{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;}
+.who-ex{background:var(--teal-xlight);color:var(--teal-dark);padding:3px 10px;border-radius:20px;font-size:11px;}
+
+/* PROBLEM STRIP */
+.problem-strip{background:var(--charcoal-mid);padding:72px 48px;}
+.problem-inner{max-width:1100px;margin:0 auto;}
+.problem-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:300;color:white;margin-bottom:40px;line-height:1.2;}
+.problem-title em{font-style:italic;color:var(--teal-light);}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.problem-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;}
+.problem-stat{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:var(--red);line-height:1;margin-bottom:8px;}
+.problem-text{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;}
+
+/* WHAT'S INCLUDED */
+.included-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+.included-list{display:flex;flex-direction:column;gap:16px;}
+.included-item{display:flex;gap:16px;align-items:flex-start;padding:20px;background:white;border-radius:16px;border:1px solid rgba(0,0,0,.06);}
+.included-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.included-content{}
+.included-title{font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:4px;}
+.included-desc{font-size:13px;color:var(--mid);line-height:1.6;}
+
+/* DIFFERENTIATOR */
+.diff-box{background:linear-gradient(135deg,var(--teal-dark),var(--violet));border-radius:24px;padding:40px;color:white;}
+.diff-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:16px;line-height:1.2;}
+.diff-title em{font-style:italic;}
+.diff-list{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+.diff-item{display:flex;gap:12px;align-items:flex-start;}
+.diff-check{color:var(--teal-light);font-size:16px;flex-shrink:0;margin-top:2px;}
+.diff-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.5;}
+.diff-text strong{color:white;}
+
+/* PROCESS */
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;}
+.process-steps::before{content:'';position:absolute;top:32px;left:10%;right:10%;height:1px;background:linear-gradient(to right,var(--teal-light),var(--teal),var(--teal-light));z-index:0;}
+.process-step{text-align:center;position:relative;z-index:1;}
+.step-num{width:64px;height:64px;border-radius:50%;background:var(--teal);color:white;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 20px rgba(61,139,139,.3);}
+.step-title{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.step-desc{font-size:12px;color:var(--mid);line-height:1.5;}
+
+/* TESTIMONIAL STYLE QUOTE */
+.quote-section{background:var(--teal-xlight);padding:72px 48px;}
+.quote-inner{max-width:800px;margin:0 auto;text-align:center;}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,32px);font-weight:300;color:var(--teal-dark);line-height:1.4;font-style:italic;margin-bottom:24px;}
+.quote-source{font-size:13px;color:var(--teal);font-weight:500;}
+
+/* CTA SECTION */
+.cta-section{background:linear-gradient(135deg,var(--charcoal),#2E3A4A);padding:96px 48px;text-align:center;}
+.cta-inner{max-width:700px;margin:0 auto;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,54px);font-weight:300;color:white;line-height:1.1;margin-bottom:16px;}
+.cta-title em{font-style:italic;color:var(--teal-light);}
+.cta-sub{font-size:15px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:40px;}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-primary{background:var(--teal);color:white;padding:16px 40px;border-radius:40px;font-size:15px;font-weight:500;text-decoration:none;transition:all .25s;}
+.btn-cta-primary:hover{background:#4A9E9E;transform:translateY(-2px);box-shadow:0 12px 32px rgba(61,139,139,.4);}
+.btn-cta-sec{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);padding:16px 40px;border-radius:40px;font-size:15px;text-decoration:none;transition:all .2s;border:1px solid rgba(255,255,255,.12);}
+.btn-cta-sec:hover{background:rgba(255,255,255,.14);color:white;}
+
+footer{background:var(--charcoal);border-top:1px solid rgba(255,255,255,.06);padding:24px 48px;text-align:center;}
+footer p{font-size:12px;color:rgba(255,255,255,.3);}
+
+@media(max-width:900px){
+  .lang-bar,nav,.hero,.section,.problem-strip,.quote-section,.cta-section{padding-left:20px;padding-right:20px;}
+  .hero-inner,.included-grid{grid-template-columns:1fr;}
+  .who-grid,.problem-grid{grid-template-columns:1fr;}
+  .process-steps{grid-template-columns:1fr 1fr;}
+  .process-steps::before{display:none;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+}
+
+  .lang-switcher{position:relative;}
+  .lang-toggle{background:none;border:1.5px solid var(--green,#3A6B3A);color:var(--green,#3A6B3A);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;min-width:44px;}
+  .lang-toggle:hover,.lang-toggle.open{background:var(--green,#3A6B3A);color:white;}
+  .lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+  .lang-dropdown.open{display:block;}
+  .lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:#1A2A1A;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+  .lang-dropdown button:last-child{border-bottom:none;}
+  .lang-dropdown button:hover{background:#E8F2E8;color:#2A4A2A;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-creaven.png" alt="Creaven" style="height:44px;width:auto;object-fit:contain;">
+    <div style="display:flex;flex-direction:column;line-height:1;">
+      <span class="main">Creaven</span>
+      <span class="sub">Psychological Well-being</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" id="nl-home">Home</a>
+    <a href="tests.html" class="nav-link" id="nl-tests">Assessments</a>
+    <a href="consultation.html" class="nav-link" data-i18n="nav_session">My Session</a>
+    <a href="organizations.html" class="nav-link active" id="nl-org">For Organizations</a>
+    <a href="booking.html" class="nav-link" id="nl-book">Book</a>
+  </div>
+  <a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a>
+    <a href="booking.html" class="nav-cta" id="nl-cta">Get Started</a>
+
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')">English</button>
+        <button onclick="selectLang('fr','FR')">Francais</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('th','TH')">ไทย</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Espanol</button>
+      </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow" id="h-eyebrow">For Organizations</div>
+      <h1 id="h-title">Your team's <em>mental health</em> is a business decision.</h1>
+      <p class="hero-desc" id="h-desc">Creaven provides organizations in the creative and cultural industries with a complete psychological well-being program. Every person on your team, regardless of their role or contract type, deserves access to professional mental health support.</p>
+      <div>
+        <a href="booking.html" class="btn-hero-primary" id="h-btn-primary">Book an Organizational Consultation</a>
+        <a href="#included" class="btn-hero-sec" id="h-btn-sec">See what's included →</a>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="sv" id="s1-v">700K</div>
+        <div class="sl" id="s1-l">lives lost to suicide every year worldwide. One every 45 seconds. (WHO, 2024)</div>
+      </div>
+      <div class="stat-card">
+        <div class="sv" id="s2-v">84%</div>
+        <div class="sl" id="s2-l">of creative industry workers report work-related psychological distress.</div>
+      </div>
+      <div class="stat-card">
+        <div class="sv" id="s3-v">0</div>
+        <div class="sl" id="s3-l">dedicated mental health platforms exist for creative industry workers.</div>
+      </div>
+      <div class="stat-card">
+        <div class="sv" id="s4-v">8</div>
+        <div class="sl" id="s4-l">languages supported. Every member of your team can access support in their own language.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<div class="section">
+  <div class="section-label" id="who-label">Who it's for</div>
+  <div class="section-title" id="who-title">Built for <em>every organization</em> in the creative space</div>
+  <div class="section-sub" id="who-sub">Creaven serves organizations of all sizes. If you employ or work with people in the creative and cultural industries, this program is designed for you.</div>
+  <div class="who-grid" id="whoGrid"></div>
+</div>
+
+<!-- PROBLEM STRIP -->
+<div class="problem-strip">
+  <div class="problem-inner">
+    <div class="problem-title" id="prob-title">The creative industry runs on human energy.<br><em>It rarely protects it.</em></div>
+    <div class="problem-grid" id="probGrid"></div>
+  </div>
+</div>
+
+<!-- WHAT'S INCLUDED -->
+<div class="section" id="included">
+  <div class="section-label" id="inc-label">The Program</div>
+  <div class="section-title" id="inc-title">What your organization <em>gets</em></div>
+  <div class="section-sub" id="inc-sub">Creaven's organizational program is comprehensive. It covers every person on your team, from artists to HR teams, from headliners to security staff and interns.</div>
+  <div class="included-grid">
+    <div class="included-list" id="includedList"></div>
+    <div class="diff-box">
+      <div class="diff-title" id="diff-title">Why Creaven is <em>different</em> from anything else on the market</div>
+      <div class="diff-list" id="diffList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div style="background:var(--cream-dark);padding:72px 48px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label" id="proc-label">How it works</div>
+    <div class="section-title" id="proc-title">From first contact to <em>ongoing support</em></div>
+    <div class="process-steps" id="processSteps" style="margin-top:48px;"></div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <div class="quote-inner">
+    <div class="quote-text" id="quote-text">"Mental health support in the creative industry has always been reserved for those at the top. Creaven is the first platform designed to reach everyone else."</div>
+    <div class="quote-source" id="quote-source">Amakon Grace Daniella  -  Founder, Creaven</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-title" id="cta-title">Ready to <em>protect your team?</em></div>
+    <div class="cta-sub" id="cta-sub">Book an organizational consultation. We will assess your team's needs, present the program in detail, and build a support plan that fits your structure and budget.</div>
+    <div class="cta-btns">
+      <a href="booking.html" class="btn-cta-primary" id="cta-btn-primary">Book an Organizational Consultation</a>
+      <a href="index.html" class="btn-cta-sec" id="cta-btn-sec">Learn more about Creaven</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p id="footer-text">Creaven &copy; 2026  -  Psychological Well-being for the Creative Industry  -  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80e4aee1ede1ebefeec0f9e1e8efefaee3efed">[email&#160;protected]</a></p>
+</footer>
+
+<script>
+const T = {
+  en: {
+    eyebrow:"For Organizations",
+    title:"Your team's <em>mental health</em> is a business decision.",
+    desc:"Creaven provides organizations in the creative and cultural industries with a complete psychological well-being program. Every person on your team, regardless of their role or contract type, deserves access to professional mental health support.",
+    btn_primary:"Book an Organizational Consultation",
+    btn_sec:"See what's included →",
+    nl_home:"Home",nl_tests:"Assessments",nl_org:"For Organizations",nl_book:"Book",nl_cta:"Get Started",
+    stats:[
+      {v:"700K",l:"lives lost to suicide every year worldwide. One every 45 seconds. (WHO, 2024)"},
+      {v:"84%",l:"of creative industry workers report work-related psychological distress."},
+      {v:"0",l:"dedicated mental health platforms exist for creative industry workers."},
+      {v:"8",l:"languages supported. Every member of your team can access support in their own language."}
+    ],
+    who_label:"Who it's for",
+    who_title:"Built for <em>every organization</em> in the creative space",
+    who_sub:"Creaven serves organizations of all sizes. If you employ or work with people in the creative and cultural industries, this program is designed for you.",
+    who:[
+      {icon:"🎵",title:"Music Labels & Agencies",desc:"Support for artists, producers, A&R, managers, stylists, choreographers, and all support staff. Covers both signed and freelance collaborators.",examples:["Music labels","Independent labels","Talent agencies"]},
+      {icon:"🎬",title:"Film & Production Companies",desc:"Mental health coverage for directors, actors, crew, post-production teams, and behind-the-scenes staff across all production phases.",examples:["Film studios","Streaming producers","Commercial agencies"]},
+      {icon:"📱",title:"Digital & Webtoon Studios",desc:"Support for content creators, writers, illustrators, social media teams, and platform operations staff managing high-output creative workflows.",examples:["Webtoon studios","Content agencies","Gaming companies"]}
+    ],
+    prob_title:"The creative industry runs on human energy.<br><em>It rarely protects it.</em>",
+    problems:[
+      {stat:"1 in 3",text:"creative industry workers experience clinical-level burnout. Most never seek help because no system is built for them."},
+      {stat:"$1T",text:"Lost every year in global productivity due to untreated mental health conditions. Prevention costs a fraction of that. (WHO)"},
+      {stat:"72h+",text:"Average work weeks during production periods. No rest, no support, no safety net for the people who build culture."}
+    ],
+    inc_label:"The Program",
+    inc_title:"What your organization <em>gets</em>",
+    inc_sub:"Creaven's organizational program is comprehensive. It covers every person on your team, from artists to HR teams, from headliners to security staff and interns.",
+    included:[
+      {icon:"🧪",title:"Full Assessment Library Access",desc:"All team members access our validated psychometric test library. Results are private to the individual and their assigned psychologist."},
+      {icon:"💬",title:"Individual Consultations",desc:"Each covered team member receives access to individual consultations with a Creaven psychologist in their preferred language."},
+      {icon:"📊",title:"Anonymous Organizational Dashboard",desc:"Aggregated and anonymized well-being data for your organization. No individual data is visible. Helps leadership identify systemic stress patterns."},
+      {icon:"🚨",title:"Crisis Protocol",desc:"Any team member in acute distress is immediately connected to a psychologist. No waiting, no queue, no referral bureaucracy."},
+      {icon:"📋",title:"Periodic Well-being Reports",desc:"Semi-annual reports on your organization's collective psychological health, with actionable recommendations for leadership."},
+      {icon:"🌍",title:"8-Language Coverage",desc:"Support available in English, French, Korean, Japanese, Chinese, Thai, German, and Spanish. No language barrier between your team and help."}
+    ],
+    diff_title:"Why Creaven is <em>different</em> from anything else on the market",
+    diffs:[
+      {text:"<strong>HR included, not required to administer.</strong> Creaven works directly with individuals. HR teams are covered as participants, not as administrators."},
+      {text:"<strong>All roles and ranks.</strong> The program covers everyone. Headliners and janitors receive the same level of care."},
+      {text:"<strong>All contract types.</strong> Employees, freelancers, seasonal staff, and volunteers are all covered under one organizational subscription."},
+      {text:"<strong>Clinically grounded.</strong> Built by a psychosocial specialist with direct experience in suicide prevention and burnout in the creative sector."},
+      {text:"<strong>AI-assisted, human-validated.</strong> Technology that enhances care, not replaces it. Every result is reviewed by a licensed psychologist."}
+    ],
+    proc_label:"How it works",
+    proc_title:"From first contact to <em>ongoing support</em>",
+    process:[
+      {n:"1",title:"Organizational Consultation",desc:"We meet with your leadership to assess needs, size, and scope. We design the program together."},
+      {n:"2",title:"Contract & Onboarding",desc:"Semi-annual subscription signed. Your team receives access credentials and onboarding materials in their language."},
+      {n:"3",title:"Active Support",desc:"Team members book consultations, complete assessments, and receive ongoing support as needed throughout the period."},
+      {n:"4",title:"Reporting & Renewal",desc:"You receive an anonymized well-being report. We review together and renew or adjust the program for the next period."}
+    ],
+    quote:"\"Mental health support in the creative industry has always been reserved for those at the top. Creaven is the first platform designed to reach everyone else.\"",
+    quote_source:"Amakon Grace Daniella  -  Founder, Creaven",
+    cta_title:"Ready to <em>protect your team?</em>",
+    cta_sub:"Book an organizational consultation. We will assess your team's needs, present the program in detail, and build a support plan that fits your structure and budget.",
+    cta_primary:"Book an Organizational Consultation",
+    cta_sec:"Learn more about Creaven",
+    footer:"Creaven \u00a9 2026 \u2014 Psychological Well-being for the Creative Industry \u2014 hellosafemindconnect@gmail.com"
+  },
+  fr: {
+    eyebrow:"Pour les organisations",
+    title:"La sante mentale de votre equipe est <em>une decision d'entreprise.</em>",
+    desc:"Creaven propose aux organisations de l'industrie creative et culturelle un programme complet de bien-etre psychologique. Chaque membre de votre equipe, quel que soit son role ou son type de contrat, merite un acces a un soutien professionnel en sante mentale.",
+    btn_primary:"Reserver une consultation organisationnelle",
+    btn_sec:"Voir ce qui est inclus →",
+    nl_home:"Accueil",nl_tests:"Evaluations",nl_org:"Pour les organisations",nl_book:"Reserver",nl_cta:"Commencer",
+    stats:[
+      {v:"700K",l:"vies perdues au suicide chaque annee dans le monde. Une toutes les 45 secondes. (OMS, 2024)"},
+      {v:"84%",l:"des travailleurs de l'industrie creative signalent une detresse psychologique liee au travail."},
+      {v:"0",l:"plateforme de sante mentale dediee aux travailleurs de l'industrie creative n'existe."},
+      {v:"6",l:"langues. Chaque membre de votre equipe peut acceder au soutien dans sa propre langue."}
+    ],
+    who_label:"Pour qui",
+    who_title:"Concu pour <em>toutes les organisations</em> de l'espace creatif",
+    who_sub:"Creaven sert des organisations de toutes tailles. Si vous employez ou travaillez avec des personnes dans l'industrie creative et culturelle, ce programme est fait pour vous.",
+    who:[
+      {icon:"🎵",title:"Labels et agences musicales",desc:"Soutien pour les artistes, producteurs, A&R, managers, stylistes, choregraphes et tout le personnel de soutien.",examples:["Labels musicaux","Labels independants","Agences de talents"]},
+      {icon:"🎬",title:"Societes de production et de cinema",desc:"Couverture de sante mentale pour les realisateurs, acteurs, equipes, post-production et personnel en coulisses.",examples:["Studios de cinema","Producteurs streaming","Agences publicitaires"]},
+      {icon:"📱",title:"Studios digitaux et webtoon",desc:"Soutien pour les createurs de contenu, auteurs, illustrateurs, equipes reseaux sociaux et personnel de plateforme.",examples:["Studios webtoon","Agences de contenu","Societes de jeux video"]}
+    ],
+    prob_title:"L'industrie creative fonctionne a l'energie humaine.<br><em>Elle la protege rarement.</em>",
+    problems:[
+      {stat:"1 sur 3",text:"les travailleurs de l'industrie creative souffrent d'un epuisement clinique. La plupart ne cherchent jamais d'aide car aucun systeme n'est concu pour eux."},
+      {stat:"1000Mds$",text:"Perdus chaque annee en productivite mondiale a cause des troubles de sante mentale non traites. La prevention coute une fraction de ca. (OMS)"},
+      {stat:"72h+",text:"Semaines de travail moyennes pendant les periodes de production. Pas de repos, pas de soutien, pas de filet de securite."}
+    ],
+    inc_label:"Le programme",
+    inc_title:"Ce que votre organisation <em>obtient</em>",
+    inc_sub:"Le programme organisationnel de Creaven est complet. Il couvre chaque personne de votre equipe, de la tete d'affiche au agent d'entretien.",
+    included:[
+      {icon:"🧪",title:"Acces a la bibliotheque d'evaluations",desc:"Tous les membres de l'equipe accdent a notre bibliotheque d'outils psychometriques valides. Les resultats sont prives."},
+      {icon:"💬",title:"Consultations individuelles",desc:"Chaque membre couvert beneficie de consultations individuelles avec un psychologue Creaven dans sa langue preferee."},
+      {icon:"📊",title:"Tableau de bord organisationnel anonymise",desc:"Donnees de bien-etre aggregees et anonymisees pour votre organisation. Aucune donnee individuelle n'est visible."},
+      {icon:"🚨",title:"Protocole de crise",desc:"Tout membre en detresse aigue est immediatement mis en contact avec un psychologue. Sans attente, sans file d'attente."},
+      {icon:"📋",title:"Rapports periodiques de bien-etre",desc:"Rapports semestriels sur la sante psychologique collective de votre organisation avec des recommandations actionables."},
+      {icon:"🌍",title:"Couverture en 8 langues",desc:"Soutien disponible en anglais, francais, coreen, japonais, chinois, thai, allemand et espagnol. Aucune barriere linguistique."}
+    ],
+    diff_title:"Pourquoi Creaven est <em>different</em> de tout ce qui existe sur le marche",
+    diffs:[
+      {text:"<strong>Sans RH requis.</strong> La plupart des PAE necessitent un service RH. Creaven fonctionne directement avec les individus."},
+      {text:"<strong>Tous les roles et rangs.</strong> Le programme couvre tout le monde. Tetes d'affiche et agents d'entretien beneficient du meme niveau de soins."},
+      {text:"<strong>Tous types de contrats.</strong> Employes, independants, personnels saisonniers et benevoles sont tous couverts."},
+      {text:"<strong>Ancrage clinique.</strong> Construit par une specialiste en soutien psychosocial avec une experience directe en prevention du suicide."},
+      {text:"<strong>Assiste par IA, valide par l'humain.</strong> Technologie qui ameliore les soins, ne les remplace pas. Chaque resultat est examine par un psychologue licencie."}
+    ],
+    proc_label:"Comment ca fonctionne",
+    proc_title:"Du premier contact au <em>soutien continu</em>",
+    process:[
+      {n:"1",title:"Consultation organisationnelle",desc:"Nous rencontrons votre direction pour evaluer les besoins, la taille et la portee. Nous concevons le programme ensemble."},
+      {n:"2",title:"Contrat et integration",desc:"Abonnement semestriel signe. Votre equipe recoit les acces et les materiaux d'integration dans sa langue."},
+      {n:"3",title:"Soutien actif",desc:"Les membres de l'equipe reservent des consultations, passent des evaluations et recoivent un soutien continu."},
+      {n:"4",title:"Rapport et renouvellement",desc:"Vous recevez un rapport de bien-etre anonymise. Nous revoyons ensemble et renouvelons le programme."}
+    ],
+    quote:"\"Le soutien en sante mentale dans l'industrie creative a toujours ete reserve a ceux du sommet. Creaven est la premiere plateforme concue pour atteindre tous les autres.\"",
+    quote_source:"Amakon Grace Daniella  -  Fondatrice, Creaven",
+    cta_title:"Pret(e) a <em>proteger votre equipe ?</em>",
+    cta_sub:"Reservez une consultation organisationnelle. Nous evaluerons les besoins de votre equipe et elaborerons un plan de soutien adapte a votre structure et budget.",
+    cta_primary:"Reserver une consultation organisationnelle",
+    cta_sec:"En savoir plus sur Creaven",
+    footer:"Creaven \u00a9 2026 \u2014 Bien-etre psychologique pour l'industrie creative \u2014 hellosafemindconnect@gmail.com"
+  },
+  kr: {
+    eyebrow:"기관을 위한",
+    title:"팀의 <em>정신 건강</em>은 비즈니스 결정입니다.",
+    desc:"Creaven는 창작 및 문화 산업의 조직에 완전한 심리적 웰빙 프로그램을 제공합니다. 역할이나 계약 유형에 관계없이 팀의 모든 구성원은 전문적인 정신 건강 지원을 받을 자격이 있습니다.",
+    btn_primary:"기관 상담 예약",
+    btn_sec:"포함 내용 보기 →",
+    nl_home:"홈",nl_tests:"평가",nl_org:"기관을 위한",nl_book:"예약",nl_cta:"시작하기",
+    stats:[
+      {v:"700K",l:"매년 전 세계에서 자살로 목숨을 잃는 사람들. 45초마다 1명. (WHO, 2024)"},
+      {v:"84%",l:"창작 산업 종사자가 업무 관련 심리적 고통을 보고합니다."},
+      {v:"0",l:"창작 산업 종사자를 위한 전용 정신 건강 플랫폼이 존재하지 않습니다."},
+      {v:"6",l:"개 언어. 팀의 모든 구성원이 자신의 언어로 지원을 받을 수 있습니다."}
+    ],
+    who_label:"대상",
+    who_title:"창작 공간의 <em>모든 조직</em>을 위해 구축",
+    who_sub:"Creaven는 모든 규모의 조직을 지원합니다. 창작 및 문화 산업에서 사람들을 고용하거나 함께 일하는 경우 이 프로그램은 여러분을 위해 설계되었습니다.",
+    who:[
+      {icon:"🎵",title:"음악 레이블 및 에이전시",desc:"아티스트, 프로듀서, A&R, 매니저, 스타일리스트, 안무가 및 모든 지원 인력 지원.",examples:["음악 레이블","인디 레이블","탤런트 에이전시"]},
+      {icon:"🎬",title:"영화 및 제작사",desc:"감독, 배우, 제작진, 후반작업팀 및 모든 제작 단계의 지원 인력에 대한 정신 건강 보장.",examples:["영화 스튜디오","스트리밍 제작사","광고 에이전시"]},
+      {icon:"📱",title:"디지털 및 웹툰 스튜디오",desc:"콘텐츠 크리에이터, 작가, 일러스트레이터, 소셜 미디어 팀 및 플랫폼 운영 인력 지원.",examples:["웹툰 스튜디오","콘텐츠 에이전시","게임 회사"]}
+    ],
+    prob_title:"창작 산업은 인간의 에너지로 운영됩니다.<br><em>그 에너지를 보호하는 경우는 드뭅니다.</em>",
+    problems:[
+      {stat:"3명 중 1명",text:"창작 산업 종사자가 임상 수준의 번아웃을 경험합니다. 대부분은 자신을 위한 시스템이 없기 때문에 도움을 구하지 않습니다."},
+      {stat:"1조$",text:"정신 건강 문제로 인한 연간 전 세계 생산성 손실. 예방은 그 비용의 일부에 불과합니다."},
+      {stat:"72시간+",text:"제작 기간 동안의 평균 주당 근무 시간. 문화를 만드는 사람들을 위한 휴식, 지원, 안전망이 없습니다."}
+    ],
+    inc_label:"프로그램",
+    inc_title:"조직이 <em>받는 것</em>",
+    inc_sub:"Creaven의 조직 프로그램은 종합적입니다. 헤드라이너부터 무대를 청소하는 청소부까지 팀의 모든 구성원을 포함합니다.",
+    included:[
+      {icon:"🧪",title:"전체 평가 라이브러리 접근",desc:"모든 팀원이 검증된 심리측정 도구 라이브러리에 접근할 수 있습니다. 결과는 개인과 배정된 심리학자에게만 공개됩니다."},
+      {icon:"💬",title:"개인 상담",desc:"모든 포함된 팀원은 선호 언어로 Creaven 심리학자와 개인 상담을 받을 수 있습니다."},
+      {icon:"📊",title:"익명 조직 대시보드",desc:"조직의 집계 및 익명화된 웰빙 데이터. 개인 데이터는 볼 수 없습니다."},
+      {icon:"🚨",title:"위기 프로토콜",desc:"급성 고통을 겪는 팀원은 즉시 심리학자와 연결됩니다. 대기 없음, 줄 없음."},
+      {icon:"📋",title:"정기 웰빙 보고서",desc:"리더십을 위한 실행 가능한 권고사항이 포함된 조직의 집단적 심리 건강에 대한 반기별 보고서."},
+      {icon:"🌍",title:"8개 언어 지원",desc:"영어, 프랑스어, 한국어, 일본어, 중국어, 태국어, 독일어, 스페인어로 지원 가능. 언어 장벽 없음."}
+    ],
+    diff_title:"Creaven가 시장의 <em>다른 어떤 것과도 다른</em> 이유",
+    diffs:[
+      {text:"<strong>HR 불필요.</strong> 대부분의 EAP는 관리를 위한 HR 부서가 필요합니다. Creaven는 중간 매개체 없이 개인과 직접 작동합니다."},
+      {text:"<strong>모든 역할과 직급.</strong> 프로그램은 모든 사람을 포함합니다. 헤드라이너와 청소부는 동일한 수준의 케어를 받습니다."},
+      {text:"<strong>모든 계약 유형.</strong> 직원, 프리랜서, 계절 인력, 자원봉사자 모두 하나의 조직 구독으로 포함됩니다."},
+      {text:"<strong>임상 기반.</strong> 창작 분야의 자살 예방과 번아웃 분야의 직접 경험을 가진 심리사회적 지원 전문가가 구축했습니다."},
+      {text:"<strong>AI 보조, 인간 검증.</strong> 케어를 대체하지 않고 향상시키는 기술. 모든 결과는 면허 있는 심리학자가 검토합니다."}
+    ],
+    proc_label:"작동 방식",
+    proc_title:"첫 연락부터 <em>지속적인 지원</em>까지",
+    process:[
+      {n:"1",title:"기관 상담",desc:"경영진과 만나 필요, 규모, 범위를 평가합니다. 함께 프로그램을 설계합니다."},
+      {n:"2",title:"계약 및 온보딩",desc:"반기별 구독 체결. 팀은 해당 언어로 접근 자격증명과 온보딩 자료를 받습니다."},
+      {n:"3",title:"적극적 지원",desc:"팀원들은 상담을 예약하고, 평가를 완료하며, 기간 내내 필요한 지원을 받습니다."},
+      {n:"4",title:"보고 및 갱신",desc:"익명화된 웰빙 보고서를 받습니다. 함께 검토하고 다음 기간을 위해 프로그램을 갱신하거나 조정합니다."}
+    ],
+    quote:"\"창작 산업의 정신 건강 지원은 항상 상위층을 위한 것이었습니다. Creaven는 다른 모든 사람들에게 닿도록 설계된 최초의 플랫폼입니다.\"",
+    quote_source:"아마콘 그레이스 다니엘라  -  Creaven 설립자",
+    cta_title:"팀을 <em>보호할 준비가 되셨나요?</em>",
+    cta_sub:"기관 상담을 예약하세요. 팀의 필요를 평가하고 구조와 예산에 맞는 지원 계획을 수립합니다.",
+    cta_primary:"기관 상담 예약",
+    cta_sec:"Creaven에 대해 더 알아보기",
+    footer:"Creaven \u00a9 2026 \u2014 창작 산업을 위한 심리적 웰빙 \u2014 hellosafemindconnect@gmail.com"
+  },
+  jp: {
+    eyebrow:"組織向け",
+    title:"チームの<em>精神的健康</em>はビジネスの決定です。",
+    desc:"Creavenはクリエイティブ・文化産業の組織に完全な心理的ウェルビーイングプログラムを提供します。役割や契約形態に関わらず、チームのすべてのメンバーが専門的な精神的健康サポートを受ける資格があります。",
+    btn_primary:"組織相談を予約する",btn_sec:"含まれる内容を見る →",
+    nl_home:"ホーム",nl_tests:"評価",nl_org:"組織向け",nl_book:"予約",nl_cta:"始める",
+    stats:[
+      {v:"700K",l:"毎年世界中で自殺により失われる命。45秒に1件。(WHO, 2024)"},
+      {v:"84%",l:"クリエイティブ産業の労働者が仕事関連の心理的苦痛を報告しています。"},
+      {v:"0",l:"クリエイティブ産業の労働者専用のメンタルヘルスプラットフォームは存在しません。"},
+      {v:"6",l:"言語。チームのすべてのメンバーが自分の言語でサポートを受けられます。"}
+    ],
+    who_label:"対象者",who_title:"クリエイティブ空間の<em>あらゆる組織</em>のために構築",
+    who_sub:"Creavenはあらゆる規模の組織をサポートします。",
+    who:[
+      {icon:"🎵",title:"音楽レーベル・エージェンシー",desc:"アーティスト、プロデューサー、A&R、マネージャー、スタイリスト、振付師、すべてのサポートスタッフへのサポート。",examples:["K-popレーベル","インディーレーベル","タレントエージェンシー"]},
+      {icon:"🎬",title:"映画・制作会社",desc:"監督、俳優、スタッフ、ポスト制作チーム、すべての制作段階のサポートスタッフへのメンタルヘルスカバレッジ。",examples:["映画スタジオ","ストリーミングプロデューサー","広告代理店"]},
+      {icon:"📱",title:"デジタル・ウェブトゥーンスタジオ",desc:"コンテンツクリエーター、ライター、イラストレーター、SNSチームへのサポート。",examples:["ウェブトゥーンスタジオ","コンテンツエージェンシー","ゲーム会社"]}
+    ],
+    prob_title:"クリエイティブ産業は人間のエネルギーで動いています。<br><em>それを保護することはほとんどありません。</em>",
+    problems:[
+      {stat:"3人に1人",text:"クリエイティブ産業の労働者が臨床レベルの燃え尽き症候群を経験しています。"},
+      {stat:"1兆$",text:"メンタルヘルス問題による年間生産性損失。予防はその何分の一かのコストです。"},
+      {stat:"72時間+",text:"制作期間中の平均週労働時間。休息もサポートも安全網もありません。"}
+    ],
+    inc_label:"プログラム",inc_title:"組織が<em>得るもの</em>",
+    inc_sub:"Creavenの組織プログラムは包括的です。ヘッドライナーから舞台を清掃するスタッフまで、チームのすべてのメンバーをカバーします。",
+    included:[
+      {icon:"🧪",title:"全評価ライブラリへのアクセス",desc:"すべてのチームメンバーが検証済みの心理測定ツールライブラリにアクセスできます。"},
+      {icon:"💬",title:"個人相談",desc:"カバーされた各チームメンバーは希望言語でCreaven心理士との個人相談を受けられます。"},
+      {icon:"📊",title:"匿名組織ダッシュボード",desc:"組織の集計・匿名化されたウェルビーイングデータ。個人データは見えません。"},
+      {icon:"🚨",title:"危機プロトコル",desc:"急性苦痛を抱えるチームメンバーはすぐに心理士と繋がります。"},
+      {icon:"📋",title:"定期ウェルビーイングレポート",desc:"組織の集団的心理的健康に関する半年ごとのレポート。"},
+      {icon:"🌍",title:"6言語対応",desc:"英語、フランス語、韓国語、日本語、中国語、タイ語でサポート利用可能。"}
+    ],
+    diff_title:"Creavenが市場の<em>他のいかなるものとも異なる</em>理由",
+    diffs:[
+      {text:"<strong>HR不要。</strong>ほとんどのEAPには管理のためのHR部門が必要です。Creavenは仲介なしに個人と直接機能します。"},
+      {text:"<strong>すべての役割とランク。</strong>プログラムは全員をカバーします。"},
+      {text:"<strong>すべての契約形態。</strong>正社員、フリーランス、季節スタッフ、ボランティアすべてが1つの組織サブスクリプションでカバーされます。"},
+      {text:"<strong>臨床的基盤。</strong>クリエイティブ分野での自殺予防と燃え尽き症候群の直接経験を持つ専門家が構築。"},
+      {text:"<strong>AI支援、人間が検証。</strong>ケアを置き換えるのではなく強化する技術。"}
+    ],
+    proc_label:"仕組み",proc_title:"最初の連絡から<em>継続的なサポート</em>まで",
+    process:[
+      {n:"1",title:"組織相談",desc:"経営陣と会い、ニーズ、規模、範囲を評価します。一緒にプログラムを設計します。"},
+      {n:"2",title:"契約とオンボーディング",desc:"半年サブスクリプション締結。チームはアクセス資格情報とオンボーディング資料を受け取ります。"},
+      {n:"3",title:"積極的サポート",desc:"チームメンバーは相談を予約し、評価を完了し、必要に応じて継続的なサポートを受けます。"},
+      {n:"4",title:"レポートと更新",desc:"匿名化されたウェルビーイングレポートを受け取ります。一緒に見直し、プログラムを更新します。"}
+    ],
+    quote:"「クリエイティブ産業でのメンタルヘルスサポートは常にトップの人々のためのものでした。Creavenは他のすべての人々に届くように設計された最初のプラットフォームです。」",
+    quote_source:"アマコン・グレース・ダニエラ  -  Creaven創業者",
+    cta_title:"チームを<em>守る準備はできていますか？</em>",
+    cta_sub:"組織相談を予約してください。チームのニーズを評価し、構造と予算に合ったサポート計画を構築します。",
+    cta_primary:"組織相談を予約する",cta_sec:"Creavenについてもっと知る",
+    footer:"Creaven \u00a9 2026 \u2014 クリエイティブ産業のための心理的ウェルビーイング \u2014 hellosafemindconnect@gmail.com"
+  },
+  zh: {
+    eyebrow:"面向组织",
+    title:"您团队的<em>心理健康</em>是一个商业决策。",
+    desc:"Creaven为创意和文化产业的组织提供完整的心理健康计划。无论角色或合同类型如何，您团队的每位成员都应该获得专业的心理健康支持。",
+    btn_primary:"预约机构咨询",btn_sec:"查看包含内容 →",
+    nl_home:"主页",nl_tests:"评估",nl_org:"机构专区",nl_book:"预约",nl_cta:"开始",
+    stats:[
+      {v:"700K",l:"每年全球因自杀失去的生命。每45秒一例。(WHO, 2024)"},
+      {v:"84%",l:"创意产业工作者报告与工作相关的心理困扰。"},
+      {v:"0",l:"专门针对创意产业工作者的心理健康平台存在。"},
+      {v:"6",l:"种语言。您团队的每位成员都可以用自己的语言获得支持。"}
+    ],
+    who_label:"适用对象",who_title:"为创意空间<em>每个组织</em>而建",
+    who_sub:"Creaven服务各种规模的组织。如果您在创意和文化产业雇用或与人合作，此计划为您设计。",
+    who:[
+      {icon:"🎵",title:"音乐厂牌和经纪公司",desc:"为艺术家、制作人、A&R、经纪人、造型师、编舞师和所有支持人员提供支持。",examples:["音乐厂牌","独立厂牌","艺人经纪公司"]},
+      {icon:"🎬",title:"影视制作公司",desc:"为导演、演员、剧组、后期制作团队和幕后工作人员提供心理健康保障。",examples:["电影工作室","流媒体制作公司","广告代理"]},
+      {icon:"📱",title:"数字和漫画工作室",desc:"为内容创作者、编剧、插画师、社交媒体团队和平台运营人员提供支持。",examples:["漫画工作室","内容代理","游戏公司"]}
+    ],
+    prob_title:"创意产业靠人类能量运转。<br><em>它很少保护这种能量。</em>",
+    problems:[
+      {stat:"3人中1人",text:"创意产业工作者经历临床水平的职业倦怠。大多数人从不寻求帮助，因为没有为他们建立的系统。"},
+      {stat:"万亿$",text:"因心理健康问题造成的年度全球生产力损失。预防成本只是其中的一小部分。"},
+      {stat:"72小时+",text:"制作期间的平均每周工作时间。没有休息，没有支持，没有安全网。"}
+    ],
+    inc_label:"计划",inc_title:"您的组织<em>获得什么</em>",
+    inc_sub:"Creaven的组织计划是全面的。它涵盖您团队的每个人，从头牌到清洁舞台的清洁工。",
+    included:[
+      {icon:"🧪",title:"完整评估库访问",desc:"所有团队成员可以访问我们经过验证的心理测量工具库。结果对个人及其指定心理学家是私密的。"},
+      {icon:"💬",title:"个人咨询",desc:"每位受保人员可以用首选语言与Creaven心理学家进行个人咨询。"},
+      {icon:"📊",title:"匿名组织仪表板",desc:"您组织的汇总和匿名化健康数据。无法查看个人数据。"},
+      {icon:"🚨",title:"危机协议",desc:"任何处于急性痛苦的团队成员都会立即与心理学家联系。无等待，无队列。"},
+      {icon:"📋",title:"定期健康报告",desc:"每半年一次关于您组织集体心理健康的报告，附有可操作的建议。"},
+      {icon:"🌍",title:"6语言覆盖",desc:"支持英语、法语、韩语、日语、中文和泰语。无语言障碍。"}
+    ],
+    diff_title:"Creaven与市场上<em>任何其他产品不同</em>的原因",
+    diffs:[
+      {text:"<strong>无需HR。</strong>大多数EAP需要HR部门来管理。Creaven直接与个人合作，无需中介。"},
+      {text:"<strong>所有角色和级别。</strong>该计划涵盖所有人。头牌和清洁工获得同等级别的关怀。"},
+      {text:"<strong>所有合同类型。</strong>员工、自由职业者、季节性员工和志愿者都在一个组织订阅下覆盖。"},
+      {text:"<strong>临床基础。</strong>由在创意领域自杀预防和倦怠方面具有直接经验的心理社会支持专家构建。"},
+      {text:"<strong>AI辅助，人工验证。</strong>增强而非替代关怀的技术。每个结果都由持牌心理学家审查。"}
+    ],
+    proc_label:"工作原理",proc_title:"从第一次接触到<em>持续支持</em>",
+    process:[
+      {n:"1",title:"组织咨询",desc:"我们与您的领导层会面，评估需求、规模和范围。我们共同设计计划。"},
+      {n:"2",title:"合同与入职",desc:"签署半年订阅。您的团队获得访问凭据和其语言的入职材料。"},
+      {n:"3",title:"积极支持",desc:"团队成员预约咨询、完成评估，并在整个期间按需获得持续支持。"},
+      {n:"4",title:"报告与续订",desc:"您收到匿名健康报告。我们共同审查并续订或调整下一期的计划。"}
+    ],
+    quote:"「创意产业的心理健康支持一直保留给顶层人士。Creaven是第一个旨在惠及所有其他人的平台。」",
+    quote_source:"阿马孔·格蕾丝·丹妮拉  -  Creaven创始人",
+    cta_title:"准备好<em>保护您的团队了吗？</em>",
+    cta_sub:"预约组织咨询。我们将评估您团队的需求，详细介绍计划，并建立适合您结构和预算的支持计划。",
+    cta_primary:"预约机构咨询",cta_sec:"了解更多关于Creaven的信息",
+    footer:"Creaven \u00a9 2026 \u2014 面向创意产业的心理健康 \u2014 hellosafemindconnect@gmail.com"
+  },
+  th: {
+    eyebrow:"สำหรับองค์กร",
+    title:"สุขภาพจิตของทีมคุณ<em>เป็นการตัดสินใจทางธุรกิจ</em>",
+    desc:"Creaven ให้บริการโปรแกรมสุขภาวะทางจิตที่ครบวงจรแก่องค์กรในอุตสาหกรรมสร้างสรรค์และวัฒนธรรม ทุกคนในทีมของคุณ ไม่ว่าจะมีบทบาทหรือประเภทสัญญาใด สมควรได้รับการสนับสนุนด้านสุขภาพจิตจากผู้เชี่ยวชาญ",
+    btn_primary:"จองการปรึกษาองค์กร",btn_sec:"ดูสิ่งที่รวมอยู่ →",
+    nl_home:"หน้าหลัก",nl_tests:"การประเมิน",nl_org:"สำหรับองค์กร",nl_book:"จอง",nl_cta:"เริ่มต้น",
+    stats:[
+      {v:"700K",l:"ชีวิตที่สูญเสียจากการฆ่าตัวตายทั่วโลกทุกปี ทุก 45 วินาที (WHO, 2024)"},
+      {v:"84%",l:"ของคนทำงานในอุตสาหกรรมสร้างสรรค์รายงานความทุกข์ทางจิตใจที่เกี่ยวข้องกับงาน"},
+      {v:"0",l:"แพลตฟอร์มสุขภาพจิตเฉพาะสำหรับคนทำงานในอุตสาหกรรมสร้างสรรค์มีอยู่"},
+      {v:"6",l:"ภาษา ทุกคนในทีมของคุณสามารถเข้าถึงการสนับสนุนในภาษาของตนเอง"}
+    ],
+    who_label:"สำหรับใคร",who_title:"สร้างขึ้นสำหรับ<em>ทุกองค์กร</em>ในพื้นที่สร้างสรรค์",
+    who_sub:"Creaven ให้บริการองค์กรทุกขนาด หากคุณจ้างหรือทำงานร่วมกับคนในอุตสาหกรรมสร้างสรรค์และวัฒนธรรม โปรแกรมนี้ออกแบบมาสำหรับคุณ",
+    who:[
+      {icon:"🎵",title:"ค่ายเพลงและเอเจนซี่",desc:"การสนับสนุนสำหรับศิลปิน โปรดิวเซอร์ A&R ผู้จัดการ สไตลิสต์ นักออกแบบท่าเต้น และเจ้าหน้าที่สนับสนุนทั้งหมด",examples:["ค่ายเพลง","ค่ายเพลงอินดี้","เอเจนซี่ศิลปิน"]},
+      {icon:"🎬",title:"บริษัทภาพยนตร์และการผลิต",desc:"ความคุ้มครองสุขภาพจิตสำหรับผู้กำกับ นักแสดง ทีมงาน ทีมหลังการผลิต และเจ้าหน้าที่เบื้องหลัง",examples:["สตูดิโอภาพยนตร์","ผู้ผลิตสตรีมมิ่ง","เอเจนซี่โฆษณา"]},
+      {icon:"📱",title:"สตูดิโอดิจิทัลและเว็บตูน",desc:"การสนับสนุนสำหรับผู้สร้างเนื้อหา นักเขียน นักวาดภาพประกอบ ทีมโซเชียลมีเดีย",examples:["สตูดิโอเว็บตูน","เอเจนซี่เนื้อหา","บริษัทเกม"]}
+    ],
+    prob_title:"อุตสาหกรรมสร้างสรรค์ขับเคลื่อนด้วยพลังงานมนุษย์<br><em>แต่แทบไม่เคยปกป้องมัน</em>",
+    problems:[
+      {stat:"1 ใน 3",text:"คนทำงานในอุตสาหกรรมสร้างสรรค์ประสบกับความหมดไฟในระดับทางคลินิก ส่วนใหญ่ไม่เคยขอความช่วยเหลือเพราะไม่มีระบบสำหรับพวกเขา"},
+      {stat:"1ล้านล้าน$",text:"การสูญเสียผลผลิตทั่วโลกต่อปีเนื่องจากปัญหาสุขภาพจิต การป้องกันมีค่าใช้จ่ายเพียงเศษเสี้ยว"},
+      {stat:"72+ ชั่วโมง",text:"ชั่วโมงทำงานเฉลี่ยต่อสัปดาห์ในช่วงการผลิต ไม่มีการพักผ่อน ไม่มีการสนับสนุน ไม่มีตาข่ายความปลอดภัย"}
+    ],
+    inc_label:"โปรแกรม",inc_title:"สิ่งที่องค์กรของคุณ<em>ได้รับ</em>",
+    inc_sub:"โปรแกรมองค์กรของ Creaven ครอบคลุมทุกด้าน ครอบคลุมทุกคนในทีมของคุณ ตั้งแต่นักแสดงหลักไปจนถึงพนักงานทำความสะอาดเวที",
+    included:[
+      {icon:"🧪",title:"เข้าถึงคลังการประเมินทั้งหมด",desc:"สมาชิกทีมทั้งหมดเข้าถึงคลังเครื่องมือวัดทางจิตวิทยาที่ผ่านการตรวจสอบแล้ว ผลลัพธ์เป็นส่วนตัว"},
+      {icon:"💬",title:"การปรึกษาส่วนตัว",desc:"สมาชิกทีมที่ครอบคลุมแต่ละคนได้รับการเข้าถึงการปรึกษาส่วนตัวกับนักจิตวิทยา Creaven ในภาษาที่ต้องการ"},
+      {icon:"📊",title:"แดชบอร์ดองค์กรแบบไม่ระบุตัวตน",desc:"ข้อมูลสุขภาวะที่รวบรวมและไม่ระบุตัวตนสำหรับองค์กรของคุณ ไม่มีข้อมูลส่วนบุคคลที่มองเห็นได้"},
+      {icon:"🚨",title:"โปรโตคอลวิกฤต",desc:"สมาชิกทีมที่มีความทุกข์ทางจิตใจอย่างเฉียบพลันจะเชื่อมต่อกับนักจิตวิทยาทันที ไม่ต้องรอ"},
+      {icon:"📋",title:"รายงานสุขภาวะเป็นระยะ",desc:"รายงานครึ่งปีเกี่ยวกับสุขภาพจิตส่วนรวมขององค์กรพร้อมคำแนะนำที่นำไปปฏิบัติได้"},
+      {icon:"🌍",title:"ครอบคลุม 6 ภาษา",desc:"การสนับสนุนในภาษาอังกฤษ ฝรั่งเศส เกาหลี ญี่ปุ่น จีน และไทย ไม่มีอุปสรรคทางภาษา"}
+    ],
+    diff_title:"ทำไม Creaven <em>แตกต่างจากสิ่งอื่น</em>ในตลาด",
+    diffs:[
+      {text:"<strong>ไม่ต้องการ HR</strong> EAP ส่วนใหญ่ต้องการฝ่าย HR เพื่อจัดการ Creaven ทำงานโดยตรงกับบุคคล ไม่มีตัวกลาง"},
+      {text:"<strong>ทุกบทบาทและระดับ</strong> โปรแกรมครอบคลุมทุกคน นักแสดงหลักและพนักงานทำความสะอาดได้รับการดูแลในระดับเดียวกัน"},
+      {text:"<strong>ทุกประเภทสัญญา</strong> พนักงานประจำ ฟรีแลนซ์ พนักงานตามฤดูกาล และอาสาสมัครทั้งหมดครอบคลุมภายใต้การสมัครสมาชิกองค์กรเดียว"},
+      {text:"<strong>พื้นฐานทางคลินิก</strong> สร้างโดยผู้เชี่ยวชาญด้านการสนับสนุนทางจิตสังคมที่มีประสบการณ์โดยตรงด้านการป้องกันการฆ่าตัวตายในภาคสร้างสรรค์"},
+      {text:"<strong>ช่วยเหลือโดย AI ตรวจสอบโดยมนุษย์</strong> เทคโนโลยีที่ช่วยเสริมการดูแล ไม่ใช่แทนที่ ผลลัพธ์ทั้งหมดได้รับการตรวจสอบโดยนักจิตวิทยาที่มีใบอนุญาต"}
+    ],
+    proc_label:"วิธีการทำงาน",proc_title:"จากการติดต่อครั้งแรกถึง<em>การสนับสนุนอย่างต่อเนื่อง</em>",
+    process:[
+      {n:"1",title:"การปรึกษาองค์กร",desc:"เราพบกับผู้นำของคุณเพื่อประเมินความต้องการ ขนาด และขอบเขต เราออกแบบโปรแกรมร่วมกัน"},
+      {n:"2",title:"สัญญาและการเตรียมความพร้อม",desc:"ลงนามสมัครสมาชิกครึ่งปี ทีมของคุณได้รับข้อมูลการเข้าถึงและวัสดุในภาษาของตน"},
+      {n:"3",title:"การสนับสนุนเชิงรุก",desc:"สมาชิกทีมจองการปรึกษา ทำการประเมิน และรับการสนับสนุนอย่างต่อเนื่องตลอดระยะเวลา"},
+      {n:"4",title:"การรายงานและการต่ออายุ",desc:"คุณได้รับรายงานสุขภาวะที่ไม่ระบุตัวตน เราทบทวนร่วมกันและต่ออายุหรือปรับโปรแกรม"}
+    ],
+    quote:"\"การสนับสนุนสุขภาพจิตในอุตสาหกรรมสร้างสรรค์มักถูกสงวนไว้สำหรับผู้ที่อยู่ด้านบนเสมอ Creaven คือแพลตฟอร์มแรกที่ออกแบบมาเพื่อเข้าถึงคนอื่นๆ ทุกคน\"",
+    quote_source:"อาม่าคอน เกรส ดาเนียลลา  -  ผู้ก่อตั้ง Creaven",
+    cta_title:"พร้อม<em>ปกป้องทีมของคุณแล้วหรือ?</em>",
+    cta_sub:"จองการปรึกษาองค์กร เราจะประเมินความต้องการของทีมคุณ นำเสนอโปรแกรมอย่างละเอียด และสร้างแผนสนับสนุนที่เหมาะกับโครงสร้างและงบประมาณของคุณ",
+    cta_primary:"จองการปรึกษาองค์กร",cta_sec:"เรียนรู้เพิ่มเติมเกี่ยวกับ Creaven",
+    footer:"Creaven \u00a9 2026 \u2014 สุขภาวะทางจิตสำหรับอุตสาหกรรมสร้างสรรค์ \u2014 hellosafemindconnect@gmail.com"
+  }
+};
+
+let lang = 'en';
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+}
+
+function applyTranslations() {
+  const t = T[lang];
+  document.getElementById('h-eyebrow').textContent = t.eyebrow;
+  document.getElementById('h-title').innerHTML = t.title;
+  document.getElementById('h-desc').textContent = t.desc;
+  document.getElementById('h-btn-primary').textContent = t.btn_primary;
+  document.getElementById('h-btn-sec').textContent = t.btn_sec;
+  document.getElementById('nl-home').textContent = t.nl_home;
+  document.getElementById('nl-tests').textContent = t.nl_tests;
+  document.getElementById('nl-org').textContent = t.nl_org;
+  document.getElementById('nl-book').textContent = t.nl_book;
+  document.getElementById('nl-cta').textContent = t.nl_cta;
+  document.getElementById('who-label').textContent = t.who_label;
+  document.getElementById('who-title').innerHTML = t.who_title;
+  document.getElementById('who-sub').textContent = t.who_sub;
+  document.getElementById('prob-title').innerHTML = t.prob_title;
+  document.getElementById('inc-label').textContent = t.inc_label;
+  document.getElementById('inc-title').innerHTML = t.inc_title;
+  document.getElementById('inc-sub').textContent = t.inc_sub;
+  document.getElementById('diff-title').innerHTML = t.diff_title;
+  document.getElementById('proc-label').textContent = t.proc_label;
+  document.getElementById('proc-title').innerHTML = t.proc_title;
+  document.getElementById('quote-text').textContent = t.quote;
+  document.getElementById('quote-source').textContent = t.quote_source;
+  document.getElementById('cta-title').innerHTML = t.cta_title;
+  document.getElementById('cta-sub').textContent = t.cta_sub;
+  document.getElementById('cta-btn-primary').textContent = t.cta_primary;
+  document.getElementById('cta-btn-sec').textContent = t.cta_sec;
+  document.getElementById('footer-text').textContent = t.footer;
+  document.getElementById('s1-v').textContent = t.stats[0].v;
+  document.getElementById('s1-l').textContent = t.stats[0].l;
+  document.getElementById('s2-v').textContent = t.stats[1].v;
+  document.getElementById('s2-l').textContent = t.stats[1].l;
+  document.getElementById('s3-v').textContent = t.stats[2].v;
+  document.getElementById('s3-l').textContent = t.stats[2].l;
+  document.getElementById('s4-v').textContent = t.stats[3].v;
+  document.getElementById('s4-l').textContent = t.stats[3].l;
+  document.getElementById('whoGrid').innerHTML = t.who.map(w =>
+    `<div class="who-card">
+      <div class="who-icon">${w.icon}</div>
+      <div class="who-title">${w.title}</div>
+      <div class="who-desc">${w.desc}</div>
+      <div class="who-examples">${w.examples.map(e => `<span class="who-ex">${e}</span>`).join('')}</div>
+    </div>`).join('');
+  document.getElementById('probGrid').innerHTML = t.problems.map(p =>
+    `<div class="problem-card">
+      <div class="problem-stat">${p.stat}</div>
+      <div class="problem-text">${p.text}</div>
+    </div>`).join('');
+  document.getElementById('includedList').innerHTML = t.included.map(i =>
+    `<div class="included-item">
+      <div class="included-icon">${i.icon}</div>
+      <div class="included-content">
+        <div class="included-title">${i.title}</div>
+        <div class="included-desc">${i.desc}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('diffList').innerHTML = t.diffs.map(d =>
+    `<div class="diff-item">
+      <div class="diff-check">✓</div>
+      <div class="diff-text">${d.text}</div>
+    </div>`).join('');
+  document.getElementById('processSteps').innerHTML = t.process.map(p =>
+    `<div
