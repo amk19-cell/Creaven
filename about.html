@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#3A6B3A;--teal-dark:#2A4A2A;--teal-light:#E8F2E8;--teal-xlight:#F0F8F8;
+  --violet:#7B6B8D;--violet-light:#EDE8F2;
+  --charcoal:#1E1E1E;--cream:#FAF8F4;--cream-dark:#F0EBE1;
+  --mid:#5A5A5A;--light:#999;--white:#FFFFFF;
+  --green:#27AE60;--green-light:#E9F7EF;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+
+.lang-bar span{color:var(--light);font-size:11px;letter-spacing:.08em;margin-right:8px;}
+
+
+
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;flex-direction:row;align-items:center;gap:10px;}
+.nav-logo .main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--teal-dark);}
+.nav-logo .sub{font-size:10px;color:var(--light);letter-spacing:.14em;text-transform:uppercase;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-link{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-link:hover{color:var(--teal);}
+.nav-link.active{color:var(--teal);font-weight:500;}
+.nav-cta{background:var(--teal);color:white;padding:8px 20px;border-radius:30px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--teal-dark);}
+
+/* HERO */
+.hero{
+  background:var(--cream-dark);
+  padding:80px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;right:-100px;top:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(61,139,139,.08) 0%,transparent 70%);
+  border-radius:50%;
+}
+.hero-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center;position:relative;}
+.hero-eyebrow{display:inline-block;background:var(--teal-light);color:var(--teal-dark);padding:5px 16px;border-radius:30px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,56px);font-weight:300;color:var(--charcoal);line-height:1.1;margin-bottom:20px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-bio{font-size:15px;color:var(--mid);line-height:1.9;font-weight:300;margin-bottom:28px;}
+.founder-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+.ftag{background:white;border:1px solid rgba(0,0,0,.08);color:var(--mid);padding:5px 14px;border-radius:20px;font-size:12px;}
+.hero-contact{font-size:13px;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.hero-contact:hover{text-decoration:underline;}
+
+/* FOUNDER VISUAL */
+.founder-visual{
+  background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal) 50%,var(--violet) 100%);
+  border-radius:24px;
+  padding:40px 32px;
+  color:white;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.founder-visual::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='10'/%3E%3C/g%3E%3C/svg%3E");
+}
+.founder-avatar{
+  width:96px;height:96px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+  border:3px solid rgba(255,255,255,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:40px;color:white;font-weight:600;
+  margin:0 auto 16px;position:relative;
+}
+.founder-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:white;margin-bottom:4px;position:relative;}
+.founder-role{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:20px;line-height:1.5;position:relative;}
+.founder-creds{display:flex;flex-direction:column;gap:8px;position:relative;}
+.fcred{background:rgba(255,255,255,.12);border-radius:10px;padding:10px 14px;text-align:left;display:flex;align-items:center;gap:10px;}
+.fcred-icon{font-size:16px;flex-shrink:0;}
+.fcred-text{font-size:12px;color:rgba(255,255,255,.8);line-height:1.4;}
+
+/* SECTIONS */
+.section{padding:72px 48px;max-width:1000px;margin:0 auto;}
+.section-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:300;color:var(--charcoal);margin-bottom:32px;line-height:1.2;}
+.section-title em{font-style:italic;color:var(--teal);}
+
+/* MISSION */
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.mission-card{background:white;border-radius:20px;padding:28px;border:1px solid rgba(0,0,0,.06);}
+.mc-icon{font-size:28px;margin-bottom:12px;}
+.mc-title{font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
+.mc-text{font-size:13px;color:var(--mid);line-height:1.7;}
+
+/* WHY */
+.why-block{
+  background:var(--charcoal);
+  border-radius:24px;
+  padding:48px;
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+.why-block::before{
+  content:'"';
+  font-family:'Cormorant Garamond',serif;
+  font-size:200px;
+  color:rgba(255,255,255,.04);
+  position:absolute;top:-40px;left:20px;line-height:1;
+}
+.why-text{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.5vw,28px);font-weight:300;color:white;line-height:1.5;font-style:italic;position:relative;}
+.why-sub{font-size:13px;color:rgba(255,255,255,.45);margin-top:20px;line-height:1.7;position:relative;}
+
+/* VALUES */
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.value-card{text-align:center;padding:28px 20px;background:white;border-radius:20px;border:1px solid rgba(0,0,0,.06);}
+.value-icon{font-size:32px;margin-bottom:12px;}
+.value-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
+.value-text{font-size:13px;color:var(--mid);line-height:1.6;}
+
+/* PLATFORM STRIP */
+.platform-strip{background:var(--teal-xlight);padding:72px 48px;}
+.platform-inner{max-width:1000px;margin:0 auto;}
+.platform-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px;}
+.platform-item{background:white;border-radius:16px;padding:20px 24px;display:flex;gap:14px;align-items:flex-start;border:1px solid rgba(0,0,0,.06);}
+.pi-icon{font-size:24px;flex-shrink:0;}
+.pi-title{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:4px;}
+.pi-text{font-size:13px;color:var(--mid);line-height:1.6;}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,var(--teal-dark),var(--violet));padding:80px 48px;text-align:center;}
+.cta-inner{max-width:600px;margin:0 auto;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:white;margin-bottom:14px;line-height:1.1;}
+.cta-title em{font-style:italic;color:rgba(255,255,255,.7);}
+.cta-sub{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:36px;line-height:1.7;}
+.btn-cta{background:white;color:var(--teal-dark);padding:15px 40px;border-radius:40px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;transition:all .25s;margin:6px;}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.2);}
+.btn-cta-sec{background:rgba(255,255,255,.12);color:white;padding:15px 40px;border-radius:40px;font-size:14px;text-decoration:none;display:inline-block;transition:all .2s;border:1px solid rgba(255,255,255,.2);margin:6px;}
+.btn-cta-sec:hover{background:rgba(255,255,255,.2);}
+
+footer{background:var(--charcoal);border-top:1px solid rgba(255,255,255,.06);padding:24px 48px;text-align:center;}
+footer p{font-size:12px;color:rgba(255,255,255,.3);}
+
+@media(max-width:900px){
+  .lang-bar,nav,.hero,.section,.platform-strip,.cta-section{padding-left:20px;padding-right:20px;}
+  .hero-inner{grid-template-columns:1fr;}
+  .founder-visual{order:-1;}
+  .mission-grid,.values-grid,.platform-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+}
+
+  .lang-switcher{position:relative;}
+  .lang-toggle{background:none;border:1.5px solid var(--green,#3A6B3A);color:var(--green,#3A6B3A);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;min-width:44px;}
+  .lang-toggle:hover,.lang-toggle.open{background:var(--green,#3A6B3A);color:white;}
+  .lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+  .lang-dropdown.open{display:block;}
+  .lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:#1A2A1A;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+  .lang-dropdown button:last-child{border-bottom:none;}
+  .lang-dropdown button:hover{background:#E8F2E8;color:#2A4A2A;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-creaven.png" alt="Creaven" style="height:44px;width:auto;object-fit:contain;">
+    <div style="display:flex;flex-direction:column;line-height:1;">
+      <span class="main">Creaven</span>
+      <span class="sub">Psychological Well-being</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" id="nl-home">Home</a>
+    <a href="tests.html" class="nav-link" id="nl-tests">Assessments</a>
+    <a href="consultation.html" class="nav-link" data-i18n="nav_session">My Session</a>
+    <a href="organizations.html" class="nav-link" id="nl-org">For Organizations</a>
+    <a href="booking.html" class="nav-link" id="nl-book">Book</a>
+  </div>
+  <a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a>
+    <a href="booking.html" class="nav-cta" id="nl-cta">Book a Consultation</a>
+
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')">English</button>
+        <button onclick="selectLang('fr','FR')">Francais</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('th','TH')">ไทย</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Espanol</button>
+      </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow" id="h-eyebrow">About</div>
+      <h1 id="h-title">Built by someone who <em>knows this world</em> from the inside.</h1>
+      <p class="hero-bio" id="h-bio"></p>
+      <div class="founder-tags" id="founderTags"></div>
+      <a href="contact.html" class="hero-contact">✉ Contact Creaven</a>
+    <a href="emergency.html" class="nav-link" style="color:var(--red);" data-i18n="nav_emergency">Emergency</a>
+    </div>
+    <div class="founder-visual">
+      <div class="founder-avatar">G</div>
+      <div class="founder-name">Amakon Grace Daniella</div>
+      <div class="founder-role" id="fv-role">Founder, Creaven<br>Psychosocial Support Specialist</div>
+      <div class="founder-creds" id="founderCreds"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div class="section">
+  <div class="section-label" id="mission-label">Mission</div>
+  <div class="section-title" id="mission-title">What Creaven <em>exists to do</em></div>
+  <div class="mission-grid" id="missionGrid"></div>
+</div>
+
+<!-- WHY -->
+<div style="padding:0 48px 72px;max-width:1000px;margin:0 auto;">
+  <div class="why-block">
+    <div class="why-text" id="why-text"></div>
+    <div class="why-sub" id="why-sub"></div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div style="background:var(--cream-dark);padding:72px 48px;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div class="section-label" id="val-label">Values</div>
+    <div class="section-title" id="val-title">What guides <em>every decision</em> at Creaven</div>
+    <div class="values-grid" id="valuesGrid"></div>
+  </div>
+</div>
+
+<!-- PLATFORM -->
+<div class="platform-strip">
+  <div class="platform-inner">
+    <div class="section-label" id="plat-label">The Platform</div>
+    <div class="section-title" id="plat-title">Built with <em>clinical precision</em> and technological ambition</div>
+    <div class="platform-grid" id="platformGrid"></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-title" id="cta-title">Ready to <em>start?</em></div>
+    <div class="cta-sub" id="cta-sub"></div>
+    <div>
+      <a href="booking.html" class="btn-cta" id="cta-btn1"></a>
+      <a href="organizations.html" class="btn-cta-sec" id="cta-btn2"></a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p id="footer-text">Creaven &copy; 2026 &mdash; Psychological Well-being for the Creative Industry &mdash; All rights reserved.</p>
+</footer>
+
+<script>
+const T = {
+  en: {
+    eyebrow:"About",
+    title:"Built by someone who <em>knows this world</em> from the inside.",
+    bio:"My name is Grace Daniella Amakon. I am a psychosocial support specialist based in Abidjan, Cote d'Ivoire, with a Master's degree in social psychology and over four years of field experience in burnout prevention, psychosocial support, and survivor accompaniment through NGO work. I have developed a deep connection to Korean language and culture, and a profound understanding of the mental health challenges faced by workers in the Korean creative industry. Creaven was built because I saw a gap that no one else was filling.",
+    tags:["Social Psychology","Suicide Prevention","Burnout Specialist","NGO Coordinator","Psychosocial Support","Korean Language & Culture"],
+    fv_role:"Founder, Creaven\nPsychosocial Support Specialist",
+    creds:[
+      {icon:"🎓",text:"Master's in Social Psychology"},
+      {icon:"💼",text:"4+ years NGO field experience"},
+      {icon:"🌍",text:"Based in Abidjan, Cote d'Ivoire"},
+      {icon:"🌏",text:"Deep knowledge of Korean creative industry context"}
+    ],
+    mission_label:"Mission",
+    mission_title:"What Creaven <em>exists to do</em>",
+    missions:[
+      {icon:"🎯",title:"Make mental health care accessible",text:"Most mental health platforms require a corporate HR system, a private insurance plan, or a therapist in your city. Creaven requires none of these. If you have internet access, you have access to care."},
+      {icon:"🎨",title:"Serve the full creative ecosystem",text:"Creaven was built for everyone in the creative and cultural industries. Not just the stars. The managers, the stylists, the sound engineers, the stagehands, the janitors. Everyone counts."},
+      {icon:"🌏",title:"Bridge cultural and clinical knowledge",text:"Western mental health frameworks do not always fit the cultural context of Korean creative industries. Creaven bridges both. Our tools are internationally validated, and our approach is specifically adapted to the diverse workforce that drives Korean creative culture, from local professionals to international collaborators."},
+      {icon:"🔬",title:"Elevate clinical standards for digital care",text:"Online mental health is often underestimated clinically. Creaven uses validated psychometric tools, AI-assisted first-pass analysis, and human psychologist validation to ensure clinical integrity at every step."}
+    ],
+    why_text:"I built Creaven because in the creative industry, the people who make culture are often the last ones anyone thinks to protect.",
+    why_sub:"The burnout rates are extreme. The working conditions are brutal in silence. The stigma around mental health in performance cultures is real and deep. And yet the platforms that exist are built for corporate HR departments, not for a freelance choreographer in Seoul or a sound engineer whose contract expired last month. Creaven exists to change that.",
+    val_label:"Values",
+    val_title:"What guides <em>every decision</em> at Creaven",
+    values:[
+      {icon:"⚖️",title:"Equity of care",text:"The headliner and the janitor receive the same quality of psychological support. Role, rank, and contract type are never conditions for access to care."},
+      {icon:"🔒",title:"Radical confidentiality",text:"What happens in a session stays between the client and their psychologist. Creaven never shares clinical information with employers, agencies, or any third party under any circumstances."},
+      {icon:"🧬",title:"Clinical integrity",text:"Every tool in our library is validated. Every result is reviewed by a licensed psychologist. No shortcuts on clinical standards, ever."}
+    ],
+    plat_label:"The Platform",
+    plat_title:"Built with <em>clinical precision</em> and technological ambition",
+    platform:[
+      {icon:"🧪",title:"Clinically verified assessment library",text:"A growing library of internationally validated psychometric instruments, rigorously reviewed for scoring accuracy and clinical compliance. Covering depression, anxiety, PTSD, burnout, sleep, self-esteem, substance use, social anxiety, and more."},
+      {icon:"🤖",title:"AI-assisted clinical analysis",text:"Face-api.js analyzes facial expressions locally during test passation. Zero image stored. AI produces a first-pass analysis. Psychologist reviews and validates."},
+      {icon:"🌐",title:"6-language platform",text:"English, French, Korean, Japanese, Chinese, and Thai. The platform and every test are fully translated and culturally adapted."},
+      {icon:"📱",title:"Fully remote delivery",text:"Every consultation, assessment, and follow-up session is conducted via secure video call. No travel required for clients or psychologists anywhere in the world."}
+    ],
+    cta_title:"Ready to <em>start?</em>",
+    cta_sub:"Whether you are an individual looking for support or an organization looking to protect your team, Creaven is here.",
+    cta_btn1:"Book a Consultation",
+    cta_btn2:"For Organizations",
+    nl_home:"Home",nl_tests:"Assessments",nl_org:"For Organizations",nl_book:"Book",nl_cta:"Book a Consultation",
+    footer:"Creaven \u00a9 2026 \u2014 Psychological Well-being for the Creative Industry \u2014 All rights reserved."
+  },
+  fr: {
+    eyebrow:"A propos",
+    title:"Construit par quelqu'un qui <em>connait ce monde</em> de l'interieur.",
+    bio:"Je m'appelle Grace Daniella Amakon. Je suis specialiste en soutien psychosocial basee a Abidjan, en Cote d'Ivoire, titulaire d'un master en psychologie sociale et de plus de quatre ans d'experience de terrain en prevention du burnout, soutien psychosocial et accompagnement des survivants via des ONG. J'ai developpe une connaissance approfondie de la langue et de la culture coreennes, ainsi qu'une comprehension profonde des defis de sante mentale auxquels font face les travailleurs de l'industrie creative coreenne. Creaven a ete construit parce que j'ai vu un vide que personne d'autre ne comblait.",
+    tags:["Psychologie sociale","Prevention du suicide","Specialiste burnout","Coordinatrice ONG","Soutien psychosocial","Langue et culture coreennes"],
+    fv_role:"Fondatrice, Creaven\nSpecialiste en soutien psychosocial",
+    creds:[
+      {icon:"🎓",text:"Master en psychologie sociale"},
+      {icon:"💼",text:"4+ ans d'experience terrain ONG"},
+      {icon:"🌍",text:"Basee a Abidjan, Cote d'Ivoire"},
+      {icon:"🇰🇷",text:"Etudes de langue et culture coreennes"}
+    ],
+    mission_label:"Mission",
+    mission_title:"Ce pour quoi Creaven <em>existe</em>",
+    missions:[
+      {icon:"🎯",title:"Rendre les soins de sante mentale accessibles",text:"La plupart des plateformes de sante mentale necessitent un systeme RH d'entreprise ou une assurance privee. Creaven n'en a besoin d'aucun. Si vous avez acces a internet, vous avez acces aux soins."},
+      {icon:"🎨",title:"Servir tout l'ecosysteme creatif",text:"Creaven a ete construit pour tout le monde dans l'industrie creative. Pas seulement les stars. Les managers, les stylistes, les ingenieurs du son, les machinistes, les agents d'entretien. Tout le monde compte."},
+      {icon:"🌏",title:"Relier connaissances culturelles et cliniques",text:"Les cadres occidentaux de sante mentale ne correspondent pas toujours au contexte culturel de l'industrie creative coreenne. Creaven fait le lien entre les deux. Nos outils sont valides internationalement et notre approche est specifiquement adaptee a la diversite des travailleurs qui composent la culture creative coreenne."},
+      {icon:"🔬",title:"Elever les standards cliniques des soins numeriques",text:"La sante mentale en ligne est souvent sous-estimee cliniquement. Creaven utilise des outils psychometriques valides, une analyse IA de premiere passe et une validation par un psychologue humain."}
+    ],
+    why_text:"J'ai construit Creaven parce que dans l'industrie creative, les personnes qui fabriquent la culture sont souvent les dernieres auxquelles on pense a proteger.",
+    why_sub:"Les taux d'epuisement sont extremes. Les conditions de travail sont brutales dans le silence. La stigmatisation de la sante mentale dans les cultures de performance est reelle et profonde. Et pourtant les plateformes qui existent sont construites pour les departements RH des entreprises, pas pour une choregraphe independante a Seoul ou un technicien dont le contrat vient d'expirer. Creaven existe pour changer cela.",
+    val_label:"Valeurs",
+    val_title:"Ce qui guide <em>chaque decision</em> chez Creaven",
+    values:[
+      {icon:"⚖️",title:"Equite des soins",text:"La tete d'affiche et l'agent d'entretien recoivent le meme niveau de soutien psychologique. Le role, le rang et le type de contrat ne sont jamais des conditions d'acces aux soins."},
+      {icon:"🔒",title:"Confidentialite absolue",text:"Ce qui se passe en seance reste entre le client et son psychologue. Creaven ne partage jamais d'informations cliniques avec les employeurs ou les agences, en aucune circonstance."},
+      {icon:"🧬",title:"Integrite clinique",text:"Chaque outil dans notre bibliotheque est valide. Chaque resultat est examine par un psychologue licencie. Aucun raccourci sur les standards cliniques, jamais."}
+    ],
+    plat_label:"La plateforme",
+    plat_title:"Construite avec <em>precision clinique</em> et ambition technologique",
+    platform:[
+      {icon:"🧪",title:"Bibliotheque d'evaluations certifiee cliniquement",text:"Une bibliotheque croissante d'instruments psychometriques valides au niveau international, rigoureusement revus pour la precision du scoring et la conformite clinique. Couvrant depression, anxiete, PTSD, burnout, sommeil, estime de soi, addictions et anxiete sociale."},
+      {icon:"🤖",title:"Analyse clinique assistee par IA",text:"Face-api.js analyse les expressions faciales localement pendant la passation. Zero image stockee. L'IA produit une analyse de premiere passe. Le psychologue examine et valide."},
+      {icon:"🌐",title:"Plateforme en 6 langues",text:"Anglais, francais, coreen, japonais, chinois et thai. La plateforme et chaque test sont entierement traduits et adaptes culturellement."},
+      {icon:"📱",title:"Prestation entierement a distance",text:"Chaque consultation, evaluation et session de suivi est conduite par appel video securise. Aucun deplacement requis."}
+    ],
+    cta_title:"Pret(e) a <em>commencer ?</em>",
+    cta_sub:"Que vous soyez un individu cherchant du soutien ou une organisation souhaitant proteger votre equipe, Creaven est la.",
+    cta_btn1:"Prendre rendez-vous",
+    cta_btn2:"Pour les organisations",
+    nl_home:"Accueil",nl_tests:"Evaluations",nl_org:"Pour les organisations",nl_book:"Reserver",nl_cta:"Prendre rendez-vous",
+    footer:"Creaven \u00a9 2026 \u2014 Bien-etre psychologique pour l'industrie creative \u2014 Tous droits reserves."
+  },
+  kr: {
+    eyebrow:"소개",
+    title:"이 세계를 <em>내부에서 아는</em> 사람이 만들었습니다.",
+    bio:"저는 코트디부아르 아비장에 거주하는 심리사회적 지원 전문가 아마콘 그레이스 다니엘라입니다. 사회심리학 석사 학위를 보유하고 있으며, NGO 활동을 통해 4년 이상의 번아웃 예방, 심리사회적 지원 및 자살 예방 현장 경험을 쌓았습니다. 저는 또한 아이보리 코스트 ARMY 커뮤니티의 활동적인 멤버이며 한국어와 한국 문화를 공부하고 있습니다. Creaven는 제가 아무도 채우지 않는 공백을 보았기 때문에 만들어졌습니다.",
+    tags:["사회심리학","자살 예방","번아웃 전문가","NGO 코디네이터","K-pop 커뮤니티","한국어 학습자"],
+    fv_role:"Creaven 설립자\n심리사회적 지원 전문가",
+    creds:[
+      {icon:"🎓",text:"사회심리학 석사"},
+      {icon:"💼",text:"4년 이상 NGO 현장 경험"},
+      {icon:"🌍",text:"코트디부아르 아비장 거주"},
+      {icon:"🇰🇷",text:"한국어 및 한국 문화 학습"}
+    ],
+    mission_label:"미션",
+    mission_title:"Creaven가 <em>존재하는 이유</em>",
+    missions:[
+      {icon:"🎯",title:"정신 건강 서비스를 접근 가능하게",text:"대부분의 정신 건강 플랫폼은 기업 HR 시스템이나 개인 보험이 필요합니다. Creaven는 이 중 어느 것도 필요하지 않습니다. 인터넷에 접근할 수 있다면 케어에 접근할 수 있습니다."},
+      {icon:"🎨",title:"전체 창작 생태계 지원",text:"Creaven는 창작 및 문화 산업의 모든 사람을 위해 만들어졌습니다. 스타뿐만 아니라 매니저, 스타일리스트, 음향 엔지니어, 무대 담당자, 청소부까지. 모든 사람이 중요합니다."},
+      {icon:"🌏",title:"문화적, 임상적 지식 연결",text:"서양 정신 건강 프레임워크가 아시아 문화적 맥락에 항상 맞는 것은 아닙니다. Creaven는 둘을 연결합니다. 우리의 도구는 국제적으로 검증되었지만 접근 방식은 한국, 일본 및 아시아 창작 산업 문화의 현실에 맞게 조정됩니다."},
+      {icon:"🔬",title:"디지털 케어의 임상 표준 향상",text:"온라인 정신 건강은 임상적으로 종종 과소평가됩니다. Creaven는 검증된 심리측정 도구, AI 지원 1차 분석 및 인간 심리학자 검증을 사용합니다."}
+    ],
+    why_text:"저는 창작 산업에서 문화를 만드는 사람들이 종종 보호를 가장 마지막으로 받는다는 것을 보았기 때문에 Creaven를 만들었습니다.",
+    why_sub:"번아웃 비율은 극단적입니다. 근무 조건은 침묵 속에서 가혹합니다. 공연 문화에서 정신 건강에 대한 낙인은 실제이며 깊습니다. 그러나 존재하는 플랫폼들은 기업 HR 부서를 위해 만들어졌지, 서울의 프리랜서 안무가나 도쿄의 음향 엔지니어를 위한 것이 아닙니다. Creaven는 이것을 바꾸기 위해 존재합니다.",
+    val_label:"가치",
+    val_title:"Creaven의 <em>모든 결정</em>을 이끄는 것",
+    values:[
+      {icon:"⚖️",title:"케어의 공평성",text:"헤드라이너와 청소부는 동일한 수준의 심리적 지원을 받습니다. 역할, 직급, 계약 유형은 케어에 대한 접근 조건이 아닙니다."},
+      {icon:"🔒",title:"절대적 기밀",text:"세션에서 일어나는 일은 내담자와 심리학자 사이에만 남습니다. Creaven는 어떤 상황에서도 고용주나 에이전시와 임상 정보를 공유하지 않습니다."},
+      {icon:"🧬",title:"임상 무결성",text:"우리 라이브러리의 모든 도구는 검증되었습니다. 모든 결과는 면허 있는 심리학자가 검토합니다. 임상 기준에 대한 지름길은 없습니다."}
+    ],
+    plat_label:"플랫폼",
+    plat_title:"<em>임상 정밀도</em>와 기술적 야망으로 구축",
+    platform:[
+      {icon:"🧪",title:"검증된 심리측정 라이브러리",text:"출시 시 감사되고 수정된 12개의 심리측정 도구로 우울증, 불안, PTSD, 번아웃, 수면, 자아존중감, 중독, 사회 불안 등을 다룹니다."},
+      {icon:"🤖",title:"AI 지원 임상 분석",text:"Face-api.js는 테스트 진행 중 로컬에서 표정을 분석합니다. 이미지 저장 없음. AI가 1차 분석을 생성하고 심리학자가 검토 및 검증합니다."},
+      {icon:"🌐",title:"6개 언어 플랫폼",text:"영어, 프랑스어, 한국어, 일본어, 중국어, 태국어. 플랫폼과 모든 테스트가 완전히 번역 및 문화적으로 적응되었습니다."},
+      {icon:"📱",title:"완전 원격 제공",text:"모든 상담, 평가, 후속 세션은 보안 화상 통화를 통해 진행됩니다. 전 세계 어디서나 이동이 필요하지 않습니다."}
+    ],
+    cta_title:"<em>시작할</em> 준비가 되셨나요?",
+    cta_sub:"지원을 찾는 개인이든 팀을 보호하려는 조직이든 Creaven가 여기 있습니다.",
+    cta_btn1:"상담 예약",
+    cta_btn2:"기관을 위한",
+    nl_home:"홈",nl_tests:"평가",nl_org:"기관을 위한",nl_book:"예약",nl_cta:"상담 예약",
+    footer:"Creaven \u00a9 2026 \u2014 창작 산업을 위한 심리적 웰빙 \u2014 All rights reserved."
+  },
+  jp: {
+    eyebrow:"について",
+    title:"この世界を<em>内側から知る</em>人間が作りました。",
+    bio:"私の名前はアマコン・グレース・ダニエラです。コートジボワールのアビジャンを拠点とする心理社会的支援専門家で、社会心理学の修士号を持ち、NGO活動を通じてバーンアウト予防、心理社会的支援、自殺予防の4年以上の現場経験があります。私はまた、アイボリーコーストのARMYコミュニティの活動的なメンバーであり、韓国語と韓国文化を学んでいます。Creavenは、誰も埋めていない空白を見たために作りました。",
+    tags:["社会心理学","自殺予防","燃え尽き症候群専門家","NGOコーディネーター","K-popコミュニティ","韓国語学習者"],
+    fv_role:"Creaven創業者\n心理社会的支援専門家",
+    creds:[
+      {icon:"🎓",text:"社会心理学修士号"},
+      {icon:"💼",text:"NGO現場経験4年以上"},
+      {icon:"🌍",text:"コートジボワール・アビジャン在住"},
+      {icon:"🇰🇷",text:"韓国語・韓国文化学習中"}
+    ],
+    mission_label:"ミッション",mission_title:"Creavenが<em>存在する理由</em>",
+    missions:[
+      {icon:"🎯",title:"メンタルヘルスケアをアクセシブルに",text:"ほとんどのメンタルヘルスプラットフォームには企業のHRシステムや民間保険が必要です。Creavenにはそのどちらも必要ありません。インターネットにアクセスできれば、ケアにアクセスできます。"},
+      {icon:"🎨",title:"クリエイティブエコシステム全体を支援",text:"Creavenはクリエイティブ・文化産業のすべての人のために作られました。スターだけでなく、マネージャー、スタイリスト、音響エンジニア、舞台スタッフ、清掃員まで。全員が重要です。"},
+      {icon:"🌏",title:"文化的・臨床的知識を橋渡し",text:"西洋のメンタルヘルスのフレームワークがアジアの文化的文脈に常に合うわけではありません。Creavenは両者を橋渡しします。"},
+      {icon:"🔬",title:"デジタルケアの臨床基準を高める",text:"オンラインメンタルヘルスは臨床的に過小評価されがちです。Creavenは検証済みの心理測定ツール、AI支援の初期分析、心理士による検証を使用します。"}
+    ],
+    why_text:"クリエイティブ産業では、文化を作る人々がしばしば最後に保護を考えられる存在だからこそ、Creavenを作りました。",
+    why_sub:"バーンアウト率は極端です。労働条件は沈黙の中で過酷です。パフォーマンス文化におけるメンタルヘルスへの偏見は現実的で根深いものです。しかし存在するプラットフォームは企業のHR部門向けに作られており、ソウルのフリーランス振付師や東京の音響エンジニアのためではありません。Creavenはそれを変えるために存在します。",
+    val_label:"価値観",val_title:"Creavenの<em>すべての決定</em>を導くもの",
+    values:[
+      {icon:"⚖️",title:"ケアの公平性",text:"ヘッドライナーも清掃員も同じ質の心理的サポートを受けます。役割、地位、契約形態はケアへのアクセス条件にはなりません。"},
+      {icon:"🔒",title:"完全な守秘義務",text:"セッションで起きたことはクライアントと心理士の間だけに留まります。Creavenはいかなる状況でも雇用主やエージェンシーと臨床情報を共有しません。"},
+      {icon:"🧬",title:"臨床的誠実さ",text:"ライブラリのすべてのツールは検証済みです。すべての結果は有資格の心理士が確認します。臨床基準に近道はありません。"}
+    ],
+    plat_label:"プラットフォーム",plat_title:"<em>臨床的精密さ</em>と技術的野心で構築",
+    platform:[
+      {icon:"🧪",title:"検証済み心理測定ライブラリ",text:"ローンチ時に監査・修正済みの12の心理測定ツール。うつ病、不安、PTSD、燃え尽き、睡眠、自尊感情、依存症、社会不安をカバー。"},
+      {icon:"🤖",title:"AI支援臨床分析",text:"Face-api.jsがテスト進行中にブラウザ内でローカルで表情を分析。画像は保存されません。AIが初期分析を生成し、心理士が検証します。"},
+      {icon:"🌐",title:"6言語プラットフォーム",text:"英語、フランス語、韓国語、日本語、中国語、タイ語。プラットフォームとすべてのテストが完全に翻訳・文化的に適応。"},
+      {icon:"📱",title:"完全リモート提供",text:"すべての相談、評価、フォローアップセッションはセキュアなビデオ通話で実施。世界中どこからでも移動不要。"}
+    ],
+    cta_title:"<em>始める</em>準備はできていますか？",
+    cta_sub:"サポートを求める個人でも、チームを守りたい組織でも、Creavenはここにあります。",
+    cta_btn1:"相談を予約する",cta_btn2:"組織向け",
+    nl_home:"ホーム",nl_tests:"評価",nl_org:"組織向け",nl_book:"予約",nl_cta:"相談を予約する",
+    footer:"Creaven \u00a9 2026 \u2014 クリエイティブ産業のための心理的ウェルビーイング \u2014 All rights reserved."
+  },
+  zh: {
+    eyebrow:"关于",
+    title:"由<em>从内部了解这个世界</em>的人构建。",
+    bio:"我叫阿马孔·格蕾丝·丹妮拉。我是一位驻科特迪瓦阿比让的心理社会支持专家，拥有社会心理学硕士学位，通过非政府组织工作在倦怠预防、心理社会支持和自杀陪伴方面有4年以上的实地经验。我也是科特迪瓦ARMY社区的活跃成员，正在学习韩语和韩国文化。Creaven的建立是因为我看到了一个没有人填补的空白。",
+    tags:["社会心理学","自杀预防","倦怠专家","NGO协调员","K-pop社区","韩语学习者"],
+    fv_role:"Creaven创始人\n心理社会支持专家",
+    creds:[
+      {icon:"🎓",text:"社会心理学硕士学位"},
+      {icon:"💼",text:"4年以上NGO实地经验"},
+      {icon:"🌍",text:"驻科特迪瓦阿比让"},
+      {icon:"🇰🇷",text:"韩语及韩国文化学习"}
+    ],
+    mission_label:"使命",mission_title:"Creaven<em>存在的意义</em>",
+    missions:[
+      {icon:"🎯",title:"让心理健康护理变得可及",text:"大多数心理健康平台需要企业HR系统或私人保险。Creaven都不需要。只要能上网，就能获得护理。"},
+      {icon:"🎨",title:"服务整个创意生态系统",text:"Creaven为创意和文化产业的每个人而建。不仅仅是明星，还有经纪人、造型师、音响工程师、舞台工作人员和清洁工。每个人都重要。"},
+      {icon:"🌏",title:"连接文化与临床知识",text:"西方心理健康框架并不总是适合亚洲文化背景。Creaven连接两者。我们的工具经过国际验证，但方法适应韩国、日本和亚洲创意产业文化的现实。"},
+      {icon:"🔬",title:"提升数字护理的临床标准",text:"在线心理健康往往在临床上被低估。Creaven使用经过验证的心理测量工具、AI辅助初步分析和心理学家验证。"}
+    ],
+    why_text:"我建立Creaven，因为在创意产业中，制造文化的人往往是最后一个被想到要保护的。",
+    why_sub:"倦怠率极端。工作条件在沉默中残酷。表演文化中的心理健康污名是真实而深刻的。然而现有的平台是为企业HR部门建立的，不是为首尔的自由职业编舞师或东京的音响工程师。Creaven为改变这一状况而存在。",
+    val_label:"价值观",val_title:"指导Creaven<em>每个决策</em>的原则",
+    values:[
+      {icon:"⚖️",title:"护理公平",text:"头牌明星和清洁工获得同等质量的心理支持。角色、级别和合同类型永远不是获得护理的条件。"},
+      {icon:"🔒",title:"绝对保密",text:"会话中发生的事情只存在于客户和心理学家之间。Creaven在任何情况下都不会与雇主或经纪公司分享临床信息。"},
+      {icon:"🧬",title:"临床诚信",text:"我们库中的每个工具都经过验证。每个结果都由持牌心理学家审查。临床标准上没有捷径。"}
+    ],
+    plat_label:"平台",plat_title:"以<em>临床精确性</em>和技术雄心构建",
+    platform:[
+      {icon:"🧪",title:"经过验证的心理测量库",text:"上线时有12个经过审计和校正的心理测量工具，涵盖抑郁、焦虑、PTSD、倦怠、睡眠、自尊、成瘾和社交焦虑。"},
+      {icon:"🤖",title:"AI辅助临床分析",text:"Face-api.js在测试期间在浏览器本地分析表情。不存储图像。AI生成初步分析，心理学家审查验证。"},
+      {icon:"🌐",title:"6语言平台",text:"英语、法语、韩语、日语、中文和泰语。平台和每个测试完全翻译并进行文化适应。"},
+      {icon:"📱",title:"完全远程提供",text:"每次咨询、评估和随访会话都通过安全视频通话进行。全球任何地方都不需要出行。"}
+    ],
+    cta_title:"准备好<em>开始了吗？</em>",
+    cta_sub:"无论您是寻求支持的个人还是希望保护团队的组织，Creaven都在这里。",
+    cta_btn1:"预约咨询",cta_btn2:"机构专区",
+    nl_home:"主页",nl_tests:"评估",nl_org:"机构专区",nl_book:"预约",nl_cta:"预约咨询",
+    footer:"Creaven \u00a9 2026 \u2014 面向创意产业的心理健康 \u2014 All rights reserved."
+  },
+  th: {
+    eyebrow:"เกี่ยวกับ",
+    title:"สร้างโดยคนที่<em>รู้จักโลกนี้</em>จากภายใน",
+    bio:"ฉันชื่ออาม่าคอน เกรส ดาเนียลลา ฉันเป็นผู้เชี่ยวชาญด้านการสนับสนุนทางจิตสังคมที่ตั้งอยู่ในอาบีจาน ประเทศโกตดิวัวร์ มีปริญญาโทด้านจิตวิทยาสังคมและประสบการณ์ภาคสนามกว่า 4 ปีในการป้องกันความหมดไฟ การสนับสนุนทางจิตสังคม และการป้องกันการฆ่าตัวตายผ่านงาน NGO ฉันยังเป็นสมาชิกที่กระตือรือร้นของชุมชน ARMY ของไอวอรีโคสต์และกำลังเรียนภาษาเกาหลีและวัฒนธรรมเกาหลี Creaven ถูกสร้างขึ้นเพราะฉันเห็นช่องว่างที่ไม่มีใครเติมเต็ม",
+    tags:["จิตวิทยาสังคม","การป้องกันการฆ่าตัวตาย","ผู้เชี่ยวชาญความหมดไฟ","ผู้ประสานงาน NGO","ชุมชน K-pop","ผู้เรียนภาษาเกาหลี"],
+    fv_role:"ผู้ก่อตั้ง Creaven\nผู้เชี่ยวชาญด้านการสนับสนุนทางจิตสังคม",
+    creds:[
+      {icon:"🎓",text:"ปริญญาโทจิตวิทยาสังคม"},
+      {icon:"💼",text:"ประสบการณ์ภาคสนาม NGO กว่า 4 ปี"},
+      {icon:"🌍",text:"ตั้งอยู่ในอาบีจาน โกตดิวัวร์"},
+      {icon:"🇰🇷",text:"เรียนภาษาเกาหลีและวัฒนธรรมเกาหลี"}
+    ],
+    mission_label:"พันธกิจ",mission_title:"สิ่งที่ Creaven <em>มีอยู่เพื่อทำ</em>",
+    missions:[
+      {icon:"🎯",title:"ทำให้การดูแลสุขภาพจิตเข้าถึงได้",text:"แพลตฟอร์มสุขภาพจิตส่วนใหญ่ต้องการระบบ HR ขององค์กรหรือประกันเอกชน Creaven ไม่ต้องการสิ่งเหล่านี้เลย หากคุณเข้าถึงอินเทอร์เน็ตได้ คุณก็เข้าถึงการดูแลได้"},
+      {icon:"🎨",title:"บริการระบบนิเวศสร้างสรรค์ทั้งหมด",text:"Creaven สร้างขึ้นสำหรับทุกคนในอุตสาหกรรมสร้างสรรค์และวัฒนธรรม ไม่ใช่แค่ดารา แต่รวมถึงผู้จัดการ สไตลิสต์ วิศวกรเสียง เจ้าหน้าที่เวที และพนักงานทำความสะอาด ทุกคนมีความสำคัญ"},
+      {icon:"🌏",title:"เชื่อมโยงความรู้ทางวัฒนธรรมและคลินิก",text:"กรอบสุขภาพจิตแบบตะวันตกไม่ได้เหมาะกับบริบทวัฒนธรรมเอเชียเสมอไป Creaven เชื่อมโยงทั้งสอง เครื่องมือของเราได้รับการตรวจสอบในระดับสากลแต่แนวทางได้รับการปรับให้เข้ากับความเป็นจริงของวัฒนธรรมอุตสาหกรรมสร้างสรรค์เกาหลี ญี่ปุ่น และเอเชีย"},
+      {icon:"🔬",title:"ยกระดับมาตรฐานคลินิกสำหรับการดูแลดิจิทัล",text:"สุขภาพจิตออนไลน์มักถูกประเมินต่ำเกินไปในเชิงคลินิก Creaven ใช้เครื่องมือวัดทางจิตวิทยาที่ผ่านการตรวจสอบแล้ว การวิเคราะห์ครั้งแรกโดย AI และการตรวจสอบโดยนักจิตวิทยามนุษย์"}
+    ],
+    why_text:"ฉันสร้าง Creaven เพราะในอุตสาหกรรมสร้างสรรค์ คนที่สร้างวัฒนธรรมมักเป็นคนสุดท้ายที่ใครนึกถึงว่าต้องปกป้อง",
+    why_sub:"อัตราความหมดไฟนั้นรุนแรง เงื่อนไขการทำงานนั้นโหดร้ายในความเงียบ การตีตราเกี่ยวกับสุขภาพจิตในวัฒนธรรมการแสดงนั้นเป็นเรื่องจริงและลึกซึ้ง แต่แพลตฟอร์มที่มีอยู่สร้างขึ้นสำหรับแผนก HR ขององค์กร ไม่ใช่สำหรับนักออกแบบท่าเต้นฟรีแลนซ์ในโซลหรือวิศวกรเสียงในโตเกียว Creaven มีอยู่เพื่อเปลี่ยนแปลงสิ่งนั้น",
+    val_label:"ค่านิยม",val_title:"สิ่งที่นำทอง<em>ทุกการตัดสินใจ</em>ของ Creaven",
+    values:[
+      {icon:"⚖️",title:"ความเท่าเทียมในการดูแล",text:"นักแสดงหลักและพนักงานทำความสะอาดได้รับการสนับสนุนทางจิตใจในระดับเดียวกัน บทบาท ระดับ และประเภทสัญญาไม่ใช่เงื่อนไขในการเข้าถึงการดูแล"},
+      {icon:"🔒",title:"ความลับอย่างสมบูรณ์",text:"สิ่งที่เกิดขึ้นในเซสชันยังคงอยู่ระหว่างลูกค้าและนักจิตวิทยาของพวกเขา Creaven ไม่เคยแบ่งปันข้อมูลทางคลินิกกับนายจ้างหรือเอเจนซี่ไม่ว่าในสถานการณ์ใด"},
+      {icon:"🧬",title:"ความซื่อสัตย์ทางคลินิก",text:"ทุกเครื่องมือในคลังของเราได้รับการตรวจสอบแล้ว ทุกผลลัพธ์ได้รับการตรวจสอบโดยนักจิตวิทยาที่มีใบอนุญาต ไม่มีทางลัดในมาตรฐานคลินิก"}
+    ],
+    plat_label:"แพลตฟอร์ม",plat_title:"สร้างด้วย<em>ความแม่นยำทางคลินิก</em>และความทะเยอทะยานทางเทคโนโลยี",
+    platform:[
+      {icon:"🧪",title:"คลังวัดทางจิตวิทยาที่ผ่านการตรวจสอบ",text:"เครื่องมือวัดทางจิตวิทยา 12 รายการที่ผ่านการตรวจสอบและแก้ไขแล้วเมื่อเปิดตัว ครอบคลุมภาวะซึมเศร้า ความวิตกกังวล PTSD ความหมดไฟ การนอนหลับ ความนับถือตนเอง การติดสาร และความวิตกกังวลทางสังคม"},
+      {icon:"🤖",title:"การวิเคราะห์ทางคลินิกโดย AI",text:"Face-api.js วิเคราะห์การแสดงออกทางสีหน้าในเบราว์เซอร์ระหว่างการทดสอบ ไม่จัดเก็บภาพ AI สร้างการวิเคราะห์เบื้องต้น นักจิตวิทยาตรวจสอบและยืนยัน"},
+      {icon:"🌐",title:"แพลตฟอร์ม 6 ภาษา",text:"อังกฤษ ฝรั่งเศส เกาหลี ญี่ปุ่น จีน และไทย แพลตฟอร์มและทุกการทดสอบได้รับการแปลอย่างสมบูรณ์และปรับให้เข้ากับวัฒนธรรม"},
+      {icon:"📱",title:"การให้บริการทางไกลอย่างสมบูรณ์",text:"การปรึกษา การประเมิน และการติดตามผลทุกครั้งดำเนินการผ่านวิดีโอคอลที่ปลอดภัย ไม่จำเป็นต้องเดินทางจากทุกที่ในโลก"}
+    ],
+    cta_title:"พร้อม<em>เริ่มต้น</em>แล้วหรือ?",
+    cta_sub:"ไม่ว่าคุณจะเป็นบุคคลที่ต้องการการสนับสนุนหรือองค์กรที่ต้องการปกป้องทีม Creaven อยู่ที่นี่",
+    cta_btn1:"จองการปรึกษา",cta_btn2:"สำหรับองค์กร",
+    nl_home:"หน้าหลัก",nl_tests:"การประเมิน",nl_org:"สำหรับองค์กร",nl_book:"จอง",nl_cta:"จองการปรึกษา",
+    footer:"Creaven \u00a9 2026 \u2014 สุขภาวะทางจิตสำหรับอุตสาหกรรมสร้างสรรค์ \u2014 All rights reserved."
+  }
+};
+
+let lang = 'en';
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTranslations();
+}
+
+function applyTranslations() {
+  const t = T[lang];
+  document.getElementById('h-eyebrow').textContent = t.eyebrow;
+  document.getElementById('h-title').innerHTML = t.title;
+  document.getElementById('h-bio').textContent = t.bio;
+  document.getElementById('fv-role').textContent = t.fv_role;
+  document.getElementById('nl-home').textContent = t.nl_home;
+  document.getElementById('nl-tests').textContent = t.nl_tests;
+  document.getElementById('nl-org').textContent = t.nl_org;
+  document.getElementById('nl-book').textContent = t.nl_book;
+  document.getElementById('nl-cta').textContent = t.nl_cta;
+  document.getElementById('mission-label').textContent = t.mission_label;
+  document.getElementById('mission-title').innerHTML = t.mission_title;
+  document.getElementById('why-text').textContent = t.why_text;
+  document.getElementById('why-sub').textContent = t.why_sub;
+  document.getElementById('val-label').textContent = t.val_label;
+  document.getElementById('val-title').innerHTML = t.val_title;
+  document.getElementById('plat-label').textContent = t.plat_label;
+  document.getElementById('plat-title').innerHTML = t.plat_title;
+  document.getElementById('cta-title').innerHTML = t.cta_title;
+  document.getElementById('cta-sub').textContent = t.cta_sub;
+  document.getElementById('cta-btn1').textContent = t.cta_btn1;
+  document.getElementById('cta-btn2').textContent = t.cta_btn2;
+  document.getElementById('footer-text').textContent = t.footer;
+
+  document.getElementById('founderTags').innerHTML = t.tags.map(tag =>
+    `<span class="ftag">${tag}</span>`).join('');
+  document.getElementById('founderCreds').innerHTML = t.creds.map(c =>
+    `<div class="fcred"><div class="fcred-icon">${c.icon}</div><div class="fcred-text">${c.text}</div></div>`).join('');
+  document.getElementById('missionGrid').innerHTML = t.missions.map(m =>
+    `<div class="mission-card"><div class="mc-icon">${m.icon}</div><div class="mc-title">${m.title}</div><div class="mc-text">${m.text}</div></div>`).join('');
+  document.getElementById('valuesGrid').innerHTML = t.values.map(v =>
+    `<div class="value-card"><div class="value-icon">${v.icon}</div><div class="value-title">${v.titl
