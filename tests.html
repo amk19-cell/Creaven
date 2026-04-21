@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assessments  -  Safe Mind</title>
+<title>Assessments  -  Creaven</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -64,7 +64,7 @@
   .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase; }
   .badge.free { background: var(--green-soft); color: var(--green); }
   .badge.reviewed { background: var(--violet-light); color: var(--violet); }
-  .badge.paid { background: var(--orange-soft); color: var(--orange); }
+  .badge.paid { background: var(--teal-light); color: var(--teal-dark); font-weight: 600; }
   .badge.sensitive { background: var(--red-soft); color: var(--red); }
   .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
   .cat-dot.distress { background: #C0392B; }
@@ -122,9 +122,9 @@
 
 <nav>
   <a href="index.html" class="nav-logo">
-    <img src="logo-safemind.png" alt="Safe Mind" style="height:44px;width:auto;object-fit:contain;">
+    <img src="logo-creaven.png" alt="Creaven" style="height:44px;width:auto;object-fit:contain;">
     <div style="display:flex;flex-direction:column;line-height:1;">
-      <span class="main-name">Safe Mind</span>
+      <span class="main-name">Creaven</span>
       <span class="sub-name">Psychological Well-being</span>
     </div>
   </a>
@@ -144,9 +144,9 @@
 <div class="hero">
   <div class="hero-tag">Psychological Assessments Library</div>
   <h1>Know <em>where you stand.</em><br>Start from understanding.</h1>
-  <p>A comprehensive library of 32 validated psychological assessments  -  from quick screenings to in-depth evaluations. All results are fully confidential.</p>
+  <p>A comprehensive library of validated psychological assessments  -  from quick screenings to in-depth evaluations. All results are fully confidential.</p>
   <div class="hero-notice">
-    🔐 &nbsp;A free account is required to take any assessment
+    🔐 &nbsp;Sign in to access assessments
   </div>
 </div>
 
@@ -170,7 +170,7 @@
 <div class="tests-grid" id="testsGrid">
 
   <div class="test-card" data-cat="distress" data-name="ace adverse childhood experiences trauma" onclick="openModal('ACE','Adverse Childhood Experiences Scale','distress')">
-    <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>ACE</h3><div class="test-abbr">Adverse Childhood Experiences Scale</div>
     <p>Measures exposure to childhood trauma and its potential long-term impact on health and well-being.</p>
     <div class="card-meta"><span>📝 10 questions</span><span>⏱ 5 min</span></div>
@@ -178,7 +178,7 @@
   </div>
 
   <div class="test-card" data-cat="addiction" data-name="audit alcohol use disorders" onclick="window.location.href='test-audit.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot addiction"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot addiction"></span></div>
     <h3>AUDIT</h3><div class="test-abbr">Alcohol Use Disorders Identification Test</div>
     <p>The WHO's gold standard alcohol screening tool  -  detects hazardous and harmful consumption patterns.</p>
     <div class="card-meta"><span>📝 10 questions</span><span>⏱ 5 min</span></div>
@@ -186,7 +186,7 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="bdi beck depression inventory" onclick="openModal('BDI-II','Beck Depression Inventory','distress')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>BDI-II</h3><div class="test-abbr">Beck Depression Inventory  -  2nd Edition</div>
     <p>Widely used instrument measuring depression severity across cognitive, affective, and somatic symptoms.</p>
     <div class="card-meta"><span>📝 21 questions</span><span>⏱ 10 min</span></div>
@@ -194,7 +194,7 @@
   </div>
 
   <div class="test-card" data-cat="development" data-name="big five ocean personality openness" onclick="openModal('Big Five (OCEAN)','Big Five Personality Inventory','development')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>Big Five</h3><div class="test-abbr">OCEAN Personality Inventory</div>
     <p>Measures the five core personality dimensions: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism.</p>
     <div class="card-meta"><span>📝 44 questions</span><span>⏱ 15 min</span></div>
@@ -202,7 +202,7 @@
   </div>
 
   <div class="test-card" data-cat="addiction" data-name="cage alcohol dependence" onclick="window.location.href='test-cage.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot addiction"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot addiction"></span></div>
     <h3>CAGE</h3><div class="test-abbr">Alcohol Dependence Questionnaire</div>
     <p>A rapid 4-question screening tool to detect possible alcohol dependence or problem drinking.</p>
     <div class="card-meta"><span>📝 4 questions</span><span>⏱ 2 min</span></div>
@@ -210,7 +210,7 @@
   </div>
 
   <div class="test-card" data-cat="professional" data-name="cbi copenhagen burnout inventory" onclick="window.location.href='test-cbi.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot professional"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot professional"></span></div>
     <h3>CBI</h3><div class="test-abbr">Copenhagen Burnout Inventory</div>
     <p>Measures burnout across three dimensions: personal, work-related, and client-related exhaustion.</p>
     <div class="card-meta"><span>📝 19 questions</span><span>⏱ 8 min</span></div>
@@ -226,7 +226,7 @@
   </div>
 
   <div class="test-card" data-cat="development" data-name="cd-risc connor davidson resilience" onclick="openModal('CD-RISC','Connor-Davidson Resilience Scale','development')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>CD-RISC</h3><div class="test-abbr">Connor-Davidson Resilience Scale</div>
     <p>Measures psychological resilience and the ability to bounce back from adversity, stress, and trauma.</p>
     <div class="card-meta"><span>📝 25 questions</span><span>⏱ 10 min</span></div>
@@ -234,7 +234,7 @@
   </div>
 
   <div class="test-card" data-cat="addiction" data-name="dast drug abuse screening test" onclick="openModal('DAST-10','Drug Abuse Screening Test','addiction')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot addiction"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot addiction"></span></div>
     <h3>DAST-10</h3><div class="test-abbr">Drug Abuse Screening Test</div>
     <p>10-item screening tool for problematic drug use (excluding alcohol), widely used in occupational health.</p>
     <div class="card-meta"><span>📝 10 questions</span><span>⏱ 5 min</span></div>
@@ -242,7 +242,7 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="ede-q eating disorder examination" onclick="openModal('EDE-Q','Eating Disorder Examination Questionnaire','distress')">
-    <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>EDE-Q</h3><div class="test-abbr">Eating Disorder Examination Questionnaire</div>
     <p>Assesses eating disorder behaviors and attitudes related to dietary restraint, weight, and shape concerns.</p>
     <div class="card-meta"><span>📝 28 questions</span><span>⏱ 12 min</span></div>
@@ -250,7 +250,7 @@
   </div>
 
   <div class="test-card" data-cat="development" data-name="eq emotional intelligence inventory" onclick="openModal('EQ-i','Emotional Intelligence Inventory','development')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>EQ-i</h3><div class="test-abbr">Emotional Intelligence Inventory</div>
     <p>Measures emotional and social intelligence: self-awareness, empathy, relationship management, and stress tolerance.</p>
     <div class="card-meta"><span>📝 30 questions</span><span>⏱ 12 min</span></div>
@@ -258,7 +258,7 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="gad-7 generalized anxiety disorder" onclick="window.location.href='test-gad7.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>GAD-7</h3><div class="test-abbr">Generalized Anxiety Disorder  -  7 items</div>
     <p>Widely validated 7-item anxiety screening tool with instant automated scoring and interpretation.</p>
     <div class="card-meta"><span>📝 7 questions</span><span>⏱ 3 min</span></div>
@@ -266,7 +266,7 @@
   </div>
 
   <div class="test-card" data-cat="professional" data-name="jcq karasek job content work demands" onclick="openModal('JCQ','Karasek Job Content Questionnaire','professional')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot professional"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot professional"></span></div>
     <h3>JCQ</h3><div class="test-abbr">Karasek Job Content Questionnaire</div>
     <p>Measures job demands, decision latitude, and social support  -  the leading tool for psychosocial work conditions.</p>
     <div class="card-meta"><span>📝 27 questions</span><span>⏱ 10 min</span></div>
@@ -274,47 +274,29 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="mbti personality type indicator" onclick="openModal('MBTI','Personality Type Indicator (adapted)','development')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>MBTI</h3><div class="test-abbr">Personality Type Indicator (adapted)</div>
     <p>Identifies personality preferences across four dimensions: energy, information, decisions, and lifestyle  -  adapted for professional contexts.</p>
     <div class="card-meta"><span>📝 60 questions</span><span>⏱ 20 min</span></div>
     <div class="arrow-hint">→</div>
   </div>
 
-  <div class="test-card" data-cat="professional" data-name="mbi maslach burnout inventory" onclick="openModal('MBI','Maslach Burnout Inventory','professional')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot professional"></span></div>
-    <h3>MBI</h3><div class="test-abbr">Maslach Burnout Inventory</div>
-    <p>The world's leading measure of burnout  -  emotional exhaustion, depersonalization, and personal accomplishment.</p>
-    <div class="card-meta"><span>📝 22 questions</span><span>⏱ 10 min</span></div>
-    <div class="arrow-hint">→</div>
-  </div>
+  
 
   <div class="test-card" data-cat="distress" data-name="mdq mood disorder questionnaire bipolar" onclick="openModal('MDQ','Mood Disorder Questionnaire','distress')">
-    <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>MDQ</h3><div class="test-abbr">Mood Disorder Questionnaire</div>
     <p>Screens for bipolar spectrum disorders  -  elevated mood, decreased sleep need, and increased energy patterns.</p>
     <div class="card-meta"><span>📝 15 questions</span><span>⏱ 7 min</span></div>
     <div class="arrow-hint">→</div>
   </div>
 
-  <div class="test-card" data-cat="comprehensive" data-name="mmpi minnesota multiphasic personality inventory" onclick="openModal('MMPI-2','Minnesota Multiphasic Personality Inventory','comprehensive')">
-    <div class="card-top"><span class="badge paid">Full Assessment</span><span class="cat-dot comprehensive"></span></div>
-    <h3>MMPI-2</h3><div class="test-abbr">Minnesota Multiphasic Personality Inventory</div>
-    <p>The most widely used clinical personality assessment in the world  -  comprehensive psychological profile across 10 clinical scales.</p>
-    <div class="card-meta"><span>📝 567 questions</span><span>⏱ 60–90 min</span></div>
-    <div class="arrow-hint">→</div>
-  </div>
+  
 
-  <div class="test-card" data-cat="professional" data-name="naq-r negative acts questionnaire harassment workplace bullying" onclick="openModal('NAQ-R','Negative Acts Questionnaire  -  Workplace Harassment','professional')">
-    <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot professional"></span></div>
-    <h3>NAQ-R</h3><div class="test-abbr">Negative Acts Questionnaire  -  Revised</div>
-    <p>Internationally validated tool assessing exposure to workplace bullying and harassment over the past 6 months.</p>
-    <div class="card-meta"><span>📝 22 questions</span><span>⏱ 10 min</span></div>
-    <div class="arrow-hint">→</div>
-  </div>
+  
 
   <div class="test-card" data-cat="distress" data-name="oci-r obsessive compulsive inventory ocd" onclick="openModal('OCI-R','Obsessive-Compulsive Inventory','distress')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>OCI-R</h3><div class="test-abbr">Obsessive-Compulsive Inventory  -  Revised</div>
     <p>Assesses OCD symptoms across six subscales: washing, checking, ordering, obsessing, hoarding, neutralizing.</p>
     <div class="card-meta"><span>📝 18 questions</span><span>⏱ 7 min</span></div>
@@ -322,7 +304,7 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="pcl-5 ptsd trauma stress checklist" onclick="window.location.href='test-pcl5.html'"  >
-    <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>PCL-5</h3><div class="test-abbr">PTSD Checklist for DSM-5</div>
     <p>Screens for and measures PTSD symptom severity related to a stressful experience  -  including workplace trauma.</p>
     <div class="card-meta"><span>📝 20 questions</span><span>⏱ 10 min</span></div>
@@ -330,7 +312,7 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="phq-9 patient health questionnaire depression" onclick="window.location.href='test-phq9.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>PHQ-9</h3><div class="test-abbr">Patient Health Questionnaire  -  9 items</div>
     <p>The global standard for depression screening across 9 DSM criteria  -  instant automated results.</p>
     <div class="card-meta"><span>📝 9 questions</span><span>⏱ 4 min</span></div>
@@ -338,7 +320,7 @@
   </div>
 
   <div class="test-card" data-cat="professional" data-name="proqol compassion fatigue satisfaction burnout" onclick="window.location.href='test-proqol.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot professional"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot professional"></span></div>
     <h3>ProQOL</h3><div class="test-abbr">Professional Quality of Life Scale</div>
     <p>Measures compassion satisfaction, burnout, and secondary traumatic stress  -  for those in high-emotion environments.</p>
     <div class="card-meta"><span>📝 30 questions</span><span>⏱ 10 min</span></div>
@@ -346,7 +328,7 @@
   </div>
 
   <div class="test-card" data-cat="professional" data-name="pss perceived stress scale" onclick="window.location.href='test-pss.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot professional"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot professional"></span></div>
     <h3>PSS</h3><div class="test-abbr">Perceived Stress Scale</div>
     <p>The most widely used instrument measuring how situations are appraised as stressful. Quick and reliable.</p>
     <div class="card-meta"><span>📝 10 questions</span><span>⏱ 5 min</span></div>
@@ -354,7 +336,7 @@
   </div>
 
   <div class="test-card" data-cat="professional" data-name="psqi pittsburgh sleep quality index" onclick="window.location.href='test-psqi.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot professional"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot professional"></span></div>
     <h3>PSQI</h3><div class="test-abbr">Pittsburgh Sleep Quality Index</div>
     <p>Assesses sleep quality and disturbances over one month across 7 components including duration, efficiency, and daytime dysfunction.</p>
     <div class="card-meta"><span>📝 19 questions</span><span>⏱ 8 min</span></div>
@@ -362,7 +344,7 @@
   </div>
 
   <div class="test-card" data-cat="development" data-name="rosenberg self-esteem scale" onclick="window.location.href='test-rosenberg.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>Rosenberg</h3><div class="test-abbr">Rosenberg Self-Esteem Scale</div>
     <p>The gold standard 10-item measure of global self-esteem  -  assessing both positive and negative feelings about oneself.</p>
     <div class="card-meta"><span>📝 10 questions</span><span>⏱ 3 min</span></div>
@@ -378,7 +360,7 @@
   </div>
 
   <div class="test-card" data-cat="addiction" data-name="smas social media addiction digital screen" onclick="openModal('SMAS','Social Media Addiction Scale','addiction')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot addiction"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot addiction"></span></div>
     <h3>SMAS</h3><div class="test-abbr">Social Media Addiction Scale</div>
     <p>Measures problematic social media use  -  highly relevant for content, communications, and digital marketing staff.</p>
     <div class="card-meta"><span>📝 16 questions</span><span>⏱ 6 min</span></div>
@@ -386,7 +368,7 @@
   </div>
 
   <div class="test-card" data-cat="distress" data-name="spin social phobia anxiety interaction" onclick="window.location.href='test-spin.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot distress"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot distress"></span></div>
     <h3>SPIN</h3><div class="test-abbr">Social Phobia Inventory</div>
     <p>Screens for social anxiety disorder across fear, avoidance, and physiological discomfort in social situations.</p>
     <div class="card-meta"><span>📝 17 questions</span><span>⏱ 7 min</span></div>
@@ -394,7 +376,7 @@
   </div>
 
   <div class="test-card" data-cat="development" data-name="swls satisfaction life scale wellbeing" onclick="window.location.href='test-swls.html'"  >
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>SWLS</h3><div class="test-abbr">Satisfaction With Life Scale</div>
     <p>A brief 5-item scale measuring global cognitive judgments of life satisfaction  -  a core subjective well-being indicator.</p>
     <div class="card-meta"><span>📝 5 questions</span><span>⏱ 2 min</span></div>
@@ -402,7 +384,7 @@
   </div>
 
   <div class="test-card" data-cat="development" data-name="wami work meaning inventory sense purpose" onclick="openModal('WAMI','Work as Meaning Inventory','development')">
-    <div class="card-top"><span class="badge free">Free</span><span class="cat-dot development"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot development"></span></div>
     <h3>WAMI</h3><div class="test-abbr">Work as Meaning Inventory</div>
     <p>Measures how much individuals experience their work as meaningful, purposeful, and contributing to something greater.</p>
     <div class="card-meta"><span>📝 10 questions</span><span>⏱ 4 min</span></div>
@@ -410,7 +392,7 @@
   </div>
 
   <div class="test-card" data-cat="professional" data-name="wvq workplace violence harassment questionnaire" onclick="openModal('WVQ','Workplace Violence & Harassment Questionnaire','professional')">
-    <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot professional"></span></div>
+    <div class="card-top"><span class="badge paid">15 USD</span><span class="cat-dot professional"></span></div>
     <h3>WVQ</h3><div class="test-abbr">Workplace Violence & Harassment Questionnaire</div>
     <p>Assesses exposure to verbal, psychological, and physical violence in the workplace  -  from supervisors, colleagues, or clients.</p>
     <div class="card-meta"><span>📝 24 questions</span><span>⏱ 10 min</span></div>
@@ -432,7 +414,7 @@
     <div class="modal-icon">🔐</div>
     <h2>Account Required</h2>
     <div class="modal-test-name" id="modalTestName"></div>
-    <p>To take this assessment and access your results securely, you need a free Safe Mind account. Your data is fully confidential and never shared.</p>
+    <p>To take this assessment and access your results securely, you need a free Creaven account. Your data is fully confidential and never shared.</p>
     <div class="modal-actions">
       <button class="btn-modal-primary">Create Free Account</button>
       <div class="modal-divider">Already have an account?</div>
@@ -442,7 +424,7 @@
 </div>
 
 <footer>
-  <span>© 2026 Safe Mind  -  Safe Mind</span>
+  <span>© 2026 Creaven  -  Creaven</span>
   <span>"Protecting the minds in the creative industry."</span>
 </footer>
 
