@@ -41,7 +41,7 @@ const analytics = getAnalytics(app);
       signup_name:"Full name", signup_name_ph:"Your full name",
       signup_email:"Email address", signup_email_ph:"your@email.com",
       signup_password:"Password", signup_password_ph:"Minimum 6 characters",
-      signup_hint:"If your organization has a Safe Mind contract, use your work email for automatic access.",
+      signup_hint:"If your organization has a Creaven contract, use your work email for automatic access.",
       signup_btn:"Create Account",
       reset_title:"Reset your password",
       reset_desc:"Enter your email and we will send you a link to reset your password.",
@@ -100,7 +100,7 @@ const analytics = getAnalytics(app);
       signup_name:"Nom complet", signup_name_ph:"Votre nom complet",
       signup_email:"Adresse email", signup_email_ph:"votre@email.com",
       signup_password:"Mot de passe", signup_password_ph:"Minimum 6 caracteres",
-      signup_hint:"Si votre organisation a un contrat Safe Mind, utilisez votre email professionnel pour un acces automatique.",
+      signup_hint:"Si votre organisation a un contrat Creaven, utilisez votre email professionnel pour un acces automatique.",
       signup_btn:"Creer un compte",
       reset_title:"Reinitialiser votre mot de passe",
       reset_desc:"Entrez votre email et nous vous enverrons un lien pour reinitialiser votre mot de passe.",
@@ -218,7 +218,7 @@ const analytics = getAnalytics(app);
       signup_name:"氏名", signup_name_ph:"お名前",
       signup_email:"メールアドレス", signup_email_ph:"your@email.com",
       signup_password:"パスワード", signup_password_ph:"最低6文字",
-      signup_hint:"組織がSafe Mind契約を結んでいる場合は、業務用メールを使用すると自動アクセスできます。",
+      signup_hint:"組織がCreaven契約を結んでいる場合は、業務用メールを使用すると自動アクセスできます。",
       signup_btn:"アカウント作成",
       reset_title:"パスワードをリセット",
       reset_desc:"メールアドレスを入力すると、パスワードリセット用リンクをお送りします。",
@@ -351,7 +351,7 @@ const analytics = getAnalytics(app);
       card_assessments_desc:"ทำแบบทดสอบที่ผ่านการรับรองสำหรับภาวะซึมเศร้า วิตกกังวล หมดไฟ PTSD และอื่นๆ",
       card_assessments_btn:"เข้าถึงการประเมิน",
       card_sessions_title:"การปรึกษาของฉัน",
-      card_sessions_desc:"เข้าร่วมเซสชันกับนักจิตวิทยา Safe Mind ของคุณ",
+      card_sessions_desc:"เข้าร่วมเซสชันกับนักจิตวิทยา Creaven ของคุณ",
       card_sessions_btn:"เข้าร่วมเซสชัน",
       card_history_title:"ประวัติผลลัพธ์",
       card_history_desc:"เข้าถึงผลการประเมินในอดีตและติดตามความคืบหน้า",
@@ -391,7 +391,7 @@ const analytics = getAnalytics(app);
       login_forgot:"Passwort vergessen?", login_btn:"Anmelden",
       signup_type_label:"Ich bin",
       signup_type_individual:"Einzelperson", signup_type_individual_desc:"Freiberufler, Kunstler oder unabhangiger Arbeiter",
-      signup_type_org:"Organisation", signup_type_org_desc:"Mitarbeiter eines Unternehmens mit Safe Mind-Vertrag",
+      signup_type_org:"Organisation", signup_type_org_desc:"Mitarbeiter eines Unternehmens mit Creaven-Vertrag",
       signup_name:"Vollstandiger Name", signup_name_ph:"Ihr vollstandiger Name",
       signup_email:"E-Mail-Adresse", signup_email_ph:"ihre@email.com",
       signup_password:"Passwort", signup_password_ph:"Mindestens 6 Zeichen",
@@ -639,7 +639,7 @@ const analytics = getAnalytics(app);
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
 nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
 .nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
-.nav-logo img{height:44px;width:auto;}
+.nav-logo img{height:68px;width:auto;}
 .nav-logo-text{display:flex;flex-direction:column;line-height:1;}
 .nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
 .nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
@@ -736,9 +736,9 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
 <body>
 <nav>
   <a href="index.html" class="nav-logo">
-    <img src="logo-safemind.png" alt="Safe Mind" onerror="this.style.display='none'">
+    <img src="logo-creaven.png" alt="Creaven" onerror="this.style.display='none'">
     <div class="nav-logo-text">
-      <span class="main-name">Safe Mind</span>
+      <span class="main-name">Creaven</span>
       <span class="sub-name">Psychological Well-being</span>
     </div>
   </a>
@@ -764,8 +764,8 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
 <div id="authView" class="view active">
   <div class="auth-wrap">
     <div class="auth-card">
-      <div class="auth-logo"><img src="logo-safemind.png" alt="Safe Mind" onerror="this.style.display='none'"></div>
-      <h1 class="auth-title"><span data-i18n="auth_title">Welcome to</span> <em>Safe Mind</em></h1>
+      <div class="auth-logo"><img src="logo-creaven.png" alt="Creaven" onerror="this.style.display='none'"></div>
+      <h1 class="auth-title"><span data-i18n="auth_title">Welcome to</span> <em>Creaven</em></h1>
       <p class="auth-sub" data-i18n="auth_sub">Your psychological well-being, in a safe and confidential space.</p>
       <div class="auth-tabs">
         <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')" data-i18n="tab_login">Sign In</button>
@@ -799,7 +799,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
             <div class="user-type-card" id="typeOrg" onclick="selectType('organization')">
               <div class="utc-icon">🏢</div>
               <div class="utc-title" data-i18n="signup_type_org">Organization</div>
-              <div class="utc-desc" data-i18n="signup_type_org_desc">Employee of a company with a Safe Mind contract</div>
+              <div class="utc-desc" data-i18n="signup_type_org_desc">Employee of a company with a Creaven contract</div>
             </div>
           </div>
         </div>
@@ -810,7 +810,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
         <div class="form-group">
           <label class="form-label" data-i18n="signup_email">Email address</label>
           <input type="email" class="form-input" id="signupEmail" data-i18n-ph="signup_email_ph" placeholder="your@email.com">
-          <div style="font-size:11px;color:var(--light);margin-top:6px;display:none;" id="orgHint" data-i18n="signup_hint">If your organization has a Safe Mind contract, use your work email for automatic access.</div>
+          <div style="font-size:11px;color:var(--light);margin-top:6px;display:none;" id="orgHint" data-i18n="signup_hint">If your organization has a Creaven contract, use your work email for automatic access.</div>
         </div>
         <div class="form-group">
           <label class="form-label" data-i18n="signup_password">Password</label>
@@ -871,7 +871,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
       <div class="dash-card">
         <div class="dc-icon">💬</div>
         <div class="dc-title" data-i18n="card_sessions_title">My Consultation</div>
-        <div class="dc-desc" data-i18n="card_sessions_desc">Join your scheduled session with your Safe Mind psychologist. Audio or video, in your language.</div>
+        <div class="dc-desc" data-i18n="card_sessions_desc">Join your scheduled session with your Creaven psychologist. Audio or video, in your language.</div>
         <div class="dc-btns">
           <a href="consultation.html" class="dc-btn green" data-i18n="card_sessions_btn">Join Session</a>
           <a href="booking.html" class="dc-btn outline">Book</a>
@@ -907,7 +907,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
   </div>
 </div>
 
-<footer><p data-i18n="footer_text">Safe Mind 2026 - Psychological well-being for the creative industry - All rights reserved.</p></footer>
+<footer><p data-i18n="footer_text">Creaven 2026 - Psychological well-being for the creative industry - All rights reserved.</p></footer>
 
 <script>window.selectedUserType = 'individual';</script>
 </body>
