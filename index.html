@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creaven  -  Psychological Well-being for the Creative Industry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #3A6B3A;
+    --green-dark: #2A4A2A;
+    --green-mid: #4A8B4A;
+    --green-light: #E8F2E8;
+    --green-pale: #F2F8F2;
+    --blue: #2B5FA8;
+    --blue-dark: #1A3F7A;
+    --blue-light: #E8EFF8;
+    --gold: #C8A84B;
+    --gold-light: #F5EDD0;
+    --gold-dark: #A08030;
+    --sage: #7A9E7E;
+    --sage-light: #B8CEB9;
+    --sage-pale: #EDF2ED;
+    --teal: #3A6B3A;
+    --teal-dark: #2A4A2A;
+    --teal-light: #E8F2E8;
+    --violet: #2B5FA8;
+    --violet-light: #E8EFF8;
+    --cream: #FAFCFA;
+    --cream-dark: #F0F5F0;
+    --charcoal: #1A2A1A;
+    --mid: #4A5A4A;
+    --light: #8A9A8A;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 999;
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s;
+  }
+  nav.scrolled {
+    padding: 12px 48px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  }
+  .nav-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .nav-logo .main-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--teal-dark);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo-img {
+    height: 68px;
+    width: auto;
+    object-fit: contain;
+  }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo .sub-name {
+    font-size: 9px;
+    color: var(--light);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--mid);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links .nav-session {
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    padding: 9px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 1px solid var(--gold);
+  }
+  .nav-links .nav-session:hover { background: var(--gold); color: white; }
+  .nav-links .nav-account {
+    color: var(--mid);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s;
+    font-weight: 500;
+  }
+  .nav-links .nav-account:hover { color: var(--green); }
+  .nav-links
+  .nav-links
+  .nav-links .nav-cta {
+    background: var(--teal);
+    color: white;
+    padding: 9px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .nav-links .nav-cta:hover { background: var(--teal-dark); color: white; }
+
+  /* ─── LANGUAGE SWITCHER DROPDOWN ─── */
+  .lang-switcher {
+    position: relative;
+  }
+  .lang-toggle {
+    background: none;
+    border: 1.5px solid var(--teal);
+    color: var(--teal);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+    min-width: 52px;
+  }
+  .lang-toggle:hover, .lang-toggle.open {
+    background: var(--teal);
+    color: white;
+  }
+  .lang-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: hidden;
+    min-width: 140px;
+    z-index: 100;
+  }
+  .lang-dropdown.open { display: block; }
+  .lang-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 11px 18px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: var(--charcoal);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .lang-dropdown button:last-child { border-bottom: none; }
+  .lang-dropdown button:hover { background: var(--teal-light); color: var(--teal-dark); }
+
+  /* ─── HERO CAROUSEL ─── */
+  .hero-carousel {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .carousel-slides {
+    position: absolute;
+    inset: 0;
+  }
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .carousel-slide.active { opacity: 1; }
+  .carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.35) 50%,
+      rgba(0,0,0,0.15) 100%
+    );
+    z-index: 1;
+  }
+  .carousel-content {
+    position: absolute;
+    z-index: 2;
+    bottom: 15%;
+    left: 8%;
+    max-width: 640px;
+  }
+  .carousel-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .carousel-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5.5vw, 72px);
+    font-weight: 300;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .carousel-title em {
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+  }
+  .carousel-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    font-weight: 300;
+    max-width: 520px;
+  }
+  .carousel-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .carousel-actions .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .carousel-actions .btn-primary:hover {
+    background: var(--teal-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(61,139,139,0.4);
+  }
+  .carousel-actions .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(4px);
+    display: inline-block;
+  }
+  .carousel-actions .btn-secondary:hover {
+    background: rgba(255,255,255,0.25);
+  }
+  .carousel-dots {
+    position: absolute;
+    left: 8%;
+    bottom: 7%;
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .cdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
+  }
+  .cdot.active {
+    background: white;
+    width: 28px;
+    border-radius: 4px;
+  }
+  .carousel-scroll {
+    position: absolute;
+    bottom: 6%;
+    right: 8%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.6);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+  .scroll-icon {
+    width: 22px;
+    height: 36px;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    border-radius: 11px;
+    position: relative;
+  }
+  .scroll-icon::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 8px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 2px;
+    animation: scrollAnim 1.8s ease infinite;
+  }
+  @keyframes scrollAnim {
+    0% { top: 5px; opacity: 1; }
+    100% { top: 18px; opacity: 0; }
+  }
+  .nav-logo-img {
+    height: 68px;
+    width: auto;
+    object-fit: contain;
+  }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo .sub-name {
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--mid);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    background: var(--teal);
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal-dark) !important; color: white !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-image: url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1600&q=80&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(250,248,244,0.97) 0%, rgba(240,235,225,0.93) 40%, rgba(224,238,238,0.82) 100%);
+    z-index: 0;
+  }
+  .hero-content, .hero-visual { position: relative; z-index: 1; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(61,139,139,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(123,107,141,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal);
+  }
+  .hero h1 strong {
+    font-weight: 600;
+    display: block;
+  }
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--mid);
+    margin-bottom: 40px;
+    max-width: 480px;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--teal-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(61,139,139,0.25);
+  }
+  .btn-call {
+    display:inline-flex;flex-direction:column;align-items:center;
+    background:var(--red);color:white;
+    padding:14px 28px;border-radius:40px;font-size:15px;font-weight:600;
+    text-decoration:none;transition:all .25s;margin-top:8px;
+    box-shadow:0 4px 20px rgba(192,57,43,.35);
+    animation:pulse 2s infinite;
+  }
+  .btn-call:hover{background:var(--red-dark,#922B21);transform:translateY(-2px);}
+  @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,.35);}50%{box-shadow:0 4px 30px rgba(192,57,43,.6);}}
+  .btn-secondary {
+    background: transparent;
+    color: var(--charcoal);
+    padding: 14px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid rgba(0,0,0,0.15);
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+    display: inline-block;
+  }
+  .btn-secondary:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    transform: translateY(-2px);
+  }
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-card-main {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 400px;
+  }
+  .hero-card-main .card-icon {
+    width: 52px; height: 52px;
+    background: var(--teal-light);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .hero-card-main h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+  .hero-card-main p {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .stat-item .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1;
+  }
+  .stat-item .stat-label {
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+  .floating-badge {
+    position: absolute;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--charcoal);
+    animation: float 4s ease-in-out infinite;
+  }
+  .floating-badge.b1 { top: -20px; right: -30px; animation-delay: 0s; }
+  .floating-badge.b2 { bottom: 20px; left: -40px; animation-delay: 2s; }
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .badge-dot.green { background: #6BCB77; }
+  .badge-dot.violet { background: var(--violet); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ─── PHOTO STRIP ─── */
+  .photo-strip {
+    background: var(--charcoal);
+    padding: 32px 48px;
+    overflow: hidden;
+  }
+  .photo-strip-inner {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .photo-strip-inner::-webkit-scrollbar { display: none; }
+  .photo-item {
+    flex-shrink: 0;
+    position: relative;
+    width: 200px;
+    height: 140px;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .3s;
+  }
+  .photo-item:hover { transform: scale(1.04); }
+  .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(.85) saturate(.9);
+    transition: filter .3s;
+  }
+  .photo-item:hover img { filter: brightness(.95) saturate(1); }
+  .photo-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+    color: rgba(255,255,255,.85);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 12px 12px 10px;
+  }
+
+  /* ─── STATS STRIP ─── */
+  .stats-strip {
+    background: var(--charcoal);
+    padding: 48px;
+    border-top: 3px solid var(--gold);
+  }
+  .stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-block {
+    text-align: center;
+    flex: 1;
+    min-width: 140px;
+  }
+  .stat-big {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 52px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-unit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.4;
+    max-width: 140px;
+    margin: 0 auto;
+  }
+  .stat-divider {
+    width: 1px;
+    height: 60px;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-section {
+    background: var(--charcoal);
+    padding: 18px 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .marquee-item::before {
+    content: '✦';
+    color: var(--teal);
+    font-size: 10px;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 100px 48px; }
+  .section-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--teal); }
+  .section-desc {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 560px;
+    font-weight: 300;
+  }
+
+  /* ─── MISSION SECTION ─── */
+  .mission {
+    background: var(--cream-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .mission-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--charcoal);
+    font-style: italic;
+    position: relative;
+    padding-left: 32px;
+  }
+  .mission-quote::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--teal), var(--violet));
+    border-radius: 2px;
+  }
+  .mission-quote span { color: var(--teal); font-style: normal; font-weight: 600; }
+  .mission-right { display: flex; flex-direction: column; gap: 24px; }
+  .mission-pill {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .mission-pill:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+  .pill-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .pill-icon.teal { background: var(--teal-light); }
+  .pill-icon.sage { background: var(--sage-pale); }
+  .pill-icon.violet { background: var(--violet-light); }
+  .pill-text h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+  }
+  .pill-text p {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  /* ─── SERVICES ─── */
+  .services { background: var(--cream); }
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 60px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .service-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--teal), var(--sage));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 1;
+  }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .service-card p {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .service-tag {
+    background: var(--cream);
+    color: var(--mid);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── WHO WE SERVE ─── */
+  .who {
+    background: var(--teal-dark);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .who::before {
+    content: '';
+    position: absolute;
+    top: -150px; right: -150px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .who .section-title { color: white; }
+  .who .section-title em { color: var(--sage-light); }
+  .who .section-tag { color: var(--sage-light); }
+  .who .section-desc { color: rgba(255,255,255,0.65); }
+  .who-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 60px;
+  }
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .who-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 28px;
+    transition: background 0.2s;
+  }
+  .who-card:hover { background: rgba(255,255,255,0.12); }
+  .who-card .who-icon { font-size: 28px; margin-bottom: 12px; }
+  .who-card h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .who-card .who-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin-top: 8px;
+  }
+  .who-card ul { list-style: none; }
+  .who-card ul li {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .who-card ul li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--sage-light);
+  }
+
+  /* ─── TESTS ─── */
+  .tests { background: var(--cream-dark); }
+  .tests-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 60px;
+  }
+  .tests-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .test-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .test-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  }
+  .test-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .test-badge.free { background: #E8F5E9; color: #388E3C; }
+  .test-badge.paid { background: var(--violet-light); color: var(--violet); }
+  .test-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+  .test-card .test-abbr {
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .test-arrow {
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 500;
+    margin-top: 12px;
+    transition: transform 0.2s;
+  }
+  .test-card:hover .test-arrow { transform: translateX(4px); }
+  .test-card p {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    background: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-img-frame {
+    background: linear-gradient(135deg, var(--teal-light) 0%, var(--violet-light) 100%);
+    border-radius: 24px;
+    aspect-ratio: 4/5;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 24px;
+  }
+  .about-img-frame::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(42,100,100,0.3), transparent);
+  }
+  .about-tag-float {
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    background: var(--charcoal);
+    color: white;
+    border-radius: 16px;
+    padding: 16px 20px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .about-tag-float strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .about-tag-float span { color: var(--sage-light); font-size: 11px; }
+  .about h2 { margin-bottom: 24px; }
+  .about-body {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .about-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .spec-item {
+    padding: 16px;
+    background: var(--cream);
+    border-radius: 12px;
+  }
+  .spec-item .spec-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+  .spec-item .spec-val {
+    font-size: 13px;
+    color: var(--charcoal);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ─── CTA BAND ─── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--violet) 100%);
+    padding: 80px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.08) 0%, transparent 70%);
+  }
+  .cta-band h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 300;
+    color: white;
+    margin-bottom: 16px;
+    font-style: italic;
+    position: relative;
+  }
+  .cta-band p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 36px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    position: relative;
+  }
+  .cta-band .btn-white {
+    background: white;
+    color: var(--teal-dark);
+    padding: 14px 40px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s;
+    display: inline-block;
+    position: relative;
+  }
+  .cta-band .btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--charcoal);
+    color: rgba(255,255,255,0.6);
+    padding: 60px 48px 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .footer-brand p {
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+  .footer-contact a {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+  .footer-contact a:hover { color: var(--sage-light); }
+  .footer-col h5 {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: white; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+  }
+  .footer-bottom a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bottom a:hover { color: var(--sage-light); }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+  nav { padding: 12px 20px; }
+    .hero { grid-template-columns: 1fr; padding: 140px 24px 80px; gap: 40px; }
+    .hero-visual { display: none; }
+    section { padding: 70px 24px; }
+    .mission, .about { grid-template-columns: 1fr; gap: 40px; }
+    .services-header, .tests-header, .who-header { grid-template-columns: 1fr; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .tests-grid { grid-template-columns: repeat(2, 1fr); }
+    .who-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .lang-bar { padding: 8px 24px; }
+  }
+
+  /* MOBILE OPTIMIZATION */
+  @media(max-width:480px){
+    body{font-size:15px;}
+    nav{padding:10px 16px !important;flex-wrap:nowrap;overflow-x:hidden;}
+    .nav-logo .main-name{font-size:16px;}
+    .nav-logo .sub-name{display:none;}
+    .nav-logo img{height:68px !important;}
+    h1,h2{font-size:clamp(24px,7vw,40px) !important;}
+    .hero{padding:40px 20px !important;}
+    .btn-primary,.btn-secondary,.btn-call{width:100%;display:block;text-align:center;margin:6px 0;}
+    .auth-card{padding:24px 16px !important;}
+    .user-type-grid{grid-template-columns:1fr !important;}
+    .type-grid{grid-template-columns:1fr !important;}
+    .pract-grid{grid-template-columns:1fr !important;}
+    .slots-grid{grid-template-columns:repeat(2,1fr) !important;}
+    .countries-grid{grid-template-columns:1fr !important;}
+    .consult-grid{grid-template-columns:1fr !important;}
+    .form-row{grid-template-columns:1fr !important;}
+    .dash-grid{grid-template-columns:1fr !important;}
+    .pract-grid{grid-template-columns:1fr !important;}
+    .cal-day{padding:8px 2px;font-size:13px;}
+    .lang-toggle{padding:5px 10px;font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <img src="logo-creaven.png" alt="Creaven" class="nav-logo-img">
+    <div class="nav-logo-text">
+      <span class="main-name">Creaven</span>
+      <span class="sub-name">Psychological Well-being</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="tests.html" data-i18n="nav_tests">Assessments</a></li>
+    <li><a href="organizations.html" data-i18n="nav_org">Organizations</a></li>
+    <li><a href="emergency.html" data-i18n="nav_emergency" style="color:var(--red);">Emergency</a></li>
+    <li><a href="about.html" data-i18n="nav_about">About</a></li>
+    <li><a href="account.html" data-i18n="nav_account" class="nav-account">My Account</a></li>
+    <li><a href="booking.html" class="nav-cta" data-i18n="nav_book">Book</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <button class="lang-toggle" onclick="toggleLangMenu()" id="langToggle">EN</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button onclick="selectLang('en','EN')">English</button>
+      <button onclick="selectLang('fr','FR')">Français</button>
+      <button onclick="selectLang('kr','한국어')">한국어</button>
+      <button onclick="selectLang('jp','日本語')">日本語</button>
+      <button onclick="selectLang('zh','中文')">中文</button>
+      <button onclick="selectLang('th','ไทย')">ไทย</button>
+      <button onclick="selectLang('de','DE')">Deutsch</button>
+      <button onclick="selectLang('es','ES')">Español</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO CAROUSEL -->
+<section class="hero-carousel" id="home">
+  <div class="carousel-slides" id="carouselSlides">
+    <div class="carousel-slide active" style="background-image:url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=1600&q=80&auto=format&fit=crop')"></div>
+    <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1598387993441-a364f854cffd?w=1600&q=80&auto=format&fit=crop')"></div>
+    <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1600&q=80&auto=format&fit=crop')"></div>
+    <div class="carousel-slide" style="background-image:url('https://images.unsplash.com/photo-1485579149621-3123dd979885?w=1600&q=80&auto=format&fit=crop')"></div>
+  </div>
+  <div class="carousel-overlay"></div>
+  <div class="carousel-content">
+    <div class="carousel-eyebrow" data-i18n="hero_eyebrow">Psychological Well-being for the Creative Industry</div>
+    <h1 class="carousel-title">
+      <span data-i18n="hero_h1_a">Every person behind the work</span><br>
+      <em data-i18n="hero_h1_b">deserves care.</em>
+    </h1>
+    <p class="carousel-desc" data-i18n="hero_desc">The industry sees the art. Creaven sees the person behind it. For those who built everything they were told to want, and still feel lost. For those who are struggling in silence, searching for a way out or a way back to themselves. You don't have to be falling apart to deserve support. You just have to be human. Fame is loud. Pain is quiet. Creaven listens.</p>
+    <div class="carousel-actions">
+      <a href="#services" class="btn-primary" data-i18n="hero_cta1">Explore Our Services</a>
+      <a href="booking.html" class="btn-secondary" data-i18n="hero_cta2">Book a Consultation</a>
+      <a href="consultation.html?instant=true" class="btn-call" id="btn-call">
+        📞 <span data-i18n="hero_call">Call Now</span>
+        <span style="font-size:11px;display:block;opacity:.8;">Immediate session - no appointment needed</span>
+      </a>
+    </div>
+  </div>
+  <div class="carousel-dots" id="carouselDots">
+    <button class="cdot active" onclick="goToSlide(0)"></button>
+    <button class="cdot" onclick="goToSlide(1)"></button>
+    <button class="cdot" onclick="goToSlide(2)"></button>
+    <button class="cdot" onclick="goToSlide(3)"></button>
+  </div>
+  <div class="carousel-scroll">
+    <div class="scroll-icon"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- Global Stats Strip -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-block">
+      <div class="stat-big">1 in 5</div>
+      <div class="stat-unit" data-i18n="stat1_unit">people worldwide</div>
+      <div class="stat-label" data-i18n="stat1_label">live with a mental health condition (WHO, 2024)</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <div class="stat-big">73%</div>
+      <div class="stat-unit" data-i18n="stat2_unit">of creative workers</div>
+      <div class="stat-label" data-i18n="stat2_label">report symptoms of anxiety or depression (MusiCares, 2023)</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <div class="stat-big">$1T</div>
+      <div class="stat-unit" data-i18n="stat3_unit">lost per year</div>
+      <div class="stat-label" data-i18n="stat3_label">in global productivity due to mental health (WHO)</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <div class="stat-big">76%</div>
+      <div class="stat-unit" data-i18n="stat4_unit">of workers</div>
+      <div class="stat-label" data-i18n="stat4_label">have experienced burnout at least once in their career</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <div class="stat-big">0</div>
+      <div class="stat-unit" data-i18n="stat5_unit">platforms exist</div>
+      <div class="stat-label" data-i18n="stat5_label">dedicated to mental health for all creative industry workers</div>
+    </div>
+  </div>
+</div>
+
+<!-- Marquee -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">Prevention & Psychoeducation</span>
+    <span class="marquee-item">Individual Support</span>
+    <span class="marquee-item">Team Training</span>
+    <span class="marquee-item">Crisis Protocols</span>
+    <span class="marquee-item">Burnout Assessment</span>
+    <span class="marquee-item">Secure Messaging</span>
+    <span class="marquee-item">Multilingual Care</span>
+    <span class="marquee-item">Creative Industry Expertise</span>
+    <span class="marquee-item">Prevention & Psychoeducation</span>
+    <span class="marquee-item">Individual Support</span>
+    <span class="marquee-item">Team Training</span>
+    <span class="marquee-item">Crisis Protocols</span>
+    <span class="marquee-item">Burnout Assessment</span>
+    <span class="marquee-item">Secure Messaging</span>
+    <span class="marquee-item">Multilingual Care</span>
+    <span class="marquee-item">Creative Industry Expertise</span>
+  </div>
+</div>
+
+<!-- Mission -->
+<section class="mission reveal" id="mission">
+  <div class="mission-left">
+    <span class="section-tag" data-i18n="mission_tag">Our Philosophy</span>
+    <blockquote class="mission-quote" data-i18n="mission_quote">
+      "The creative industry shines because of <span>thousands of invisible hands.</span> They deserve more than acknowledgment  -  they deserve care."
+    </blockquote>
+    <p style="margin-top:24px;font-size:13px;color:var(--mid);" data-i18n="mission_author"> -  Amakon Grace Daniella, Founder, Creaven</p>
+  </div>
+  <div class="mission-right">
+    <div class="mission-pill">
+      <div class="pill-icon teal">🛡️</div>
+      <div class="pill-text">
+        <h4 data-i18n="mp1_title">Prevention First</h4>
+        <p data-i18n="mp1_desc">We act before crises occur. Our approach is proactive, continuous, and deeply human.</p>
+      </div>
+    </div>
+    <div class="mission-pill">
+      <div class="pill-icon sage">🌱</div>
+      <div class="pill-text">
+        <h4 data-i18n="mp2_title">Holistic & Non-Stigmatizing</h4>
+        <p data-i18n="mp2_desc">Mental health is not weakness. We create spaces where every person feels safe to speak.</p>
+      </div>
+    </div>
+    <div class="mission-pill">
+      <div class="pill-icon violet">🌍</div>
+      <div class="pill-text">
+        <h4 data-i18n="mp3_title">Globally Accessible</h4>
+        <p data-i18n="mp3_desc">100% remote, multilingual, and culturally sensitive  -  available to teams across the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <div>
+      <span class="section-tag" data-i18n="services_tag">What We Offer</span>
+      <h2 class="section-title"><em data-i18n="services_h2a">Four pillars</em> <span data-i18n="services_h2b">of care</span></h2>
+    </div>
+    <p class="section-desc" data-i18n="services_desc">Every service is delivered 100% remotely and tailored to your organization's culture and specific needs.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 data-i18n="s1_title">Prevention & Psychoeducation</h3>
+      <p data-i18n="s1_desc">Building psychological literacy and awareness across the entire organization  -  from mental health basics to addiction, harassment, and identity.</p>
+      <div class="service-tags">
+        <span class="service-tag" data-i18n="stag_workshops">Workshops</span>
+        <span class="service-tag" data-i18n="stag_webinars">Webinars</span>
+        <span class="service-tag" data-i18n="stag_resources">Resources</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 data-i18n="s2_title">Listening & Individual Support</h3>
+      <p data-i18n="s2_desc">Confidential individual sessions providing a safe space to be heard, assessed, and guided  -  with referral to clinical professionals when needed.</p>
+      <div class="service-tags">
+        <span class="service-tag" data-i18n="stag_1-on-1-sessions">1-on-1 Sessions</span>
+        <span class="service-tag" data-i18n="stag_follow-up">Follow-up</span>
+        <span class="service-tag" data-i18n="stag_referral">Referral</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 data-i18n="s3_title">Team & Management Training</h3>
+      <p data-i18n="s3_desc">Equipping managers and team leaders with tools to recognize distress signals, respond appropriately, and build a culture of psychological safety.</p>
+      <div class="service-tags">
+        <span class="service-tag" data-i18n="stag_leadership">Leadership</span>
+        <span class="service-tag" data-i18n="stag_eq-training">EQ Training</span>
+        <span class="service-tag" data-i18n="stag_protocols">Protocols</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3 data-i18n="s4_title">Protocols & Organizational Safety</h3>
+      <p data-i18n="s4_desc">Designing robust systems  -  from minor protection to crisis management and suicide prevention procedures  -  that protect employees at the structural level.</p>
+      <div class="service-tags">
+        <span class="service-tag" data-i18n="stag_risk-audit">Risk Audit</span>
+        <span class="service-tag" data-i18n="stag_policy-design">Policy Design</span>
+        <span class="service-tag" data-i18n="stag_crisis-plans">Crisis Plans</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Who We Serve -->
+<section class="who" id="who">
+  <div class="who-header reveal">
+    <div>
+      <span class="section-tag" data-i18n="who_tag">Our People</span>
+      <h2 class="section-title"><em data-i18n="who_h2a">Everyone</em> <span data-i18n="who_h2b">matters here</span></h2>
+    </div>
+    <p class="section-desc" data-i18n="who_desc">If you work for the organization, you are included. No role too small, no position too junior. From CEO to intern  -  Creaven is for all of you.</p>
+  </div>
+  <div class="who-grid reveal">
+    <div class="who-card">
+      <div class="who-icon">🎤</div>
+      <h4 data-i18n="wc1_title">Artists & Performers</h4>
+      <p class="who-desc" data-i18n="wc1_desc">Singers, dancers, actors, musicians. Those who give everything on stage and carry what no one sees when the lights go off.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">🎬</div>
+      <h4 data-i18n="wc2_title">Production & Technical</h4>
+      <p class="who-desc" data-i18n="wc2_desc">Camera crews, sound engineers, lighting teams, stage builders. The hands that make the show exist, invisible in the applause.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">📋</div>
+      <h4 data-i18n="wc3_title">Management & Coordination</h4>
+      <p class="who-desc" data-i18n="wc3_desc">Managers, coordinators, schedulers. The people who absorb every pressure so others can perform, with no one asking how they are.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">👥</div>
+      <h4 data-i18n="wc4_title">Human Resources</h4>
+      <p class="who-desc" data-i18n="wc4_desc">HR teams, recruiters, talent managers. They hold the human side of organizations together. They too carry the weight of others.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">✍️</div>
+      <h4 data-i18n="wc5_title">Creative & Media</h4>
+      <p class="who-desc" data-i18n="wc5_desc">Designers, photographers, content creators, social media teams. Building culture daily, often alone, often without recognition.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">🛠️</div>
+      <h4 data-i18n="wc6_title">Support & Operations</h4>
+      <p class="who-desc" data-i18n="wc6_desc">Drivers, catering staff, logistics, administration. Without them nothing moves. They are the foundation no one photographs.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">🌱</div>
+      <h4 data-i18n="wc7_title">Interns & Early Careers</h4>
+      <p class="who-desc" data-i18n="wc7_desc">Those just starting, carrying the most while having the least protection. Their passion deserves the same care as anyone else.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">🔒</div>
+      <h4 data-i18n="wc8_title">Security & Safety</h4>
+      <p class="who-desc" data-i18n="wc8_desc">Security staff, bodyguards, event safety officers. They protect everyone else. Who protects them?</p>
+    </div>
+  </div>
+</section>
+
+<!-- Assessments -->
+<section class="tests" id="tests">
+  <div class="tests-header reveal">
+    <div>
+      <span class="section-tag" data-i18n="tests_tag">Psychological Assessments</span>
+      <h2 class="section-title"><em data-i18n="tests_h2a">Know</em> <span data-i18n="tests_h2b">where you stand</span></h2>
+    </div>
+    <p class="section-desc" data-i18n="tests_desc">Validated psychological assessments  -  from quick screenings with instant results to comprehensive evaluations reviewed by our team.</p>
+  </div>
+  <div class="tests-grid reveal">
+    <div class="test-card" onclick="window.location.href='test-phq9.html'" style="cursor:pointer">
+      <h4 data-i18n="tc1_title">Depression</h4>
+      <div class="test-abbr">PHQ-9</div>
+      <p data-i18n="tc1_desc">9-item screening tool used globally. Instant automated results.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='test-gad7.html'" style="cursor:pointer">
+      <h4 data-i18n="tc2_title">Anxiety</h4>
+      <div class="test-abbr">GAD-7</div>
+      <p data-i18n="tc2_desc">7-item generalized anxiety disorder screening with instant results.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='test-cbi.html'" style="cursor:pointer">
+      <h4 data-i18n="tc3_title">Burnout</h4>
+      <div class="test-abbr">CBI</div>
+      <p data-i18n="tc3_desc">Measures personal, work-related, and client burnout across three dimensions.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='test-pcl5.html'" style="cursor:pointer">
+      <h4 data-i18n="tc4_title">PTSD</h4>
+      <div class="test-abbr">PCL-5</div>
+      <p data-i18n="tc4_desc">Validated PTSD checklist based on DSM-5 criteria.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='test-psqi.html'" style="cursor:pointer">
+      <h4 data-i18n="tc5_title">Sleep Quality</h4>
+      <div class="test-abbr">PSQI</div>
+      <p data-i18n="tc5_desc">Evaluates sleep quality and disturbances over one month.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='test-rosenberg.html'" style="cursor:pointer">
+      <h4 data-i18n="tc6_title">Self-Esteem</h4>
+      <div class="test-abbr">Rosenberg Scale</div>
+      <p data-i18n="tc6_desc">Gold standard 10-item measure of global self-esteem and self-worth.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='test-audit.html'" style="cursor:pointer">
+      <h4 data-i18n="tc7_title">Alcohol Use</h4>
+      <div class="test-abbr">AUDIT</div>
+      <p data-i18n="tc7_desc">WHO-validated screening for alcohol use disorders.</p>
+      <div class="test-arrow" data-i18n="tc_cta">Take the assessment →</div>
+    </div>
+    <div class="test-card" onclick="window.location.href='tests.html'" style="cursor:pointer">
+      <h4 data-i18n="tc8_title">See All Assessments</h4>
+      <div class="test-abbr" data-i18n="tc8_abbr">Full Library</div>
+      <p data-i18n="tc8_desc">12 validated psychometric tools covering all major dimensions of psychological well-being.</p>
+      <div class="test-arrow" data-i18n="tc8_cta">View full library →</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA Band -->
+<div class="cta-band" id="contact">
+  <h2 data-i18n="cta_h2">Ready to bring care to your team?</h2>
+  <p data-i18n="cta_p">Whether you represent an agency, a studio, or you're an individual looking for support  -  we're here. Let's talk.</p>
+  <a href="contact.html" class="btn-white" data-i18n="cta_btn">Get in Touch</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand-name">Creaven</div>
+      <p data-i18n="footer_desc">Psychological well-being for the creative industry. Accessible to everyone, regardless of role or rank.</p>
+      <div class="footer-contact">
+        <a href="contact.html">Contact Us</a>
+        <a href="https://www.linkedin.com/in/grace-daniella-amakon-976380362" target="_blank">LinkedIn</a>
+        <a href="about.html" data-i18n="footer_about">About Creaven</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 data-i18n="footer_col1">Services</h5>
+      <a href="#services" data-i18n="fc1_1">Prevention</a>
+      <a href="#services" data-i18n="fc1_2">Individual Support</a>
+      <a href="#services" data-i18n="fc1_3">Team Training</a>
+      <a href="#services" data-i18n="fc1_4">Protocols</a>
+    </div>
+    <div class="footer-col">
+      <h5 data-i18n="footer_col2">Assessments</h5>
+      <a href="#tests">GAD-7</a>
+      <a href="#tests">PHQ-9</a>
+      <a href="#tests">CBI Burnout</a>
+      <a href="#tests">PHQ-9 Depression</a>
+    </div>
+    <div class="footer-col">
+      <h5 data-i18n="footer_col3">Company</h5>
+      <a href="#about" data-i18n="fc3_1">About</a>
+      <a href="#contact" data-i18n="fc3_2">Contact</a>
+      <a href="#" data-i18n="fc3_3">Blog</a>
+      <a href="account.html" data-i18n="fc3_4">My Account</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Creaven. <span data-i18n="footer_rights">All rights reserved.</span></span>
+    <span data-i18n="footer_tagline">"Psychological well-being for everyone in the creative industry."</span>
+  </div>
+</footer>
+
+<script>
+function toggleLangMenu(){
+  var d=document.getElementById('langDropdown');
+  var b=document.getElementById('langToggle');
+  if(d){d.classList.toggle('open');}
+  if(b){b.classList.toggle('open');}
+}
+function selectLang(lang,label){
+  if(typeof setLang==='function')setLang(lang);
+  var b=document.getElementById('langToggle');
+  var d=document.getElementById('langDropdown');
+  if(b)b.textContent=label;
+  if(d)d.classList.remove('open');
+  if(b)b.classList.remove('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.lang-switcher')){
+    var d=document.getElementById('langDropdown');
+    if(d)d.classList.remove('open');
+  }
+});
+</script>
+<script src="creaven-i18n.js"></script>
+
+</body>
+</html>
