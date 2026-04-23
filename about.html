@@ -164,12 +164,34 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
   .lang-dropdown button:last-child{border-bottom:none;}
   .lang-dropdown button:hover{background:#E8F2E8;color:#2A4A2A;}
 </style>
+<script>
+function toggleLangMenu(){
+  var d=document.getElementById('langDropdown');
+  var b=document.getElementById('langToggle');
+  if(d){d.classList.toggle('open');}
+  if(b){b.classList.toggle('open');}
+}
+function selectLang(lang,label){
+  if(typeof setLang==='function')setLang(lang);
+  var b=document.getElementById('langToggle');
+  var d=document.getElementById('langDropdown');
+  if(b)b.textContent=label;
+  if(d)d.classList.remove('open');
+  if(b)b.classList.remove('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.lang-switcher')){
+    var d=document.getElementById('langDropdown');
+    if(d)d.classList.remove('open');
+  }
+});
+</script>
 </head>
 <body>
 
 <nav>
   <a href="index.html" class="nav-logo">
-    <img src="logo-creaven.png" alt="Creaven" style="height:44px;width:auto;object-fit:contain;">
+    <img src="logo-creaven.png" alt="Creaven" style="height:68px;width:auto;object-fit:contain;">
     <div style="display:flex;flex-direction:column;line-height:1;">
       <span class="main">Creaven</span>
       <span class="sub">Psychological Well-being</span>
@@ -318,8 +340,8 @@ const T = {
   fr: {
     eyebrow:"A propos",
     title:"Construit par quelqu'un qui <em>connait ce monde</em> de l'interieur.",
-    bio:"Je m'appelle Grace Daniella Amakon. Je suis specialiste en soutien psychosocial basee a Abidjan, en Cote d'Ivoire, titulaire d'un master en psychologie sociale et de plus de quatre ans d'experience de terrain en prevention du burnout, soutien psychosocial et accompagnement des survivants via des ONG. J'ai developpe une connaissance approfondie de la langue et de la culture coreennes, ainsi qu'une comprehension profonde des defis de sante mentale auxquels font face les travailleurs de l'industrie creative coreenne. Creaven a ete construit parce que j'ai vu un vide que personne d'autre ne comblait.",
-    tags:["Psychologie sociale","Prevention du suicide","Specialiste burnout","Coordinatrice ONG","Soutien psychosocial","Langue et culture coreennes"],
+    bio:"Je m'appelle Grace Daniella Amakon. Je suis specialiste en soutien psychosocial basee a Abidjan, en Cote d'Ivoire, titulaire d'un master en psychologie sociale et de plus de quatre ans d'experience de terrain en prevention du burnout, soutien psychosocial et accompagnement des survivants via des ONG. J'ai developpe une connaissance approfondie, ainsi qu'une comprehension profonde des defis de sante mentale auxquels font face les travailleurs de l'industrie creative. Creaven a ete construit parce que j'ai vu un vide que personne d'autre ne comblait.",
+    tags:["Psychologie sociale","Prevention du suicide","Specialiste burnout"],
     fv_role:"Fondatrice, Creaven\nSpecialiste en soutien psychosocial",
     creds:[
       {icon:"🎓",text:"Master en psychologie sociale"},
@@ -333,7 +355,7 @@ const T = {
       {icon:"🎯",title:"Rendre les soins de sante mentale accessibles",text:"La plupart des plateformes de sante mentale necessitent un systeme RH d'entreprise ou une assurance privee. Creaven n'en a besoin d'aucun. Si vous avez acces a internet, vous avez acces aux soins."},
       {icon:"🎨",title:"Servir tout l'ecosysteme creatif",text:"Creaven a ete construit pour tout le monde dans l'industrie creative. Pas seulement les stars. Les managers, les stylistes, les ingenieurs du son, les machinistes, les agents d'entretien. Tout le monde compte."},
       {icon:"🌏",title:"Relier connaissances culturelles et cliniques",text:"Les cadres occidentaux de sante mentale ne correspondent pas toujours au contexte culturel de l'industrie creative coreenne. Creaven fait le lien entre les deux. Nos outils sont valides internationalement et notre approche est specifiquement adaptee a la diversite des travailleurs qui composent la culture creative coreenne."},
-      {icon:"🔬",title:"Elever les standards cliniques des soins numeriques",text:"La sante mentale en ligne est souvent sous-estimee cliniquement. Creaven utilise des outils psychometriques valides, une analyse IA de premiere passe et une validation par un psychologue humain."}
+      {icon:"🔬",title:"Elever les standards cliniques des soins numeriques",text:"La santé mentale en ligne est souvent sous-estimee cliniquement. Creaven utilise des outils psychometriques valides, une analyse IA de premiere passe et une validation par un psychologue humain."}
     ],
     why_text:"J'ai construit Creaven parce que dans l'industrie creative, les personnes qui fabriquent la culture sont souvent les dernieres auxquelles on pense a proteger.",
     why_sub:"Les taux d'epuisement sont extremes. Les conditions de travail sont brutales dans le silence. La stigmatisation de la sante mentale dans les cultures de performance est reelle et profonde. Et pourtant les plateformes qui existent sont construites pour les departements RH des entreprises, pas pour une choregraphe independante a Seoul ou un technicien dont le contrat vient d'expirer. Creaven existe pour changer cela.",
