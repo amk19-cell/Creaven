@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
+  --blue:#2B5FA8;--blue-light:#E8EFF8;
+  --gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;
+  --cream:#FAFCFA;--cream-dark:#F0F5F0;
+  --charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  --red:#C0392B;--red-light:#FDEAEA;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+/* NAV */
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.nav-link{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-link:hover{color:var(--green);}
+.nav-link.emergency{color:var(--red);font-weight:600;}
+.nav-link.active{color:var(--green);font-weight:500;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover{background:var(--green-light);color:var(--green-dark);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 55%,var(--blue) 100%);padding:100px 48px 80px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.06) 0%,transparent 60%);}
+.hero-eyebrow{display:inline-block;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);padding:5px 18px;border-radius:30px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px;position:relative;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;color:white;line-height:1.1;margin-bottom:20px;position:relative;}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.7);}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.65);max-width:600px;margin:0 auto;line-height:1.85;position:relative;}
+
+/* BODY SECTIONS */
+.wrap{max-width:860px;margin:0 auto;padding:80px 48px;}
+.wrap-wide{max-width:1100px;margin:0 auto;padding:80px 48px;}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--charcoal);line-height:1.15;margin-bottom:28px;}
+.section-title em{font-style:italic;color:var(--green);}
+.body-text{font-size:15px;color:var(--mid);line-height:1.9;font-weight:300;margin-bottom:22px;}
+.body-text strong{color:var(--charcoal);font-weight:500;}
+
+/* QUOTE BLOCK */
+.quote-block{background:var(--charcoal);padding:56px 64px;position:relative;overflow:hidden;}
+.quote-block::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:280px;color:rgba(255,255,255,.03);position:absolute;top:-80px;left:20px;line-height:1;}
+.quote-inner{max-width:860px;margin:0 auto;position:relative;}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.8vw,34px);font-weight:300;color:white;line-height:1.55;font-style:italic;}
+.quote-context{font-size:14px;color:rgba(255,255,255,.4);margin-top:24px;line-height:1.8;max-width:680px;}
+
+/* TENSIONS SECTION */
+.tensions-section{background:var(--cream-dark);padding:80px 48px;}
+.tensions-inner{max-width:860px;margin:0 auto;}
+.tensions-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;}
+.tension-card{background:white;border-radius:16px;padding:28px 28px 28px 32px;border-left:3px solid var(--green);position:relative;}
+.tc-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:8px;}
+.tc-title{font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
+.tc-text{font-size:13px;color:var(--mid);line-height:1.7;}
+
+/* JOBS SECTION */
+.jobs-section{padding:80px 48px;}
+.jobs-inner{max-width:1100px;margin:0 auto;}
+.jobs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;}
+.job-category{background:white;border-radius:16px;padding:24px;border:1px solid rgba(0,0,0,.06);}
+.jc-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(0,0,0,.06);}
+.jc-icon{font-size:20px;}
+.jc-title{font-size:13px;font-weight:600;color:var(--charcoal);}
+.job-list{list-style:none;}
+.job-list li{font-size:12px;color:var(--mid);padding:4px 0;border-bottom:1px solid rgba(0,0,0,.03);line-height:1.4;}
+.job-list li:last-child{border-bottom:none;}
+.job-note{background:var(--green-pale);border-radius:12px;padding:16px 20px;margin-top:24px;font-size:13px;color:var(--mid);line-height:1.7;}
+.job-note strong{color:var(--green-dark);}
+
+/* COMMITMENTS */
+.commitments-section{background:var(--green-dark);padding:80px 48px;}
+.commitments-inner{max-width:1000px;margin:0 auto;}
+.com-eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600;margin-bottom:12px;}
+.com-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:white;line-height:1.15;margin-bottom:48px;}
+.com-title em{font-style:italic;color:rgba(255,255,255,.55);}
+.com-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.com-card{background:rgba(255,255,255,.07);border-radius:16px;padding:28px;border:1px solid rgba(255,255,255,.1);}
+.com-icon{font-size:26px;margin-bottom:14px;}
+.com-title-card{font-size:15px;font-weight:600;color:white;margin-bottom:8px;}
+.com-text{font-size:13px;color:rgba(255,255,255,.58);line-height:1.7;}
+
+/* FOUNDER NOTE */
+.founder-section{padding:72px 48px;}
+.founder-inner{max-width:860px;margin:0 auto;}
+.founder-card{background:var(--gold-light);border:1px solid rgba(200,168,75,.2);border-radius:20px;padding:40px 48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;}
+.founder-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--green-dark),var(--green));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:26px;color:white;font-weight:600;flex-shrink:0;margin-top:4px;}
+.founder-text{font-size:14px;color:var(--mid);line-height:1.85;}
+.founder-text strong{color:var(--charcoal);font-weight:600;}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,var(--green-dark),var(--blue));padding:88px 48px;text-align:center;}
+.cta-inner{max-width:560px;margin:0 auto;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:white;margin-bottom:14px;line-height:1.1;}
+.cta-title em{font-style:italic;color:rgba(255,255,255,.6);}
+.cta-sub{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:36px;line-height:1.8;}
+.btn-white{background:white;color:var(--green-dark);padding:15px 40px;border-radius:40px;font-size:14px;font-weight:600;text-decoration:none;display:inline-block;transition:all .25s;margin:6px;}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.25);}
+.btn-ghost{background:rgba(255,255,255,.12);color:white;padding:15px 40px;border-radius:40px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;transition:all .2s;border:1px solid rgba(255,255,255,.2);margin:6px;}
+.btn-ghost:hover{background:rgba(255,255,255,.2);}
+
+footer{background:var(--charcoal);padding:24px 48px;text-align:center;}
+footer p{font-size:12px;color:rgba(255,255,255,.3);}
+
+@media(max-width:900px){
+  nav{padding:12px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:72px 20px 56px;}
+  .wrap,.wrap-wide,.tensions-section,.jobs-section,.commitments-section,.founder-section,.cta-section{padding-left:20px;padding-right:20px;}
+  .tensions-grid{grid-template-columns:1fr;}
+  .jobs-grid{grid-template-columns:1fr 1fr;}
+  .com-grid{grid-template-columns:1fr;}
+  .founder-card{grid-template-columns:1fr;text-align:center;}
+  .founder-avatar{margin:0 auto;}
+  .quote-block{padding:40px 24px;}
+  footer{padding:20px;}
+}
+@media(max-width:600px){
+  .jobs-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div>
+      <span class="main-name">Creaven</span>
+      <div class="sub-name">Psychological Well-being</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" id="nl-home">Home</a>
+    <a href="tests.html" class="nav-link" id="nl-tests">Assessments</a>
+    <a href="booking.html" class="nav-link" id="nl-book">Book</a>
+    <a href="organizations.html" class="nav-link" id="nl-org">Organizations</a>
+    <a href="emergency.html" class="nav-link emergency" id="nl-emergency">Emergency</a>
+    <a href="account.html" class="nav-link" id="nl-account">My Account</a>
+    <a href="about.html" class="nav-link active" id="nl-about">About</a>
+    <a href="contact.html" class="nav-link" id="nl-contact">Contact</a>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button onclick="selectLang('en','EN')">English</button>
+      <button onclick="selectLang('fr','FR')">Francais</button>
+      <button onclick="selectLang('kr','KR')">한국어</button>
+      <button onclick="selectLang('jp','JP')">日本語</button>
+      <button onclick="selectLang('zh','ZH')">中文</button>
+      <button onclick="selectLang('th','TH')">ไทย</button>
+      <button onclick="selectLang('de','DE')">Deutsch</button>
+      <button onclick="selectLang('es','ES')">Espanol</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow" id="h-eyebrow">About Creaven</div>
+  <h1 id="h-title">The story behind <em>the platform.</em></h1>
+  <p class="hero-sub" id="h-sub">Not a pitch. Not a product page. This is why Creaven exists, who it is for, and what we refuse to compromise on.</p>
+</div>
+
+<!-- ORIGIN -->
+<div class="wrap">
+  <div class="eyebrow" id="origin-label">Where this comes from</div>
+  <div class="section-title" id="origin-title">A problem <em>hiding in plain sight.</em></div>
+  <p class="body-text" id="origin-p1">The creative industry is one of the most demanding environments on earth. Not because it is harder than construction or medicine or agriculture. But because the suffering inside it is systematically invisible. The culture rewards performance. It punishes fragility. And it has spent decades telling the people inside it that exhaustion is the price of passion.</p>
+  <p class="body-text" id="origin-p2">Most of the people who make culture, the ones you will never see on a stage or in a credits list, work in conditions of extreme pressure with near-total silence around mental health. When something breaks, the systems that exist were not built for them. Corporate mental health platforms require an employer who has opted in. Insurance plans require coverage. Local therapists require the right geography and the right language. And the cultural stigma in high-performance environments requires that you simply carry on.</p>
+  <p class="body-text" id="origin-p3">Creaven was built because that gap is not a minor inconvenience. It costs careers, relationships, and lives. And no platform was built specifically to close it.</p>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-block">
+  <div class="quote-inner">
+    <div class="quote-text" id="quote-text">You do not have to be falling apart to deserve support. You just have to be human.</div>
+    <div class="quote-context" id="quote-context">This is the single conviction at the center of everything Creaven builds. Not as a tagline. As a design principle. Every feature, every protocol, every clinical decision on this platform exists to make that sentence true in practice.</div>
+  </div>
+</div>
+
+<!-- TENSIONS -->
+<div class="tensions-section">
+  <div class="tensions-inner">
+    <div class="eyebrow" id="tensions-label">What we saw</div>
+    <div class="section-title" id="tensions-title">The real tensions <em>nobody names out loud.</em></div>
+    <div class="tensions-grid" id="tensionsGrid"></div>
+  </div>
+</div>
+
+<!-- JOBS -->
+<div class="jobs-section">
+  <div class="jobs-inner">
+    <div class="eyebrow" id="jobs-label">Who this is for</div>
+    <div class="section-title" id="jobs-title">Every role. <em>Without exception.</em></div>
+    <p class="body-text" id="jobs-intro">The creative industry is not just the faces you know. It is hundreds of professions, most of them invisible, all of them essential. Creaven is for all of them. If your work touches the creative world in any way, this platform was built with you in mind.</p>
+    <div class="jobs-grid" id="jobsGrid"></div>
+    <div class="job-note" id="jobs-note"><strong>If your role is not listed here, it still counts.</strong> This list is a starting point, not a boundary. The creative industry is vast and constantly evolving. If you work in it, Creaven is for you.</div>
+  </div>
+</div>
+
+<!-- COMMITMENTS -->
+<div class="commitments-section">
+  <div class="commitments-inner">
+    <div class="com-eyebrow" id="com-label">What we stand for</div>
+    <div class="com-title" id="com-title">The things we will <em>never compromise on.</em></div>
+    <div class="com-grid" id="comGrid"></div>
+  </div>
+</div>
+
+<!-- FOUNDER NOTE -->
+<div class="founder-section">
+  <div class="founder-inner">
+    <div class="eyebrow" id="fn-label">The founder</div>
+    <div class="founder-card">
+      <div class="founder-avatar">G</div>
+      <div class="founder-text" id="fn-text">
+        <strong>Creaven was founded by Grace Daniella Amakon</strong>, a psychosocial support specialist with a Master's degree in social psychology and field experience in burnout prevention, psychosocial accompaniment, and mental health coordination through NGO work in West Africa. Creaven was not built from a boardroom or a startup incubator. It was built from years of observation, from fieldwork, and from a simple refusal to accept that the people who make culture should not have access to the same quality of psychological care as anyone else. The platform reflects both clinical rigor and lived understanding of what the creative industry actually demands from human beings.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-title" id="cta-title">Ready to <em>start?</em></div>
+    <p class="cta-sub" id="cta-sub">Whether you need support for yourself or you want to protect your team, Creaven is here.</p>
+    <a href="booking.html" class="btn-white" id="cta-btn1">Book a Consultation</a>
+    <a href="organizations.html" class="btn-ghost" id="cta-btn2">For Organizations</a>
+  </div>
+</div>
+
+<footer>
+  <p id="footer-text">Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.</p>
+</footer>
+
+<script>
+var JOBS = {
+  en:[
+    {
+      icon:'🎤',
+      title:'On stage / On screen',
+      jobs:['Singer','Dancer','Actor','Musician','Rapper','Comedian','Model','Host / Presenter','Emcee','Influencer','Streamer','Circus artist','Acrobat','Stand-up artist']
+    },
+    {
+      icon:'🎵',
+      title:'Music production',
+      jobs:['Music producer','Beatmaker','Composer','Arranger','Sound engineer','Mixing engineer','Mastering engineer','A&R manager','Artistic director (label)','DJ']
+    },
+    {
+      icon:'🎬',
+      title:'Audiovisual production',
+      jobs:['Director','Screenwriter','Director of photography','Camera operator','Video editor','Colorist','Sound recordist','Boom operator','Set designer','Props master','Costume designer','Make-up artist','Hair stylist (set)','Production manager','Assistant director','Script supervisor']
+    },
+    {
+      icon:'✏️',
+      title:'Creative and media',
+      jobs:['Art director','Graphic designer','Photographer','Videographer','Content creator','Community manager','Copywriter','Cultural journalist','Blogger','Podcaster','Brand designer']
+    },
+    {
+      icon:'💻',
+      title:'Digital and tech',
+      jobs:['Creative web developer','Motion designer','2D / 3D animator','Game designer','UX/UI designer (media)','Streaming technician','VFX artist','Digital art director','Interactive media designer']
+    },
+    {
+      icon:'🏗️',
+      title:'Events and live production',
+      jobs:['Event producer','Stage manager','Lighting technician','Sound technician','Rigger','Set builder','Event coordinator','Tour manager','Venue manager','Security officer','Catering staff']
+    },
+    {
+      icon:'📋',
+      title:'Management and administration',
+      jobs:['Talent manager','Booking agent','Label manager','Tour coordinator','Publicist','PR manager','Legal counsel (entertainment)','HR coordinator','Project manager','Executive assistant']
+    },
+    {
+      icon:'🌱',
+      title:'Early careers and support',
+      jobs:['Intern','Runner','Production assistant','Stagehand','Driver','Logistics coordinator','Translator / interpreter','Subtitler','Archivist','Researcher']
+    }
+  ],
+  fr:[
+    {
+      icon:'🎤',
+      title:'Sur scene / Devant la camera',
+      jobs:['Chanteur','Danseur','Acteur','Musicien','Rappeur','Comedien','Mannequin','Presentateur / Animateur','MC','Influenceur','Streamer','Artiste de cirque','Acrobate','Humoriste']
+    },
+    {
+      icon:'🎵',
+      title:'Production musicale',
+      jobs:['Producteur musical','Beatmaker','Compositeur','Arrangeur','Ingenieur du son','Mixeur','Masteriseur','Manager A&R','Directeur artistique (label)','DJ']
+    },
+    {
+      icon:'🎬',
+      title:'Production audiovisuelle',
+      jobs:['Realisateur','Scenariste','Directeur de la photographie','Camerman','Monteur video','Coloriste','Preneur de son','Perchiste','Chef decorateur','Accessoiriste','Costumier','Maquilleur','Coiffeur plateau','Regisseur','Assistant realisateur','Scripte']
+    },
+    {
+      icon:'✏️',
+      title:'Creatif et media',
+      jobs:['Directeur artistique','Graphiste','Photographe','Videaste','Createur de contenu','Community manager','Redacteur','Journaliste culturel','Blogueur','Podcasteur','Designer de marque']
+    },
+    {
+      icon:'💻',
+      title:'Digital et tech',
+      jobs:['Developpeur web creatif','Motion designer','Animateur 2D / 3D','Game designer','Concepteur UX/UI (medias)','Technicien streaming','Artiste VFX','Directeur artistique digital','Designer media interactif']
+    },
+    {
+      icon:'🏗️',
+      title:'Evenementiel et production live',
+      jobs:['Producteur evenementiel','Directeur de scene','Technicien lumiere','Technicien son','Rigger','Constructeur de decors','Coordinateur evenementiel','Manager de tournee','Directeur de salle','Agent de securite','Personnel de restauration']
+    },
+    {
+      icon:'📋',
+      title:'Management et administration',
+      jobs:['Manager de talent','Agent de booking','Manager de label','Coordinateur de tournee','Attache de presse','Manager PR','Juriste (entertainment)','Coordinateur RH','Chef de projet','Assistant executif']
+    },
+    {
+      icon:'🌱',
+      title:'Debuts de carriere et support',
+      jobs:['Stagiaire','Runner','Assistant de production','Machiniste','Chauffeur','Coordinateur logistique','Traducteur / Interprete','Sous-titreur','Archiviste','Charge de recherche']
+    }
+  ],
+  kr:[
+    {
+      icon:'🎤',
+      title:'무대 / 스크린',
+      jobs:['가수','댄서','배우','음악가','래퍼','코미디언','모델','MC / 진행자','인플루언서','스트리머','서커스 아티스트','아크로바트','스탠드업 아티스트']
+    },
+    {
+      icon:'🎵',
+      title:'음악 프로덕션',
+      jobs:['음악 프로듀서','비트메이커','작곡가','편곡자','음향 엔지니어','믹싱 엔지니어','마스터링 엔지니어','A&R 매니저','아트 디렉터 (레이블)','DJ']
+    },
+    {
+      icon:'🎬',
+      title:'영상 프로덕션',
+      jobs:['감독','시나리오 작가','촬영 감독','카메라맨','영상 편집자','컬러리스트','음향 녹음사','붐 오퍼레이터','세트 디자이너','소품 담당','의상 디자이너','메이크업 아티스트','헤어 스타일리스트','제작 관리자','조감독','스크립터']
+    },
+    {
+      icon:'✏️',
+      title:'크리에이티브 & 미디어',
+      jobs:['아트 디렉터','그래픽 디자이너','사진작가','비디오그래퍼','콘텐츠 크리에이터','커뮤니티 매니저','카피라이터','문화 저널리스트','블로거','팟캐스터']
+    },
+    {
+      icon:'💻',
+      title:'디지털 & 기술',
+      jobs:['크리에이티브 웹 개발자','모션 디자이너','2D / 3D 애니메이터','게임 디자이너','UX/UI 디자이너','스트리밍 기술자','VFX 아티스트']
+    },
+    {
+      icon:'🏗️',
+      title:'이벤트 & 라이브 프로덕션',
+      jobs:['이벤트 프로듀서','무대 감독','조명 기술자','음향 기술자','리거','세트 빌더','이벤트 코디네이터','투어 매니저','공연장 매니저','보안 요원','케이터링 스태프']
+    },
+    {
+      icon:'📋',
+      title:'매니지먼트 & 행정',
+      jobs:['탤런트 매니저','부킹 에이전트','레이블 매니저','투어 코디네이터','홍보 담당','PR 매니저','엔터테인먼트 법무','HR 코디네이터','프로젝트 매니저','임원 비서']
+    },
+    {
+      icon:'🌱',
+      title:'신입 & 지원',
+      jobs:['인턴','러너','프로덕션 어시스턴트','스테이지핸드','드라이버','물류 코디네이터','번역사 / 통역사','자막 작업자','아카이비스트']
+    }
+  ]
+};
+
+var T = {
+  en:{
+    h_eyebrow:'About Creaven',
+    h_title:'The story behind <em>the platform.</em>',
+    h_sub:'Not a pitch. Not a product page. This is why Creaven exists, who it is for, and what we refuse to compromise on.',
+    origin_label:'Where this comes from',
+    origin_title:'A problem <em>hiding in plain sight.</em>',
+    origin_p1:'The creative industry is one of the most demanding environments on earth. Not because it is harder than construction or medicine or agriculture. But because the suffering inside it is systematically invisible. The culture rewards performance. It punishes fragility. And it has spent decades telling the people inside it that exhaustion is the price of passion.',
+    origin_p2:'Most of the people who make culture work in conditions of extreme pressure with near-total silence around mental health. When something breaks, the systems that exist were not built for them. Corporate mental health platforms require an employer who has opted in. Insurance plans require coverage. Local therapists require the right geography and the right language. And the stigma in high-performance environments requires that you simply carry on.',
+    origin_p3:'Creaven was built because that gap is not a minor inconvenience. It costs careers, relationships, and lives. And no platform was built specifically to close it.',
+    quote_text:'You do not have to be falling apart to deserve support. You just have to be human.',
+    quote_context:'This is the single conviction at the center of everything Creaven builds. Not as a tagline. As a design principle. Every feature, every protocol, every clinical decision on this platform exists to make that sentence true in practice.',
+    tensions_label:'What we saw',
+    tensions_title:'The real tensions <em>nobody names out loud.</em>',
+    tensions:[
+      {label:'Silence as culture',title:'The system rewards staying quiet',text:'In high-performance creative environments, asking for help is still read as weakness. Admitting burnout risks your contract. Showing vulnerability risks your reputation. The silence is not personal. It is structural.'},
+      {label:'Accessibility gap',title:'Existing solutions do not reach them',text:'Mental health resources exist. But most require corporate enrollment, private insurance, or proximity to a major city. The freelancer in Bangkok, the producer in Lagos, the dancer whose contract ended last month, they fall through every crack.'},
+      {label:'Language and culture',title:'Mental health is not culturally neutral',text:'Western clinical frameworks do not translate cleanly into every cultural context. The way distress is expressed, named, and accepted varies enormously. A platform built for one cultural reality will fail people from another.'},
+      {label:'Invisibility at scale',title:'The industry does not count who it forgets',text:'The data on mental health in the creative industry is almost entirely about artists and performers. The technician, the assistant, the intern, the security guard: invisible in every study, invisible in every solution.'}
+    ],
+    jobs_label:'Who this is for',
+    jobs_title:'Every role. <em>Without exception.</em>',
+    jobs_intro:'The creative industry is not just the faces you know. It is hundreds of professions, most of them invisible, all of them essential. Creaven is for all of them. If your work touches the creative world in any way, this platform was built with you in mind.',
+    jobs_note:'<strong>If your role is not listed here, it still counts.</strong> This list is a starting point, not a boundary. The creative industry is vast and constantly evolving. If you work in it, Creaven is for you.',
+    com_label:'What we stand for',
+    com_title:'The things we will <em>never compromise on.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Equity of care',text:'The headliner and the janitor receive the same quality of psychological support. Role, rank, and contract type are never conditions for access to care on this platform.'},
+      {icon:'🔒',title:'Radical confidentiality',text:'What happens in a session stays between the client and their psychologist. Creaven never shares clinical information with employers, agencies, or any third party under any circumstance.'},
+      {icon:'🧬',title:'Clinical integrity',text:'Every tool we use is internationally validated. Every result is reviewed by a licensed psychologist. There are no shortcuts on clinical standards.'},
+      {icon:'🌍',title:'Worldwide accessibility',text:'If you have an internet connection, geography is not a barrier. Creaven operates across time zones, in multiple languages, for any creative worker anywhere in the world.'},
+      {icon:'🗣️',title:'Language as a right',text:'Mental health care should not require you to speak the dominant language. Creaven operates in multiple languages and uses AI-assisted interpretation to bridge gaps in real time.'},
+      {icon:'❤️',title:'Human first, always',text:'Technology supports care. It does not replace it. Every assessment result, every session, every critical decision involves a human psychologist. AI assists. Humans decide.'}
+    ],
+    fn_label:'The founder',
+    fn_text:'<strong>Creaven was founded by Grace Daniella Amakon</strong>, a psychosocial support specialist with a Master\'s degree in social psychology and field experience in burnout prevention, psychosocial accompaniment, and mental health coordination through NGO work. Creaven was not built from a boardroom. It was built from years of observation, from fieldwork, and from a simple refusal to accept that the people who make culture should not have access to quality psychological care. The platform reflects both clinical rigor and lived understanding of what the creative industry actually demands from human beings.',
+    cta_title:'Ready to <em>start?</em>',
+    cta_sub:'Whether you need support for yourself or you want to protect your team, Creaven is here.',
+    cta_btn1:'Book a Consultation',
+    cta_btn2:'For Organizations',
+    nl_home:'Home',nl_tests:'Assessments',nl_book:'Book',nl_org:'Organizations',
+    nl_emergency:'Emergency',nl_account:'My Account',nl_about:'About',nl_contact:'Contact',
+    footer:'Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.'
+  },
+  fr:{
+    h_eyebrow:'A propos de Creaven',
+    h_title:'L\'histoire derriere <em>la plateforme.</em>',
+    h_sub:'Pas un pitch. Pas une page produit. Voici pourquoi Creaven existe, pour qui, et sur quoi nous ne transigeons jamais.',
+    origin_label:'D\'ou ca vient',
+    origin_title:'Un probleme <em>cache en pleine vue.</em>',
+    origin_p1:'L\'industrie creative est l\'un des environnements les plus exigeants au monde. Pas parce qu\'elle est plus dure que la construction ou la medecine ou l\'agriculture. Mais parce que la souffrance qui s\'y trouve est systematiquement invisible. La culture y recompense la performance. Elle punit la fragilite. Et elle a passe des decennies a dire aux personnes qui y travaillent que l\'epuisement est le prix de la passion.',
+    origin_p2:'La plupart des personnes qui fabriquent la culture travaillent dans des conditions de pression extreme avec un silence quasi total autour de la sante mentale. Quand quelque chose se brise, les systemes existants n\'ont pas ete concus pour eux. Les plateformes de sante mentale d\'entreprise exigent un employeur qui a adhere. Les assurances exigent une couverture. Les therapeutes locaux exigent la bonne geographie et la bonne langue. Et la stigmatisation dans les environnements de haute performance exige qu\'on continue simplement.',
+    origin_p3:'Creaven a ete construit parce que ce vide n\'est pas un inconvenient mineur. Il coute des carrieres, des relations, et des vies. Et aucune plateforme n\'avait ete construite specifiquement pour le combler.',
+    quote_text:'Vous n\'avez pas besoin d\'etre en train de vous effondrer pour meriter un soutien. Vous avez juste besoin d\'etre humain.',
+    quote_context:'C\'est la conviction unique au centre de tout ce que Creaven construit. Pas comme un slogan. Comme un principe de conception. Chaque fonctionnalite, chaque protocole, chaque decision clinique sur cette plateforme existe pour rendre cette phrase vraie en pratique.',
+    tensions_label:'Ce que nous avons observe',
+    tensions_title:'Les vraies tensions <em>que personne ne nomme a voix haute.</em>',
+    tensions:[
+      {label:'Le silence comme culture',title:'Le systeme recompense le silence',text:'Dans les environnements creatifs a haute performance, demander de l\'aide est encore lu comme une faiblesse. Admettre le burnout risque votre contrat. Montrer sa vulnerabilite risque votre reputation. Le silence n\'est pas personnel. Il est structurel.'},
+      {label:'Le fosse d\'accessibilite',title:'Les solutions existantes ne les atteignent pas',text:'Les ressources de sante mentale existent. Mais la plupart necessitent une inscription d\'entreprise, une assurance privee, ou la proximite d\'une grande ville. Le freelance a Bangkok, le producteur a Lagos, la danseuse dont le contrat vient d\'expirer passent a travers toutes les mailles.'},
+      {label:'Langue et culture',title:'La sante mentale n\'est pas culturellement neutre',text:'Les cadres cliniques occidentaux ne se traduisent pas proprement dans tous les contextes culturels. La facon dont la detresse est exprimee, nommee et acceptee varie enormement. Une plateforme construite pour une realite culturelle echouera des personnes d\'une autre.'},
+      {label:'L\'invisibilite a grande echelle',title:'L\'industrie ne compte pas ceux qu\'elle oublie',text:'Les donnees sur la sante mentale dans l\'industrie creative concernent presque exclusivement les artistes et les performers. Le technicien, l\'assistante, le stagiaire, l\'agent de securite : invisibles dans chaque etude, invisibles dans chaque solution.'}
+    ],
+    jobs_label:'Pour qui c\'est',
+    jobs_title:'Chaque metier. <em>Sans exception.</em>',
+    jobs_intro:'L\'industrie creative n\'est pas que les visages que vous connaissez. Ce sont des centaines de metiers, la plupart invisibles, tous essentiels. Creaven est pour tous. Si votre travail touche le monde creatif d\'une quelconque maniere, cette plateforme a ete construite avec vous en tete.',
+    jobs_note:'<strong>Si votre metier n\'est pas liste ici, il compte quand meme.</strong> Cette liste est un point de depart, pas une frontiere. L\'industrie creative est vaste et en constante evolution. Si vous y travaillez, Creaven est pour vous.',
+    com_label:'Ce pour quoi nous nous engageons',
+    com_title:'Ce sur quoi nous ne <em>transigeons jamais.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Equite des soins',text:'La tete d\'affiche et l\'agent d\'entretien recoivent le meme niveau de soutien psychologique. Le role, le rang et le type de contrat ne sont jamais des conditions d\'acces aux soins.'},
+      {icon:'🔒',title:'Confidentialite absolue',text:'Ce qui se passe en seance reste entre le client et son psychologue. Creaven ne partage jamais d\'informations cliniques avec les employeurs, agences ou tout tiers, en aucune circonstance.'},
+      {icon:'🧬',title:'Integrite clinique',text:'Chaque outil que nous utilisons est valide internationalement. Chaque resultat est examine par un psychologue licencie. Aucun raccourci sur les standards cliniques.'},
+      {icon:'🌍',title:'Accessibilite mondiale',text:'Si vous avez une connexion internet, la geographie n\'est pas un obstacle. Creaven opere dans tous les fuseaux horaires, en plusieurs langues, pour tout travailleur creatif partout dans le monde.'},
+      {icon:'🗣️',title:'La langue comme droit',text:'Les soins de sante mentale ne doivent pas exiger que vous parliez la langue dominante. Creaven opere en plusieurs langues et utilise l\'interpretation assistee par IA pour combler les ecarts en temps reel.'},
+      {icon:'❤️',title:'L\'humain avant tout',text:'La technologie soutient les soins. Elle ne les remplace pas. Chaque resultat d\'evaluation, chaque seance, chaque decision critique implique un psychologue humain. L\'IA assiste. Les humains decidient.'}
+    ],
+    fn_label:'La fondatrice',
+    fn_text:'<strong>Creaven a ete fonde par Grace Daniella Amakon</strong>, specialiste en soutien psychosocial titulaire d\'un master en psychologie sociale et forte d\'une experience de terrain en prevention du burnout, accompagnement psychosocial et coordination de sante mentale au sein d\'ONG. Creaven n\'a pas ete construit depuis une salle de conseil. Il a ete construit a partir d\'annees d\'observation, de travail de terrain, et d\'un refus simple d\'accepter que les personnes qui fabriquent la culture n\'aient pas acces a des soins psychologiques de qualite.',
+    cta_title:'Pret(e) a <em>commencer ?</em>',
+    cta_sub:'Que vous ayez besoin de soutien pour vous-meme ou que vous souhaitiez proteger votre equipe, Creaven est la.',
+    cta_btn1:'Prendre rendez-vous',
+    cta_btn2:'Pour les organisations',
+    nl_home:'Accueil',nl_tests:'Evaluations',nl_book:'Reserver',nl_org:'Organisations',
+    nl_emergency:'Urgences',nl_account:'Mon Compte',nl_about:'A Propos',nl_contact:'Contact',
+    footer:'Creaven 2026 - Bien-etre psychologique pour l\'industrie creative - Tous droits reserves.'
+  },
+  kr:{
+    h_eyebrow:'Creaven 소개',
+    h_title:'플랫폼 <em>뒤의 이야기.</em>',
+    h_sub:'홍보 자료가 아닙니다. 제품 페이지가 아닙니다. Creaven이 존재하는 이유, 누구를 위한 것인지, 그리고 절대 타협하지 않는 것들입니다.',
+    origin_label:'시작점',
+    origin_title:'눈앞에 숨어있던 <em>문제.</em>',
+    origin_p1:'창작 산업은 지구상에서 가장 혹독한 환경 중 하나입니다. 건설이나 의학이나 농업보다 더 힘들어서가 아닙니다. 그 안의 고통이 체계적으로 보이지 않기 때문입니다. 문화는 퍼포먼스를 보상합니다. 취약함을 처벌합니다. 그리고 수십 년 동안 그 안의 사람들에게 번아웃은 열정의 대가라고 말해왔습니다.',
+    origin_p2:'문화를 만드는 대부분의 사람들은 정신 건강에 대한 거의 완전한 침묵 속에서 극도의 압박 조건 하에 일합니다. 무언가 무너질 때, 기존의 시스템은 그들을 위해 만들어진 것이 아니었습니다.',
+    origin_p3:'Creaven은 그 공백이 사소한 불편이 아니기 때문에 만들어졌습니다. 그것은 경력, 관계, 그리고 삶을 앗아갑니다. 그리고 그것을 구체적으로 해결하기 위해 만들어진 플랫폼이 없었습니다.',
+    quote_text:'지원받을 자격을 얻기 위해 무너지고 있을 필요는 없습니다. 그냥 인간이기만 하면 됩니다.',
+    quote_context:'이것이 Creaven이 만드는 모든 것의 중심에 있는 단 하나의 확신입니다. 슬로건이 아니라 설계 원칙으로서. 이 플랫폼의 모든 기능, 모든 프로토콜, 모든 임상 결정은 그 문장을 실제로 실현하기 위해 존재합니다.',
+    tensions_label:'우리가 본 것',
+    tensions_title:'아무도 <em>크게 말하지 않는 진짜 긴장들.</em>',
+    tensions:[
+      {label:'문화로서의 침묵',title:'시스템은 침묵을 보상한다',text:'고성과 창작 환경에서 도움을 요청하는 것은 여전히 약함으로 읽힙니다. 번아웃을 인정하면 계약이 위험해집니다. 취약함을 보이면 평판이 위험해집니다. 침묵은 개인적인 것이 아닙니다. 구조적인 것입니다.'},
+      {label:'접근성 격차',title:'기존 솔루션이 그들에게 닿지 않는다',text:'정신 건강 자원은 존재합니다. 하지만 대부분은 기업 등록, 개인 보험, 또는 대도시 근접성을 필요로 합니다. 방콕의 프리랜서, 라고스의 프로듀서, 지난달 계약이 만료된 댄서, 그들은 모든 틈새를 통해 떨어집니다.'},
+      {label:'언어와 문화',title:'정신 건강은 문화적으로 중립적이지 않다',text:'서양 임상 프레임워크가 모든 문화적 맥락으로 깔끔하게 번역되지는 않습니다. 고통이 표현되고, 명명되고, 받아들여지는 방식은 엄청나게 다양합니다.'},
+      {label:'대규모 비가시성',title:'산업은 잊어버리는 사람들을 세지 않는다',text:'창작 산업의 정신 건강 데이터는 거의 전적으로 아티스트와 공연자에 관한 것입니다. 기술자, 어시스턴트, 인턴, 보안 요원: 모든 연구에서 보이지 않고, 모든 솔루션에서 보이지 않습니다.'}
+    ],
+    jobs_label:'누구를 위한 것인가',
+    jobs_title:'모든 직업. <em>예외 없이.</em>',
+    jobs_intro:'창작 산업은 여러분이 아는 얼굴들만이 아닙니다. 수백 가지 직업들로, 대부분은 보이지 않지만 모두 필수적입니다. Creaven은 그들 모두를 위한 것입니다.',
+    jobs_note:'<strong>여기에 나열되지 않은 직업이라도 중요합니다.</strong> 이 목록은 경계가 아니라 시작점입니다. 창작 산업은 방대하고 계속 진화합니다. 그 안에서 일한다면 Creaven은 당신을 위한 것입니다.',
+    com_label:'우리가 지지하는 것',
+    com_title:'절대 <em>타협하지 않을 것들.</em>',
+    commitments:[
+      {icon:'⚖️',title:'케어의 공평성',text:'헤드라이너와 청소부는 동일한 질의 심리적 지원을 받습니다. 역할, 직급, 계약 유형은 이 플랫폼에서 케어 접근의 조건이 아닙니다.'},
+      {icon:'🔒',title:'절대적 기밀',text:'세션에서 일어나는 일은 내담자와 심리학자 사이에만 남습니다. Creaven은 어떠한 상황에서도 고용주, 에이전시, 또는 제3자와 임상 정보를 공유하지 않습니다.'},
+      {icon:'🧬',title:'임상 무결성',text:'우리가 사용하는 모든 도구는 국제적으로 검증되었습니다. 모든 결과는 면허 있는 심리학자가 검토합니다. 임상 기준에 타협은 없습니다.'},
+      {icon:'🌍',title:'전 세계 접근성',text:'인터넷 연결이 있다면 지리는 장벽이 아닙니다. Creaven은 모든 시간대, 여러 언어로, 전 세계 모든 창작 종사자를 위해 운영됩니다.'},
+      {icon:'🗣️',title:'언어는 권리',text:'정신 건강 케어를 받기 위해 지배적인 언어를 말할 필요가 없어야 합니다. Creaven은 여러 언어로 운영되며 AI 보조 통역을 사용합니다.'},
+      {icon:'❤️',title:'항상 인간 먼저',text:'기술은 케어를 지원합니다. 대체하지 않습니다. 모든 평가 결과, 모든 세션, 모든 중요한 결정에는 인간 심리학자가 관여합니다. AI는 보조합니다. 인간이 결정합니다.'}
+    ],
+    fn_label:'설립자',
+    fn_text:'<strong>Creaven은 Grace Daniella Amakon이 설립했습니다</strong>, 사회심리학 석사 학위를 보유하고 NGO 활동을 통해 번아웃 예방, 심리사회적 동반, 정신 건강 조정에서 현장 경험을 가진 심리사회적 지원 전문가입니다. Creaven은 이사회실에서 만들어지지 않았습니다. 수년간의 관찰에서, 현장 작업에서, 그리고 문화를 만드는 사람들이 양질의 심리적 케어를 받을 수 없다는 것을 받아들이지 않겠다는 단순한 거부에서 만들어졌습니다.',
+    cta_title:'<em>시작할</em> 준비가 되셨나요?',
+    cta_sub:'자신을 위한 지원이 필요하든 팀을 보호하고 싶든, Creaven이 여기 있습니다.',
+    cta_btn1:'상담 예약',
+    cta_btn2:'기관을 위한',
+    nl_home:'홈',nl_tests:'평가',nl_book:'예약',nl_org:'기관',
+    nl_emergency:'긴급',nl_account:'내 계정',nl_about:'소개',nl_contact:'연락',
+    footer:'Creaven 2026 - 창작 산업을 위한 심리적 웰빙 - All rights reserved.'
+  }
+};
+['jp','zh','th','de','es'].forEach(function(l){ T[l] = Object.assign({}, T.en); });
+T.jp.h_eyebrow='Creavenについて'; T.jp.h_title='プラットフォームの<em>背景にある物語。</em>';
+T.zh.h_eyebrow='关于Creaven'; T.zh.h_title='平台<em>背后的故事。</em>';
+T.th.h_eyebrow='เกี่ยวกับ Creaven'; T.th.h_title='เรื่องราวเบื้องหลัง<em>แพลตฟอร์ม</em>';
+T.de.h_eyebrow='Uber Creaven'; T.de.h_title='Die Geschichte hinter <em>der Plattform.</em>';
+T.es.h_eyebrow='Sobre Creaven'; T.es.h_title='La historia detras <em>de la plataforma.</em>';
+
+var currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  var t = T[lang] || T.en;
+  var jobs = JOBS[lang] || JOBS.en;
+
+  function setText(id, val) { var el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
+  function setHtml(id, val) { var el = document.getElementById(id); if (el && val !== undefined) el.innerHTML = val; }
+
+  setHtml('h-title', t.h_title);
+  setText('h-eyebrow', t.h_eyebrow);
+  setText('h-sub', t.h_sub);
+  setText('origin-label', t.origin_label);
+  setHtml('origin-title', t.origin_title);
+  setText('origin-p1', t.origin_p1);
+  setText('origin-p2', t.origin_p2);
+  setText('origin-p3', t.origin_p3);
+  setText('quote-text', t.quote_text);
+  setText('quote-context', t.quote_context);
+  setText('tensions-label', t.tensions_label);
+  setHtml('tensions-title', t.tensions_title);
+  setText('jobs-label', t.jobs_label);
+  setHtml('jobs-title', t.jobs_title);
+  setText('jobs-intro', t.jobs_intro);
+  setHtml('jobs-note', t.jobs_note);
+  setText('com-label', t.com_label);
+  setHtml('com-title', t.com_title);
+  setText('fn-label', t.fn_label);
+  setHtml('fn-text', t.fn_text);
+  setHtml('cta-title', t.cta_title);
+  setText('cta-sub', t.cta_sub);
+  setText('cta-btn1', t.cta_btn1);
+  setText('cta-btn2', t.cta_btn2);
+  setText('footer-text', t.footer);
+  setText('nl-home', t.nl_home);
+  setText('nl-tests', t.nl_tests);
+  setText('nl-book', t.nl_book);
+  setText('nl-org', t.nl_org);
+  setText('nl-emergency', t.nl_emergency);
+  setText('nl-account', t.nl_account);
+  setText('nl-about', t.nl_about);
+  setText('nl-contact', t.nl_contact);
+
+  // Tensions
+  if (t.tensions) {
+    document.getElementById('tensionsGrid').innerHTML = t.tensions.map(function(ten) {
+      return '<div class="tension-card">'
+        + '<div class="tc-label">' + ten.label + '</div>'
+        + '<div class="tc-title">' + ten.title + '</div>'
+        + '<div class="tc-text">' + ten.text + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  // Jobs
+  document.getElementById('jobsGrid').innerHTML = jobs.map(function(cat) {
+    return '<div class="job-category">'
+      + '<div class="jc-header"><span class="jc-icon">' + cat.icon + '</span><span class="jc-title">' + cat.title + '</span></div>'
+      + '<ul class="job-list">' + cat.jobs.map(function(j){ return '<li>' + j + '</li>'; }).join('') + '</ul>'
+      + '</div>';
+  }).join('');
+
+  // Commitments
+  if (t.commitments) {
+    document.getElementById('comGrid').innerHTML = t.commitments.map(function(c) {
+      return '<div class="com-card">'
+        + '<div class="com-icon">' + c.icon + '</div>'
+        + '<div class="com-title-card">' + c.title + '</div>'
+        + '<div class="com-text">' + c.text + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  document.documentElement.lang = {kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es'}[lang] || 'en';
+}
+
+function toggleLangMenu() { document.getElementById('langDropdown').classList.toggle('open'); }
+function selectLang(lang, label) {
+  applyLang(lang);
+  document.getElementById('langToggle').textContent = label;
+  document.getElementById('langDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open');
+});
+
+applyLang('en');
+</script>
+</body>
+</html>
