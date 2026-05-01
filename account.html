@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creaven - My Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+function toggleLangMenu(){var d=document.getElementById('langDropdown');if(d)d.classList.toggle('open');}
+function selectLang(lang,label){
+  currentLang=lang;applyTranslations();
+  var b=document.getElementById('langToggle');if(b)b.textContent=label;
+  var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');
+  document.documentElement.lang={kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es'}[lang]||'en';
+}
+document.addEventListener('click',function(e){if(!e.target.closest('.lang-switcher')){var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');}});
+</script>
+<style>
+:root{--green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--blue:#2B5FA8;--blue-light:#E8EFF8;--gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;--cream:#FAFCFA;--cream-dark:#F0F5F0;--charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;--red:#C0392B;--red-light:#FDEAEA;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:64px;width:auto;object-fit:contain;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-back{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-back:hover{color:var(--green);}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover{background:var(--green-light);color:var(--green-dark);}
+.auth-wrap{min-height:calc(100vh - 73px);display:flex;align-items:center;justify-content:center;padding:48px 24px;background:linear-gradient(135deg,var(--green-light) 0%,var(--cream) 50%,var(--gold-light) 100%);}
+.auth-card{background:white;border-radius:28px;padding:48px;width:100%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.08);}
+.auth-logo{text-align:center;margin-bottom:28px;}
+.auth-logo img{height:80px;width:auto;}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--charcoal);text-align:center;margin-bottom:6px;}
+.auth-title em{font-style:italic;color:var(--green);}
+.auth-sub{font-size:13px;color:var(--light);text-align:center;margin-bottom:32px;line-height:1.6;}
+.auth-tabs{display:flex;background:var(--cream);border-radius:12px;padding:4px;margin-bottom:28px;}
+.auth-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:500;cursor:pointer;border-radius:10px;border:none;background:none;color:var(--light);transition:all .2s;font-family:'DM Sans',sans-serif;}
+.auth-tab.active{background:white;color:var(--green-dark);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.form-group{margin-bottom:16px;}
+.form-label{font-size:11px;color:var(--mid);letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-bottom:7px;display:block;}
+.form-input{width:100%;padding:12px 16px;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;font-size:14px;color:var(--charcoal);background:var(--cream);font-family:'DM Sans',sans-serif;transition:border-color .2s;outline:none;}
+.form-input:focus{border-color:var(--green);background:white;}
+.user-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.user-type-card{border:1.5px solid rgba(0,0,0,.1);border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;text-align:center;}
+.user-type-card:hover,.user-type-card.selected{border-color:var(--green);}
+.user-type-card.selected{background:var(--green-light);}
+.user-type-card.full{grid-column:1/-1;}
+.utc-icon{font-size:22px;margin-bottom:6px;}
+.utc-title{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:3px;}
+.utc-desc{font-size:11px;color:var(--light);line-height:1.4;}
+.btn-primary{width:100%;background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;padding:14px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;margin-top:8px;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,107,58,.3);}
+.forgot-link{text-align:right;margin-top:-8px;margin-bottom:14px;}
+.forgot-link a{font-size:12px;color:var(--green);text-decoration:none;cursor:pointer;}
+.msg{padding:12px 16px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none;}
+.msg.show{display:block;}
+.msg.error{background:var(--red-light);color:var(--red);}
+.msg.success{background:var(--green-light);color:var(--green-dark);}
+.msg.info{background:var(--blue-light);color:var(--blue);}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:1000;}
+.modal-content{background:white;border-radius:24px;padding:32px;max-width:400px;width:90%;}
+.modal-content h3{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:8px;}
+.modal-content p{font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.6;}
+.modal-buttons{display:flex;gap:12px;margin-top:20px;}
+.modal-buttons button{flex:1;padding:11px;border-radius:40px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;}
+.modal-buttons .cancel{background:var(--cream-dark);color:var(--mid);}
+.modal-buttons .submit{background:var(--green);color:white;}
+.view{display:none;}.view.active{display:block;}
+.dashboard-wrap{max-width:1000px;margin:0 auto;padding:48px 24px;}
+.dash-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;flex-wrap:wrap;gap:16px;}
+.dash-name{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:var(--charcoal);}
+.dash-name em{font-style:italic;color:var(--green);}
+.dash-email{font-size:13px;color:var(--light);margin-top:4px;}
+.btn-logout{background:none;border:1.5px solid rgba(0,0,0,.1);color:var(--mid);padding:9px 20px;border-radius:20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+.plan-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;margin-bottom:24px;}
+.plan-badge.individual{background:var(--blue-light);color:var(--blue);}
+.plan-badge.organization{background:var(--gold-light);color:var(--gold-dark);}
+.upgrade-banner{background:linear-gradient(135deg,var(--gold-light),white);border:1px solid var(--gold);border-radius:16px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px;}
+.ub-title{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:4px;}
+.ub-sub{font-size:13px;color:var(--mid);}
+.ub-btn{background:var(--gold);color:white;padding:10px 24px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;}
+.dash-card{background:white;border-radius:20px;padding:28px;border:1px solid rgba(0,0,0,.06);transition:all .25s;}
+.dash-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08);}
+.dc-icon{font-size:32px;margin-bottom:14px;}
+.dc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.dc-desc{font-size:13px;color:var(--mid);line-height:1.6;margin-bottom:16px;}
+.dc-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.dc-btn{display:inline-block;padding:9px 18px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+.dc-btn.green{background:var(--green);color:white;}
+.dc-btn.green:hover{background:var(--green-dark);}
+.dc-btn.outline{background:none;border:1.5px solid var(--green);color:var(--green);}
+.dc-btn.outline:hover{background:var(--green);color:white;}
+.account-info{background:white;border-radius:16px;padding:28px;border:1px solid rgba(0,0,0,.06);margin-bottom:24px;}
+.ai-title{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:20px;}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ai-label{font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.ai-val{font-size:14px;color:var(--charcoal);}
+.ai-val.active{color:var(--green);font-weight:500;}
+.danger-zone{background:var(--red-light);border:1px solid rgba(192,57,43,.2);border-radius:16px;padding:24px;margin-bottom:24px;}
+.danger-title{font-size:13px;font-weight:600;color:var(--red);margin-bottom:6px;}
+.danger-desc{font-size:13px;color:var(--mid);margin-bottom:16px;}
+.btn-danger{background:none;border:1.5px solid var(--red);color:var(--red);padding:10px 24px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-danger:hover{background:var(--red);color:white;}
+.pend-wrap{min-height:calc(100vh - 73px);display:flex;align-items:center;justify-content:center;padding:48px 24px;background:linear-gradient(135deg,var(--blue-light),var(--cream));}
+.pend-card{background:white;border-radius:28px;padding:48px;max-width:520px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.08);}
+.pend-icon{font-size:56px;margin-bottom:20px;}
+.pend-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--charcoal);margin-bottom:10px;}
+.pend-title em{font-style:italic;color:var(--blue);}
+.pend-sub{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:24px;}
+footer{background:var(--charcoal);padding:20px 48px;text-align:center;margin-top:40px;}
+footer p{font-size:12px;color:rgba(255,255,255,.3);}
+@media(max-width:600px){
+  nav{padding:10px 16px;}
+  .auth-card{padding:24px 16px;}
+  .user-type-grid{grid-template-columns:1fr;}
+  .dash-grid{grid-template-columns:1fr;}
+  .dashboard-wrap{padding:24px 16px;}
+  .upgrade-banner{flex-direction:column;align-items:flex-start;}
+  .ai-grid{grid-template-columns:1fr;}
+  footer{padding:20px;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      <span class="main-name">Creaven</span>
+      <span class="sub-name">Psychological Well-being</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" data-i18n="nav_back">Back to site</a>
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')">English</button>
+        <button onclick="selectLang('fr','FR')">Francais</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('th','TH')">ไทย</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Espanol</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- AUTH VIEW -->
+<div id="authView" class="view active">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo"><img src="logo-creaven.png" alt="Creaven" onerror="this.style.display='none'"></div>
+      <h1 class="auth-title"><span data-i18n="auth_title">Welcome to</span> <em>Creaven</em></h1>
+      <p class="auth-sub" data-i18n="auth_sub">Your psychological well-being, in a safe and confidential space.</p>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')" data-i18n="tab_login">Sign In</button>
+        <button class="auth-tab" id="tabSignup" onclick="switchTab('signup')" data-i18n="tab_signup">Create Account</button>
+      </div>
+      <div id="loginForm">
+        <div class="msg" id="loginMsg"></div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="login_email">Email address</label>
+          <input type="email" class="form-input" id="loginEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="login_password">Password</label>
+          <input type="password" class="form-input" id="loginPassword" placeholder="Your password">
+        </div>
+        <div class="forgot-link"><a onclick="showForgot()" data-i18n="login_forgot">Forgot password?</a></div>
+        <button class="btn-primary" onclick="signIn()" data-i18n="login_btn">Sign In</button>
+      </div>
+      <div id="signupForm" style="display:none;">
+        <div class="msg" id="signupMsg"></div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="signup_type_label">I am</label>
+          <div class="user-type-grid">
+            <div class="user-type-card selected" id="typeIndividual" onclick="selectType('individual')">
+              <div class="utc-icon">👤</div>
+              <div class="utc-title" data-i18n="signup_type_individual">Individual</div>
+              <div class="utc-desc" data-i18n="signup_type_individual_desc">Freelancer, artist, or independent worker</div>
+            </div>
+            <div class="user-type-card" id="typeOrg" onclick="selectType('organization')">
+              <div class="utc-icon">🏢</div>
+              <div class="utc-title" data-i18n="signup_type_org">Organization</div>
+              <div class="utc-desc" data-i18n="signup_type_org_desc">Employee of a company with a Creaven contract</div>
+            </div>
+            <div class="user-type-card full" id="typePractitioner" onclick="selectType('practitioner')">
+              <div class="utc-icon">🩺</div>
+              <div class="utc-title" data-i18n="signup_type_pract">Practitioner</div>
+              <div class="utc-desc" data-i18n="signup_type_pract_desc">Psychologist or mental health professional</div>
+            </div>
+          </div>
+        </div>
+        <div id="nameField">
+          <div class="form-group">
+            <label class="form-label" data-i18n="signup_name">Full name</label>
+            <input type="text" class="form-input" id="signupName" placeholder="Your full name">
+          </div>
+        </div>
+        <div id="practitionerFields" style="display:none;">
+          <div style="background:var(--blue-light);border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;color:var(--blue);">Your application will be reviewed before activation. You will receive an email once approved.</div>
+          <div class="form-group"><label class="form-label">First name *</label><input type="text" class="form-input" id="pFirstName" placeholder="Your first name"></div>
+          <div class="form-group"><label class="form-label">Last name *</label><input type="text" class="form-input" id="pLastName" placeholder="Your last name"></div>
+          <div class="form-group"><label class="form-label">Date of birth *</label><input type="date" class="form-input" id="pDob"></div>
+          <div class="form-group"><label class="form-label">Country of practice *</label><input type="text" class="form-input" id="pCountry" placeholder="e.g. Ivory Coast, South Korea"></div>
+          <div class="form-group"><label class="form-label">Languages spoken *</label><input type="text" class="form-input" id="pLanguages" placeholder="e.g. French, English, Korean"></div>
+          <div class="form-group"><label class="form-label">Specialities</label><input type="text" class="form-input" id="pSpec" placeholder="e.g. Burnout, Trauma, Anxiety"></div>
+          <div class="form-group"><label class="form-label">Licence number <span style="color:var(--light);font-weight:400;">(optional)</span></label><input type="text" class="form-input" id="pLicence" placeholder="Leave empty if not applicable"></div>
+          <div class="form-group"><label class="form-label">Diploma * <span style="color:var(--red);font-size:10px;">PDF max 5MB</span></label><input type="file" class="form-input" id="pDiploma" accept=".pdf" style="padding:10px;"></div>
+          <div class="form-group"><label class="form-label">CV * <span style="color:var(--red);font-size:10px;">PDF max 5MB</span></label><input type="file" class="form-input" id="pCv" accept=".pdf" style="padding:10px;"></div>
+          <div class="form-group"><label class="form-label">LinkedIn <span style="color:var(--light);font-weight:400;">(optional)</span></label><input type="url" class="form-input" id="pLinkedin" placeholder="https://linkedin.com/in/yourprofile"></div>
+          <div class="form-group">
+            <div style="display:flex;gap:10px;align-items:flex-start;background:var(--cream-dark);border-radius:10px;padding:14px;">
+              <input type="checkbox" id="pConsent" style="margin-top:2px;flex-shrink:0;">
+              <label for="pConsent" style="font-size:12px;color:var(--mid);line-height:1.6;cursor:pointer;">I consent to Creaven collecting and processing my information for evaluating my application and facilitating consultations.</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="signup_email">Email address</label>
+          <input type="email" class="form-input" id="signupEmail" placeholder="your@email.com">
+          <div style="font-size:11px;color:var(--light);margin-top:6px;display:none;" id="orgHint" data-i18n="signup_hint">If your organization has a Creaven contract, use your work email.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="signup_password">Password</label>
+          <input type="password" class="form-input" id="signupPassword" placeholder="Minimum 6 characters">
+        </div>
+        <button class="btn-primary" onclick="signUp()" data-i18n="signup_btn">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT MODAL -->
+<div id="forgotModal" class="modal">
+  <div class="modal-content">
+    <h3 data-i18n="reset_title">Reset your password</h3>
+    <p data-i18n="reset_desc">Enter your email and we will send you a link.</p>
+    <div class="form-group"><input type="email" class="form-input" id="resetEmail" placeholder="your@email.com"></div>
+    <div class="msg" id="resetMsg"></div>
+    <div class="modal-buttons">
+      <button class="cancel" onclick="closeForgot()" data-i18n="reset_cancel">Cancel</button>
+      <button class="submit" onclick="resetPassword()" data-i18n="reset_send">Send reset link</button>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboardView" class="view">
+  <div class="dashboard-wrap">
+    <div class="dash-header">
+      <div>
+        <div class="dash-name">Hello, <em id="dashName">there</em></div>
+        <div class="dash-email" id="dashEmail">...</div>
+      </div>
+      <button class="btn-logout" onclick="signOutUser()" data-i18n="dash_signout">Sign Out</button>
+    </div>
+    <div class="plan-badge individual" id="planBadge">Individual account</div>
+    <div class="upgrade-banner" id="upgradeBanner">
+      <div>
+        <div class="ub-title" data-i18n="upgrade_title">Book a consultation to unlock full access</div>
+        <div class="ub-sub" data-i18n="upgrade_desc">Assessments available to all. Consultations require booking.</div>
+      </div>
+      <a href="booking.html" class="ub-btn" data-i18n="upgrade_btn">Book a Consultation</a>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card">
+        <div class="dc-icon">🧪</div>
+        <div class="dc-title" data-i18n="card_assessments_title">Psychological Assessments</div>
+        <div class="dc-desc" data-i18n="card_assessments_desc">Take validated tests for depression, anxiety, burnout, PTSD and more.</div>
+        <div class="dc-btns"><a href="tests.html" class="dc-btn green" data-i18n="card_assessments_btn">Access Assessments</a></div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-icon">💬</div>
+        <div class="dc-title" data-i18n="card_sessions_title">My Consultation</div>
+        <div class="dc-desc" data-i18n="card_sessions_desc">Join your scheduled session with your Creaven psychologist.</div>
+        <div class="dc-btns">
+          <a href="consultation.html" class="dc-btn green" data-i18n="card_sessions_btn">Join Session</a>
+          <a href="booking.html" class="dc-btn outline">Book</a>
+        </div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-icon">📊</div>
+        <div class="dc-title" data-i18n="card_history_title">Results History</div>
+        <div class="dc-desc" data-i18n="card_history_desc">Access your past assessment results.</div>
+        <div class="dc-btns"><a href="tests.html" class="dc-btn outline" data-i18n="card_history_btn">View Assessments</a></div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-icon">🔒</div>
+        <div class="dc-title" data-i18n="card_privacy_title">Privacy and Security</div>
+        <div class="dc-desc" data-i18n="card_privacy_desc">Manage your data and privacy settings.</div>
+        <div class="dc-btns"><a href="contact.html" class="dc-btn outline" data-i18n="card_privacy_btn">Contact Us</a></div>
+      </div>
+    </div>
+    <div class="account-info">
+      <div class="ai-title" data-i18n="account_info">Account Information</div>
+      <div class="ai-grid">
+        <div><div class="ai-label" data-i18n="acc_email">Email</div><div class="ai-val" id="dashEmailInfo">...</div></div>
+        <div><div class="ai-label" data-i18n="acc_type">Account type</div><div class="ai-val" id="dashType">Individual</div></div>
+        <div><div class="ai-label" data-i18n="acc_since">Member since</div><div class="ai-val" id="dashSince">...</div></div>
+        <div><div class="ai-label" data-i18n="acc_status">Status</div><div class="ai-val active" data-i18n="acc_status_val">Active</div></div>
+      </div>
+    </div>
+    <div class="danger-zone">
+      <div class="danger-title" data-i18n="danger_title">Danger Zone</div>
+      <div class="danger-desc" data-i18n="danger_desc">Permanently delete your account. This cannot be undone.</div>
+      <button class="btn-danger" onclick="deleteAccount()" data-i18n="danger_btn">Delete my account</button>
+      <div class="msg" id="deleteMsg" style="margin-top:12px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTITIONER PENDING -->
+<div id="practitionerPendingView" class="view">
+  <div class="pend-wrap">
+    <div class="pend-card">
+      <div class="pend-icon">⏳</div>
+      <h2 class="pend-title">Thank you, <em id="pendingName">Doctor</em>.</h2>
+      <p class="pend-sub">Your application to join the Creaven network has been received. Our team will review your profile within 3 to 5 business days.</p>
+      <p style="font-size:12px;color:var(--light);">Questions? <a href="mailto:creavenconnect@gmail.com" style="color:var(--green);">creavenconnect@gmail.com</a></p>
+      <button class="btn-logout" onclick="signOutUser()" style="margin-top:20px;">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<footer><p data-i18n="footer_text">Creaven 2026 - Psychological well-being for the creative industry - All rights reserved.</p></footer>
+
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain:"creaven-01.firebaseapp.com",
+  projectId:"creaven-01",
+  storageBucket:"creaven-01.firebasestorage.app",
+  messagingSenderId:"247953277751",
+  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+});
+var auth=firebase.auth();
+var db=firebase.firestore();
+var storage=firebase.storage();
+emailjs.init('1hbqBu0F2Qh3qxAa6');
+
+var i18n={
+  en:{nav_back:"Back to site",auth_title:"Welcome to",auth_sub:"Your psychological well-being, in a safe and confidential space.",tab_login:"Sign In",tab_signup:"Create Account",login_email:"Email address",login_password:"Password",login_forgot:"Forgot password?",login_btn:"Sign In",signup_type_label:"I am",signup_type_individual:"Individual",signup_type_individual_desc:"Freelancer, artist, or independent worker",signup_type_org:"Organization",signup_type_org_desc:"Employee of a company with a Creaven contract",signup_type_pract:"Practitioner",signup_type_pract_desc:"Psychologist or mental health professional",signup_name:"Full name",signup_email:"Email address",signup_password:"Password",signup_hint:"If your organization has a Creaven contract, use your work email.",signup_btn:"Create Account",reset_title:"Reset your password",reset_desc:"Enter your email and we will send you a reset link.",reset_cancel:"Cancel",reset_send:"Send reset link",dash_signout:"Sign Out",plan_individual:"Individual account",plan_org:"Organization member",upgrade_title:"Book a consultation to unlock full access",upgrade_desc:"Assessments are available to all. Consultations require a booking.",upgrade_btn:"Book a Consultation",card_assessments_title:"Psychological Assessments",card_assessments_desc:"Take validated tests for depression, anxiety, burnout, PTSD and more.",card_assessments_btn:"Access Assessments",card_sessions_title:"My Consultation",card_sessions_desc:"Join your scheduled session with your Creaven psychologist.",card_sessions_btn:"Join Session",card_history_title:"Results History",card_history_desc:"Access your past assessment results.",card_history_btn:"View Assessments",card_privacy_title:"Privacy and Security",card_privacy_desc:"Manage your data and privacy settings.",card_privacy_btn:"Contact Us",account_info:"Account Information",acc_email:"Email",acc_type:"Account type",acc_since:"Member since",acc_status:"Status",acc_status_val:"Active",acc_type_individual:"Individual",acc_type_org:"Organization",footer_text:"Creaven 2026 - Psychological well-being for the creative industry - All rights reserved.",danger_title:"Danger Zone",danger_desc:"Permanently delete your account. This cannot be undone.",danger_btn:"Delete my account",msg_enter_fields:"Please enter your email and password.",msg_signing_in:"Signing in...",msg_signin_failed:"Sign in failed. Please check your credentials.",msg_no_account:"No account found with this email.",msg_wrong_password:"Incorrect password.",msg_invalid_email:"Invalid email format.",msg_too_many:"Too many failed attempts. Try again later.",msg_fill_all:"Please fill in all fields.",msg_password_short:"Password must be at least 6 characters.",msg_creating:"Creating your account...",msg_created:"Account created! Please check your email.",msg_signup_failed:"Account creation failed.",msg_email_exists:"This email is already registered.",msg_weak_password:"Password too weak. Minimum 6 characters.",msg_signed_out:"You have been signed out.",msg_reset_sent:"Reset link sent. Check your inbox.",msg_reset_failed:"Reset failed."},
+  fr:{nav_back:"Retour au site",auth_title:"Bienvenue sur",auth_sub:"Votre bien-etre psychologique, dans un espace sur et confidentiel.",tab_login:"Se connecter",tab_signup:"Creer un compte",login_email:"Adresse email",login_password:"Mot de passe",login_forgot:"Mot de passe oublie ?",login_btn:"Se connecter",signup_type_label:"Je suis",signup_type_individual:"Individuel",signup_type_individual_desc:"Freelance, artiste ou travailleur independant",signup_type_org:"Organisation",signup_type_org_desc:"Employe d'une entreprise avec un contrat Creaven",signup_type_pract:"Praticien",signup_type_pract_desc:"Psychologue ou professionnel de sante mentale",signup_name:"Nom complet",signup_email:"Adresse email",signup_password:"Mot de passe",signup_hint:"Si votre organisation a un contrat Creaven, utilisez votre email professionnel.",signup_btn:"Creer un compte",reset_title:"Reinitialiser votre mot de passe",reset_desc:"Entrez votre email et nous vous enverrons un lien.",reset_cancel:"Annuler",reset_send:"Envoyer le lien",dash_signout:"Se deconnecter",plan_individual:"Compte individuel",plan_org:"Membre d'une organisation",upgrade_title:"Reservez une consultation pour acceder a toutes les fonctionnalites",upgrade_desc:"Les evaluations sont accessibles a tous. Les consultations necessitent une reservation.",upgrade_btn:"Reserver une consultation",card_assessments_title:"Evaluations Psychologiques",card_assessments_desc:"Passez des tests valides pour la depression, l'anxiete, le burnout et plus.",card_assessments_btn:"Acceder aux evaluations",card_sessions_title:"Ma Consultation",card_sessions_desc:"Rejoignez votre seance avec votre psychologue Creaven.",card_sessions_btn:"Rejoindre la seance",card_history_title:"Historique des Resultats",card_history_desc:"Accedez a vos resultats passes.",card_history_btn:"Voir les evaluations",card_privacy_title:"Confidentialite et Securite",card_privacy_desc:"Gerez vos donnees et ajustez vos parametres.",card_privacy_btn:"Nous contacter",account_info:"Informations du compte",acc_email:"Email",acc_type:"Type de compte",acc_since:"Membre depuis",acc_status:"Statut",acc_status_val:"Actif",acc_type_individual:"Individuel",acc_type_org:"Organisation",footer_text:"Creaven 2026 - Bien-etre psychologique pour l'industrie creative - Tous droits reserves.",danger_title:"Zone de danger",danger_desc:"Supprimez definitivement votre compte. Cette action est irreversible.",danger_btn:"Supprimer mon compte",msg_enter_fields:"Veuillez saisir votre email et mot de passe.",msg_signing_in:"Connexion en cours...",msg_signin_failed:"Echec de connexion.",msg_no_account:"Aucun compte trouve.",msg_wrong_password:"Mot de passe incorrect.",msg_invalid_email:"Format d'email invalide.",msg_too_many:"Trop de tentatives.",msg_fill_all:"Veuillez remplir tous les champs.",msg_password_short:"Minimum 6 caracteres.",msg_creating:"Creation du compte...",msg_created:"Compte cree ! Verifiez votre email.",msg_signup_failed:"Echec de creation.",msg_email_exists:"Email deja enregistre.",msg_weak_password:"Mot de passe trop faible.",msg_signed_out:"Deconnecte.",msg_reset_sent:"Lien envoye.",msg_reset_failed:"Echec."},
+  kr:{nav_back:"사이트로 돌아가기",auth_title:"에 오신 것을 환영합니다",auth_sub:"안전하고 기밀적인 공간에서의 심리적 웰빙.",tab_login:"로그인",tab_signup:"계정 만들기",login_email:"이메일 주소",login_password:"비밀번호",login_forgot:"비밀번호를 잊으셨나요?",login_btn:"로그인",signup_type_label:"저는",signup_type_individual:"개인",signup_type_individual_desc:"프리랜서, 아티스트 또는 독립 작업자",signup_type_org:"조직",signup_type_org_desc:"Creaven 계약이 있는 회사의 직원",signup_type_pract:"실무자",signup_type_pract_desc:"심리학자 또는 정신 건강 전문가",signup_name:"전체 이름",signup_email:"이메일 주소",signup_password:"비밀번호",signup_hint:"조직에 Creaven 계약이 있는 경우 업무용 이메일을 사용하세요.",signup_btn:"계정 만들기",reset_title:"비밀번호 재설정",reset_desc:"이메일을 입력하시면 링크를 보내드립니다.",reset_cancel:"취소",reset_send:"링크 보내기",dash_signout:"로그아웃",plan_individual:"개인 계정",plan_org:"조직 멤버",upgrade_title:"상담을 예약하여 전체 액세스를 잠금 해제하세요",upgrade_desc:"평가는 모두 이용 가능합니다. 상담은 예약이 필요합니다.",upgrade_btn:"상담 예약",card_assessments_title:"심리 평가",card_assessments_desc:"우울증, 불안, 번아웃 등 검증된 테스트를 진행하세요.",card_assessments_btn:"평가 접근",card_sessions_title:"내 상담",card_sessions_desc:"Creaven 심리학자와 예약된 세션에 참여하세요.",card_sessions_btn:"세션 참여",card_history_title:"결과 기록",card_history_desc:"과거 평가 결과에 액세스하세요.",card_history_btn:"평가 보기",card_privacy_title:"개인정보 및 보안",card_privacy_desc:"데이터 관리 및 개인정보 설정.",card_privacy_btn:"문의하기",account_info:"계정 정보",acc_email:"이메일",acc_type:"계정 유형",acc_since:"가입일",acc_status:"상태",acc_status_val:"활성",acc_type_individual:"개인",acc_type_org:"조직",footer_text:"Creaven 2026 - 창작 산업의 모든 사람을 위한 심리적 웰빙.",danger_title:"위험 구역",danger_desc:"계정을 영구적으로 삭제합니다.",danger_btn:"내 계정 삭제",msg_enter_fields:"이메일과 비밀번호를 입력해주세요.",msg_signing_in:"로그인 중...",msg_signin_failed:"로그인 실패.",msg_no_account:"계정이 없습니다.",msg_wrong_password:"잘못된 비밀번호.",msg_invalid_email:"이메일 형식 오류.",msg_too_many:"시도 횟수 초과.",msg_fill_all:"모든 필드를 작성해주세요.",msg_password_short:"최소 6자.",msg_creating:"계정 생성 중...",msg_created:"계정 생성! 이메일을 확인하세요.",msg_signup_failed:"생성 실패.",msg_email_exists:"이미 등록된 이메일.",msg_weak_password:"비밀번호가 너무 약합니다.",msg_signed_out:"로그아웃.",msg_reset_sent:"링크 발송.",msg_reset_failed:"실패."}
+};
+['jp','zh','th','de','es'].forEach(function(l){i18n[l]=Object.assign({},i18n.en);});
+i18n.jp.nav_back="サイトに戻る";i18n.jp.auth_title="ようこそ";i18n.jp.tab_login="ログイン";i18n.jp.dash_signout="ログアウト";i18n.jp.footer_text="Creaven 2026 - クリエイティブ産業のすべての人のための心理的ウェルビーイング。";
+i18n.zh.nav_back="返回网站";i18n.zh.auth_title="欢迎来到";i18n.zh.tab_login="登录";i18n.zh.dash_signout="登出";i18n.zh.footer_text="Creaven 2026 - 为创意产业中的每个人提供心理健康服务。";
+i18n.th.nav_back="กลับไปยังเว็บไซต์";i18n.th.auth_title="ยินดีต้อนรับสู่";i18n.th.tab_login="เข้าสู่ระบบ";i18n.th.footer_text="Creaven 2026 - สุขภาวะทางจิตสำหรับทุกคนในอุตสาหกรรมสร้างสรรค์";
+i18n.de.nav_back="Zuruck zur Website";i18n.de.auth_title="Willkommen bei";i18n.de.tab_login="Anmelden";i18n.de.footer_text="Creaven 2026 - Psychisches Wohlbefinden fur alle in der Kreativbranche.";
+i18n.es.nav_back="Volver al sitio";i18n.es.auth_title="Bienvenido a";i18n.es.tab_login="Iniciar sesion";i18n.es.footer_text="Creaven 2026 - Bienestar psicologico para todos en la industria creativa.";
+
+var currentLang='en';
+function L(k){return(i18n[currentLang]||i18n.en)[k]||'';}
+function applyTranslations(){
+  var lang=i18n[currentLang]||i18n.en;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(lang[k]!==undefined)el.textContent=lang[k];});
+}
+function showMsg(id,text,type){var el=document.getElementById(id);el.textContent=text;el.className='msg '+type+' show';}
+
+function signIn(){
+  var email=document.getElementById('loginEmail').value.trim();
+  var pass=document.getElementById('loginPassword').value;
+  if(!email||!pass)return showMsg('loginMsg',L('msg_enter_fields'),'error');
+  showMsg('loginMsg',L('msg_signing_in'),'info');
+  auth.signInWithEmailAndPassword(email,pass)
+    .then(function(){
+      var rp=new URLSearchParams(window.location.search);
+      var rd=rp.get('redirect');
+      if(rd&&rd.endsWith('.html'))setTimeout(function(){window.location.href=rd;},800);
+    })
+    .catch(function(err){
+      var map={'auth/user-not-found':'msg_no_account','auth/wrong-password':'msg_wrong_password','auth/invalid-credential':'msg_wrong_password','auth/invalid-email':'msg_invalid_email','auth/too-many-requests':'msg_too_many'};
+      showMsg('loginMsg',L(map[err.code]||'msg_signin_failed'),'error');
+    });
+}
+
+function signUp(){
+  var userType=window.selectedUserType||'individual';
+  var email=document.getElementById('signupEmail').value.trim();
+  var pass=document.getElementById('signupPassword').value;
+  if(userType==='practitioner')return signUpPractitioner(email,pass);
+  var name=document.getElementById('signupName').value.trim();
+  if(!name||!email||!pass)return showMsg('signupMsg',L('msg_fill_all'),'error');
+  if(pass.length<6)return showMsg('signupMsg',L('msg_password_short'),'error');
+  showMsg('signupMsg',L('msg_creating'),'info');
+  auth.createUserWithEmailAndPassword(email,pass)
+    .then(function(cred){
+      return cred.user.updateProfile({displayName:name})
+        .then(function(){return cred.user.sendEmailVerification();})
+        .then(function(){localStorage.setItem('sm_name',name);localStorage.setItem('sm_type',userType);showMsg('signupMsg',L('msg_created'),'success');});
+    })
+    .catch(function(err){
+      var map={'auth/email-already-in-use':'msg_email_exists','auth/invalid-email':'msg_invalid_email','auth/weak-password':'msg_weak_password'};
+      showMsg('signupMsg',L(map[err.code]||'msg_signup_failed'),'error');
+    });
+}
+
+function signUpPractitioner(email,pass){
+  var fn=document.getElementById('pFirstName').value.trim();
+  var ln=document.getElementById('pLastName').value.trim();
+  var dob=document.getElementById('pDob').value;
+  var country=document.getElementById('pCountry').value.trim();
+  var langs=document.getElementById('pLanguages').value.trim();
+  var spec=document.getElementById('pSpec').value.trim();
+  var lic=document.getElementById('pLicence').value.trim();
+  var li=document.getElementById('pLinkedin').value.trim();
+  var dip=document.getElementById('pDiploma').files[0];
+  var cv=document.getElementById('pCv').files[0];
+  var consent=document.getElementById('pConsent').checked;
+  if(!fn||!ln||!dob||!country||!langs)return showMsg('signupMsg','Please fill all required fields.','error');
+  if(!dip)return showMsg('signupMsg','Please upload your diploma.','error');
+  if(!cv)return showMsg('signupMsg','Please upload your CV.','error');
+  if(!consent)return showMsg('signupMsg','You must give your consent.','error');
+  if(!email||!pass)return showMsg('signupMsg',L('msg_fill_all'),'error');
+  if(pass.length<6)return showMsg('signupMsg',L('msg_password_short'),'error');
+  if(dip.size>5242880||cv.size>5242880)return showMsg('signupMsg','Files must be under 5MB.','error');
+  var fullName=fn+' '+ln;
+  var uid;
+  showMsg('signupMsg','Creating your application...','info');
+  auth.createUserWithEmailAndPassword(email,pass)
+    .then(function(cred){uid=cred.user.uid;return cred.user.updateProfile({displayName:fullName});})
+    .then(function(){showMsg('signupMsg','Uploading diploma...','info');return storage.ref('practitioners/'+uid+'/diploma.pdf').put(dip);})
+    .then(function(s){return s.ref.getDownloadURL();})
+    .then(function(dipUrl){
+      showMsg('signupMsg','Uploading CV...','info');
+      return storage.ref('practitioners/'+uid+'/cv.pdf').put(cv)
+        .then(function(s){return s.ref.getDownloadURL();})
+        .then(function(cvUrl){
+          return db.collection('practitioners').doc(uid).set({uid:uid,email:email,firstName:fn,lastName:ln,fullName:fullName,dob:dob,country:country,languages:langs,specialities:spec,licence:lic||'Not provided',linkedin:li||'',diplomaUrl:dipUrl,cvUrl:cvUrl,status:'pending',appliedAt:firebase.firestore.FieldValue.serverTimestamp(),consent:true})
+            .then(function(){
+              return emailjs.send('service_creaven','template_YoursessionCrea',{pract_name:fullName,pract_email:email,pract_dob:dob,pract_country:country,pract_languages:langs,pract_specialities:spec,pract_licence:lic||'Not provided',pract_linkedin:li||'Not provided',pract_diploma_url:dipUrl,pract_cv_url:cvUrl,to_email:'creavenconnect@gmail.com'});
+            });
+        });
+    })
+    .then(function(){localStorage.setItem('sm_name',fullName);localStorage.setItem('sm_type','practitioner_pending');showMsg('signupMsg','Application submitted! You will receive an email once reviewed.','success');})
+    .catch(function(err){console.error(err);var map={'auth/email-already-in-use':'msg_email_exists','auth/invalid-email':'msg_invalid_email','auth/weak-password':'msg_weak_password'};showMsg('signupMsg',L(map[err.code]||'msg_signup_failed'),'error');});
+}
+
+function signOutUser(){auth.signOut();localStorage.removeItem('sm_type');localStorage.removeItem('sm_name');}
+function resetPassword(){
+  var email=document.getElementById('resetEmail').value.trim();
+  if(!email)return showMsg('resetMsg',L('msg_enter_fields'),'error');
+  auth.sendPasswordResetEmail(email)
+    .then(function(){showMsg('resetMsg',L('msg_reset_sent'),'success');setTimeout(function(){document.getElementById('forgotModal').style.display='none';},2500);})
+    .catch(function(err){showMsg('resetMsg',L(err.code==='auth/user-not-found'?'msg_no_account':'msg_reset_failed'),'error');});
+}
+function showForgot(){document.getElementById('forgotModal').style.display='flex';}
+function closeForgot(){document.getElementById('forgotModal').style.display='none';}
+function switchTab(tab){
+  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+  document.getElementById('signupForm').style.display=tab==='signup'?'block':'none';
+  document.getElementById('tabLogin').classList.toggle('active',tab==='login');
+  document.getElementById('tabSignup').classList.toggle('active',tab==='signup');
+}
+function selectType(type){
+  window.selectedUserType=type;
+  ['Individual','Org','Practitioner'].forEach(function(t){var el=document.getElementById('type'+t);if(el)el.classList.toggle('selected',t.toLowerCase()===type||(t==='Org'&&type==='organization'));});
+  document.getElementById('orgHint').style.display=type==='organization'?'block':'none';
+  document.getElementById('practitionerFields').style.display=type==='practitioner'?'block':'none';
+  document.getElementById('nameField').style.display=type==='practitioner'?'none':'block';
+}
+function deleteAccount(){
+  if(!confirm('Are you sure you want to permanently delete your account?'))return;
+  var msg=document.getElementById('deleteMsg');
+  msg.textContent='Deleting...';msg.className='msg info show';
+  var user=auth.currentUser;
+  if(!user)return;
+  db.collection('practitioners').doc(user.uid).delete().catch(function(){})
+    .then(function(){return user.delete();})
+    .then(function(){localStorage.removeItem('sm_type');localStorage.removeItem('sm_name');alert('Account deleted.');window.location.href='index.html';})
+    .catch(function(err){msg.textContent=err.code==='auth/requires-recent-login'?'Please sign out and sign back in first.':'Could not delete. Contact creavenconnect@gmail.com';msg.className='msg error show';});
+}
+function showDashboard(user){
+  var lang=i18n[currentLang]||i18n.en;
+  var name=user.displayName||localStorage.getItem('sm_name')||user.email.split('@')[0];
+  var userType=localStorage.getItem('sm_type')||'individual';
+  if(userType==='practitioner_pending'){
+    document.getElementById('authView').classList.remove('active');
+    document.getElementById('practitionerPendingView').classList.add('active');
+    document.getElementById('pendingName').textContent=name;
+    return;
+  }
+  document.getElementById('authView').classList.remove('active');
+  document.getElementById('dashboardView').classList.add('active');
+  document.getElementById('dashName').textContent=name;
+  document.getElementById('dashEmail').textContent=user.email;
+  document.getElementById('dashEmailInfo').textContent=user.email;
+  document.getElementById('dashSince').textContent=new Date(user.metadata.creationTime).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  document.getElementById('dashType').textContent=userType==='organization'?lang.acc_type_org:lang.acc_type_individual;
+  var badge=document.getElementById('planBadge');
+  badge.textContent=(userType==='organization'?'🏢 ':'👤 ')+(userType==='organization'?lang.plan_org:lang.plan_individual);
+  badge.className='plan-badge '+(userType==='organization'?'organization':'individual');
+  document.getElementById('upgradeBanner').style.display=userType==='organization'?'none':'flex';
+}
+auth.onAuthStateChanged(function(user){
+  if(user){
+    db.collection('practitioners').doc(user.uid).get()
+      .then(function(doc){if(doc.exists){var d=doc.data();localStorage.setItem('sm_type',d.status==='approved'?'practitioner':'practitioner_pending');localStorage.setItem('sm_name',d.fullName||user.displayName||'');}})
+      .catch(function(){}).then(function(){showDashboard(user);});
+  } else {
+    ['dashboardView','practitionerPendingView'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
+    document.getElementById('authView').classList.add('active');
+  }
+});
+var _urlP=new URLSearchParams(window.location.search);
+if(_urlP.get('tab')==='signup')setTimeout(function(){if(document.getElementById('authView').classList.contains('active'))switchTab('signup');},300);
+window.selectedUserType='individual';
+applyTranslations();
+</script>
+</body>
+</html>
