@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessments - Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<style>
+:root{
+  --green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
+  --blue:#2B5FA8;--blue-light:#E8EFF8;
+  --gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;
+  --cream:#FAFCFA;--cream-dark:#F0F5F0;
+  --charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  --red:#C0392B;--red-light:#FDEAEA;
+  --violet:#7B6B8D;--violet-light:#EDE8F2;
+  --orange:#D46A1A;--orange-light:#FDF0E8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.nav-link{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-link:hover{color:var(--green);}
+.nav-link.emergency{color:var(--red);font-weight:600;}
+.nav-link.active{color:var(--green);font-weight:500;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover{background:var(--green-light);color:var(--green-dark);}
+.hero{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 55%,var(--blue) 100%);padding:80px 48px 70px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(255,255,255,.07) 0%,transparent 70%);}
+.hero-tag{display:inline-block;background:rgba(255,255,255,.15);color:rgba(255,255,255,.85);padding:5px 16px;border-radius:30px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:20px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:300;color:white;line-height:1.15;margin-bottom:16px;}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.7);}
+.hero p{font-size:15px;color:rgba(255,255,255,.65);max-width:560px;margin:0 auto 28px;line-height:1.7;}
+.hero-notice{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:8px 20px;border-radius:30px;font-size:12px;}
+.controls{padding:36px 48px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between;}
+.search-wrap{position:relative;flex:1;max-width:400px;}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--light);pointer-events:none;}
+#searchInput{width:100%;padding:11px 16px 11px 40px;border:1.5px solid rgba(0,0,0,.1);border-radius:30px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--charcoal);background:white;outline:none;transition:border-color .2s;}
+#searchInput:focus{border-color:var(--green);}
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-tab{background:white;border:1.5px solid rgba(0,0,0,.1);color:var(--mid);padding:7px 16px;border-radius:30px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.filter-tab:hover{border-color:var(--green);color:var(--green);}
+.filter-tab.active{background:var(--green);border-color:var(--green);color:white;}
+.currency-bar{padding:4px 48px 16px;display:flex;align-items:center;gap:10px;}
+.currency-bar-label{font-size:12px;color:var(--light);}
+.currency-select{border:1.5px solid rgba(0,0,0,.1);border-radius:20px;padding:4px 12px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--charcoal);background:white;cursor:pointer;outline:none;}
+.currency-select:focus{border-color:var(--green);}
+.results-count{padding:0 48px 16px;font-size:12px;color:var(--light);}
+.tests-container{padding:0 48px 80px;}
+.tests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+.test-card{background:white;border-radius:18px;padding:28px;border:1px solid rgba(0,0,0,.06);cursor:pointer;transition:all .3s;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+.test-card:hover{transform:translateY(-5px);box-shadow:0 16px 50px rgba(0,0,0,.1);}
+.test-card.hidden{display:none;}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:.08em;font-weight:600;text-transform:uppercase;}
+.badge.quick{background:var(--green-light);color:var(--green-dark);}
+.badge.standard{background:var(--blue-light);color:var(--blue);}
+.badge.reviewed{background:var(--violet-light);color:var(--violet);}
+.badge.comprehensive{background:var(--gold-light);color:var(--gold-dark);}
+.badge.sensitive{background:var(--red-light);color:var(--red);}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.cat-dot.distress{background:var(--red);}
+.cat-dot.professional{background:var(--orange);}
+.cat-dot.addiction{background:var(--violet);}
+.cat-dot.development{background:var(--green);}
+.cat-dot.comprehensive{background:var(--blue);}
+.test-card h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);margin-bottom:4px;line-height:1.2;}
+.test-abbr{font-size:11px;color:var(--light);letter-spacing:.05em;margin-bottom:10px;}
+.test-desc{font-size:12px;color:var(--mid);line-height:1.6;margin-bottom:14px;flex:1;}
+.card-meta{display:flex;gap:12px;font-size:11px;color:var(--light);margin-bottom:12px;}
+.card-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--green-dark);}
+.card-consult{font-size:10px;color:var(--gold-dark);background:var(--gold-light);border-radius:8px;padding:3px 8px;margin-top:6px;display:inline-block;}
+.arrow-hint{position:absolute;bottom:20px;right:20px;font-size:18px;color:var(--green-light);transition:all .25s;}
+.test-card:hover .arrow-hint{color:var(--green);transform:translateX(4px);}
+.no-results{display:none;text-align:center;padding:60px 24px;color:var(--mid);grid-column:1/-1;}
+.no-results.show{display:block;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:white;border-radius:24px;padding:40px;max-width:480px;width:100%;position:relative;max-height:90vh;overflow-y:auto;}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--cream-dark);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;color:var(--mid);display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:var(--green-light);color:var(--green-dark);}
+.modal-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--charcoal);margin-bottom:4px;}
+.modal-fullname{font-size:13px;color:var(--mid);margin-bottom:20px;}
+.modal-price-block{background:var(--green-pale);border:1px solid var(--green-light);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
+.modal-price-label{font-size:12px;color:var(--mid);}
+.modal-price-sub{font-size:11px;color:var(--light);margin-top:2px;}
+.modal-price-val{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--green-dark);}
+.modal-banner{border-radius:12px;padding:12px 16px;font-size:12px;margin-bottom:16px;line-height:1.6;}
+.modal-banner.gold{background:var(--gold-light);color:var(--gold-dark);}
+.modal-banner.red{background:var(--red-light);color:var(--red);}
+.modal-desc{font-size:13px;color:var(--mid);line-height:1.75;margin-bottom:20px;}
+.modal-meta{display:flex;gap:16px;font-size:12px;color:var(--light);margin-bottom:24px;flex-wrap:wrap;}
+.btn-modal-primary{width:100%;background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;padding:14px;border-radius:40px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:10px;}
+.btn-modal-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,107,58,.3);}
+.modal-or{text-align:center;font-size:12px;color:var(--light);margin-bottom:10px;}
+.btn-modal-secondary{width:100%;background:transparent;color:var(--charcoal);padding:13px;border-radius:40px;font-size:14px;border:1.5px solid rgba(0,0,0,.12);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-modal-secondary:hover{border-color:var(--green);color:var(--green);}
+
+footer{background:var(--charcoal);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.3);}
+@media(max-width:768px){
+  nav{padding:12px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:56px 20px 48px;}
+  .controls,.currency-bar,.results-count,.tests-container{padding-left:20px;padding-right:20px;}
+  .tests-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:8px;text-align:center;padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div>
+      <span class="main-name">Creaven</span>
+      <div class="sub-name">Psychological Well-being</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="tests.html" class="nav-link active">Assessments</a>
+    <a href="booking.html" class="nav-link">Book</a>
+    <a href="organizations.html" class="nav-link">Organizations</a>
+    <a href="emergency.html" class="nav-link emergency">Emergency</a>
+    <a href="account.html" class="nav-link">My Account</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button onclick="selectLang('en','EN')">English</button>
+      <button onclick="selectLang('fr','FR')">Francais</button>
+      <button onclick="selectLang('kr','KR')">한국어</button>
+      <button onclick="selectLang('jp','JP')">日本語</button>
+      <button onclick="selectLang('zh','ZH')">中文</button>
+      <button onclick="selectLang('th','TH')">ไทย</button>
+      <button onclick="selectLang('de','DE')">Deutsch</button>
+      <button onclick="selectLang('es','ES')">Espanol</button>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Psychological Assessments Library</div>
+  <h1>Know <em>where you stand.</em><br>Start from understanding.</h1>
+  <p>Validated psychological assessments from quick screenings to comprehensive evaluations. Every result is reviewed by a licensed psychologist. All data is fully confidential.</p>
+  <div class="hero-notice">&#128274; A free account and a consultation are required to access results</div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Search assessments..." oninput="applyFilters()">
+  </div>
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-tab" onclick="setFilter('distress',this)">&#128308; Distress</button>
+    <button class="filter-tab" onclick="setFilter('professional',this)">&#129000; Work</button>
+    <button class="filter-tab" onclick="setFilter('addiction',this)">&#128995; Addiction</button>
+    <button class="filter-tab" onclick="setFilter('development',this)">&#128994; Development</button>
+    <button class="filter-tab" onclick="setFilter('comprehensive',this)">&#128309; Comprehensive</button>
+  </div>
+</div>
+
+<div class="currency-bar">
+  <span class="currency-bar-label">Display prices in</span>
+  <select class="currency-select" id="currencySelect" onchange="setCurrency(this.value)">
+    <option value="USD">USD $</option>
+    <option value="XOF">XOF CFA</option>
+    <option value="EUR">EUR</option>
+    <option value="SGD">SGD S$</option>
+    <option value="KRW">KRW</option>
+    <option value="JPY">JPY</option>
+    <option value="CNY">CNY</option>
+    <option value="GBP">GBP</option>
+    <option value="CAD">CAD</option>
+    <option value="AUD">AUD</option>
+    <option value="CHF">CHF</option>
+    <option value="INR">INR</option>
+    <option value="NGN">NGN</option>
+    <option value="GHS">GHS</option>
+    <option value="THB">THB</option>
+    <option value="MYR">MYR</option>
+    <option value="PHP">PHP</option>
+    <option value="HKD">HKD</option>
+    <option value="AED">AED</option>
+    <option value="SAR">SAR</option>
+  </select>
+</div>
+
+<div class="results-count" id="resultsCount">Showing all 30 assessments</div>
+
+<div class="tests-container">
+  <div class="tests-grid" id="testsGrid">
+
+    <div class="test-card" data-cat="distress" data-search="ace adverse childhood experiences trauma" onclick="openModal(this)">
+      <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+      <h3>ACE</h3><div class="test-abbr">Adverse Childhood Experiences Scale</div>
+      <p class="test-desc">Measures exposure to childhood trauma and its potential long-term impact on physical and mental health. Results reviewed by a psychologist before delivery.</p>
+      <div class="card-meta"><span>&#128221; 10 questions</span><span>&#9203; 5 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="ACE" data-fullname="Adverse Childhood Experiences Scale" data-badge="reviewed" data-cat="distress" data-q="10" data-dur="5 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Measures exposure to childhood trauma across 10 categories and assesses its potential long-term impact on physical and mental health. Results are reviewed by a psychologist before being shared with you." data-id="ace"></div>
+    </div>
+
+    <div class="test-card" data-cat="addiction" data-search="audit alcohol use disorders who" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot addiction"></span></div>
+      <h3>AUDIT</h3><div class="test-abbr">Alcohol Use Disorders Identification Test</div>
+      <p class="test-desc">The WHO gold standard for detecting hazardous and harmful alcohol consumption patterns. Used globally in clinical and occupational health settings.</p>
+      <div class="card-meta"><span>&#128221; 10 questions</span><span>&#9203; 5 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="AUDIT" data-fullname="Alcohol Use Disorders Identification Test" data-badge="quick" data-cat="addiction" data-q="10" data-dur="5 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="The WHO gold standard for detecting hazardous and harmful alcohol consumption patterns. Used globally in clinical and occupational health settings. Results are automated and reviewed." data-id="audit"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="bdi beck depression inventory" onclick="openModal(this)">
+      <div class="card-top"><span class="badge standard">Standard</span><span class="cat-dot distress"></span></div>
+      <h3>BDI-II</h3><div class="test-abbr">Beck Depression Inventory (2nd Edition)</div>
+      <p class="test-desc">Widely used instrument measuring depression severity across cognitive, affective, somatic and vegetative symptoms. One of the most cited depression tools in research.</p>
+      <div class="card-meta"><span>&#128221; 21 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="BDI-II" data-fullname="Beck Depression Inventory (2nd Edition)" data-badge="standard" data-cat="distress" data-q="21" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Widely used instrument measuring depression severity across cognitive, affective, somatic and vegetative symptoms. One of the most cited depression tools in research worldwide." data-id="bdi"></div>
+    </div>
+
+    <div class="test-card" data-cat="comprehensive" data-search="big five ocean personality openness conscientiousness" onclick="openModal(this)">
+      <div class="card-top"><span class="badge comprehensive">Consultation included</span><span class="cat-dot comprehensive"></span></div>
+      <h3>Big Five</h3><div class="test-abbr">OCEAN Personality Inventory</div>
+      <p class="test-desc">Measures the five core personality dimensions: Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism. Consultation to interpret results is included.</p>
+      <div class="card-meta"><span>&#128221; 44 questions</span><span>&#9203; 15 min</span></div>
+      <div class="card-price" data-usd="150">$150</div>
+      <div class="card-consult" style="background:var(--green-light);color:var(--green-dark);">Consultation included</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="Big Five" data-fullname="OCEAN Personality Inventory" data-badge="comprehensive" data-cat="comprehensive" data-q="44" data-dur="15 min" data-usd="150" data-tier="comprehensive" data-consult-included="true" data-sensitive="false" data-desc="Measures the five core personality dimensions: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism. A consultation to interpret your results is included in the price." data-id="bigfive"></div>
+    </div>
+
+    <div class="test-card" data-cat="addiction" data-search="cage alcohol dependence" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot addiction"></span></div>
+      <h3>CAGE</h3><div class="test-abbr">Alcohol Dependence Questionnaire</div>
+      <p class="test-desc">A rapid 4-question screening tool to detect possible alcohol dependence or problem drinking. Widely used as a first-line clinical screening instrument.</p>
+      <div class="card-meta"><span>&#128221; 4 questions</span><span>&#9203; 2 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="CAGE" data-fullname="Alcohol Dependence Questionnaire" data-badge="quick" data-cat="addiction" data-q="4" data-dur="2 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="A rapid 4-question screening tool to detect possible alcohol dependence or problem drinking. Widely used as a first-line clinical screening instrument in occupational and general health." data-id="cage"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="cbi copenhagen burnout inventory" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot professional"></span></div>
+      <h3>CBI</h3><div class="test-abbr">Copenhagen Burnout Inventory</div>
+      <p class="test-desc">Measures burnout across three dimensions: personal exhaustion, work-related exhaustion, and client-related exhaustion. Validated across multiple industries.</p>
+      <div class="card-meta"><span>&#128221; 19 questions</span><span>&#9203; 8 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="CBI" data-fullname="Copenhagen Burnout Inventory" data-badge="quick" data-cat="professional" data-q="19" data-dur="8 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Measures burnout across three dimensions: personal exhaustion, work-related exhaustion, and client-related exhaustion. Validated across multiple industries and professional contexts." data-id="cbi"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="cssrs columbia suicide severity rating scale" onclick="openModal(this)">
+      <div class="card-top"><span class="badge sensitive">Practitioner only</span><span class="cat-dot distress"></span></div>
+      <h3>C-SSRS</h3><div class="test-abbr">Columbia Suicide Severity Rating Scale</div>
+      <p class="test-desc">Clinical gold standard for assessing suicidal ideation and behavior. Administered exclusively by a Creaven psychologist. Consultation is included in the price.</p>
+      <div class="card-meta"><span>&#128221; 6 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="70">$70</div>
+      <div class="card-consult" style="background:var(--green-light);color:var(--green-dark);">Consultation included</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="C-SSRS" data-fullname="Columbia Suicide Severity Rating Scale" data-badge="sensitive" data-cat="distress" data-q="6" data-dur="10 min" data-usd="70" data-tier="sensitive" data-consult-included="true" data-sensitive="true" data-desc="Clinical gold standard for assessing suicidal ideation and behavior. This assessment is administered exclusively by a Creaven psychologist during a consultation session. You cannot take it independently. A consultation is included in the price." data-id="cssrs"></div>
+    </div>
+
+    <div class="test-card" data-cat="development" data-search="cd-risc connor davidson resilience" onclick="openModal(this)">
+      <div class="card-top"><span class="badge standard">Standard</span><span class="cat-dot development"></span></div>
+      <h3>CD-RISC</h3><div class="test-abbr">Connor-Davidson Resilience Scale</div>
+      <p class="test-desc">Measures psychological resilience and the ability to bounce back from adversity, stress, and trauma. Useful in high-pressure creative environments.</p>
+      <div class="card-meta"><span>&#128221; 25 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="CD-RISC" data-fullname="Connor-Davidson Resilience Scale" data-badge="standard" data-cat="development" data-q="25" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Measures psychological resilience and the ability to bounce back from adversity, stress, and trauma. Particularly useful for people working in high-pressure creative industry environments." data-id="cdrisc"></div>
+    </div>
+
+    <div class="test-card" data-cat="addiction" data-search="dast drug abuse screening test" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot addiction"></span></div>
+      <h3>DAST-10</h3><div class="test-abbr">Drug Abuse Screening Test</div>
+      <p class="test-desc">10-item screening tool for problematic drug use excluding alcohol. Widely used in occupational and general clinical health practice.</p>
+      <div class="card-meta"><span>&#128221; 10 questions</span><span>&#9203; 5 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="DAST-10" data-fullname="Drug Abuse Screening Test" data-badge="quick" data-cat="addiction" data-q="10" data-dur="5 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="10-item screening tool for problematic drug use excluding alcohol. Widely used in occupational health and general clinical practice as a first-line screening instrument." data-id="dast"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="ede-q eating disorder examination questionnaire" onclick="openModal(this)">
+      <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+      <h3>EDE-Q</h3><div class="test-abbr">Eating Disorder Examination Questionnaire</div>
+      <p class="test-desc">Assesses eating disorder behaviors and attitudes related to dietary restraint, weight and shape concerns over the past 28 days. Results reviewed by a psychologist.</p>
+      <div class="card-meta"><span>&#128221; 28 questions</span><span>&#9203; 12 min</span></div>
+      <div class="card-price" data-usd="35">$35</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="EDE-Q" data-fullname="Eating Disorder Examination Questionnaire" data-badge="reviewed" data-cat="distress" data-q="28" data-dur="12 min" data-usd="35" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Assesses eating disorder behaviors and attitudes related to dietary restraint, weight and shape concerns, and eating patterns over the past 28 days. Results are reviewed by a psychologist before delivery." data-id="edeq"></div>
+    </div>
+
+    <div class="test-card" data-cat="development" data-search="eq-i emotional intelligence inventory" onclick="openModal(this)">
+      <div class="card-top"><span class="badge standard">Standard</span><span class="cat-dot development"></span></div>
+      <h3>EQ-i</h3><div class="test-abbr">Emotional Intelligence Inventory</div>
+      <p class="test-desc">Measures emotional and social intelligence: self-awareness, empathy, relationship management, adaptability, and stress tolerance.</p>
+      <div class="card-meta"><span>&#128221; 30 questions</span><span>&#9203; 12 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="EQ-i" data-fullname="Emotional Intelligence Inventory" data-badge="standard" data-cat="development" data-q="30" data-dur="12 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Measures emotional and social intelligence across key domains: self-awareness, empathy, relationship management, adaptability, and stress tolerance. Valuable for professionals in high-collaboration creative environments." data-id="eqi"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="gad-7 generalized anxiety disorder" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot distress"></span></div>
+      <h3>GAD-7</h3><div class="test-abbr">Generalized Anxiety Disorder Scale (7 items)</div>
+      <p class="test-desc">Widely validated 7-item anxiety screening tool. The most commonly used anxiety screening instrument in primary care settings worldwide.</p>
+      <div class="card-meta"><span>&#128221; 7 questions</span><span>&#9203; 3 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="GAD-7" data-fullname="Generalized Anxiety Disorder Scale (7 items)" data-badge="quick" data-cat="distress" data-q="7" data-dur="3 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Widely validated 7-item anxiety screening tool. The most commonly used anxiety screening instrument in primary care settings worldwide. Automated scoring with psychologist review." data-id="gad7"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="jcq karasek job content questionnaire work demands" onclick="openModal(this)">
+      <div class="card-top"><span class="badge standard">Standard</span><span class="cat-dot professional"></span></div>
+      <h3>JCQ</h3><div class="test-abbr">Karasek Job Content Questionnaire</div>
+      <p class="test-desc">Measures job demands, decision latitude, and social support. The leading validated tool for assessing psychosocial work conditions and occupational stress.</p>
+      <div class="card-meta"><span>&#128221; 27 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="JCQ" data-fullname="Karasek Job Content Questionnaire" data-badge="standard" data-cat="professional" data-q="27" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Measures job demands, decision latitude, and social support. The leading internationally validated tool for assessing psychosocial work conditions and occupational stress risk factors." data-id="jcq"></div>
+    </div>
+
+    <div class="test-card" data-cat="comprehensive" data-search="mbti personality type indicator" onclick="openModal(this)">
+      <div class="card-top"><span class="badge comprehensive">Consultation included</span><span class="cat-dot comprehensive"></span></div>
+      <h3>MBTI</h3><div class="test-abbr">Personality Type Indicator (adapted)</div>
+      <p class="test-desc">Identifies personality preferences across four dimensions: energy, information, decisions, and lifestyle. Adapted for professional creative contexts. Consultation included.</p>
+      <div class="card-meta"><span>&#128221; 60 questions</span><span>&#9203; 20 min</span></div>
+      <div class="card-price" data-usd="150">$150</div>
+      <div class="card-consult" style="background:var(--green-light);color:var(--green-dark);">Consultation included</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="MBTI" data-fullname="Personality Type Indicator (adapted)" data-badge="comprehensive" data-cat="comprehensive" data-q="60" data-dur="20 min" data-usd="150" data-tier="comprehensive" data-consult-included="true" data-sensitive="false" data-desc="Identifies personality preferences across four dimensions: energy source, information processing, decision-making, and lifestyle orientation. Adapted for professional creative industry contexts. A consultation to interpret your results is included in the price." data-id="mbti"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="mbi maslach burnout inventory" onclick="openModal(this)">
+      <div class="card-top"><span class="badge standard">Standard</span><span class="cat-dot professional"></span></div>
+      <h3>MBI</h3><div class="test-abbr">Maslach Burnout Inventory</div>
+      <p class="test-desc">The world leading measure of occupational burnout, assessing emotional exhaustion, depersonalization, and reduced personal accomplishment.</p>
+      <div class="card-meta"><span>&#128221; 22 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="MBI" data-fullname="Maslach Burnout Inventory" data-badge="standard" data-cat="professional" data-q="22" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="The world leading measure of occupational burnout, assessing emotional exhaustion, depersonalization, and reduced personal accomplishment. The global research standard for burnout measurement across industries." data-id="mbi"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="mdq mood disorder questionnaire bipolar" onclick="openModal(this)">
+      <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+      <h3>MDQ</h3><div class="test-abbr">Mood Disorder Questionnaire</div>
+      <p class="test-desc">Screens for bipolar spectrum disorders by identifying patterns of elevated mood, decreased sleep need, and increased energy. Results reviewed by a psychologist.</p>
+      <div class="card-meta"><span>&#128221; 15 questions</span><span>&#9203; 7 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="MDQ" data-fullname="Mood Disorder Questionnaire" data-badge="reviewed" data-cat="distress" data-q="15" data-dur="7 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Screens for bipolar spectrum disorders by identifying patterns of elevated mood, decreased need for sleep, and increased energy over the past year. Results are reviewed by a psychologist before delivery." data-id="mdq"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="naq-r negative acts questionnaire workplace bullying harassment" onclick="openModal(this)">
+      <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot professional"></span></div>
+      <h3>NAQ-R</h3><div class="test-abbr">Negative Acts Questionnaire (Revised)</div>
+      <p class="test-desc">Internationally validated tool assessing exposure to workplace bullying and harassment behaviors over the past 6 months. Results handled with strict confidentiality.</p>
+      <div class="card-meta"><span>&#128221; 22 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="NAQ-R" data-fullname="Negative Acts Questionnaire (Revised)" data-badge="reviewed" data-cat="professional" data-q="22" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Internationally validated tool assessing exposure to workplace bullying and harassment behaviors over the past 6 months. Results are handled with strict confidentiality and reviewed by our clinical team." data-id="naqr"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="oci-r obsessive compulsive inventory ocd" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot distress"></span></div>
+      <h3>OCI-R</h3><div class="test-abbr">Obsessive-Compulsive Inventory (Revised)</div>
+      <p class="test-desc">Assesses OCD symptoms across six subscales: washing, checking, ordering, obsessing, hoarding, and neutralizing. A well-validated brief screening tool.</p>
+      <div class="card-meta"><span>&#128221; 18 questions</span><span>&#9203; 7 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="OCI-R" data-fullname="Obsessive-Compulsive Inventory (Revised)" data-badge="quick" data-cat="distress" data-q="18" data-dur="7 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Assesses OCD symptoms across six subscales: washing, checking, ordering, obsessing, hoarding, and neutralizing. One of the most widely used brief OCD screening instruments in clinical research." data-id="ocir"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="pcl-5 ptsd checklist dsm-5 trauma" onclick="openModal(this)">
+      <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot distress"></span></div>
+      <h3>PCL-5</h3><div class="test-abbr">PTSD Checklist for DSM-5</div>
+      <p class="test-desc">Screens for and measures PTSD symptom severity related to a stressful experience, including workplace trauma. Results reviewed by a psychologist before delivery.</p>
+      <div class="card-meta"><span>&#128221; 20 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="PCL-5" data-fullname="PTSD Checklist for DSM-5" data-badge="reviewed" data-cat="distress" data-q="20" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Screens for and measures PTSD symptom severity related to a stressful experience, including workplace trauma. Validated against DSM-5 criteria. Results are reviewed by a psychologist before being shared." data-id="pcl5"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="phq-9 patient health questionnaire depression" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot distress"></span></div>
+      <h3>PHQ-9</h3><div class="test-abbr">Patient Health Questionnaire (9 items)</div>
+      <p class="test-desc">The global standard for depression screening across 9 DSM-5 criteria. The most widely used depression screening tool in primary care worldwide.</p>
+      <div class="card-meta"><span>&#128221; 9 questions</span><span>&#9203; 4 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="PHQ-9" data-fullname="Patient Health Questionnaire (9 items)" data-badge="quick" data-cat="distress" data-q="9" data-dur="4 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="The global standard for depression screening across 9 DSM-5 criteria. The most widely used depression screening tool in primary care worldwide. Automated scoring with psychologist review." data-id="phq9"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="proqol compassion fatigue satisfaction burnout" onclick="openModal(this)">
+      <div class="card-top"><span class="badge standard">Standard</span><span class="cat-dot professional"></span></div>
+      <h3>ProQOL</h3><div class="test-abbr">Professional Quality of Life Scale</div>
+      <p class="test-desc">Measures compassion satisfaction, burnout, and secondary traumatic stress. Particularly relevant for those in high-emotion creative environments.</p>
+      <div class="card-meta"><span>&#128221; 30 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="ProQOL" data-fullname="Professional Quality of Life Scale" data-badge="standard" data-cat="professional" data-q="30" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Measures compassion satisfaction, burnout, and secondary traumatic stress. Particularly relevant for those working in high-emotion, high-responsibility creative environments where emotional labor is constant." data-id="proqol"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="pss perceived stress scale" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot professional"></span></div>
+      <h3>PSS</h3><div class="test-abbr">Perceived Stress Scale</div>
+      <p class="test-desc">The most widely used instrument measuring how situations are appraised as stressful. Assesses how unpredictable and overwhelming respondents find their lives.</p>
+      <div class="card-meta"><span>&#128221; 10 questions</span><span>&#9203; 5 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="PSS" data-fullname="Perceived Stress Scale" data-badge="quick" data-cat="professional" data-q="10" data-dur="5 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="The most widely used instrument measuring how situations are appraised as stressful. Assesses how unpredictable, uncontrollable, and overwhelming respondents find their life situations over the past month." data-id="pss"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="psqi pittsburgh sleep quality index" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot professional"></span></div>
+      <h3>PSQI</h3><div class="test-abbr">Pittsburgh Sleep Quality Index</div>
+      <p class="test-desc">Assesses sleep quality and disturbances over one month across 7 components including duration, efficiency, disturbances, and daytime dysfunction.</p>
+      <div class="card-meta"><span>&#128221; 19 questions</span><span>&#9203; 8 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="PSQI" data-fullname="Pittsburgh Sleep Quality Index" data-badge="quick" data-cat="professional" data-q="19" data-dur="8 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Assesses sleep quality and disturbances over one month across 7 components: subjective quality, latency, duration, efficiency, disturbances, medication use, and daytime dysfunction. Widely used internationally." data-id="psqi"></div>
+    </div>
+
+    <div class="test-card" data-cat="development" data-search="rosenberg self-esteem scale" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot development"></span></div>
+      <h3>Rosenberg</h3><div class="test-abbr">Rosenberg Self-Esteem Scale</div>
+      <p class="test-desc">The gold standard 10-item measure of global self-esteem. Assesses both positive and negative feelings about oneself. Widely used across social science research.</p>
+      <div class="card-meta"><span>&#128221; 10 questions</span><span>&#9203; 3 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="Rosenberg" data-fullname="Rosenberg Self-Esteem Scale" data-badge="quick" data-cat="development" data-q="10" data-dur="3 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="The gold standard 10-item measure of global self-esteem. Assesses both positive and negative feelings about oneself. One of the most widely validated and cited scales in social science research." data-id="rosenberg"></div>
+    </div>
+
+    <div class="test-card" data-cat="comprehensive" data-search="scl-90-r symptom checklist 90 revised" onclick="openModal(this)">
+      <div class="card-top"><span class="badge comprehensive">Consultation included</span><span class="cat-dot comprehensive"></span></div>
+      <h3>SCL-90-R</h3><div class="test-abbr">Symptom Checklist 90 Revised</div>
+      <p class="test-desc">Comprehensive multidimensional assessment covering 9 primary symptom dimensions. One of the most complete psychological screening instruments available.</p>
+      <div class="card-meta"><span>&#128221; 90 questions</span><span>&#9203; 25 min</span></div>
+      <div class="card-price" data-usd="250">$250</div>
+      <div class="card-consult" style="background:var(--green-light);color:var(--green-dark);">Consultation included</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="SCL-90-R" data-fullname="Symptom Checklist 90 Revised" data-badge="comprehensive" data-cat="comprehensive" data-q="90" data-dur="25 min" data-usd="250" data-tier="comprehensive" data-consult-included="true" data-sensitive="false" data-desc="Comprehensive multidimensional assessment covering 9 primary symptom dimensions: somatization, obsessive-compulsive, interpersonal sensitivity, depression, anxiety, hostility, phobic anxiety, paranoid ideation, and psychoticism. A consultation to interpret your results is included in the price." data-id="scl90"></div>
+    </div>
+
+    <div class="test-card" data-cat="addiction" data-search="smas social media addiction scale digital" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot addiction"></span></div>
+      <h3>SMAS</h3><div class="test-abbr">Social Media Addiction Scale</div>
+      <p class="test-desc">Measures problematic social media use. Highly relevant for content creators, community managers, and digital professionals who work online daily.</p>
+      <div class="card-meta"><span>&#128221; 16 questions</span><span>&#9203; 6 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="SMAS" data-fullname="Social Media Addiction Scale" data-badge="quick" data-cat="addiction" data-q="16" data-dur="6 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Measures problematic social media use across key dimensions including salience, mood modification, tolerance, withdrawal, conflict, and relapse. Highly relevant for digital industry professionals." data-id="smas"></div>
+    </div>
+
+    <div class="test-card" data-cat="distress" data-search="spin social phobia inventory anxiety" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot distress"></span></div>
+      <h3>SPIN</h3><div class="test-abbr">Social Phobia Inventory</div>
+      <p class="test-desc">Screens for social anxiety disorder across fear, avoidance, and physiological discomfort. Particularly relevant for performers and those in high-visibility roles.</p>
+      <div class="card-meta"><span>&#128221; 17 questions</span><span>&#9203; 7 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="SPIN" data-fullname="Social Phobia Inventory" data-badge="quick" data-cat="distress" data-q="17" data-dur="7 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Screens for social anxiety disorder across fear, avoidance, and physiological discomfort in social situations. Particularly relevant for performers and those who work in high-visibility, high-exposure roles." data-id="spin"></div>
+    </div>
+
+    <div class="test-card" data-cat="development" data-search="swls satisfaction with life scale wellbeing" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot development"></span></div>
+      <h3>SWLS</h3><div class="test-abbr">Satisfaction With Life Scale</div>
+      <p class="test-desc">A brief 5-item scale measuring global cognitive judgments of life satisfaction. A core subjective well-being indicator widely used in positive psychology research.</p>
+      <div class="card-meta"><span>&#128221; 5 questions</span><span>&#9203; 2 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="SWLS" data-fullname="Satisfaction With Life Scale" data-badge="quick" data-cat="development" data-q="5" data-dur="2 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="A brief 5-item scale measuring global cognitive judgments of life satisfaction. One of the most widely used subjective well-being indicators in psychology and public health research worldwide." data-id="swls"></div>
+    </div>
+
+    <div class="test-card" data-cat="development" data-search="wami work meaning inventory purpose" onclick="openModal(this)">
+      <div class="card-top"><span class="badge quick">Quick screening</span><span class="cat-dot development"></span></div>
+      <h3>WAMI</h3><div class="test-abbr">Work as Meaning Inventory</div>
+      <p class="test-desc">Measures how much individuals experience their work as meaningful, purposeful, and contributing to something greater than themselves.</p>
+      <div class="card-meta"><span>&#128221; 10 questions</span><span>&#9203; 4 min</span></div>
+      <div class="card-price" data-usd="15">$15</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="WAMI" data-fullname="Work as Meaning Inventory" data-badge="quick" data-cat="development" data-q="10" data-dur="4 min" data-usd="15" data-tier="quick" data-consult-included="false" data-sensitive="false" data-desc="Measures how much individuals experience their work as meaningful, purposeful, and contributing to something greater than themselves. Useful for understanding motivation and engagement levels." data-id="wami"></div>
+    </div>
+
+    <div class="test-card" data-cat="professional" data-search="wvq workplace violence harassment questionnaire" onclick="openModal(this)">
+      <div class="card-top"><span class="badge reviewed">Reviewed</span><span class="cat-dot professional"></span></div>
+      <h3>WVQ</h3><div class="test-abbr">Workplace Violence and Harassment Questionnaire</div>
+      <p class="test-desc">Assesses exposure to verbal, psychological, and physical violence in the workplace from supervisors, colleagues, or clients. Handled with strict confidentiality.</p>
+      <div class="card-meta"><span>&#128221; 24 questions</span><span>&#9203; 10 min</span></div>
+      <div class="card-price" data-usd="25">$25</div>
+      <div class="card-consult">+ Consultation required</div>
+      <div class="arrow-hint">&#8594;</div>
+      <div style="display:none" class="modal-data" data-title="WVQ" data-fullname="Workplace Violence and Harassment Questionnaire" data-badge="reviewed" data-cat="professional" data-q="24" data-dur="10 min" data-usd="25" data-tier="standard" data-consult-included="false" data-sensitive="false" data-desc="Assesses exposure to verbal, psychological, and physical violence in the workplace from supervisors, colleagues, or clients. Results are handled with strict confidentiality and reviewed by our clinical team." data-id="wvq"></div>
+    </div>
+
+    <div class="no-results" id="noResults">
+      <div style="font-size:40px;margin-bottom:12px">&#128269;</div>
+      <p>No assessments found. Try a different search term or filter.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">&#215;</button>
+    <div class="modal-badges" id="modalBadges"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-fullname" id="modalFullname"></div>
+    <div class="modal-price-block">
+      <div>
+        <div class="modal-price-label">Assessment price</div>
+        <div class="modal-price-sub" id="modalPriceSub"></div>
+      </div>
+      <div class="modal-price-val" id="modalPriceVal"></div>
+    </div>
+    <div class="modal-banner red" id="modalSensitiveBanner" style="display:none;">
+      This assessment is administered exclusively by a Creaven psychologist during a consultation session. You cannot take it independently. A consultation is included in the price.
+    </div>
+    <div class="modal-banner gold" id="modalConsultBanner" style="display:none;"></div>
+    <p class="modal-desc" id="modalDesc"></p>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div id="modalActions"></div>
+  </div>
+</div>
+
+<footer>
+  <span>Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.</span>
+  <span>"The industry sees the art. Creaven sees the person behind it."</span>
+</footer>
+
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain:"creaven-01.firebaseapp.com",
+  projectId:"creaven-01",
+  storageBucket:"creaven-01.firebasestorage.app",
+  messagingSenderId:"247953277751",
+  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+});
+var auth = firebase.auth();
+var currentUser = null;
+auth.onAuthStateChanged(function(u){ currentUser = u; });
+
+// CURRENCY
+var RATES = {
+  USD:{rate:1,symbol:'$',dec:2},XOF:{rate:620,symbol:'CFA ',dec:0},
+  EUR:{rate:0.93,symbol:'€',dec:2},SGD:{rate:1.35,symbol:'S$',dec:2},
+  KRW:{rate:1370,symbol:'₩',dec:0},JPY:{rate:154,symbol:'¥',dec:0},
+  CNY:{rate:7.24,symbol:'¥',dec:2},GBP:{rate:0.79,symbol:'£',dec:2},
+  CAD:{rate:1.37,symbol:'CA$',dec:2},AUD:{rate:1.53,symbol:'A$',dec:2},
+  CHF:{rate:0.90,symbol:'CHF ',dec:2},INR:{rate:83,symbol:'₹',dec:0},
+  NGN:{rate:1600,symbol:'₦',dec:0},GHS:{rate:14,symbol:'₵',dec:2},
+  THB:{rate:36,symbol:'฿',dec:0},MYR:{rate:4.7,symbol:'RM',dec:2},
+  PHP:{rate:57,symbol:'₱',dec:2},HKD:{rate:7.8,symbol:'HK$',dec:2},
+  AED:{rate:3.67,symbol:'AED ',dec:2},SAR:{rate:3.75,symbol:'SAR ',dec:2}
+};
+var selectedCurrency = 'USD';
+
+function fmt(usd, cur) {
+  var c = RATES[cur] || RATES.USD;
+  var v = usd * c.rate;
+  return c.symbol + v.toLocaleString('en-US',{minimumFractionDigits:c.dec,maximumFractionDigits:c.dec});
+}
+
+function setCurrency(cur) {
+  selectedCurrency = cur;
+  // Update all price tags on cards
+  document.querySelectorAll('.card-price').forEach(function(el) {
+    var usd = parseFloat(el.getAttribute('data-usd'));
+    el.textContent = fmt(usd, cur);
+  });
+  // Update modal if open
+  var usdEl = document.getElementById('modalPriceVal');
+  if (usdEl && usdEl.getAttribute('data-usd')) {
+    usdEl.textContent = fmt(parseFloat(usdEl.getAttribute('data-usd')), cur);
+  }
+}
+
+// FILTERS
+var currentCat = 'all';
+
+function setFilter(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.filter-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  var query = document.getElementById('searchInput').value.toLowerCase();
+  var cards = document.querySelectorAll('.test-card[data-cat]');
+  var count = 0;
+  cards.forEach(function(card) {
+    var cat = card.getAttribute('data-cat');
+    var search = (card.getAttribute('data-search') || '') + ' ' + card.innerText.toLowerCase();
+    var matchCat = currentCat === 'all' || cat === currentCat;
+    var matchSearch = !query || search.toLowerCase().includes(query);
+    if (matchCat && matchSearch) {
+      card.classList.remove('hidden');
+      count++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  var total = cards.length;
+  document.getElementById('resultsCount').textContent = count === total
+    ? 'Showing all ' + total + ' assessments'
+    : 'Showing ' + count + ' of ' + total + ' assessments';
+  var noRes = document.getElementById('noResults');
+  if (noRes) noRes.classList.toggle('show', count === 0);
+}
+
+// MODAL
+function openModal(card) {
+  var d = card.querySelector('.modal-data');
+  if (!d) return;
+  var usd = parseFloat(d.getAttribute('data-usd'));
+  var consultIncluded = d.getAttribute('data-consult-included') === 'true';
+  var sensitive = d.getAttribute('data-sensitive') === 'true';
+  var tier = d.getAttribute('data-tier');
+  var badge = d.getAttribute('data-badge');
+  var badgeLabels = {quick:'Quick screening',standard:'Standard assessment',reviewed:'Reviewed by psychologist',comprehensive:'Consultation included',sensitive:'Practitioner only'};
+
+  // Badges
+  var badgeHtml = '<span class="badge ' + badge + '">' + (badgeLabels[badge]||badge) + '</span>';
+  if (consultIncluded) badgeHtml += ' <span class="badge comprehensive">Consultation included</span>';
+  document.getElementById('modalBadges').innerHTML = badgeHtml;
+  document.getElementById('modalTitle').textContent = d.getAttribute('data-title');
+  document.getElementById('modalFullname').textContent = d.getAttribute('data-fullname');
+  var priceEl = document.getElementById('modalPriceVal');
+  priceEl.textContent = fmt(usd, selectedCurrency);
+  priceEl.setAttribute('data-usd', usd);
+  document.getElementById('modalPriceSub').textContent = d.getAttribute('data-q') + ' questions - ' + d.getAttribute('data-dur');
+  document.getElementById('modalDesc').textContent = d.getAttribute('data-desc');
+  document.getElementById('modalMeta').innerHTML = '<span>&#128221; ' + d.getAttribute('data-q') + ' questions</span><span>&#9203; ' + d.getAttribute('data-dur') + '</span>';
+
+  // Banners
+  var sensitiveEl = document.getElementById('modalSensitiveBanner');
+  sensitiveEl.style.display = sensitive ? 'block' : 'none';
+  var consultEl = document.getElementById('modalConsultBanner');
+  if (consultIncluded && !sensitive) {
+    consultEl.textContent = 'A consultation with a Creaven psychologist is included in this price. Your results will be interpreted together with your psychologist.';
+    consultEl.style.display = 'block';
+  } else if (!consultIncluded && !sensitive) {
+    consultEl.textContent = 'A paid consultation with a psychologist is required to access and interpret your results. You will book your consultation as part of the checkout process.';
+    consultEl.style.display = 'block';
+  } else {
+    consultEl.style.display = 'none';
+  }
+
+  // Actions
+  var actionsEl = document.getElementById('modalActions');
+  if (currentUser) {
+    if (sensitive) {
+      actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'booking.html\'">Book consultation with psychologist</button>';
+    } else {
+      actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'booking.html\'">Book consultation + take assessment</button>';
+    }
+  } else {
+    actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'account.html?tab=signup\'">Create free account to proceed</button>'
+      + '<div class="modal-or">Already have an account?</div>'
+      + '<button class="btn-modal-secondary" onclick="window.location.href=\'account.html\'">Sign in</button>';
+  }
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+
+// LANG
+function toggleLangMenu() { document.getElementById('langDropdown').classList.toggle('open'); }
+function selectLang(lang, label) {
+  document.getElementById('langToggle').textContent = label;
+  document.getElementById('langDropdown').classList.remove('open');
+  document.documentElement.lang = {kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es'}[lang]||'en';
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open');
+});
+</script>
+</body>
+</html>
