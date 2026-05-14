@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSS — Perceived Stress Scale | Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-dark:#2A4A2A;--green:#3A6B3A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
+  --cream:#FAFCFA;--cream-dark:#F0F5F0;
+  --charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  --orange:#D46A1A;--orange-light:#FEF0E8;
+  --yellow:#C8A030;--yellow-light:#FEF8E8;
+  --red:#C0392B;--red-light:#FDEAEA;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-back{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-back:hover{color:var(--green);}
+.nav-back svg{width:16px;height:16px;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:160px;z-index:200;max-height:320px;overflow-y:auto;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:10px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover,.lang-dropdown button.active-lang{background:var(--green-light);color:var(--green-dark);}
+
+.view{display:none;}.view.active{display:block;}
+
+.gate-wrap,.locked-wrap{max-width:560px;margin:0 auto;padding:80px 24px;text-align:center;}
+.gate-icon,.locked-icon{font-size:48px;margin-bottom:20px;}
+.gate-wrap h2,.locked-wrap h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:12px;}
+.gate-wrap p,.locked-wrap p{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:24px;}
+.btn-gate,.btn-book{background:var(--green);color:white;padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:inline-block;text-decoration:none;}
+.btn-gate:hover,.btn-book:hover{background:var(--green-dark);transform:translateY(-2px);}
+
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px;}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--orange-light);color:var(--orange);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px;}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px;}
+.intro-wrap h1 em{font-style:italic;color:var(--green);}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px;}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(42,74,42,.08);text-align:center;}
+.ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--green);line-height:1;margin-bottom:4px;}
+.ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px;}
+.info-box p{font-size:13px;line-height:1.7;}
+.info-box.orange{background:var(--orange-light);color:var(--orange);}
+.info-box.green{background:var(--green-light);color:var(--green-dark);}
+.scale-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.scale-chip{background:white;border-radius:20px;padding:5px 14px;font-size:11px;color:var(--green-dark);border:1px solid rgba(42,74,42,.2);white-space:nowrap;}
+.access-banner{background:var(--green-pale);border:1px solid var(--green-light);border-radius:14px;padding:14px 20px;margin-bottom:28px;font-size:12px;color:var(--green-dark);line-height:1.6;}
+.btn-start{background:var(--green);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.btn-start:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(42,74,42,.25);}
+
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px;}
+.progress-bar-wrap{margin-bottom:40px;}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--green);font-weight:600;}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--orange),var(--green));border-radius:2px;transition:width .5s ease;}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(42,74,42,.08);margin-bottom:32px;animation:fadeSlide .4s ease;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px;}
+.reversed-tag{display:inline-block;background:var(--orange-light);color:var(--orange);font-size:10px;padding:2px 8px;border-radius:10px;margin-bottom:16px;font-family:'DM Sans',sans-serif;}
+.scale-options{display:flex;flex-direction:column;gap:10px;}
+.scale-option{display:flex;align-items:center;gap:16px;padding:14px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--cream);}
+.scale-option:hover,.scale-option.selected{border-color:var(--green);background:var(--green-light);}
+.scale-option input{display:none;}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.scale-option.selected .opt-dot{background:var(--green);border-color:var(--green);}
+.scale-option.selected .opt-dot::after{content:'';width:8px;height:8px;background:white;border-radius:50%;}
+.opt-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green);width:24px;text-align:center;}
+.opt-label{font-size:13px;color:var(--mid);flex:1;}
+.nav-btns{display:flex;justify-content:space-between;align-items:center;}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-prev:hover{border-color:var(--green);color:var(--green);}
+.btn-next{background:var(--green);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-next:hover{background:var(--green-dark);}
+.btn-next:disabled{background:var(--light);cursor:not-allowed;}
+
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px;}
+.results-header{text-align:center;margin-bottom:48px;}
+.results-icon{font-size:56px;margin-bottom:16px;}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px;}
+.results-header h2 em{font-style:italic;color:var(--green);}
+.results-header p{font-size:14px;color:var(--mid);}
+.total-score-card{background:white;border-radius:24px;padding:40px;text-align:center;margin-bottom:28px;border:1px solid rgba(42,74,42,.08);}
+.ts-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px;}
+.ts-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;line-height:1;margin-bottom:8px;}
+.ts-max{font-size:14px;color:var(--light);margin-bottom:20px;}
+.ts-badge{display:inline-block;padding:6px 20px;border-radius:30px;font-size:14px;font-weight:500;}
+.severity-bar-wrap{margin-top:24px;}
+.severity-bar{height:8px;background:linear-gradient(to right,#27AE60,#D4AC0D,#E07B39,#C0392B);border-radius:4px;position:relative;}
+.severity-marker{position:absolute;top:-6px;transform:translateX(-50%);width:20px;height:20px;background:white;border:3px solid var(--charcoal);border-radius:50%;transition:left 1s ease .3s;}
+.severity-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--light);}
+.forwarded-box{background:var(--green-light);border-radius:16px;padding:20px 24px;margin-bottom:28px;border:1px solid rgba(42,74,42,.15);}
+.forwarded-box p{font-size:13px;color:var(--green-dark);line-height:1.7;}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(42,74,42,.08);}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px;}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8;}
+.range-table{width:100%;border-collapse:collapse;margin-top:20px;}
+.range-table th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(0,0,0,.06);}
+.range-table td{padding:10px 12px;font-size:13px;color:var(--mid);border-bottom:1px solid rgba(0,0,0,.04);}
+.range-table tr.current-row td{font-weight:500;color:var(--charcoal);}
+.range-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;}
+.cta-results{background:linear-gradient(135deg,var(--green-dark),var(--orange));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px;}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px;}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7;}
+.btn-consult{background:white;color:var(--green-dark);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2);}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7;}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s;}
+.btn-retake:hover{border-color:var(--green);color:var(--green);}
+
+@media(max-width:768px){
+  nav{padding:12px 20px;}
+  .intro-wrap,.test-wrap,.results-wrap,.gate-wrap,.locked-wrap{padding-left:20px;padding-right:20px;}
+  .question-text{font-size:20px;}
+  .question-card{padding:24px;}
+}
+</style>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain:"creaven-01.firebaseapp.com",
+  projectId:"creaven-01",
+  storageBucket:"creaven-01.firebasestorage.app",
+  messagingSenderId:"247953277751",
+  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+});
+var auth=firebase.auth();
+var db=firebase.firestore();
+var currentUser=null;
+var TEST_ID='pss';
+
+auth.onAuthStateChanged(function(user){
+  if(!user){showView('view-gate');}
+  else{currentUser=user;checkAccess();}
+});
+
+function checkAccess(){
+  db.collection('bookings')
+    .where('clientEmail','==',currentUser.email)
+    .where('testId','==',TEST_ID)
+    .where('paymentStatus','==','paid')
+    .get()
+    .then(function(snap){
+      if(snap.empty){showView('view-locked');return;}
+      var now=new Date(), valid=null;
+      snap.forEach(function(doc){
+        var d=doc.data();
+        if(d.date&&d.time){
+          var consult=new Date(d.date+'T'+d.time);
+          var expires=new Date(consult.getTime()-15*60*1000);
+          if(now<expires) valid=expires;
+        }
+      });
+      if(valid){
+        var expStr=valid.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+
+                   ' — '+valid.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+        document.getElementById('accessExpiry').textContent=expStr;
+        showView('view-intro');
+        applyTranslations();
+      } else {
+        showView('view-locked');
+      }
+    })
+    .catch(function(){showView('view-locked');});
+}
+</script>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div><span class="main-name">Creaven</span><div class="sub-name">Psychological Well-being</div></div>
+  </a>
+  <div class="nav-right">
+    <a href="tests.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <span id="nav-back-label">Back to Assessments</span>
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')" class="active-lang">English</button>
+        <button onclick="selectLang('fr','FR')">Français</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Español</button>
+        <button onclick="selectLang('pt','PT')">Português</button>
+        <button onclick="selectLang('it','IT')">Italiano</button>
+        <button onclick="selectLang('nl','NL')">Nederlands</button>
+        <button onclick="selectLang('sv','SV')">Svenska</button>
+        <button onclick="selectLang('pl','PL')">Polski</button>
+        <button onclick="selectLang('ru','RU')">Русский</button>
+        <button onclick="selectLang('tr','TR')">Türkçe</button>
+        <button onclick="selectLang('ar','AR')">العربية</button>
+        <button onclick="selectLang('hi','HI')">हिन्दी</button>
+        <button onclick="selectLang('vi','VI')">Tiếng Việt</button>
+        <button onclick="selectLang('th','TH')">ภาษาไทย</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="view" id="view-gate">
+  <div class="gate-wrap">
+    <div class="gate-icon">🔒</div>
+    <h2 id="gate-title">Sign in to access this assessment</h2>
+    <p id="gate-desc">A Creaven account is required to take assessments.</p>
+    <a href="account.html?redirect=test-pss.html" class="btn-gate" id="gate-btn">Sign in or create account</a>
+  </div>
+</div>
+
+<div class="view" id="view-locked">
+  <div class="locked-wrap">
+    <div class="locked-icon">🗝️</div>
+    <h2 id="locked-title">Assessment not yet unlocked</h2>
+    <p id="locked-desc">Book a consultation and pay for this test. Access is available until 15 minutes before your consultation.</p>
+    <button class="btn-book" onclick="window.location.href='booking.html?test=pss'" id="locked-btn">Book consultation + assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Stress Screening</div>
+    <h1>Perceived<br><em>Stress Scale</em></h1>
+    <div class="abbr">PSS-10 — Sheldon Cohen, Tom Kamarck & Robin Mermelstein, 1983</div>
+    <p class="intro-desc" id="i-desc">The PSS is the most widely used psychological instrument for measuring the perception of stress. It measures the degree to which situations in one's life are appraised as stressful. In the creative industry, chronic stress often accumulates silently — masked by deadlines, performance pressure, and always-on culture.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">10</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">5</div><div class="ic-label" id="i-ml">Minutes</div></div>
+      <div class="info-card"><div class="ic-val">$15</div><div class="ic-label" id="i-pl">Quick Screen</div></div>
+    </div>
+    <div class="access-banner">
+      <strong id="access-label">✓ Assessment unlocked.</strong> <span id="access-expiry-text">Access available until</span> <strong id="accessExpiry"></strong>
+    </div>
+    <div class="info-box orange">
+      <p id="i-note"><strong>Confidential:</strong> Your responses are private and protected. Results will be shared only with your Creaven psychologist, who will review them before your consultation.</p>
+    </div>
+    <div class="info-box green">
+      <p id="i-instructions"><strong>Instructions:</strong> In the last month, how often have you been upset because of something that happened unexpectedly?</p>
+      <div class="scale-preview" id="i-scale-preview">
+        <span class="scale-chip">0 — Never</span>
+        <span class="scale-chip">1 — Almost never</span>
+        <span class="scale-chip">2 — Sometimes</span>
+        <span class="scale-chip">3 — Fairly often</span>
+        <span class="scale-chip">4 — Very often</span>
+      </div>
+    </div>
+    <br>
+    <button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span class="prog-label" id="t-prog-label">Progress</span>
+        <span class="prog-count" id="progCount">1 / 10</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:10%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="reversed-tag" id="reversedTag" style="display:none;"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-icon">🌪️</div>
+      <h2>Your <em>PSS Results</em></h2>
+      <p id="r-subtitle">Based on your responses about the past month</p>
+    </div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="forwarded-box" id="forwardedBox"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results">
+      <h3 id="r-cta-h">Ready to talk about this?</h3>
+      <p id="r-cta-p">Your psychologist has received your results and will review them before your consultation.</p>
+      <button class="btn-consult" id="r-cta-btn" onclick="window.location.href='booking.html'">View my consultation</button>
+    </div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important:</strong> The PSS is a validated screening tool, not a diagnosis. Only a qualified mental health professional can interpret these results in the full context of your personal history.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+// Reversed items (0-indexed): questions 3, 4, 6, 7 (PSS items 4, 5, 7, 8)
+var REVERSED = [3, 4, 6, 7];
+
+var T = {
+  en:{back:"Back to Assessments",eyebrow:"Stress Screening",desc:"The PSS is the most widely used instrument for measuring the perception of stress. It measures how unpredictable, uncontrollable, and overwhelming respondents find their life situations. In the creative industry, chronic stress accumulates silently beneath deadlines and performance pressure.",ql:"Questions",ml:"Minutes",pl:"Quick Screen",note:"<strong>Confidential:</strong> Your responses are private and protected. Results will be shared only with your Creaven psychologist.",instructions:"<strong>Instructions:</strong> In the last month, how often have you felt or thought the following?",scale_chips:"0 — Never|1 — Almost never|2 — Sometimes|3 — Fairly often|4 — Very often",access_label:"✓ Assessment unlocked.",access_expiry:"Access available until",reversed_tag:"✦ Positive item",btn_start:"Begin Assessment",prog_label:"Progress",q_of:"of",btn_prev:"Previous",btn_next:"Next",btn_results:"See Results",r_subtitle:"Based on your responses about the past month",r_forwarded:"✓ Your results have been securely transmitted to your Creaven psychologist for review before your consultation.",r_cta_h:"Ready to talk about this?",r_cta_p:"Your psychologist has received your results and will review them before your consultation.",r_cta_btn:"View my consultation",r_disclaimer:"<strong>Important:</strong> The PSS is a validated screening tool, not a diagnosis. Only a qualified mental health professional can interpret these results.",r_retake:"Retake Assessment",out_of:"out of 40",score_label:"Total Score",gate_title:"Sign in to access this assessment",gate_desc:"A Creaven account is required to take assessments.",gate_btn:"Sign in or create account",locked_title:"Assessment not yet unlocked",locked_desc:"Book a consultation and pay for this test. Access is available until 15 minutes before your consultation.",locked_btn:"Book consultation + assessment",
+    opts:["Never","Almost never","Sometimes","Fairly often","Very often"],
+    ranges:[
+      {min:0,max:13,label:"Low Stress",color:"#27AE60",bg:"#E9F7EF",action:"Monitor",interp:"Your score suggests low perceived stress. Your psychologist will explore what's working well in your coping strategies and how to maintain this balance in your creative work."},
+      {min:14,max:26,label:"Moderate Stress",color:"#E07B39",bg:"#FDF0E8",action:"Stress management",interp:"Your score indicates moderate perceived stress — the most common range. At this level, stress is beginning to affect daily functioning, creativity, and well-being. A consultation can help identify key stressors and build effective coping strategies."},
+      {min:27,max:40,label:"High Stress",color:"#C0392B",bg:"#FDEAEA",action:"Active support",interp:"Your score suggests high perceived stress. Chronic high stress has significant physical and psychological consequences. Your psychologist will work with you to understand the sources of this stress and develop a targeted support plan."}
+    ],
+    questions:[
+      {text:"Been upset because of something that happened unexpectedly?",reversed:false},
+      {text:"Felt that you were unable to control the important things in your life?",reversed:false},
+      {text:"Felt nervous and stressed?",reversed:false},
+      {text:"Felt confident about your ability to handle your personal problems?",reversed:true},
+      {text:"Felt that things were going your way?",reversed:true},
+      {text:"Found that you could not cope with all the things that you had to do?",reversed:false},
+      {text:"Been able to control irritations in your life?",reversed:true},
+      {text:"Felt that you were on top of things?",reversed:true},
+      {text:"Been angered because of things that happened that were outside of your control?",reversed:false},
+      {text:"Felt difficulties were piling up so high that you could not overcome them?",reversed:false}
+    ]
+  },
+  fr:{back:"Retour aux évaluations",eyebrow:"Dépistage Stress",desc:"Le PSS est l'instrument le plus utilisé pour mesurer la perception du stress. Il évalue dans quelle mesure les situations de la vie sont perçues comme imprévisibles, incontrôlables et accablantes.",ql:"Questions",ml:"Minutes",pl:"Dépistage rapide",note:"<strong>Confidentiel :</strong> Vos réponses sont privées et protégées.",instructions:"<strong>Instructions :</strong> Au cours du dernier mois, à quelle fréquence avez-vous ressenti ou pensé ce qui suit ?",scale_chips:"0 — Jamais|1 — Presque jamais|2 — Parfois|3 — Assez souvent|4 — Très souvent",access_label:"✓ Évaluation déverrouillée.",access_expiry:"Accès disponible jusqu'au",reversed_tag:"✦ Élément positif",btn_start:"Commencer l'évaluation",prog_label:"Progression",q_of:"sur",btn_prev:"Précédent",btn_next:"Suivant",btn_results:"Voir les résultats",r_subtitle:"Basé sur vos réponses du mois dernier",r_forwarded:"✓ Vos résultats ont été transmis en toute sécurité à votre psychologue Creaven.",r_cta_h:"Prêt(e) à en parler ?",r_cta_p:"Votre psychologue a reçu vos résultats et les examinera avant votre consultation.",r_cta_btn:"Voir ma consultation",r_disclaimer:"<strong>Important :</strong> Le PSS est un outil de dépistage validé, pas un diagnostic.",r_retake:"Refaire l'évaluation",out_of:"sur 40",score_label:"Score total",gate_title:"Connectez-vous pour accéder",gate_desc:"Un compte Creaven est requis.",gate_btn:"Se connecter ou créer un compte",locked_title:"Évaluation non déverrouillée",locked_desc:"Réservez une consultation et payez ce test. L'accès est disponible jusqu'à 15 minutes avant votre consultation.",locked_btn:"Réserver consultation + évaluation",
+    opts:["Jamais","Presque jamais","Parfois","Assez souvent","Très souvent"],
+    ranges:[
+      {min:0,max:13,label:"Stress faible",color:"#27AE60",bg:"#E9F7EF",action:"Surveillance",interp:"Votre score suggère un stress perçu faible. Votre psychologue explorera vos stratégies d'adaptation efficaces."},
+      {min:14,max:26,label:"Stress modéré",color:"#E07B39",bg:"#FDF0E8",action:"Gestion du stress",interp:"Votre score indique un stress modéré — la plage la plus courante. À ce niveau, le stress commence à affecter le fonctionnement quotidien et la créativité. Une consultation peut aider à identifier les facteurs de stress clés."},
+      {min:27,max:40,label:"Stress élevé",color:"#C0392B",bg:"#FDEAEA",action:"Soutien actif",interp:"Votre score suggère un stress élevé. Le stress chronique a des conséquences physiques et psychologiques significatives. Votre psychologue travaillera avec vous sur un plan de soutien ciblé."}
+    ],
+    questions:[
+      {text:"Été contrarié(e) à cause de quelque chose d'inattendu ?",reversed:false},
+      {text:"Eu l'impression d'être incapable de contrôler les choses importantes de votre vie ?",reversed:false},
+      {text:"Ressenti de la nervosité ou du stress ?",reversed:false},
+      {text:"Eu confiance en votre capacité à gérer vos problèmes personnels ?",reversed:true},
+      {text:"Eu l'impression que les choses allaient dans votre sens ?",reversed:true},
+      {text:"Constaté que vous n'arriviez pas à faire face à tout ce que vous aviez à faire ?",reversed:false},
+      {text:"Réussi à contrôler les irritations dans votre vie ?",reversed:true},
+      {text:"Eu l'impression de maîtriser les choses ?",reversed:true},
+      {text:"Été en colère à cause de choses hors de votre contrôle ?",reversed:false},
+      {text:"Eu l'impression que les difficultés s'accumulaient au point de ne plus pouvoir les surmonter ?",reversed:false}
+    ]
+  },
+  de:{back:"Zurück",eyebrow:"Stress-Screening",desc:"Der PSS ist das am häufigsten verwendete Instrument zur Messung der Stresswahrnehmung.",ql:"Fragen",ml:"Minuten",pl:"Schnell-Screening",note:"<strong>Vertraulich:</strong> Ihre Antworten sind privat und geschützt.",instructions:"<strong>Anleitung:</strong> Wie oft haben Sie im letzten Monat Folgendes gefühlt oder gedacht?",scale_chips:"0 — Nie|1 — Fast nie|2 — Manchmal|3 — Ziemlich oft|4 — Sehr oft",access_label:"✓ Bewertung freigeschaltet.",access_expiry:"Zugang bis",reversed_tag:"✦ Positives Item",btn_start:"Bewertung beginnen",prog_label:"Fortschritt",q_of:"von",btn_prev:"Zurück",btn_next:"Weiter",btn_results:"Ergebnisse",r_subtitle:"Basierend auf Ihren Antworten des letzten Monats",r_forwarded:"✓ Ihre Ergebnisse wurden sicher übermittelt.",r_cta_h:"Möchten Sie darüber sprechen?",r_cta_p:"Ihr Psychologe hat Ihre Ergebnisse erhalten.",r_cta_btn:"Konsultation anzeigen",r_disclaimer:"<strong>Wichtig:</strong> Der PSS ist ein Screening-Instrument, keine Diagnose.",r_retake:"Erneut bewerten",out_of:"von 40",score_label:"Gesamtpunktzahl",gate_title:"Anmelden um fortzufahren",gate_desc:"Ein Creaven-Konto ist erforderlich.",gate_btn:"Anmelden oder registrieren",locked_title:"Noch nicht freigeschaltet",locked_desc:"Buchen Sie eine Konsultation und bezahlen Sie diesen Test. Zugang bis 15 Min. vor der Konsultation.",locked_btn:"Konsultation + Test buchen",
+    opts:["Nie","Fast nie","Manchmal","Ziemlich oft","Sehr oft"],
+    ranges:[
+      {min:0,max:13,label:"Geringer Stress",color:"#27AE60",bg:"#E9F7EF",action:"Beobachten",interp:"Ihr Ergebnis deutet auf geringen wahrgenommenen Stress hin."},
+      {min:14,max:26,label:"Mäßiger Stress",color:"#E07B39",bg:"#FDF0E8",action:"Stressmanagement",interp:"Ihr Ergebnis zeigt mäßigen Stress. Eine Konsultation kann helfen, Stressquellen zu identifizieren."},
+      {min:27,max:40,label:"Hoher Stress",color:"#C0392B",bg:"#FDEAEA",action:"Aktive Unterstützung",interp:"Ihr Ergebnis deutet auf hohen chronischen Stress hin. Professionelle Unterstützung ist empfohlen."}
+    ],
+    questions:[
+      {text:"Durch etwas Unerwartetes verärgert gewesen?",reversed:false},
+      {text:"Das Gefühl gehabt, wichtige Dinge in Ihrem Leben nicht kontrollieren zu können?",reversed:false},
+      {text:"Nervös und gestresst gefühlt?",reversed:false},
+      {text:"Vertrauen gehabt, mit Ihren persönlichen Problemen umgehen zu können?",reversed:true},
+      {text:"Das Gefühl gehabt, dass die Dinge nach Ihren Vorstellungen laufen?",reversed:true},
+      {text:"Festgestellt, dass Sie nicht mit allem fertig werden konnten, was Sie erledigen mussten?",reversed:false},
+      {text:"In der Lage gewesen, Irritationen in Ihrem Leben zu kontrollieren?",reversed:true},
+      {text:"Das Gefühl gehabt, die Dinge im Griff zu haben?",reversed:true},
+      {text:"Sich über Dinge geärgert, die außerhalb Ihrer Kontrolle lagen?",reversed:false},
+      {text:"Das Gefühl gehabt, dass sich die Schwierigkeiten so sehr angehäuft haben, dass Sie sie nicht mehr überwinden können?",reversed:false}
+    ]
+  },
+  es:{back:"Volver",eyebrow:"Cribado de Estrés",desc:"El PSS es el instrumento más utilizado para medir la percepción del estrés.",ql:"Preguntas",ml:"Minutos",pl:"Cribado rápido",note:"<strong>Confidencial:</strong> Sus respuestas son privadas y protegidas.",instructions:"<strong>Instrucciones:</strong> En el último mes, ¿con qué frecuencia ha sentido o pensado lo siguiente?",scale_chips:"0 — Nunca|1 — Casi nunca|2 — A veces|3 — Con bastante frecuencia|4 — Muy a menudo",access_label:"✓ Evaluación desbloqueada.",access_expiry:"Acceso hasta",reversed_tag:"✦ Ítem positivo",btn_start:"Comenzar evaluación",prog_label:"Progreso",q_of:"de",btn_prev:"Anterior",btn_next:"Siguiente",btn_results:"Ver resultados",r_subtitle:"Basado en sus respuestas del último mes",r_forwarded:"✓ Sus resultados han sido transmitidos a su psicólogo de Creaven.",r_cta_h:"¿Desea hablar sobre esto?",r_cta_p:"Su psicólogo ha recibido sus resultados.",r_cta_btn:"Ver mi consulta",r_disclaimer:"<strong>Importante:</strong> El PSS es una herramienta de cribado, no un diagnóstico.",r_retake:"Repetir evaluación",out_of:"de 40",score_label:"Puntuación total",gate_title:"Inicie sesión para acceder",gate_desc:"Se requiere una cuenta de Creaven.",gate_btn:"Iniciar sesión o crear cuenta",locked_title:"Evaluación no desbloqueada",locked_desc:"Reserve una consulta y pague este test. Acceso hasta 15 minutos antes.",locked_btn:"Reservar consulta + evaluación",
+    opts:["Nunca","Casi nunca","A veces","Con bastante frecuencia","Muy a menudo"],
+    ranges:[
+      {min:0,max:13,label:"Estrés bajo",color:"#27AE60",bg:"#E9F7EF",action:"Monitoreo",interp:"Su puntuación sugiere estrés percibido bajo."},
+      {min:14,max:26,label:"Estrés moderado",color:"#E07B39",bg:"#FDF0E8",action:"Gestión del estrés",interp:"Su puntuación indica estrés moderado que puede afectar el funcionamiento diario."},
+      {min:27,max:40,label:"Estrés alto",color:"#C0392B",bg:"#FDEAEA",action:"Apoyo activo",interp:"Su puntuación sugiere estrés alto. Se recomienda apoyo profesional."}
+    ],
+    questions:[
+      {text:"¿Se ha molestado a causa de algo que ocurrió inesperadamente?",reversed:false},
+      {text:"¿Se ha sentido incapaz de controlar las cosas importantes de su vida?",reversed:false},
+      {text:"¿Se ha sentido nervioso o estresado?",reversed:false},
+      {text:"¿Ha tenido confianza en su capacidad para manejar sus problemas personales?",reversed:true},
+      {text:"¿Ha sentido que las cosas iban a su manera?",reversed:true},
+      {text:"¿Ha comprobado que no podía afrontar todas las cosas que tenía que hacer?",reversed:false},
+      {text:"¿Ha podido controlar las irritaciones en su vida?",reversed:true},
+      {text:"¿Ha sentido que tenía todo bajo control?",reversed:true},
+      {text:"¿Se ha sentido enfadado(a) por cosas que estaban fuera de su control?",reversed:false},
+      {text:"¿Ha sentido que las dificultades se acumulaban tanto que no podía superarlas?",reversed:false}
+    ]
+  },
+  pt:{back:"Voltar",eyebrow:"Rastreio de Stress",desc:"O PSS é o instrumento mais utilizado para medir a percepção do stress.",ql:"Questões",ml:"Minutos",pl:"Rastreio rápido",note:"<strong>Confidencial:</strong> As suas respostas são privadas e protegidas.",instructions:"<strong>Instruções:</strong> No último mês, com que frequência sentiu ou pensou o seguinte?",scale_chips:"0 — Nunca|1 — Quase nunca|2 — Às vezes|3 — Com alguma frequência|4 — Muito frequentemente",access_label:"✓ Avaliação desbloqueada.",access_expiry:"Acesso até",reversed_tag:"✦ Item positivo",btn_start:"Iniciar avaliação",prog_label:"Progresso",q_of:"de",btn_prev:"Anterior",btn_next:"Próximo",btn_results:"Ver resultados",r_subtitle:"Com base nas suas respostas do último mês",r_forwarded:"✓ Os seus resultados foram transmitidos ao seu psicólogo Creaven.",r_cta_h:"Gostaria de falar?",r_cta_p:"O seu psicólogo recebeu os seus resultados.",r_cta_btn:"Ver a minha consulta",r_disclaimer:"<strong>Importante:</strong> O PSS é um instrumento de rastreio, não um diagnóstico.",r_retake:"Refazer",out_of:"de 40",score_label:"Pontuação total",gate_title:"Inicie sessão para aceder",gate_desc:"É necessária uma conta Creaven.",gate_btn:"Iniciar sessão ou criar conta",locked_title:"Avaliação não desbloqueada",locked_desc:"Reserve uma consulta e pague este teste. Acesso até 15 minutos antes.",locked_btn:"Reservar consulta + avaliação",
+    opts:["Nunca","Quase nunca","Às vezes","Com alguma frequência","Muito frequentemente"],
+    ranges:[
+      {min:0,max:13,label:"Stress baixo",color:"#27AE60",bg:"#E9F7EF",action:"Monitorizar",interp:"A sua pontuação sugere stress percebido baixo."},
+      {min:14,max:26,label:"Stress moderado",color:"#E07B39",bg:"#FDF0E8",action:"Gestão do stress",interp:"A sua pontuação indica stress moderado a afectar o funcionamento diário."},
+      {min:27,max:40,label:"Stress elevado",color:"#C0392B",bg:"#FDEAEA",action:"Apoio activo",interp:"A sua pontuação sugere stress elevado. Recomenda-se apoio profissional."}
+    ],
+    questions:[
+      {text:"Ficou perturbado(a) por algo que aconteceu inesperadamente?",reversed:false},
+      {text:"Sentiu que era incapaz de controlar coisas importantes da sua vida?",reversed:false},
+      {text:"Sentiu-se nervoso(a) e stressado(a)?",reversed:false},
+      {text:"Sentiu confiança na sua capacidade de lidar com os seus problemas pessoais?",reversed:true},
+      {text:"Sentiu que as coisas corriam bem?",reversed:true},
+      {text:"Descobriu que não conseguia lidar com tudo o que tinha de fazer?",reversed:false},
+      {text:"Conseguiu controlar as irritações da sua vida?",reversed:true},
+      {text:"Sentiu que estava por cima das coisas?",reversed:true},
+      {text:"Sentiu-se irritado(a) por coisas fora do seu controlo?",reversed:false},
+      {text:"Sentiu que as dificuldades se acumulavam a um ponto em que não conseguia superá-las?",reversed:false}
+    ]
+  },
+  it:{back:"Torna",eyebrow:"Screening Stress",desc:"Il PSS è lo strumento più utilizzato per misurare la percezione dello stress.",ql:"Domande",ml:"Minuti",pl:"Screening rapido",note:"<strong>Riservato:</strong> Le sue risposte sono private e protette.",instructions:"<strong>Istruzioni:</strong> Nell'ultimo mese, con quale frequenza ha avuto i seguenti pensieri o sentimenti?",scale_chips:"0 — Mai|1 — Quasi mai|2 — A volte|3 — Abbastanza spesso|4 — Molto spesso",access_label:"✓ Valutazione sbloccata.",access_expiry:"Accesso fino al",reversed_tag:"✦ Item positivo",btn_start:"Inizia valutazione",prog_label:"Progresso",q_of:"di",btn_prev:"Precedente",btn_next:"Avanti",btn_results:"Vedi risultati",r_subtitle:"Sulla base delle sue risposte dell'ultimo mese",r_forwarded:"✓ I suoi risultati sono stati trasmessi al suo psicologo Creaven.",r_cta_h:"Vuole parlarne?",r_cta_p:"Il suo psicologo ha ricevuto i suoi risultati.",r_cta_btn:"Vedi la mia consulenza",r_disclaimer:"<strong>Importante:</strong> Il PSS è uno strumento di screening, non una diagnosi.",r_retake:"Ripeti",out_of:"su 40",score_label:"Punteggio totale",gate_title:"Acceda per continuare",gate_desc:"È necessario un account Creaven.",gate_btn:"Accedi o crea account",locked_title:"Non ancora sbloccata",locked_desc:"Prenoti una consulenza e paghi. Accesso fino a 15 minuti prima.",locked_btn:"Prenota consulenza + valutazione",
+    opts:["Mai","Quasi mai","A volte","Abbastanza spesso","Molto spesso"],
+    ranges:[
+      {min:0,max:13,label:"Stress basso",color:"#27AE60",bg:"#E9F7EF",action:"Monitoraggio",interp:"Il suo punteggio suggerisce stress percepito basso."},
+      {min:14,max:26,label:"Stress moderato",color:"#E07B39",bg:"#FDF0E8",action:"Gestione dello stress",interp:"Il suo punteggio indica stress moderato che può influenzare il funzionamento quotidiano."},
+      {min:27,max:40,label:"Stress elevato",color:"#C0392B",bg:"#FDEAEA",action:"Supporto attivo",interp:"Il suo punteggio suggerisce stress elevato. Si raccomanda supporto professionale."}
+    ],
+    questions:[
+      {text:"Si è sentito(a) turbato(a) a causa di qualcosa di inaspettato?",reversed:false},
+      {text:"Si è sentito(a) incapace di controllare le cose importanti della sua vita?",reversed:false},
+      {text:"Si è sentito(a) nervoso(a) e stressato(a)?",reversed:false},
+      {text:"Ha avuto fiducia nella sua capacità di gestire i suoi problemi personali?",reversed:true},
+      {text:"Ha sentito che le cose andavano per il verso giusto?",reversed:true},
+      {text:"Ha scoperto di non riuscire a far fronte a tutto ciò che doveva fare?",reversed:false},
+      {text:"È riuscito(a) a controllare le irritazioni nella sua vita?",reversed:true},
+      {text:"Ha sentito di avere tutto sotto controllo?",reversed:true},
+      {text:"Si è arrabbiato(a) per cose al di fuori del suo controllo?",reversed:false},
+      {text:"Ha sentito che le difficoltà si accumulavano così tanto da non poterle superare?",reversed:false}
+    ]
+  },
+  nl:{back:"Terug",eyebrow:"Stress Screening",desc:"De PSS is het meest gebruikte instrument voor het meten van stressbeleving.",ql:"Vragen",ml:"Minuten",pl:"Snelle screening",note:"<strong>Vertrouwelijk:</strong> Uw antwoorden zijn privé en beschermd.",instructions:"<strong>Instructies:</strong> Hoe vaak heeft u de afgelopen maand het volgende gevoeld of gedacht?",scale_chips:"0 — Nooit|1 — Bijna nooit|2 — Soms|3 — Vrij vaak|4 — Zeer vaak",access_label:"✓ Beoordeling ontgrendeld.",access_expiry:"Toegang tot",reversed_tag:"✦ Positief item",btn_start:"Begin beoordeling",prog_label:"Voortgang",q_of:"van",btn_prev:"Vorige",btn_next:"Volgende",btn_results:"Resultaten",r_subtitle:"Gebaseerd op uw antwoorden van de afgelopen maand",r_forwarded:"✓ Uw resultaten zijn veilig doorgezonden.",r_cta_h:"Wilt u hierover praten?",r_cta_p:"Uw psycholoog heeft uw resultaten ontvangen.",r_cta_btn:"Consultatie bekijken",r_disclaimer:"<strong>Belangrijk:</strong> De PSS is een screeningsinstrument, geen diagnose.",r_retake:"Opnieuw",out_of:"van 40",score_label:"Totaalscore",gate_title:"Meld u aan",gate_desc:"Een Creaven-account is vereist.",gate_btn:"Aanmelden of registreren",locked_title:"Nog niet ontgrendeld",locked_desc:"Boek een consultatie en betaal. Toegang tot 15 minuten voor de consultatie.",locked_btn:"Boeken",
+    opts:["Nooit","Bijna nooit","Soms","Vrij vaak","Zeer vaak"],
+    ranges:[
+      {min:0,max:13,label:"Weinig stress",color:"#27AE60",bg:"#E9F7EF",action:"Monitoren",interp:"Uw score suggereert weinig ervaren stress."},
+      {min:14,max:26,label:"Matige stress",color:"#E07B39",bg:"#FDF0E8",action:"Stressmanagement",interp:"Uw score wijst op matige stress die het dagelijks functioneren kan beïnvloeden."},
+      {min:27,max:40,label:"Hoge stress",color:"#C0392B",bg:"#FDEAEA",action:"Actieve steun",interp:"Uw score wijst op hoge chronische stress. Professionele ondersteuning wordt aanbevolen."}
+    ],
+    questions:[
+      {text:"Overstuur geraakt door iets wat onverwacht gebeurde?",reversed:false},
+      {text:"Het gevoel gehad dat u de belangrijke dingen in uw leven niet kon controleren?",reversed:false},
+      {text:"Zenuwachtig en gestrest gevoeld?",reversed:false},
+      {text:"Vertrouwen gehad in uw vermogen om met uw persoonlijke problemen om te gaan?",reversed:true},
+      {text:"Het gevoel gehad dat dingen uw kant op gingen?",reversed:true},
+      {text:"Gemerkt dat u niet met alles kon omgaan wat u moest doen?",reversed:false},
+      {text:"In staat geweest om irritaties in uw leven te beheersen?",reversed:true},
+      {text:"Het gevoel gehad dat u alles in de hand had?",reversed:true},
+      {text:"Boos geworden door dingen die buiten uw controle lagen?",reversed:false},
+      {text:"Het gevoel gehad dat moeilijkheden zich zo opstapelden dat u ze niet meer kon overwinnen?",reversed:false}
+    ]
+  },
+  sv:{back:"Tillbaka",eyebrow:"Stressscreening",desc:"PSS är det mest använda instrumentet för att mäta upplevd stress.",ql:"Frågor",ml:"Minuter",pl:"Snabb screening",note:"<strong>Konfidentiellt:</strong> Dina svar är privata och skyddade.",instructions:"<strong>Instruktioner:</strong> Under den senaste månaden, hur ofta har du känt eller tänkt följande?",scale_chips:"0 — Aldrig|1 — Nästan aldrig|2 — Ibland|3 — Ganska ofta|4 — Mycket ofta",access_label:"✓ Bedömning upplåst.",access_expiry:"Åtkomst till",reversed_tag:"✦ Positivt påstående",btn_start:"Börja",prog_label:"Framsteg",q_of:"av",btn_prev:"Föregående",btn_next:"Nästa",btn_results:"Se resultat",r_subtitle:"Baserat på dina svar om den senaste månaden",r_forwarded:"✓ Dina resultat har säkert överförts.",r_cta_h:"Vill du prata?",r_cta_p:"Din psykolog har tagit emot dina resultat.",r_cta_btn:"Visa konsultation",r_disclaimer:"<strong>Viktigt:</strong> PSS är ett screeningverktyg, inte en diagnos.",r_retake:"Gör om",out_of:"av 40",score_label:"Totalpoäng",gate_title:"Logga in",gate_desc:"Ett Creaven-konto krävs.",gate_btn:"Logga in eller skapa konto",locked_title:"Inte upplåst",locked_desc:"Boka och betala. Åtkomst till 15 minuter före.",locked_btn:"Boka",
+    opts:["Aldrig","Nästan aldrig","Ibland","Ganska ofta","Mycket ofta"],
+    ranges:[
+      {min:0,max:13,label:"Låg stress",color:"#27AE60",bg:"#E9F7EF",action:"Övervaka",interp:"Din poäng tyder på låg upplevd stress."},
+      {min:14,max:26,label:"Måttlig stress",color:"#E07B39",bg:"#FDF0E8",action:"Stresshantering",interp:"Din poäng indikerar måttlig stress som kan påverka det dagliga livet."},
+      {min:27,max:40,label:"Hög stress",color:"#C0392B",bg:"#FDEAEA",action:"Aktivt stöd",interp:"Din poäng tyder på hög kronisk stress. Professionellt stöd rekommenderas."}
+    ],
+    questions:[
+      {text:"Blivit upprörd av något som hände oväntat?",reversed:false},
+      {text:"Känt att du inte kunde kontrollera de viktiga sakerna i ditt liv?",reversed:false},
+      {text:"Känt dig nervös och stressad?",reversed:false},
+      {text:"Känt dig trygg i din förmåga att hantera dina personliga problem?",reversed:true},
+      {text:"Känt att saker gick din väg?",reversed:true},
+      {text:"Märkt att du inte klarade av allt du behövde göra?",reversed:false},
+      {text:"Kunnat kontrollera irritationer i ditt liv?",reversed:true},
+      {text:"Känt att du hade koll på saker?",reversed:true},
+      {text:"Blivit arg på grund av saker utanför din kontroll?",reversed:false},
+      {text:"Känt att svårigheter hög upp sig så mycket att du inte kunde övervinna dem?",reversed:false}
+    ]
+  },
+  pl:{back:"Powrót",eyebrow:"Badanie stresu",desc:"PSS jest najczęściej używanym instrumentem do pomiaru odczuwanego stresu.",ql:"Pytania",ml:"Minuty",pl:"Szybkie badanie",note:"<strong>Poufne:</strong> Twoje odpowiedzi są prywatne i chronione.",instructions:"<strong>Instrukcje:</strong> W ciągu ostatniego miesiąca, jak często czułeś(aś) lub myślałeś(aś) co następuje?",scale_chips:"0 — Nigdy|1 — Prawie nigdy|2 — Czasami|3 — Dość często|4 — Bardzo często",access_label:"✓ Ocena odblokowana.",access_expiry:"Dostęp do",reversed_tag:"✦ Pozytywne stwierdzenie",btn_start:"Rozpocznij",prog_label:"Postęp",q_of:"z",btn_prev:"Poprzedni",btn_next:"Następny",btn_results:"Wyniki",r_subtitle:"Na podstawie Twoich odpowiedzi z ostatniego miesiąca",r_forwarded:"✓ Twoje wyniki zostały przekazane.",r_cta_h:"Chcesz porozmawiać?",r_cta_p:"Twój psycholog otrzymał Twoje wyniki.",r_cta_btn:"Wyświetl konsultację",r_disclaimer:"<strong>Ważne:</strong> PSS to narzędzie przesiewowe, nie diagnoza.",r_retake:"Powtórz",out_of:"z 40",score_label:"Wynik",gate_title:"Zaloguj się",gate_desc:"Wymagane konto Creaven.",gate_btn:"Zaloguj lub utwórz konto",locked_title:"Nie odblokowano",locked_desc:"Zarezerwuj konsultację i opłać test. Dostęp do 15 minut przed.",locked_btn:"Zarezerwuj",
+    opts:["Nigdy","Prawie nigdy","Czasami","Dość często","Bardzo często"],
+    ranges:[
+      {min:0,max:13,label:"Niski stres",color:"#27AE60",bg:"#E9F7EF",action:"Monitorowanie",interp:"Twój wynik sugeruje niski odczuwany stres."},
+      {min:14,max:26,label:"Umiarkowany stres",color:"#E07B39",bg:"#FDF0E8",action:"Zarządzanie stresem",interp:"Twój wynik wskazuje na umiarkowany stres wpływający na codzienne funkcjonowanie."},
+      {min:27,max:40,label:"Wysoki stres",color:"#C0392B",bg:"#FDEAEA",action:"Aktywne wsparcie",interp:"Twój wynik sugeruje wysoki chroniczny stres. Zalecane wsparcie profesjonalne."}
+    ],
+    questions:[
+      {text:"Zdenerwowałeś(aś) się z powodu czegoś nieoczekiwanego?",reversed:false},
+      {text:"Czułeś(aś) się niezdolny(a) do kontrolowania ważnych rzeczy w swoim życiu?",reversed:false},
+      {text:"Czułeś(aś) się nerwowy(a) i zestresowany(a)?",reversed:false},
+      {text:"Miałeś(aś) zaufanie do swojej zdolności radzenia sobie z osobistymi problemami?",reversed:true},
+      {text:"Czułeś(aś), że sprawy idą po Twojej myśli?",reversed:true},
+      {text:"Odkryłeś(aś), że nie możesz poradzić sobie ze wszystkim, co musisz zrobić?",reversed:false},
+      {text:"Byłeś(aś) w stanie kontrolować irytacje w swoim życiu?",reversed:true},
+      {text:"Czułeś(aś), że masz wszystko pod kontrolą?",reversed:true},
+      {text:"Wpadłeś(aś) w złość z powodu rzeczy poza Twoją kontrolą?",reversed:false},
+      {text:"Czułeś(aś), że trudności spiętrzają się tak bardzo, że nie możesz ich przezwyciężyć?",reversed:false}
+    ]
+  },
+  ru:{back:"Назад",eyebrow:"Скрининг стресса",desc:"PSS — наиболее широко используемый инструмент для измерения воспринимаемого стресса.",ql:"Вопросы",ml:"Минуты",pl:"Скрининг",note:"<strong>Конфиденциально:</strong> Ваши ответы защищены.",instructions:"<strong>Инструкции:</strong> За последний месяц, как часто вы чувствовали или думали следующее?",scale_chips:"0 — Никогда|1 — Почти никогда|2 — Иногда|3 — Довольно часто|4 — Очень часто",access_label:"✓ Оценка разблокирована.",access_expiry:"Доступ до",reversed_tag:"✦ Позитивный пункт",btn_start:"Начать",prog_label:"Прогресс",q_of:"из",btn_prev:"Назад",btn_next:"Далее",btn_results:"Результаты",r_subtitle:"На основе ваших ответов за последний месяц",r_forwarded:"✓ Ваши результаты переданы психологу Creaven.",r_cta_h:"Хотите поговорить?",r_cta_p:"Ваш психолог получил результаты.",r_cta_btn:"Просмотреть консультацию",r_disclaimer:"<strong>Важно:</strong> PSS — инструмент скрининга, а не диагноз.",r_retake:"Повторить",out_of:"из 40",score_label:"Балл",gate_title:"Войдите для продолжения",gate_desc:"Требуется аккаунт Creaven.",gate_btn:"Войти или создать аккаунт",locked_title:"Не разблокировано",locked_desc:"Запишитесь на консультацию и оплатите тест. Доступ до 15 минут до консультации.",locked_btn:"Записаться",
+    opts:["Никогда","Почти никогда","Иногда","Довольно часто","Очень часто"],
+    ranges:[
+      {min:0,max:13,label:"Низкий стресс",color:"#27AE60",bg:"#E9F7EF",action:"Мониторинг",interp:"Ваш результат указывает на низкий воспринимаемый стресс."},
+      {min:14,max:26,label:"Умеренный стресс",color:"#E07B39",bg:"#FDF0E8",action:"Управление стрессом",interp:"Ваш результат указывает на умеренный стресс, влияющий на повседневную жизнь."},
+      {min:27,max:40,label:"Высокий стресс",color:"#C0392B",bg:"#FDEAEA",action:"Активная поддержка",interp:"Ваш результат указывает на высокий хронический стресс. Рекомендуется профессиональная поддержка."}
+    ],
+    questions:[
+      {text:"Расстраивались из-за чего-то неожиданного?",reversed:false},
+      {text:"Чувствовали, что не можете контролировать важные вещи в своей жизни?",reversed:false},
+      {text:"Чувствовали нервозность и стресс?",reversed:false},
+      {text:"Были уверены в своей способности справляться с личными проблемами?",reversed:true},
+      {text:"Чувствовали, что события складываются в вашу пользу?",reversed:true},
+      {text:"Обнаруживали, что не справляетесь со всем, что вам нужно сделать?",reversed:false},
+      {text:"Могли контролировать раздражения в своей жизни?",reversed:true},
+      {text:"Чувствовали, что держите всё под контролем?",reversed:true},
+      {text:"Злились из-за вещей, которые были вне вашего контроля?",reversed:false},
+      {text:"Чувствовали, что трудности накапливаются настолько, что вы не можете их преодолеть?",reversed:false}
+    ]
+  },
+  tr:{back:"Geri",eyebrow:"Stres Taraması",desc:"PSS, algılanan stresi ölçmek için en yaygın kullanılan araçtır.",ql:"Sorular",ml:"Dakika",pl:"Tarama",note:"<strong>Gizli:</strong> Yanıtlarınız korumalıdır.",instructions:"<strong>Talimatlar:</strong> Son bir ayda aşağıdakileri ne sıklıkla hissettiniz veya düşündünüz?",scale_chips:"0 — Hiç|1 — Neredeyse hiç|2 — Bazen|3 — Oldukça sık|4 — Çok sık",access_label:"✓ Kilidi açıldı.",access_expiry:"Erişim şu tarihe kadar",reversed_tag:"✦ Olumlu madde",btn_start:"Başla",prog_label:"İlerleme",q_of:"/",btn_prev:"Önceki",btn_next:"Sonraki",btn_results:"Sonuçlar",r_subtitle:"Son bir aydaki yanıtlarınıza göre",r_forwarded:"✓ Sonuçlarınız psikologunuza iletildi.",r_cta_h:"Konuşmak ister misiniz?",r_cta_p:"Psikologunuz sonuçlarınızı aldı.",r_cta_btn:"Konsültasyonu görüntüle",r_disclaimer:"<strong>Önemli:</strong> PSS bir tarama aracıdır, tanı değildir.",r_retake:"Tekrarla",out_of:"/ 40",score_label:"Puan",gate_title:"Giriş yapın",gate_desc:"Creaven hesabı gereklidir.",gate_btn:"Giriş yap veya kayıt ol",locked_title:"Henüz açılmadı",locked_desc:"Rezervasyon yapın ve testi ödeyin. Erişim konsültasyondan 15 dk önceye kadar.",locked_btn:"Rezervasyon yap",
+    opts:["Hiç","Neredeyse hiç","Bazen","Oldukça sık","Çok sık"],
+    ranges:[
+      {min:0,max:13,label:"Düşük stres",color:"#27AE60",bg:"#E9F7EF",action:"İzleme",interp:"Puanınız düşük algılanan strese işaret ediyor."},
+      {min:14,max:26,label:"Orta stres",color:"#E07B39",bg:"#FDF0E8",action:"Stres yönetimi",interp:"Puanınız günlük yaşamı etkileyen orta düzeyde strese işaret ediyor."},
+      {min:27,max:40,label:"Yüksek stres",color:"#C0392B",bg:"#FDEAEA",action:"Aktif destek",interp:"Puanınız yüksek kronik strese işaret ediyor. Profesyonel destek önerilir."}
+    ],
+    questions:[
+      {text:"Beklenmedik bir şey olduğu için üzüldünüz mü?",reversed:false},
+      {text:"Hayatınızdaki önemli şeyleri kontrol edemediğinizi hissettiniz mi?",reversed:false},
+      {text:"Sinirli ve stresli hissettiniz mi?",reversed:false},
+      {text:"Kişisel sorunlarınızla başa çıkma yeteneğinize güvendiniz mi?",reversed:true},
+      {text:"İşlerin istediğiniz gibi gittiğini hissettiniz mi?",reversed:true},
+      {text:"Yapmanız gereken her şeyle başa çıkamadığınızı fark ettiniz mi?",reversed:false},
+      {text:"Hayatınızdaki rahatsızlıkları kontrol edebildiniz mi?",reversed:true},
+      {text:"Her şeyin üstesinden geldiğinizi hissettiniz mi?",reversed:true},
+      {text:"Kontrolünüz dışındaki şeyler yüzünden sinirlendiniz mi?",reversed:false},
+      {text:"Zorlukların o kadar biriktiğini hissettiniz ki bunları aşamayacaksınız?",reversed:false}
+    ]
+  },
+  ar:{back:"رجوع",eyebrow:"فحص الضغط",desc:"PSS هو الأداة الأكثر استخداماً لقياس الإدراك الذاتي للضغط النفسي.",ql:"أسئلة",ml:"دقائق",pl:"فحص سريع",note:"<strong>سري:</strong> إجاباتك خاصة ومحمية.",instructions:"<strong>التعليمات:</strong> في الشهر الماضي، كم مرة شعرت أو فكرت في ما يلي؟",scale_chips:"0 — أبداً|1 — نادراً جداً|2 — أحياناً|3 — كثيراً|4 — كثيراً جداً",access_label:"✓ تم فتح التقييم.",access_expiry:"الوصول حتى",reversed_tag:"✦ بند إيجابي",btn_start:"ابدأ",prog_label:"التقدم",q_of:"من",btn_prev:"السابق",btn_next:"التالي",btn_results:"النتائج",r_subtitle:"بناءً على إجاباتك عن الشهر الماضي",r_forwarded:"✓ تم إرسال نتائجك إلى معالجك النفسي.",r_cta_h:"هل تريد التحدث؟",r_cta_p:"استلم معالجك نتائجك.",r_cta_btn:"عرض الاستشارة",r_disclaimer:"<strong>ملاحظة:</strong> PSS أداة فحص وليست تشخيصاً.",r_retake:"إعادة",out_of:"من 40",score_label:"الدرجة",gate_title:"سجّل الدخول",gate_desc:"يلزم حساب Creaven.",gate_btn:"تسجيل الدخول أو إنشاء حساب",locked_title:"غير مفتوح",locked_desc:"احجز استشارة وادفع. الوصول حتى 15 دقيقة قبل الاستشارة.",locked_btn:"احجز",
+    opts:["أبداً","نادراً جداً","أحياناً","كثيراً","كثيراً جداً"],
+    ranges:[
+      {min:0,max:13,label:"ضغط منخفض",color:"#27AE60",bg:"#E9F7EF",action:"مراقبة",interp:"تشير درجتك إلى ضغط نفسي منخفض."},
+      {min:14,max:26,label:"ضغط معتدل",color:"#E07B39",bg:"#FDF0E8",action:"إدارة الضغط",interp:"تشير درجتك إلى ضغط معتدل يؤثر على الحياة اليومية."},
+      {min:27,max:40,label:"ضغط مرتفع",color:"#C0392B",bg:"#FDEAEA",action:"دعم نشط",interp:"تشير درجتك إلى ضغط مزمن مرتفع. يُوصى بالدعم المهني."}
+    ],
+    questions:[
+      {text:"شعرت بالانزعاج بسبب شيء غير متوقع؟",reversed:false},
+      {text:"شعرت بعدم القدرة على التحكم في الأشياء المهمة في حياتك؟",reversed:false},
+      {text:"شعرت بالتوتر والضغط؟",reversed:false},
+      {text:"شعرت بالثقة في قدرتك على التعامل مع مشاكلك الشخصية؟",reversed:true},
+      {text:"شعرت أن الأمور تسير في صالحك؟",reversed:true},
+      {text:"اكتشفت أنك لا تستطيع التعامل مع كل ما عليك فعله؟",reversed:false},
+      {text:"استطعت السيطرة على مصادر الانزعاج في حياتك؟",reversed:true},
+      {text:"شعرت أنك تتحكم في الأمور؟",reversed:true},
+      {text:"غضبت بسبب أشياء خارجة عن إرادتك؟",reversed:false},
+      {text:"شعرت أن الصعوبات تتراكم لدرجة أنك لا تستطيع التغلب عليها؟",reversed:false}
+    ]
+  },
+  hi:{back:"वापस",eyebrow:"तनाव जांच",desc:"PSS तनाव की धारणा को मापने के लिए सबसे व्यापक रूप से उपयोग किया जाने वाला उपकरण है।",ql:"प्रश्न",ml:"मिनट",pl:"जांच",note:"<strong>गोपनीय:</strong> आपके उत्तर सुरक्षित हैं।",instructions:"<strong>निर्देश:</strong> पिछले महीने, आप निम्नलिखित कितनी बार महसूस किया या सोचा?",scale_chips:"0 — कभी नहीं|1 — लगभग कभी नहीं|2 — कभी-कभी|3 — अक्सर|4 — बहुत अक्सर",access_label:"✓ आकलन अनलॉक।",access_expiry:"पहुंच उपलब्ध तक",reversed_tag:"✦ सकारात्मक प्रश्न",btn_start:"शुरू करें",prog_label:"प्रगति",q_of:"में से",btn_prev:"पिछला",btn_next:"अगला",btn_results:"परिणाम",r_subtitle:"पिछले महीने के उत्तरों के आधार पर",r_forwarded:"✓ परिणाम आपके मनोवैज्ञानिक को भेजे गए।",r_cta_h:"बात करना चाहते हैं?",r_cta_p:"आपके मनोवैज्ञानिक को परिणाम मिल गए।",r_cta_btn:"परामर्श देखें",r_disclaimer:"<strong>महत्वपूर्ण:</strong> PSS जांच उपकरण है, निदान नहीं।",r_retake:"दोबारा करें",out_of:"40 में से",score_label:"स्कोर",gate_title:"साइन इन करें",gate_desc:"Creaven खाता आवश्यक है।",gate_btn:"साइन इन या खाता बनाएं",locked_title:"अनलॉक नहीं",locked_desc:"परामर्श बुक करें और भुगतान करें। परामर्श से 15 मिनट पहले तक पहुंच।",locked_btn:"बुक करें",
+    opts:["कभी नहीं","लगभग कभी नहीं","कभी-कभी","अक्सर","बहुत अक्सर"],
+    ranges:[
+      {min:0,max:13,label:"कम तनाव",color:"#27AE60",bg:"#E9F7EF",action:"निगरानी",interp:"आपका स्कोर कम तनाव का सुझाव देता है।"},
+      {min:14,max:26,label:"मध्यम तनाव",color:"#E07B39",bg:"#FDF0E8",action:"तनाव प्रबंधन",interp:"आपका स्कोर मध्यम तनाव का संकेत देता है।"},
+      {min:27,max:40,label:"उच्च तनाव",color:"#C0392B",bg:"#FDEAEA",action:"सक्रिय सहायता",interp:"आपका स्कोर उच्च तनाव का सुझाव देता है। पेशेवर सहायता अनुशंसित है।"}
+    ],
+    questions:[
+      {text:"किसी अप्रत्याशित घटना के कारण परेशान हुए?",reversed:false},
+      {text:"महसूस किया कि आप अपने जीवन की महत्वपूर्ण चीजों को नियंत्रित करने में असमर्थ हैं?",reversed:false},
+      {text:"घबराहट और तनाव महसूस किया?",reversed:false},
+      {text:"अपनी व्यक्तिगत समस्याओं को संभालने की क्षमता पर भरोसा था?",reversed:true},
+      {text:"महसूस किया कि चीजें आपके अनुकूल चल रही हैं?",reversed:true},
+      {text:"पाया कि आप वह सब नहीं कर पा रहे जो आपको करना था?",reversed:false},
+      {text:"अपने जीवन की जलन को नियंत्रित करने में सक्षम थे?",reversed:true},
+      {text:"महसूस किया कि सब कुछ नियंत्रण में है?",reversed:true},
+      {text:"आपके नियंत्रण से बाहर की चीजों के कारण क्रोधित हुए?",reversed:false},
+      {text:"महसूस किया कि कठिनाइयाँ इतनी ज्यादा हो गई हैं कि आप उन्हें पार नहीं कर सकते?",reversed:false}
+    ]
+  },
+  vi:{back:"Quay lại",eyebrow:"Sàng lọc Căng thẳng",desc:"PSS là công cụ được sử dụng rộng rãi nhất để đo lường nhận thức về căng thẳng.",ql:"Câu hỏi",ml:"Phút",pl:"Sàng lọc",note:"<strong>Bí mật:</strong> Câu trả lời của bạn được bảo vệ.",instructions:"<strong>Hướng dẫn:</strong> Trong tháng qua, bạn có cảm giác hoặc suy nghĩ sau đây bao nhiêu lần?",scale_chips:"0 — Không bao giờ|1 — Hầu như không|2 — Đôi khi|3 — Khá thường xuyên|4 — Rất thường xuyên",access_label:"✓ Đã mở khóa.",access_expiry:"Truy cập đến",reversed_tag:"✦ Câu hỏi tích cực",btn_start:"Bắt đầu",prog_label:"Tiến độ",q_of:"/",btn_prev:"Trước",btn_next:"Tiếp",btn_results:"Kết quả",r_subtitle:"Dựa trên câu trả lời tháng qua",r_forwarded:"✓ Kết quả đã được gửi đến nhà tâm lý học.",r_cta_h:"Bạn muốn nói chuyện?",r_cta_p:"Nhà tâm lý học đã nhận kết quả.",r_cta_btn:"Xem tư vấn",r_disclaimer:"<strong>Lưu ý:</strong> PSS là công cụ sàng lọc, không phải chẩn đoán.",r_retake:"Làm lại",out_of:"/ 40",score_label:"Điểm",gate_title:"Đăng nhập",gate_desc:"Cần tài khoản Creaven.",gate_btn:"Đăng nhập hoặc tạo tài khoản",locked_title:"Chưa mở khóa",locked_desc:"Đặt lịch và thanh toán. Truy cập đến 15 phút trước tư vấn.",locked_btn:"Đặt lịch",
+    opts:["Không bao giờ","Hầu như không","Đôi khi","Khá thường xuyên","Rất thường xuyên"],
+    ranges:[
+      {min:0,max:13,label:"Căng thẳng thấp",color:"#27AE60",bg:"#E9F7EF",action:"Theo dõi",interp:"Điểm của bạn cho thấy căng thẳng được cảm nhận thấp."},
+      {min:14,max:26,label:"Căng thẳng vừa",color:"#E07B39",bg:"#FDF0E8",action:"Quản lý căng thẳng",interp:"Điểm của bạn cho thấy căng thẳng vừa phải ảnh hưởng đến cuộc sống hàng ngày."},
+      {min:27,max:40,label:"Căng thẳng cao",color:"#C0392B",bg:"#FDEAEA",action:"Hỗ trợ tích cực",interp:"Điểm của bạn cho thấy căng thẳng mãn tính cao. Nên tìm hỗ trợ chuyên nghiệp."}
+    ],
+    questions:[
+      {text:"Bị khó chịu vì điều gì đó xảy ra bất ngờ?",reversed:false},
+      {text:"Cảm thấy không thể kiểm soát những điều quan trọng trong cuộc sống?",reversed:false},
+      {text:"Cảm thấy lo lắng và căng thẳng?",reversed:false},
+      {text:"Tự tin vào khả năng xử lý các vấn đề cá nhân của mình?",reversed:true},
+      {text:"Cảm thấy mọi thứ đang diễn ra thuận lợi?",reversed:true},
+      {text:"Nhận ra rằng bạn không thể đối phó với tất cả những gì phải làm?",reversed:false},
+      {text:"Có thể kiểm soát những điều gây khó chịu trong cuộc sống?",reversed:true},
+      {text:"Cảm thấy mình đang kiểm soát được mọi thứ?",reversed:true},
+      {text:"Tức giận vì những điều ngoài tầm kiểm soát?",reversed:false},
+      {text:"Cảm thấy khó khăn chồng chất đến mức không thể vượt qua?",reversed:false}
+    ]
+  },
+  th:{back:"กลับ",eyebrow:"คัดกรองความเครียด",desc:"PSS คือเครื่องมือที่ใช้กันมากที่สุดในการวัดการรับรู้ความเครียด",ql:"คำถาม",ml:"นาที",pl:"คัดกรอง",note:"<strong>ความลับ:</strong> คำตอบของคุณได้รับการปกป้อง",instructions:"<strong>คำแนะนำ:</strong> ในเดือนที่ผ่านมา คุณรู้สึกหรือคิดสิ่งต่อไปนี้บ่อยแค่ไหน?",scale_chips:"0 — ไม่เลย|1 — แทบไม่|2 — บางครั้ง|3 — ค่อนข้างบ่อย|4 — บ่อยมาก",access_label:"✓ ปลดล็อคแล้ว",access_expiry:"เข้าถึงได้จนถึง",reversed_tag:"✦ ข้อความเชิงบวก",btn_start:"เริ่ม",prog_label:"ความคืบหน้า",q_of:"/",btn_prev:"ก่อนหน้า",btn_next:"ถัดไป",btn_results:"ผลลัพธ์",r_subtitle:"จากคำตอบของคุณในเดือนที่ผ่านมา",r_forwarded:"✓ ผลลัพธ์ถูกส่งไปยังนักจิตวิทยาแล้ว",r_cta_h:"ต้องการพูดคุยไหม?",r_cta_p:"นักจิตวิทยาได้รับผลลัพธ์แล้ว",r_cta_btn:"ดูการนัดหมาย",r_disclaimer:"<strong>หมายเหตุ:</strong> PSS เป็นเครื่องมือคัดกรอง ไม่ใช่การวินิจฉัย",r_retake:"ทำใหม่",out_of:"/ 40",score_label:"คะแนน",gate_title:"ลงชื่อเข้าใช้",gate_desc:"ต้องมีบัญชี Creaven",gate_btn:"ลงชื่อหรือสร้างบัญชี",locked_title:"ยังไม่ได้ปลดล็อค",locked_desc:"จองการนัดหมายและชำระเงิน เข้าถึงได้จนถึง 15 นาทีก่อนนัดหมาย",locked_btn:"จอง",
+    opts:["ไม่เลย","แทบไม่","บางครั้ง","ค่อนข้างบ่อย","บ่อยมาก"],
+    ranges:[
+      {min:0,max:13,label:"ความเครียดต่ำ",color:"#27AE60",bg:"#E9F7EF",action:"ติดตาม",interp:"คะแนนของคุณบ่งชี้ความเครียดที่รับรู้ต่ำ"},
+      {min:14,max:26,label:"ความเครียดปานกลาง",color:"#E07B39",bg:"#FDF0E8",action:"จัดการความเครียด",interp:"คะแนนของคุณบ่งชี้ความเครียดปานกลางที่ส่งผลต่อชีวิตประจำวัน"},
+      {min:27,max:40,label:"ความเครียดสูง",color:"#C0392B",bg:"#FDEAEA",action:"การสนับสนุนเชิงรุก",interp:"คะแนนของคุณบ่งชี้ความเครียดเรื้อรังสูง แนะนำการสนับสนุนจากผู้เชี่ยวชาญ"}
+    ],
+    questions:[
+      {text:"รู้สึกไม่พอใจเพราะบางอย่างเกิดขึ้นโดยไม่คาดคิด?",reversed:false},
+      {text:"รู้สึกว่าไม่สามารถควบคุมสิ่งสำคัญในชีวิตได้?",reversed:false},
+      {text:"รู้สึกกังวลและเครียด?",reversed:false},
+      {text:"มั่นใจในความสามารถของตนเองในการจัดการปัญหาส่วนตัว?",reversed:true},
+      {text:"รู้สึกว่าสิ่งต่างๆ ดำเนินไปตามที่ต้องการ?",reversed:true},
+      {text:"พบว่าไม่สามารถรับมือกับทุกอย่างที่ต้องทำได้?",reversed:false},
+      {text:"สามารถควบคุมสิ่งที่ก่อความรำคาญในชีวิตได้?",reversed:true},
+      {text:"รู้สึกว่าควบคุมทุกอย่างได้?",reversed:true},
+      {text:"โกรธเพราะสิ่งที่อยู่นอกเหนือการควบคุม?",reversed:false},
+      {text:"รู้สึกว่าความยากลำบากสะสมมากจนไม่สามารถเอาชนะได้?",reversed:false}
+    ]
+  },
+  zh:{back:"返回",eyebrow:"压力筛查",desc:"PSS是测量压力感知最广泛使用的工具。",ql:"问题",ml:"分钟",pl:"筛查",note:"<strong>保密：</strong>您的回答受到保护。",instructions:"<strong>说明：</strong>在过去一个月中，您有以下感受或想法的频率如何？",scale_chips:"0 — 从不|1 — 几乎从不|2 — 有时|3 — 相当经常|4 — 非常频繁",access_label:"✓ 已解锁。",access_expiry:"访问至",reversed_tag:"✦ 正向题目",btn_start:"开始",prog_label:"进度",q_of:"/",btn_prev:"上一题",btn_next:"下一题",btn_results:"结果",r_subtitle:"基于您过去一个月的回答",r_forwarded:"✓ 结果已发送给您的心理学家。",r_cta_h:"想谈谈吗？",r_cta_p:"您的心理学家已收到结果。",r_cta_btn:"查看咨询",r_disclaimer:"<strong>提示：</strong>PSS是筛查工具，不是诊断。",r_retake:"重做",out_of:"/ 40",score_label:"总分",gate_title:"请登录",gate_desc:"需要Creaven账户。",gate_btn:"登录或注册",locked_title:"尚未解锁",locked_desc:"预约咨询并支付费用。在咨询前15分钟之前可访问。",locked_btn:"预约",
+    opts:["从不","几乎从不","有时","相当经常","非常频繁"],
+    ranges:[
+      {min:0,max:13,label:"低压力",color:"#27AE60",bg:"#E9F7EF",action:"监测",interp:"您的分数表明感知压力低。"},
+      {min:14,max:26,label:"中度压力",color:"#E07B39",bg:"#FDF0E8",action:"压力管理",interp:"您的分数表明中度压力影响日常生活。"},
+      {min:27,max:40,label:"高度压力",color:"#C0392B",bg:"#FDEAEA",action:"积极支持",interp:"您的分数表明高度慢性压力。建议寻求专业支持。"}
+    ],
+    questions:[
+      {text:"因为某件意外发生的事情而感到不安？",reversed:false},
+      {text:"感到无法控制生活中的重要事情？",reversed:false},
+      {text:"感到紧张和有压力？",reversed:false},
+      {text:"对自己处理个人问题的能力感到有信心？",reversed:true},
+      {text:"感到事情在朝着您想要的方向发展？",reversed:true},
+      {text:"发现自己无法应对必须做的所有事情？",reversed:false},
+      {text:"能够控制生活中的烦恼？",reversed:true},
+      {text:"感到自己掌控着一切？",reversed:true},
+      {text:"因控制之外的事情而感到愤怒？",reversed:false},
+      {text:"感到困难堆积如山，以至于无法克服？",reversed:false}
+    ]
+  },
+  jp:{back:"戻る",eyebrow:"ストレス・スクリーニング",desc:"PSSはストレスの知覚を測定するために最も広く使われている心理尺度です。",ql:"質問",ml:"分",pl:"スクリーニング",note:"<strong>秘密厳守：</strong>回答は保護されています。",instructions:"<strong>指示：</strong>過去1ヶ月間、次のことをどのくらい感じたり考えたりしましたか？",scale_chips:"0 — まったくない|1 — ほとんどない|2 — ときどき|3 — かなり多い|4 — とても多い",access_label:"✓ ロック解除済み。",access_expiry:"アクセス期限",reversed_tag:"✦ ポジティブな項目",btn_start:"開始",prog_label:"進捗",q_of:"/",btn_prev:"前へ",btn_next:"次へ",btn_results:"結果",r_subtitle:"過去1ヶ月の回答に基づいて",r_forwarded:"✓ 結果は心理士に送信されました。",r_cta_h:"話し合いませんか？",r_cta_p:"心理士が結果を受け取りました。",r_cta_btn:"予約を確認",r_disclaimer:"<strong>重要：</strong>PSSはスクリーニングツールです。診断ではありません。",r_retake:"再実施",out_of:"/ 40点",score_label:"スコア",gate_title:"サインイン",gate_desc:"Creavenアカウントが必要です。",gate_btn:"サインインまたは登録",locked_title:"未解除",locked_desc:"コンサルテーションを予約してください。15分前まで利用可能です。",locked_btn:"予約する",
+    opts:["まったくない","ほとんどない","ときどき","かなり多い","とても多い"],
+    ranges:[
+      {min:0,max:13,label:"低ストレス",color:"#27AE60",bg:"#E9F7EF",action:"モニタリング",interp:"低い知覚ストレスを示しています。"},
+      {min:14,max:26,label:"中程度のストレス",color:"#E07B39",bg:"#FDF0E8",action:"ストレス管理",interp:"日常生活に影響する中程度のストレスを示しています。"},
+      {min:27,max:40,label:"高いストレス",color:"#C0392B",bg:"#FDEAEA",action:"積極的サポート",interp:"高い慢性ストレスを示しています。専門家のサポートをお勧めします。"}
+    ],
+    questions:[
+      {text:"予期しないことが起きて動揺した",reversed:false},
+      {text:"人生の重要なことをコントロールできないと感じた",reversed:false},
+      {text:"神経質でストレスを感じた",reversed:false},
+      {text:"個人的な問題に対処する能力に自信があった",reversed:true},
+      {text:"物事が思い通りに進んでいると感じた",reversed:true},
+      {text:"やるべきことすべてに対処できないと感じた",reversed:false},
+      {text:"人生のイライラをコントロールできた",reversed:true},
+      {text:"物事を把握できていると感じた",reversed:true},
+      {text:"コントロールできないことで怒りを感じた",reversed:false},
+      {text:"困難が積み重なって乗り越えられないと感じた",reversed:false}
+    ]
+  },
+  kr:{back:"돌아가기",eyebrow:"스트레스 검사",desc:"PSS는 스트레스 지각을 측정하는 가장 널리 사용되는 심리 도구입니다.",ql:"문항",ml:"분",pl:"검사",note:"<strong>기밀:</strong> 귀하의 응답은 보호됩니다.",instructions:"<strong>지침:</strong> 지난 한 달 동안 다음을 얼마나 자주 느끼거나 생각했습니까?",scale_chips:"0 — 전혀 없음|1 — 거의 없음|2 — 때때로|3 — 꽤 자주|4 — 매우 자주",access_label:"✓ 잠금 해제됨.",access_expiry:"접근 가능 기간",reversed_tag:"✦ 긍정적 문항",btn_start:"시작",prog_label:"진행률",q_of:"/",btn_prev:"이전",btn_next:"다음",btn_results:"결과",r_subtitle:"지난 한 달간의 응답 기준",r_forwarded:"✓ 결과가 심리사에게 전송되었습니다.",r_cta_h:"이야기하고 싶으신가요?",r_cta_p:"심리사가 결과를 받았습니다.",r_cta_btn:"상담 보기",r_disclaimer:"<strong>중요:</strong> PSS는 선별 도구입니다. 진단이 아닙니다.",r_retake:"다시 하기",out_of:"/ 40점",score_label:"점수",gate_title:"로그인",gate_desc:"Creaven 계정이 필요합니다.",gate_btn:"로그인 또는 가입",locked_title:"잠금 해제 안 됨",locked_desc:"상담을 예약하고 결제하세요. 상담 15분 전까지 접근 가능.",locked_btn:"예약",
+    opts:["전혀 없음","거의 없음","때때로","꽤 자주","매우 자주"],
+    ranges:[
+      {min:0,max:13,label:"낮은 스트레스",color:"#27AE60",bg:"#E9F7EF",action:"모니터링",interp:"낮은 지각 스트레스를 나타냅니다."},
+      {min:14,max:26,label:"중등도 스트레스",color:"#E07B39",bg:"#FDF0E8",action:"스트레스 관리",interp:"일상생활에 영향을 미치는 중등도 스트레스를 나타냅니다."},
+      {min:27,max:40,label:"높은 스트레스",color:"#C0392B",bg:"#FDEAEA",action:"적극적 지원",interp:"높은 만성 스트레스를 나타냅니다. 전문적 지원이 권장됩니다."}
+    ],
+    questions:[
+      {text:"예상치 못한 일이 발생하여 화가 났다",reversed:false},
+      {text:"삶의 중요한 일들을 통제할 수 없다고 느꼈다",reversed:false},
+      {text:"긴장되고 스트레스를 받았다",reversed:false},
+      {text:"개인적인 문제를 처리할 능력에 자신이 있었다",reversed:true},
+      {text:"일이 원하는 대로 흘러가고 있다고 느꼈다",reversed:true},
+      {text:"해야 할 모든 일을 감당할 수 없다는 것을 알았다",reversed:false},
+      {text:"삶의 짜증나는 일들을 통제할 수 있었다",reversed:true},
+      {text:"모든 것을 잘 파악하고 있다고 느꼈다",reversed:true},
+      {text:"통제할 수 없는 일로 인해 화가 났다",reversed:false},
+      {text:"어려움이 너무 쌓여서 극복할 수 없다고 느꼈다",reversed:false}
+    ]
+  }
+};
+
+var lang='en', current=0, answers=new Array(10).fill(null), TOTAL_Q=10;
+
+function toggleLangMenu(){ document.getElementById('langDropdown').classList.toggle('open'); }
+function selectLang(l,label){
+  lang=l;
+  document.getElementById('langToggle').textContent=label;
+  document.getElementById('langDropdown').classList.remove('open');
+  document.querySelectorAll('.lang-dropdown button').forEach(function(b){b.classList.remove('active-lang');});
+  event.target.classList.add('active-lang');
+  document.documentElement.lang=l;
+  document.documentElement.dir=(l==='ar')?'rtl':'ltr';
+  applyTranslations();
+  if(document.getElementById('view-test').classList.contains('active')) renderQ();
+}
+document.addEventListener('click',function(e){ if(!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open'); });
+
+function applyTranslations(){
+  var t=T[lang]; if(!t) return;
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-pl').textContent=t.pl;
+  document.getElementById('i-note').innerHTML=t.note;
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('i-scale-preview').innerHTML=t.scale_chips.split('|').map(function(c){return '<span class="scale-chip">'+c+'</span>';}).join('');
+  document.getElementById('access-label').textContent=t.access_label;
+  document.getElementById('access-expiry-text').textContent=t.access_expiry;
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+  document.getElementById('gate-title').textContent=t.gate_title;
+  document.getElementById('gate-desc').textContent=t.gate_desc;
+  document.getElementById('gate-btn').textContent=t.gate_btn;
+  document.getElementById('locked-title').textContent=t.locked_title;
+  document.getElementById('locked-desc').textContent=t.locked_desc;
+  document.getElementById('locked-btn').textContent=t.locked_btn;
+}
+
+function showView(id){ document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');}); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+function startTest(){ showView('view-test'); renderQ(); }
+
+function renderQ(){
+  var t=T[lang];
+  var q=t.questions[current];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' '+TOTAL_Q;
+  document.getElementById('progFill').style.width=((current+1)/TOTAL_Q*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' '+TOTAL_Q;
+  document.getElementById('questionText').textContent=q.text;
+  var rtag=document.getElementById('reversedTag');
+  if(q.reversed){ rtag.textContent=t.reversed_tag; rtag.style.display='inline-block'; }
+  else { rtag.style.display='none'; }
+  var opts=document.getElementById('scaleOptions'); opts.innerHTML='';
+  t.opts.forEach(function(label,i){
+    var div=document.createElement('label');
+    div.className='scale-option'+(answers[current]===i?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+i+'"><div class="opt-dot"></div><div class="opt-val">'+i+'</div><div class="opt-label">'+label+'</div>';
+    div.onclick=(function(idx,el){return function(){selectOption(idx,el);};})(i,div);
+    opts.appendChild(div);
+  });
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  var bn=document.getElementById('btnNext');
+  bn.textContent=current===TOTAL_Q-1?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  var card=document.getElementById('questionCard');
+  card.style.animation='none'; card.offsetHeight; card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(idx,el){
+  answers[current]=idx;
+  document.querySelectorAll('.scale-option').forEach(function(o){o.classList.remove('selected');});
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){var bn=document.getElementById('btnNext');if(bn&&!bn.disabled)bn.click();},400);
+}
+function nextQ(){ if(answers[current]===null)return; if(current<TOTAL_Q-1){current++;renderQ();}else showResults(); }
+function prevQ(){ if(current>0){current--;renderQ();} }
+
+// PSS scoring: reversed items scored as 4-x
+function calcTotal(){
+  return answers.reduce(function(sum,val,i){
+    var score = REVERSED.indexOf(i) >= 0 ? (4 - val) : val;
+    return sum + score;
+  }, 0);
+}
+
+function getClinicalInterpretation(total){
+  if(total<=13) return 'Low perceived stress (PSS ≤13). Adequate coping resources. Monitor for changes especially during high-demand creative periods.';
+  if(total<=26) return 'Moderate perceived stress (PSS 14–26). Most common range. Stress is affecting appraisal of daily demands. Consider stress inoculation training, CBT-based stress management, and environmental/workload review.';
+  return 'High perceived stress (PSS 27–40). Chronic high stress with significant impact on psychological and physical health. Recommend comprehensive stress management programme, possible evaluation for comorbid anxiety/depression (GAD-7, PHQ-9).';
+}
+
+function showResults(){
+  var t=T[lang];
+  var total=calcTotal();
+  var range=t.ranges.find(function(r){return total>=r.min&&total<=r.max;});
+  var pct=Math.round((total/40)*100);
+  if(currentUser){
+    db.collection('assessmentResults').add({
+      userId:currentUser.uid,userEmail:currentUser.email,
+      userName:currentUser.displayName||currentUser.email,
+      assessment:'PSS-10',totalScore:total,maxScore:40,
+      category:range?range.label:'',lang:lang,
+      items:answers.map(function(v,i){return{question:i+1,rawScore:v,reversed:REVERSED.indexOf(i)>=0,scoredValue:REVERSED.indexOf(i)>=0?4-v:v};}),
+      clinicalInterpretation:getClinicalInterpretation(total),
+      completedAt:firebase.firestore.FieldValue.serverTimestamp(),
+      status:'pending_consultation'
+    }).catch(function(e){console.error(e);});
+  }
+  document.getElementById('totalScoreCard').innerHTML=
+    '<div class="ts-label">'+t.score_label+'</div>'+
+    '<div class="ts-score" style="color:'+range.color+'">'+total+'</div>'+
+    '<div class="ts-max">'+t.out_of+'</div>'+
+    '<div class="ts-badge" style="background:'+range.bg+';color:'+range.color+'">'+range.label+'</div>'+
+    '<div style="font-size:12px;color:var(--light);margin-top:8px;">'+range.action+'</div>'+
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:'+pct+'%"></div></div>'+
+    '<div class="severity-labels"><span>0</span><span>13</span><span>26</span><span>40</span></div></div>';
+  document.getElementById('forwardedBox').innerHTML='<p>'+t.r_forwarded+'</p>';
+  document.getElementById('interpretationBox').innerHTML=
+    '<h3>'+range.label+'</h3><p>'+range.interp+'</p>'+
+    '<table class="range-table" style="margin-top:20px"><thead><tr><th>Score</th><th>Level</th><th>Next step</th></tr></thead><tbody>'+
+    t.ranges.map(function(r){
+      return '<tr class="'+(total>=r.min&&total<=r.max?'current-row':'')+'">'+
+        '<td><span class="range-dot" style="background:'+r.color+'"></span>'+r.min+'–'+r.max+'</td>'+
+        '<td>'+r.label+(total>=r.min&&total<=r.max?' ←':'')+'</td>'+
+        '<td>'+r.action+'</td></tr>';
+    }).join('')+'</tbody></table>';
+  showView('view-results');
+}
+
+function resetTest(){ current=0; answers=new Array(TOTAL_Q).fill(null); showView('view-intro'); }
+</script>
+</body>
+</html>
