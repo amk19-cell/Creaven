@@ -131,6 +131,11 @@ nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:cen
 .btn-pay-manual{width:100%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:white;padding:15px;border-radius:40px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;margin-top:8px;display:none;}
 .btn-pay-manual.show{display:block;}
 .btn-pay-manual:hover{transform:translateY(-2px);}
+.btn-pay-paypal{width:100%;background:#FFC439;color:#003087;padding:15px;border-radius:40px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;margin-top:8px;display:none;letter-spacing:.02em;}
+.btn-pay-paypal.show{display:block;}
+.btn-pay-paypal:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15);}
+.paypal-info{background:#E8F0FC;border-radius:12px;padding:14px 18px;font-size:13px;color:#003087;line-height:1.6;display:none;margin-top:8px;}
+.paypal-info.show{display:block;}
 .btn-quote{width:100%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:white;padding:15px;border-radius:40px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;margin-top:8px;}
 .btn-quote:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(160,128,48,.3);}
 .btn-quote:disabled{opacity:.5;cursor:not-allowed;transform:none;}
@@ -404,22 +409,20 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
           <button class="pay-method-btn active" id="pm-card" onclick="selectPayMethod('card')">
             <span>&#128179;</span> Card / Mobile Money
           </button>
-          <button class="pay-method-btn" id="pm-manual" onclick="selectPayMethod('manual')">
-            <span>&#128241;</span> Wave / MTN CI
+          <button class="pay-method-btn" id="pm-paypal" onclick="selectPayMethod('paypal')">
+            <span>🅿</span> PayPal
           </button>
         </div>
-        <div class="manual-pay-box" id="manualPayBox">
-          <p>Send payment via <strong>Wave</strong> or <strong>MTN Mobile Money</strong> to:</p>
-          <p><strong>Wave : +225 07 79 00 26 79</strong> - Amakon Grace Daniella</p>
-          <p><strong>MTN : +225 05 06 04 56 70</strong> - Amakon Grace Daniella</p>
-          <p style="font-size:12px;color:var(--mid);margin-top:8px;">After sending, click below. Your booking will be confirmed within 2 hours.</p>
-          <div class="manual-ref" id="manualRef">Reference: ...</div>
+        <div class="manual-pay-box" id="manualPayBox" style="display:none;"></div>
+        <div class="paypal-info" id="paypalInfo">
+          <strong>Pay securely via PayPal.</strong> You will be redirected to PayPal to complete your payment. Works with any Visa, Mastercard, or PayPal account — worldwide.
         </div>
         <div class="resend-info" id="paystackInfo">
           Secured by <a href="https://paystack.com" target="_blank">Paystack</a> - Card, Mobile Money, Bank transfer accepted
         </div>
       </div>
       <button class="btn-confirm" id="btnPay" onclick="initiatePayment()">Pay &amp; Confirm Booking</button>
+      <button class="btn-pay-paypal show" id="btnPayPal" onclick="initiatePayPal()" style="display:none;">&#128179; Pay with PayPal</button>
       <button class="btn-pay-manual" id="btnManual" onclick="confirmManualBooking()">I have sent the payment</button>
     </div>
   </div>
@@ -494,7 +497,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
 // =============================================
 // CONFIG - METS TA CLE RESEND ICI
 // =============================================
-var RESEND_API_KEY = 're_SN5ATFMa_GHoWWRgW64zUZTnRkYupUUVX'; // re_xxxxxxxx
+var RESEND_API_KEY = 'COLLE_TA_CLE_RESEND_ICI'; // re_xxxxxxxx
 var RESEND_FROM    = 'Creaven <onboarding@resend.dev>'; // change quand tu as un domaine verifie
 var ADMIN_EMAIL    = 'creavenconnect@gmail.com';
 
@@ -708,7 +711,53 @@ function selectSlot(idx,time,duration){selectedSlot={idx:idx,time:time,duration:
 var TYPE_NAMES=['Emergency','First Consultation','Follow-up','Assessment','Burnout','Organizational'];
 function showStep5(){var t=T[currentLang]||T.en;var typeName=t['t'+selectedType+'_title']||TYPE_NAMES[selectedType];var priceDisplay=getDisplayPrice(selectedCurrency);document.getElementById('bookingSummary').innerHTML='<div class="summary-title">Booking Summary</div>'+'<div class="summary-item"><span>'+(t.summary_type||'Type')+'</span><strong>'+typeName+'</strong></div>'+'<div class="summary-item"><span>'+(t.summary_pract||'Psychologist')+'</span><strong>'+selectedPract.name+'</strong></div>'+'<div class="summary-item"><span>'+(t.summary_date||'Date')+'</span><strong>'+selectedDate+'</strong></div>'+'<div class="summary-item"><span>'+(t.summary_time||'Time')+'</span><strong>'+selectedSlot.time+' ('+selectedSlot.duration+' min)</strong></div>'+'<div class="summary-item"><span>'+(t.summary_total||'Total')+'</span><strong>'+priceDisplay+'</strong></div>';document.getElementById('pay-amount-display').textContent=priceDisplay;pendingSessionCode=generateCode();document.getElementById('manualRef').textContent='Reference: '+pendingSessionCode;document.getElementById('step5Section').style.display='block';setTimeout(function(){document.getElementById('step5Section').scrollIntoView({behavior:'smooth',block:'start'});},100);}
 
-function selectPayMethod(method){selectedPayMethod=method;document.getElementById('pm-card').classList.toggle('active',method==='card');document.getElementById('pm-manual').classList.toggle('active',method==='manual');document.getElementById('manualPayBox').classList.toggle('show',method==='manual');document.getElementById('paystackInfo').style.display=method==='card'?'block':'none';document.getElementById('btnPay').style.display=method==='card'?'block':'none';document.getElementById('btnManual').classList.toggle('show',method==='manual');}
+function selectPayMethod(method){
+  selectedPayMethod=method;
+  document.getElementById('pm-card').classList.toggle('active',method==='card');
+  document.getElementById('pm-paypal').classList.toggle('active',method==='paypal');
+  document.getElementById('paypalInfo').classList.toggle('show',method==='paypal');
+  document.getElementById('paystackInfo').style.display=method==='card'?'block':'none';
+  document.getElementById('btnPay').style.display=method==='card'?'block':'none';
+  document.getElementById('btnPayPal').style.display=method==='paypal'?'block':'none';
+  document.getElementById('btnManual').classList.remove('show');
+}
+
+function getPayPalAmount(cur){
+  // Always charge in USD for PayPal — convert XOF to USD if needed
+  if(cur==='XOF') return '45.00';
+  var rates={'EUR':42,'GBP':36,'CAD':61,'AUD':69,'KRW':59000,'JPY':6700,'CNY':325,'THB':1580,'SGD':60,'CHF':39};
+  var rate=rates[cur]||45;
+  return typeof rate==='number'&&rate>100?'45.00':'45.00'; // Always $45 USD via PayPal
+}
+
+function initiatePayPal(){
+  if(!validateForm())return;
+  var name=document.getElementById('fi-name').value.trim();
+  var email=document.getElementById('fi-email').value.trim();
+  var t=T[currentLang]||T.en;
+  var typeName=t['t'+selectedType+'_title']||TYPE_NAMES[selectedType];
+  var amount=getPayPalAmount(selectedCurrency);
+  var note=encodeURIComponent('Creaven consultation — '+typeName+' — '+selectedDate+' '+selectedSlot.time+' — Ref: '+pendingSessionCode);
+  // PayPal.me link — redirects to PayPal payment page
+  var paypalUrl='https://www.paypal.com/paypalme/daniellakim/'+amount+'USD?note='+note;
+  // Open PayPal in new tab
+  window.open(paypalUrl,'_blank');
+  // Show confirmation instructions
+  var msg=document.getElementById('formMsg');
+  msg.innerHTML='<strong>PayPal opened in a new tab.</strong> Complete your payment of $'+amount+' USD, then click the button below to confirm your booking.';
+  msg.className='msg-box show';
+  // Show a "I have paid via PayPal" button
+  document.getElementById('btnPayPal').textContent='✓ I have paid via PayPal — Confirm booking';
+  document.getElementById('btnPayPal').onclick=function(){confirmPayPalBooking();};
+}
+
+async function confirmPayPalBooking(){
+  if(!validateForm())return;
+  var btn=document.getElementById('btnPayPal');
+  btn.disabled=true;btn.textContent='Confirming...';
+  await onPaymentSuccess(pendingSessionCode,'paypal');
+  btn.disabled=false;
+}
 
 function validateForm(){var name=document.getElementById('fi-name').value.trim();var email=document.getElementById('fi-email').value.trim();var msg=document.getElementById('formMsg');if(!name||!email){msg.textContent='Please fill in your name and email.';msg.className='msg-box error show';return false;}if(!email.includes('@')){msg.textContent='Please enter a valid email address.';msg.className='msg-box error show';return false;}msg.className='msg-box';return true;}
 
