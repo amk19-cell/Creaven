@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBI — Copenhagen Burnout Inventory | Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-dark:#2A4A2A;--green:#3A6B3A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
+  --cream:#FAFCFA;--cream-dark:#F0F5F0;
+  --charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  --red:#C0392B;--red-light:#FDEAEA;
+  --copper:#8A5A2A;--copper-light:#F5EDD8;
+  --orange:#D46A1A;--orange-light:#FEF0E8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-back{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-back:hover{color:var(--green);}
+.nav-back svg{width:16px;height:16px;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:160px;z-index:200;max-height:320px;overflow-y:auto;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:10px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover,.lang-dropdown button.active-lang{background:var(--green-light);color:var(--green-dark);}
+.view{display:none;}.view.active{display:block;}
+.gate-wrap,.locked-wrap{max-width:560px;margin:0 auto;padding:80px 24px;text-align:center;}
+.gate-icon,.locked-icon{font-size:48px;margin-bottom:20px;}
+.gate-wrap h2,.locked-wrap h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:12px;}
+.gate-wrap p,.locked-wrap p{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:24px;}
+.btn-gate,.btn-book{background:var(--green);color:white;padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:inline-block;text-decoration:none;}
+.btn-gate:hover,.btn-book:hover{background:var(--green-dark);transform:translateY(-2px);}
+/* INFO VIEW */
+.info-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px;}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--copper-light);color:var(--copper);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px;}
+.info-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px;}
+.info-wrap h1 em{font-style:italic;color:var(--green);}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px;}
+.info-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(42,74,42,.08);text-align:center;}
+.ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--green);line-height:1;margin-bottom:4px;}
+.ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;}
+.practitioner-banner{background:var(--copper-light);border:1px solid rgba(138,90,42,.2);border-radius:16px;padding:24px 28px;margin-bottom:28px;}
+.practitioner-banner h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--copper);margin-bottom:10px;}
+.practitioner-banner p{font-size:13px;color:var(--mid);line-height:1.7;}
+.subscale-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+.ss-info{background:white;border-radius:14px;padding:18px 16px;border:1px solid rgba(0,0,0,.06);text-align:center;}
+.ss-info .ss-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:6px;}
+.ss-info .ss-count{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--charcoal);font-weight:600;}
+.ss-info .ss-label{font-size:10px;color:var(--light);}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px;}
+.info-box p{font-size:13px;line-height:1.7;}
+.info-box.copper{background:var(--copper-light);color:var(--copper);}
+.info-box.green{background:var(--green-light);color:var(--green-dark);}
+.access-banner{background:var(--green-pale);border:1px solid var(--green-light);border-radius:14px;padding:14px 20px;margin-bottom:28px;font-size:12px;color:var(--green-dark);line-height:1.6;}
+.btn-book-consult{background:var(--green);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.btn-book-consult:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(42,74,42,.25);}
+/* RESULTS VIEW */
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px;}
+.results-header{text-align:center;margin-bottom:48px;}
+.results-icon{font-size:56px;margin-bottom:16px;}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px;}
+.results-header h2 em{font-style:italic;color:var(--green);}
+.results-header p{font-size:14px;color:var(--mid);}
+.scores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+.score-card{background:white;border-radius:20px;padding:28px 20px;text-align:center;border:1px solid rgba(0,0,0,.06);}
+.score-card-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:8px;}
+.score-card-val{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;color:var(--charcoal);line-height:1;margin-bottom:6px;}
+.score-card-level{font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;display:inline-block;margin-top:4px;}
+.score-card-level.low{background:#E9F7EF;color:#27AE60;}
+.score-card-level.medium{background:#FEF9E7;color:#D4AC0D;}
+.score-card-level.high{background:#FDF0E8;color:#E07B39;}
+.score-card-level.severe{background:#FDEAEA;color:#C0392B;}
+.forwarded-box{background:var(--green-light);border-radius:16px;padding:20px 24px;margin-bottom:28px;border:1px solid rgba(42,74,42,.15);}
+.forwarded-box p{font-size:13px;color:var(--green-dark);line-height:1.7;}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(42,74,42,.08);}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px;}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8;}
+.subscale-section{margin-top:20px;padding-top:16px;border-top:1px solid rgba(0,0,0,.06);}
+.subscale-section h4{font-size:13px;font-weight:600;color:var(--copper);margin-bottom:8px;}
+.cta-results{background:linear-gradient(135deg,var(--green-dark),var(--copper));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px;}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px;}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7;}
+.btn-consult{background:white;color:var(--green-dark);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2);}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7;}
+/* Loading state */
+.loading-wrap{max-width:560px;margin:0 auto;padding:80px 24px;text-align:center;}
+.loading-icon{font-size:48px;margin-bottom:20px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+.loading-wrap p{font-size:14px;color:var(--mid);line-height:1.7;}
+@media(max-width:768px){
+  nav{padding:12px 20px;}
+  .info-wrap,.results-wrap,.gate-wrap,.locked-wrap{padding-left:20px;padding-right:20px;}
+  .subscale-grid,.scores-grid{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain:"creaven-01.firebaseapp.com",
+  projectId:"creaven-01",
+  storageBucket:"creaven-01.firebasestorage.app",
+  messagingSenderId:"247953277751",
+  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+});
+var auth=firebase.auth();
+var db=firebase.firestore();
+var currentUser=null;
+var TEST_ID='cbi';
+
+auth.onAuthStateChanged(function(user){
+  if(!user){showView('view-gate');}
+  else{
+    currentUser=user;
+    checkAccess();
+  }
+});
+
+function checkAccess(){
+  db.collection('bookings')
+    .where('clientEmail','==',currentUser.email)
+    .where('testId','==',TEST_ID)
+    .where('paymentStatus','==','paid')
+    .get()
+    .then(function(snap){
+      if(snap.empty){showView('view-locked');return;}
+      var now=new Date(),valid=null;
+      snap.forEach(function(doc){
+        var d=doc.data();
+        if(d.date&&d.time){
+          var consult=new Date(d.date+'T'+d.time);
+          var expires=new Date(consult.getTime()-15*60*1000);
+          if(now<expires) valid=expires;
+        }
+      });
+      if(valid){
+        var expStr=valid.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+' — '+valid.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+        document.getElementById('accessExpiry').textContent=expStr;
+        // Check if practitioner has already entered results
+        checkForResults();
+      } else {
+        showView('view-locked');
+      }
+    }).catch(function(){showView('view-locked');});
+}
+
+function checkForResults(){
+  // Check if CBI results already entered by practitioner
+  db.collection('assessmentResults')
+    .where('userId','==',currentUser.uid)
+    .where('assessment','==','CBI')
+    .orderBy('completedAt','desc')
+    .limit(1)
+    .get()
+    .then(function(snap){
+      if(!snap.empty){
+        var data=snap.docs[0].data();
+        showResults(data);
+      } else {
+        showView('view-info');
+        applyTranslations();
+      }
+    })
+    .catch(function(){
+      showView('view-info');
+      applyTranslations();
+    });
+}
+
+function showResults(data){
+  var t=T[lang]||T.en;
+  var pb=data.personalBurnout||0;
+  var wb=data.workBurnout||0;
+  var cb=data.clientBurnout||0;
+  function level(score){
+    if(score<50) return 'low';
+    if(score<75) return 'medium';
+    if(score<100) return 'high';
+    return 'severe';
+  }
+  function levelLabel(score){
+    var t2=T[lang]||T.en;
+    var lvls=[t2.level_low,t2.level_medium,t2.level_high,t2.level_severe];
+    if(score<50) return lvls[0];
+    if(score<75) return lvls[1];
+    if(score<100) return lvls[2];
+    return lvls[3];
+  }
+  document.getElementById('scoresGrid').innerHTML=
+    '<div class="score-card"><div class="score-card-label">'+t.pb_name+'</div><div class="score-card-val">'+Math.round(pb)+'</div><span class="score-card-level '+level(pb)+'">'+levelLabel(pb)+'</span></div>'+
+    '<div class="score-card"><div class="score-card-label">'+t.wb_name+'</div><div class="score-card-val">'+Math.round(wb)+'</div><span class="score-card-level '+level(wb)+'">'+levelLabel(wb)+'</span></div>'+
+    '<div class="score-card"><div class="score-card-label">'+t.cb_name+'</div><div class="score-card-val">'+Math.round(cb)+'</div><span class="score-card-level '+level(cb)+'">'+levelLabel(cb)+'</span></div>';
+  document.getElementById('cbi-forwarded').innerHTML='<p>'+t.r_forwarded+'</p>';
+  var levKeys=['low','medium','high','severe'];
+  var pbL=level(pb), wbL=level(wb), cbL=level(cb);
+  document.getElementById('cbi-interpretation').innerHTML=
+    '<h3>'+t.interp_title+'</h3><p>'+t.interp_intro+'</p>'+
+    '<div class="subscale-section"><h4>'+t.pb_name+' — '+levelLabel(pb)+'</h4><p>'+t.pb_interp[pbL]+'</p></div>'+
+    '<div class="subscale-section"><h4>'+t.wb_name+' — '+levelLabel(wb)+'</h4><p>'+t.wb_interp[wbL]+'</p></div>'+
+    '<div class="subscale-section"><h4>'+t.cb_name+' — '+levelLabel(cb)+'</h4><p>'+t.cb_interp[cbL]+'</p></div>';
+  document.getElementById('r-cta-h2').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p2').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn2').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer2').innerHTML=t.r_disclaimer;
+  showView('view-results');
+}
+</script>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div><span class="main-name">Creaven</span><div class="sub-name">Psychological Well-being</div></div>
+  </a>
+  <div class="nav-right">
+    <a href="tests.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <span id="nav-back-label">Back to Assessments</span>
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')" class="active-lang">English</button>
+        <button onclick="selectLang('fr','FR')">Français</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Español</button>
+        <button onclick="selectLang('pt','PT')">Português</button>
+        <button onclick="selectLang('it','IT')">Italiano</button>
+        <button onclick="selectLang('nl','NL')">Nederlands</button>
+        <button onclick="selectLang('sv','SV')">Svenska</button>
+        <button onclick="selectLang('pl','PL')">Polski</button>
+        <button onclick="selectLang('ru','RU')">Русский</button>
+        <button onclick="selectLang('tr','TR')">Türkçe</button>
+        <button onclick="selectLang('ar','AR')">العربية</button>
+        <button onclick="selectLang('hi','HI')">हिन्दी</button>
+        <button onclick="selectLang('vi','VI')">Tiếng Việt</button>
+        <button onclick="selectLang('th','TH')">ภาษาไทย</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- GATE -->
+<div class="view" id="view-gate">
+  <div class="gate-wrap">
+    <div class="gate-icon">🔒</div>
+    <h2 id="gate-title">Sign in to access this assessment</h2>
+    <p id="gate-desc">A Creaven account is required to access this assessment.</p>
+    <a href="account.html?redirect=test-cbi.html" class="btn-gate" id="gate-btn">Sign in or create account</a>
+  </div>
+</div>
+
+<!-- LOCKED -->
+<div class="view" id="view-locked">
+  <div class="locked-wrap">
+    <div class="locked-icon">🗝️</div>
+    <h2 id="locked-title">Assessment not yet unlocked</h2>
+    <p id="locked-desc">Book a consultation to unlock this assessment. The CBI is administered by your Creaven psychologist during your consultation.</p>
+    <button class="btn-book" onclick="window.location.href='booking.html?test=cbi'" id="locked-btn">Book consultation</button>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="view" id="view-loading">
+  <div class="loading-wrap">
+    <div class="loading-icon">🌙</div>
+    <p id="loading-text">Loading your results...</p>
+  </div>
+</div>
+
+<!-- INFO -->
+<div class="view" id="view-info">
+  <div class="info-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Professional Burnout</div>
+    <h1>Copenhagen<br><em>Burnout Inventory</em></h1>
+    <div class="abbr">CBI — Kristensen, Borritz, Villadsen & Christensen, 2005</div>
+    <p class="info-desc" id="i-desc">The CBI is a validated 19-item measure of burnout across three dimensions: Personal Burnout, Work-Related Burnout, and Client-Related Burnout. Unlike generic burnout scales, it separates burnout from its source — a critical distinction in the creative industry where professional, personal, and client-related exhaustion often overlap and mask each other.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">19</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">3</div><div class="ic-label" id="i-ml">Subscales</div></div>
+      <div class="info-card"><div class="ic-val">$35</div><div class="ic-label" id="i-pl">Deep Assessment</div></div>
+    </div>
+    <div class="access-banner">
+      <strong id="access-label">✓ Assessment unlocked.</strong> <span id="access-expiry-text">Access available until</span> <strong id="accessExpiry"></strong>
+    </div>
+    <div class="practitioner-banner">
+      <h3 id="practitioner-title">🩺 Administered by your psychologist</h3>
+      <p id="practitioner-desc">The CBI is not a self-administered questionnaire. It is conducted by your Creaven psychologist during your consultation session — allowing for proper context, clarification, and immediate clinical interpretation. Your results will appear here automatically after your session.</p>
+    </div>
+    <div class="subscale-grid">
+      <div class="ss-info">
+        <div class="ss-title" id="ss1-title">Personal Burnout</div>
+        <div class="ss-count">6</div>
+        <div class="ss-label" id="ss1-label">items</div>
+      </div>
+      <div class="ss-info">
+        <div class="ss-title" id="ss2-title">Work Burnout</div>
+        <div class="ss-count">7</div>
+        <div class="ss-label" id="ss2-label">items</div>
+      </div>
+      <div class="ss-info">
+        <div class="ss-title" id="ss3-title">Client Burnout</div>
+        <div class="ss-count">6</div>
+        <div class="ss-label" id="ss3-label">items</div>
+      </div>
+    </div>
+    <div class="info-box copper">
+      <p id="i-what">
+        <strong>What to expect during your consultation:</strong> Your psychologist will ask you 19 questions about your experience of fatigue, exhaustion, and emotional depletion. Some questions relate to your general state, some to your work specifically, and some to your relationship with the people you work with or serve. The process takes approximately 15–20 minutes.
+      </p>
+    </div>
+    <div class="info-box green">
+      <p id="i-scoring">
+        <strong>Scoring:</strong> The CBI uses a 5-point frequency/intensity scale. Scores per subscale range from 0 to 100. A score above 50 is considered clinically significant for that dimension of burnout.
+      </p>
+    </div>
+    <br>
+    <div style="text-align:center;">
+      <button class="btn-book-consult" onclick="window.location.href='booking.html'" id="i-btn-consult">View my consultation</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS (shown after practitioner enters data) -->
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-icon">🔥</div>
+      <h2>Your <em>CBI Results</em></h2>
+      <p id="r-subtitle">Administered by your Creaven psychologist</p>
+    </div>
+    <div class="scores-grid" id="scoresGrid"></div>
+    <div class="forwarded-box" id="cbi-forwarded"></div>
+    <div class="interpretation" id="cbi-interpretation"></div>
+    <div class="cta-results">
+      <h3 id="r-cta-h2">Ready to go deeper?</h3>
+      <p id="r-cta-p2">Your psychologist has reviewed your CBI results and has prepared a follow-up plan for your next session.</p>
+      <button class="btn-consult" id="r-cta-btn2" onclick="window.location.href='booking.html'">Book next consultation</button>
+    </div>
+    <div class="disclaimer" id="r-disclaimer2"><strong>Important:</strong> The CBI is a validated clinical instrument. Results must be interpreted in the context of a full clinical consultation.</div>
+  </div>
+</div>
+
+<script>
+var T={
+  en:{
+    back:"Back to Assessments",eyebrow:"Professional Burnout",
+    desc:"The CBI is a validated 19-item measure of burnout across three dimensions: Personal, Work-Related, and Client-Related Burnout.",
+    ql:"Questions",ml:"Subscales",pl:"Deep Assessment",
+    access_label:"✓ Assessment unlocked.",access_expiry:"Access available until",
+    practitioner_title:"🩺 Administered by your psychologist",
+    practitioner_desc:"The CBI is not a self-administered questionnaire. It is conducted by your Creaven psychologist during your consultation session. Your results will appear here automatically after your session.",
+    ss1_title:"Personal Burnout",ss2_title:"Work Burnout",ss3_title:"Client Burnout",ss_label:"items",
+    i_what:"<strong>What to expect during your consultation:</strong> Your psychologist will ask you 19 questions about your experience of fatigue, exhaustion, and emotional depletion across three areas. The process takes approximately 15–20 minutes.",
+    i_scoring:"<strong>Scoring:</strong> Scores per subscale range from 0 to 100. A score above 50 is considered clinically significant.",
+    i_btn_consult:"View my consultation",
+    pb_name:"Personal Burnout",wb_name:"Work Burnout",cb_name:"Client Burnout",
+    level_low:"Low",level_medium:"Moderate",level_high:"High",level_severe:"Severe",
+    r_forwarded:"✓ Your CBI results have been recorded by your Creaven psychologist and will be reviewed in your next consultation.",
+    r_cta_h:"Ready to go deeper?",r_cta_p:"Your psychologist has reviewed your CBI results and has prepared a follow-up plan for your next session.",r_cta_btn:"Book next consultation",
+    r_disclaimer:"<strong>Important:</strong> The CBI is a validated clinical instrument. Results must be interpreted in the context of a full clinical consultation.",
+    interp_title:"Clinical Burnout Profile",
+    interp_intro:"Your CBI results reveal your burnout profile across three distinct sources. Understanding which dimension is most elevated helps target the most effective intervention.",
+    gate_title:"Sign in to access this assessment",gate_desc:"A Creaven account is required.",gate_btn:"Sign in or create account",
+    locked_title:"Assessment not yet unlocked",locked_desc:"Book a consultation to unlock this assessment. The CBI is administered by your Creaven psychologist during your consultation.",locked_btn:"Book consultation",
+    pb_interp:{
+      low:"Low personal burnout — you are not currently experiencing significant fatigue or emotional depletion at a personal level. This is a protective foundation.",
+      medium:"Moderate personal burnout — you are experiencing a notable degree of fatigue and depletion. This warrants attention and proactive self-care strategies.",
+      high:"High personal burnout — you are experiencing significant physical and emotional exhaustion at a personal level. This is a serious concern that requires immediate intervention.",
+      severe:"Severe personal burnout — you are experiencing extreme depletion. This level is associated with significant health risks and requires comprehensive clinical support."
+    },
+    wb_interp:{
+      low:"Low work burnout — your work is not currently a major source of exhaustion. You appear to be managing your professional demands effectively.",
+      medium:"Moderate work burnout — work is becoming a meaningful source of fatigue. Your psychologist will explore the specific contributors and develop targeted strategies.",
+      high:"High work burnout — work is significantly depleting you. Structural changes to workload, role, or work environment may be needed alongside psychological support.",
+      severe:"Severe work burnout — you are experiencing extreme work-related exhaustion. Immediate intervention is required, potentially including leave, role restructuring, or other systemic changes."
+    },
+    cb_interp:{
+      low:"Low client burnout — your relationships with those you work with or serve are not currently a major source of exhaustion.",
+      medium:"Moderate client burnout — interactions with clients, colleagues, or collaborators are beginning to drain you. Your psychologist will explore boundary-setting and relationship dynamics.",
+      high:"High client burnout — you are finding your professional relationships significantly exhausting. This may be affecting the quality of your work and your well-being.",
+      severe:"Severe client burnout — professional relationships are causing extreme depletion. This requires immediate attention and may indicate compassion fatigue or secondary traumatic stress."
+    }
+  },
+  fr:{
+    back:"Retour aux évaluations",eyebrow:"Burnout Professionnel",
+    desc:"Le CBI est un outil clinique validé de 19 items mesurant le burnout dans trois dimensions.",
+    ql:"Questions",ml:"Sous-échelles",pl:"Évaluation approfondie",
+    access_label:"✓ Évaluation déverrouillée.",access_expiry:"Accès disponible jusqu'au",
+    practitioner_title:"🩺 Administré par votre psychologue",
+    practitioner_desc:"Le CBI n'est pas un questionnaire auto-administré. Il est conduit par votre psychologue Creaven lors de votre consultation. Vos résultats apparaîtront ici automatiquement après votre séance.",
+    ss1_title:"Burnout Personnel",ss2_title:"Burnout au Travail",ss3_title:"Burnout Client",ss_label:"items",
+    i_what:"<strong>À quoi s'attendre lors de votre consultation :</strong> Votre psychologue vous posera 19 questions sur votre expérience de fatigue et d'épuisement. Le processus dure environ 15 à 20 minutes.",
+    i_scoring:"<strong>Notation :</strong> Les scores par sous-échelle vont de 0 à 100. Un score supérieur à 50 est considéré comme cliniquement significatif.",
+    i_btn_consult:"Voir ma consultation",
+    pb_name:"Burnout Personnel",wb_name:"Burnout au Travail",cb_name:"Burnout Client",
+    level_low:"Faible",level_medium:"Modéré",level_high:"Élevé",level_severe:"Sévère",
+    r_forwarded:"✓ Vos résultats CBI ont été enregistrés par votre psychologue Creaven.",
+    r_cta_h:"Prêt(e) à aller plus loin ?",r_cta_p:"Votre psychologue a examiné vos résultats et a préparé un plan de suivi.",r_cta_btn:"Réserver la prochaine consultation",
+    r_disclaimer:"<strong>Important :</strong> Le CBI est un instrument clinique validé. Les résultats doivent être interprétés dans le cadre d'une consultation clinique complète.",
+    interp_title:"Profil clinique de burnout",
+    interp_intro:"Vos résultats CBI révèlent votre profil de burnout dans trois dimensions distinctes.",
+    gate_title:"Connectez-vous pour accéder",gate_desc:"Un compte Creaven est requis.",gate_btn:"Se connecter ou créer un compte",
+    locked_title:"Évaluation non déverrouillée",locked_desc:"Réservez une consultation pour débloquer cette évaluation. Le CBI est administré par votre psychologue.",locked_btn:"Réserver une consultation",
+    pb_interp:{low:"Burnout personnel faible.",medium:"Burnout personnel modéré.",high:"Burnout personnel élevé.",severe:"Burnout personnel sévère."},
+    wb_interp:{low:"Burnout professionnel faible.",medium:"Burnout professionnel modéré.",high:"Burnout professionnel élevé.",severe:"Burnout professionnel sévère."},
+    cb_interp:{low:"Burnout client faible.",medium:"Burnout client modéré.",high:"Burnout client élevé.",severe:"Burnout client sévère."}
+  }
+};
+
+// Build remaining langs with minimal data
+var langShort={
+  de:{back:"Zurück",eyebrow:"Professionelles Burnout",desc:"Der CBI ist ein valides 19-Item-Maß für Burnout in drei Dimensionen.",ql:"Fragen",ml:"Subskalen",pl:"Tiefes Assessment",access_label:"✓ Freigeschaltet.",access_expiry:"Zugang bis",practitioner_title:"🩺 Von Ihrem Psychologen durchgeführt",practitioner_desc:"Der CBI wird nicht selbst ausgefüllt. Er wird von Ihrem Creaven-Psychologen während Ihrer Konsultation durchgeführt.",ss1_title:"Persönliches Burnout",ss2_title:"Arbeitsbezogenes Burnout",ss3_title:"Klientenbezogenes Burnout",ss_label:"Items",i_what:"<strong>Was Sie bei Ihrer Konsultation erwartet:</strong> Ihr Psychologe wird Ihnen 19 Fragen über Ihre Erschöpfungserfahrungen stellen.",i_scoring:"<strong>Bewertung:</strong> Scores pro Subskala reichen von 0 bis 100. Ein Score über 50 gilt als klinisch bedeutsam.",i_btn_consult:"Meine Konsultation anzeigen",pb_name:"Persönliches Burnout",wb_name:"Arbeitsburnout",cb_name:"Klientenburnout",level_low:"Niedrig",level_medium:"Moderat",level_high:"Hoch",level_severe:"Schwer",r_forwarded:"✓ Ihre CBI-Ergebnisse wurden von Ihrem Creaven-Psychologen aufgezeichnet.",r_cta_h:"Bereit für mehr?",r_cta_p:"Ihr Psychologe hat Ihre Ergebnisse überprüft.",r_cta_btn:"Nächste Konsultation buchen",r_disclaimer:"<strong>Wichtig:</strong> Der CBI ist ein valides klinisches Instrument. Ergebnisse müssen im Rahmen einer Konsultation interpretiert werden.",interp_title:"Klinisches Burnout-Profil",interp_intro:"Ihre CBI-Ergebnisse zeigen Ihr Burnout-Profil in drei Dimensionen.",gate_title:"Anmelden",gate_desc:"Creaven-Konto erforderlich.",gate_btn:"Anmelden",locked_title:"Nicht freigeschaltet",locked_desc:"Buchen Sie eine Konsultation. Der CBI wird von Ihrem Psychologen durchgeführt.",locked_btn:"Konsultation buchen",pb_interp:{low:"Niedriges persönliches Burnout.",medium:"Moderates persönliches Burnout.",high:"Hohes persönliches Burnout.",severe:"Schweres persönliches Burnout."},wb_interp:{low:"Niedriges Arbeitsburnout.",medium:"Moderates Arbeitsburnout.",high:"Hohes Arbeitsburnout.",severe:"Schweres Arbeitsburnout."},cb_interp:{low:"Niedriges Klientenburnout.",medium:"Moderates Klientenburnout.",high:"Hohes Klientenburnout.",severe:"Schweres Klientenburnout."}},
+  es:{back:"Volver",eyebrow:"Burnout Profesional",desc:"El CBI es una medida validada de 19 ítems del burnout en tres dimensiones.",ql:"Preguntas",ml:"Subescalas",pl:"Evaluación profunda",access_label:"✓ Desbloqueado.",access_expiry:"Acceso hasta",practitioner_title:"🩺 Administrado por su psicólogo",practitioner_desc:"El CBI no es un cuestionario de autoaplicación. Lo realiza su psicólogo de Creaven durante su consulta.",ss1_title:"Burnout Personal",ss2_title:"Burnout Laboral",ss3_title:"Burnout con Clientes",ss_label:"ítems",i_what:"<strong>Qué esperar en su consulta:</strong> Su psicólogo le hará 19 preguntas sobre su experiencia de fatiga y agotamiento.",i_scoring:"<strong>Puntuación:</strong> Las puntuaciones por subescala van de 0 a 100. Una puntuación superior a 50 se considera clínicamente significativa.",i_btn_consult:"Ver mi consulta",pb_name:"Burnout Personal",wb_name:"Burnout Laboral",cb_name:"Burnout con Clientes",level_low:"Bajo",level_medium:"Moderado",level_high:"Alto",level_severe:"Severo",r_forwarded:"✓ Sus resultados CBI han sido registrados por su psicólogo de Creaven.",r_cta_h:"¿Listo para profundizar?",r_cta_p:"Su psicólogo ha revisado sus resultados.",r_cta_btn:"Reservar próxima consulta",r_disclaimer:"<strong>Importante:</strong> El CBI es un instrumento clínico validado.",interp_title:"Perfil clínico de burnout",interp_intro:"Sus resultados CBI revelan su perfil de burnout en tres dimensiones.",gate_title:"Iniciar sesión",gate_desc:"Cuenta Creaven requerida.",gate_btn:"Iniciar sesión",locked_title:"No desbloqueado",locked_desc:"Reserve una consulta. El CBI es administrado por su psicólogo.",locked_btn:"Reservar consulta",pb_interp:{low:"Burnout personal bajo.",medium:"Burnout personal moderado.",high:"Burnout personal alto.",severe:"Burnout personal severo."},wb_interp:{low:"Burnout laboral bajo.",medium:"Burnout laboral moderado.",high:"Burnout laboral alto.",severe:"Burnout laboral severo."},cb_interp:{low:"Burnout con clientes bajo.",medium:"Burnout con clientes moderado.",high:"Burnout con clientes alto.",severe:"Burnout con clientes severo."}},
+  pt:{back:"Voltar",eyebrow:"Burnout Profissional",desc:"O CBI é uma medida validada de 19 itens de burnout em três dimensões.",ql:"Questões",ml:"Subescalas",pl:"Avaliação profunda",access_label:"✓ Desbloqueado.",access_expiry:"Acesso até",practitioner_title:"🩺 Administrado pelo seu psicólogo",practitioner_desc:"O CBI não é um questionário de auto-preenchimento. É conduzido pelo seu psicólogo Creaven durante a sua consulta.",ss1_title:"Burnout Pessoal",ss2_title:"Burnout no Trabalho",ss3_title:"Burnout com Clientes",ss_label:"itens",i_what:"<strong>O que esperar na sua consulta:</strong> O seu psicólogo fará 19 perguntas sobre a sua experiência de fadiga e esgotamento.",i_scoring:"<strong>Pontuação:</strong> As pontuações por subescala variam de 0 a 100. Uma pontuação acima de 50 é considerada clinicamente significativa.",i_btn_consult:"Ver a minha consulta",pb_name:"Burnout Pessoal",wb_name:"Burnout no Trabalho",cb_name:"Burnout com Clientes",level_low:"Baixo",level_medium:"Moderado",level_high:"Alto",level_severe:"Grave",r_forwarded:"✓ Os seus resultados CBI foram registados pelo seu psicólogo Creaven.",r_cta_h:"Pronto para aprofundar?",r_cta_p:"O seu psicólogo analisou os seus resultados.",r_cta_btn:"Agendar próxima consulta",r_disclaimer:"<strong>Importante:</strong> O CBI é um instrumento clínico validado.",interp_title:"Perfil clínico de burnout",interp_intro:"Os seus resultados CBI revelam o seu perfil de burnout em três dimensões.",gate_title:"Iniciar sessão",gate_desc:"Conta Creaven necessária.",gate_btn:"Iniciar sessão",locked_title:"Não desbloqueado",locked_desc:"Reserve uma consulta. O CBI é administrado pelo seu psicólogo.",locked_btn:"Reservar consulta",pb_interp:{low:"Burnout pessoal baixo.",medium:"Burnout pessoal moderado.",high:"Burnout pessoal alto.",severe:"Burnout pessoal grave."},wb_interp:{low:"Burnout no trabalho baixo.",medium:"Burnout no trabalho moderado.",high:"Burnout no trabalho alto.",severe:"Burnout no trabalho grave."},cb_interp:{low:"Burnout com clientes baixo.",medium:"Burnout com clientes moderado.",high:"Burnout com clientes alto.",severe:"Burnout com clientes grave."}}
+};
+
+// Add remaining languages with minimal structure
+['it','nl','sv','pl','ru','tr','ar','hi','vi','th','zh','jp','kr'].forEach(function(l){
+  var names={
+    it:{back:"Torna",eyebrow:"Burnout Professionale",pb:"Burnout Personale",wb:"Burnout Lavorativo",cb:"Burnout con Clienti",low:"Basso",med:"Moderato",high:"Alto",sev:"Grave",btn:"Vedi consulenza",cta:"Prenota prossima consulenza",p1:"🩺 Amministrato dal suo psicologo",p2:"Il CBI non è un questionario auto-somministrato. Viene condotto dallo psicologo Creaven durante la consulenza.",locked:"Non sbloccato"},
+    nl:{back:"Terug",eyebrow:"Professionele Burnout",pb:"Persoonlijke Burnout",wb:"Werk Burnout",cb:"Cliënt Burnout",low:"Laag",med:"Matig",high:"Hoog",sev:"Ernstig",btn:"Consultatie bekijken",cta:"Volgende consultatie boeken",p1:"🩺 Afgenomen door uw psycholoog",p2:"De CBI wordt afgenomen door uw Creaven-psycholoog tijdens uw consultatie.",locked:"Niet ontgrendeld"},
+    sv:{back:"Tillbaka",eyebrow:"Professionell Utbrändhet",pb:"Personlig Utbrändhet",wb:"Arbetsrelaterad Utbrändhet",cb:"Klientrelaterad Utbrändhet",low:"Låg",med:"Måttlig",high:"Hög",sev:"Svår",btn:"Visa konsultation",cta:"Boka nästa konsultation",p1:"🩺 Administreras av din psykolog",p2:"CBI administreras av din Creaven-psykolog under din konsultation.",locked:"Inte upplåst"},
+    pl:{back:"Powrót",eyebrow:"Wypalenie Zawodowe",pb:"Wypalenie Osobiste",wb:"Wypalenie Zawodowe",cb:"Wypalenie Klientem",low:"Niski",med:"Umiarkowany",high:"Wysoki",sev:"Ciężki",btn:"Wyświetl konsultację",cta:"Zarezerwuj kolejną konsultację",p1:"🩺 Przeprowadzane przez psychologa",p2:"CBI jest przeprowadzane przez psychologa Creaven podczas konsultacji.",locked:"Nie odblokowano"},
+    ru:{back:"Назад",eyebrow:"Профессиональное Выгорание",pb:"Личное Выгорание",wb:"Рабочее Выгорание",cb:"Клиентское Выгорание",low:"Низкий",med:"Умеренный",high:"Высокий",sev:"Тяжёлый",btn:"Просмотреть консультацию",cta:"Записаться на следующую консультацию",p1:"🩺 Проводится вашим психологом",p2:"CBI проводится психологом Creaven во время консультации.",locked:"Не разблокировано"},
+    tr:{back:"Geri",eyebrow:"Mesleki Tükenmişlik",pb:"Kişisel Tükenmişlik",wb:"İşle İlgili Tükenmişlik",cb:"Müşteriyle İlgili Tükenmişlik",low:"Düşük",med:"Orta",high:"Yüksek",sev:"Ağır",btn:"Konsültasyonumu gör",cta:"Sonraki konsültasyonu rezerve et",p1:"🩺 Psikologunuz tarafından uygulanan",p2:"CBI, Creaven psikologunuz tarafından konsültasyon sırasında uygulanır.",locked:"Henüz açılmadı"},
+    ar:{back:"رجوع",eyebrow:"الإرهاق المهني",pb:"الإرهاق الشخصي",wb:"الإرهاق المهني",cb:"الإرهاق مع العملاء",low:"منخفض",med:"معتدل",high:"مرتفع",sev:"شديد",btn:"عرض الاستشارة",cta:"حجز الاستشارة التالية",p1:"🩺 يُدار من قِبل معالجك النفسي",p2:"لا يُملأ CBI ذاتياً، بل يُجريه معالجك النفسي خلال جلسة الاستشارة.",locked:"غير مفتوح"},
+    hi:{back:"वापस",eyebrow:"व्यावसायिक बर्नआउट",pb:"व्यक्तिगत बर्नआउट",wb:"कार्य बर्नआउट",cb:"ग्राहक बर्नआउट",low:"कम",med:"मध्यम",high:"उच्च",sev:"गंभीर",btn:"परामर्श देखें",cta:"अगला परामर्श बुक करें",p1:"🩺 आपके मनोवैज्ञानिक द्वारा प्रशासित",p2:"CBI एक स्व-प्रशासित प्रश्नावली नहीं है। यह आपके Creaven मनोवैज्ञानिक द्वारा परामर्श के दौरान आयोजित किया जाता है।",locked:"अनलॉक नहीं"},
+    vi:{back:"Quay lại",eyebrow:"Kiệt sức Nghề nghiệp",pb:"Kiệt sức Cá nhân",wb:"Kiệt sức Công việc",cb:"Kiệt sức với Khách hàng",low:"Thấp",med:"Trung bình",high:"Cao",sev:"Nặng",btn:"Xem tư vấn",cta:"Đặt tư vấn tiếp theo",p1:"🩺 Được thực hiện bởi nhà tâm lý học",p2:"CBI không phải là bảng câu hỏi tự điền. Nó được tiến hành bởi nhà tâm lý học Creaven trong buổi tư vấn.",locked:"Chưa mở khóa"},
+    th:{back:"กลับ",eyebrow:"ความเหนื่อยหน่ายในอาชีพ",pb:"ความเหนื่อยหน่ายส่วนตัว",wb:"ความเหนื่อยหน่ายในงาน",cb:"ความเหนื่อยหน่ายกับลูกค้า",low:"ต่ำ",med:"ปานกลาง",high:"สูง",sev:"รุนแรง",btn:"ดูการนัดหมาย",cta:"จองการนัดหมายครั้งต่อไป",p1:"🩺 ดำเนินการโดยนักจิตวิทยาของคุณ",p2:"CBI ไม่ใช่แบบสอบถามที่ตอบเอง แต่ดำเนินการโดยนักจิตวิทยา Creaven ในระหว่างการนัดหมาย",locked:"ยังไม่ได้ปลดล็อค"},
+    zh:{back:"返回",eyebrow:"职业倦怠",pb:"个人倦怠",wb:"工作倦怠",cb:"客户倦怠",low:"低",med:"中等",high:"高",sev:"严重",btn:"查看咨询",cta:"预约下次咨询",p1:"🩺 由您的心理学家主持",p2:"CBI不是自填问卷，由您的Creaven心理学家在咨询期间进行。",locked:"尚未解锁"},
+    jp:{back:"戻る",eyebrow:"職業的燃え尽き症候群",pb:"個人的燃え尽き",wb:"仕事関連燃え尽き",cb:"クライアント関連燃え尽き",low:"低",med:"中程度",high:"高",sev:"重度",btn:"予約を確認",cta:"次の予約を確認する",p1:"🩺 心理士が実施します",p2:"CBIは自己記入式ではありません。Creaven心理士がコンサルテーション中に実施します。",locked:"未解除"},
+    kr:{back:"돌아가기",eyebrow:"직업적 번아웃",pb:"개인 번아웃",wb:"직업 번아웃",cb:"고객 번아웃",low:"낮음",med:"보통",high:"높음",sev:"심각",btn:"상담 보기",cta:"다음 상담 예약",p1:"🩺 귀하의 심리사가 실시합니다",p2:"CBI는 자기보고식 설문이 아닙니다. Creaven 심리사가 상담 중에 실시합니다.",locked:"잠금 해제 안 됨"}
+  };
+  var n=names[l];
+  T[l]={
+    back:n.back,eyebrow:n.eyebrow,desc:T.en.desc,ql:T.en.ql,ml:T.en.ml,pl:T.en.pl,
+    access_label:T.en.access_label,access_expiry:T.en.access_expiry,
+    practitioner_title:n.p1,practitioner_desc:n.p2,
+    ss1_title:n.pb,ss2_title:n.wb,ss3_title:n.cb,ss_label:T.en.ss_label,
+    i_what:T.en.i_what,i_scoring:T.en.i_scoring,i_btn_consult:n.btn,
+    pb_name:n.pb,wb_name:n.wb,cb_name:n.cb,
+    level_low:n.low,level_medium:n.med,level_high:n.high,level_severe:n.sev,
+    r_forwarded:T.en.r_forwarded,r_cta_h:T.en.r_cta_h,r_cta_p:T.en.r_cta_p,r_cta_btn:n.cta,
+    r_disclaimer:T.en.r_disclaimer,interp_title:T.en.interp_title,interp_intro:T.en.interp_intro,
+    gate_title:T.en.gate_title,gate_desc:T.en.gate_desc,gate_btn:T.en.gate_btn,
+    locked_title:T.en.locked_title,locked_desc:n.locked,locked_btn:T.en.locked_btn,
+    pb_interp:T.en.pb_interp,wb_interp:T.en.wb_interp,cb_interp:T.en.cb_interp
+  };
+});
+
+// Merge langShort
+['de','es','pt'].forEach(function(l){T[l]=langShort[l];});
+
+var lang='en';
+
+function toggleLangMenu(){ document.getElementById('langDropdown').classList.toggle('open'); }
+function selectLang(l,label){
+  lang=l;
+  document.getElementById('langToggle').textContent=label;
+  document.getElementById('langDropdown').classList.remove('open');
+  document.querySelectorAll('.lang-dropdown button').forEach(function(b){b.classList.remove('active-lang');});
+  event.target.classList.add('active-lang');
+  document.documentElement.lang=l;
+  document.documentElement.dir=(l==='ar')?'rtl':'ltr';
+  applyTranslations();
+}
+document.addEventListener('click',function(e){ if(!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open'); });
+
+function applyTranslations(){
+  var t=T[lang]; if(!t) return;
+  document.getElementById('nav-back-label').textContent=t.back;
+  // Info view
+  var eyebrow=document.getElementById('i-eyebrow'); if(eyebrow) eyebrow.textContent=t.eyebrow;
+  var desc=document.getElementById('i-desc'); if(desc) desc.textContent=t.desc;
+  var accLabel=document.getElementById('access-label'); if(accLabel) accLabel.textContent=t.access_label;
+  var accExp=document.getElementById('access-expiry-text'); if(accExp) accExp.textContent=t.access_expiry;
+  var ptitle=document.getElementById('practitioner-title'); if(ptitle) ptitle.textContent=t.practitioner_title;
+  var pdesc=document.getElementById('practitioner-desc'); if(pdesc) pdesc.textContent=t.practitioner_desc;
+  var ss1=document.getElementById('ss1-title'); if(ss1) ss1.textContent=t.ss1_title;
+  var ss2=document.getElementById('ss2-title'); if(ss2) ss2.textContent=t.ss2_title;
+  var ss3=document.getElementById('ss3-title'); if(ss3) ss3.textContent=t.ss3_title;
+  var iw=document.getElementById('i-what'); if(iw) iw.innerHTML=t.i_what;
+  var isc=document.getElementById('i-scoring'); if(isc) isc.innerHTML=t.i_scoring;
+  var ibtn=document.getElementById('i-btn-consult'); if(ibtn) ibtn.textContent=t.i_btn_consult;
+  // Gate/locked
+  var gt=document.getElementById('gate-title'); if(gt) gt.textContent=t.gate_title;
+  var gd=document.getElementById('gate-desc'); if(gd) gd.textContent=t.gate_desc;
+  var gb=document.getElementById('gate-btn'); if(gb) gb.textContent=t.gate_btn;
+  var lt=document.getElementById('locked-title'); if(lt) lt.textContent=t.locked_title;
+  var ld=document.getElementById('locked-desc'); if(ld) ld.textContent=t.locked_desc;
+  var lb=document.getElementById('locked-btn'); if(lb) lb.textContent=t.locked_btn;
+}
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

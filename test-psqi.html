@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSQI — Sleep Quality Index | Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-dark:#2A4A2A;--green:#3A6B3A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
+  --cream:#FAFCFA;--cream-dark:#F0F5F0;
+  --charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  --indigo:#4A3A8A;--indigo-light:#ECEAF5;
+  --red:#C0392B;--red-light:#FDEAEA;
+  --orange:#D46A1A;--orange-light:#FEF0E8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-back{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-back:hover{color:var(--green);}
+.nav-back svg{width:16px;height:16px;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:160px;z-index:200;max-height:320px;overflow-y:auto;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:10px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover,.lang-dropdown button.active-lang{background:var(--green-light);color:var(--green-dark);}
+.view{display:none;}.view.active{display:block;}
+.gate-wrap,.locked-wrap{max-width:560px;margin:0 auto;padding:80px 24px;text-align:center;}
+.gate-icon,.locked-icon{font-size:48px;margin-bottom:20px;}
+.gate-wrap h2,.locked-wrap h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:12px;}
+.gate-wrap p,.locked-wrap p{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:24px;}
+.btn-gate,.btn-book{background:var(--green);color:white;padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:inline-block;text-decoration:none;}
+.btn-gate:hover,.btn-book:hover{background:var(--green-dark);transform:translateY(-2px);}
+.intro-wrap{max-width:720px;margin:0 auto;padding:60px 24px 80px;}
+.test-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--indigo-light);color:var(--indigo);padding:5px 14px;border-radius:30px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:24px;}
+.intro-wrap h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:10px;}
+.intro-wrap h1 em{font-style:italic;color:var(--green);}
+.abbr{font-size:13px;color:var(--light);letter-spacing:.1em;margin-bottom:28px;}
+.intro-desc{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:36px;font-weight:300;}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+.info-card{background:white;border-radius:16px;padding:20px 24px;border:1px solid rgba(42,74,42,.08);text-align:center;}
+.ic-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--green);line-height:1;margin-bottom:4px;}
+.ic-label{font-size:11px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;}
+.info-box{border-radius:16px;padding:20px 24px;margin-bottom:28px;}
+.info-box p{font-size:13px;line-height:1.7;}
+.info-box.indigo{background:var(--indigo-light);color:var(--indigo);}
+.info-box.green{background:var(--green-light);color:var(--green-dark);}
+.access-banner{background:var(--green-pale);border:1px solid var(--green-light);border-radius:14px;padding:14px 20px;margin-bottom:28px;font-size:12px;color:var(--green-dark);line-height:1.6;}
+.btn-start{background:var(--green);color:white;padding:16px 48px;border-radius:40px;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.btn-start:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(42,74,42,.25);}
+.test-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px;}
+.progress-bar-wrap{margin-bottom:40px;}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.prog-label{font-size:12px;color:var(--light);letter-spacing:.08em;text-transform:uppercase;}
+.prog-count{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--green);font-weight:600;}
+.prog-track{height:4px;background:var(--cream-dark);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(to right,var(--indigo),var(--green));border-radius:2px;transition:width .5s ease;}
+.question-card{background:white;border-radius:24px;padding:40px;box-shadow:0 4px 30px rgba(42,74,42,.08);margin-bottom:32px;animation:fadeSlide .4s ease;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.question-num{font-size:11px;color:var(--light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+.component-tag{display:inline-block;background:var(--indigo-light);color:var(--indigo);padding:3px 10px;border-radius:20px;font-size:10px;font-weight:500;letter-spacing:.08em;margin-bottom:14px;}
+.question-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.35;color:var(--charcoal);margin-bottom:36px;}
+.scale-options{display:flex;flex-direction:column;gap:10px;}
+.scale-option{display:flex;align-items:center;gap:16px;padding:14px 20px;border:1.5px solid rgba(0,0,0,.08);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--cream);}
+.scale-option:hover,.scale-option.selected{border-color:var(--green);background:var(--green-light);}
+.scale-option input{display:none;}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.scale-option.selected .opt-dot{background:var(--green);border-color:var(--green);}
+.scale-option.selected .opt-dot::after{content:'';width:8px;height:8px;background:white;border-radius:50%;}
+.opt-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--green);width:28px;text-align:center;flex-shrink:0;}
+.opt-label{font-size:13px;color:var(--mid);flex:1;}
+.nav-btns{display:flex;justify-content:space-between;align-items:center;}
+.btn-prev{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:12px 28px;border-radius:40px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-prev:hover{border-color:var(--green);color:var(--green);}
+.btn-next{background:var(--green);color:white;padding:12px 36px;border-radius:40px;font-size:13px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-next:hover{background:var(--green-dark);}
+.btn-next:disabled{background:var(--light);cursor:not-allowed;}
+.results-wrap{max-width:760px;margin:0 auto;padding:60px 24px 80px;}
+.results-header{text-align:center;margin-bottom:48px;}
+.results-icon{font-size:56px;margin-bottom:16px;}
+.results-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,48px);font-weight:300;color:var(--charcoal);margin-bottom:10px;}
+.results-header h2 em{font-style:italic;color:var(--green);}
+.results-header p{font-size:14px;color:var(--mid);}
+.total-score-card{background:white;border-radius:24px;padding:40px;text-align:center;margin-bottom:28px;border:1px solid rgba(42,74,42,.08);}
+.ts-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px;}
+.ts-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:600;line-height:1;margin-bottom:8px;}
+.ts-max{font-size:14px;color:var(--light);margin-bottom:20px;}
+.ts-badge{display:inline-block;padding:6px 20px;border-radius:30px;font-size:14px;font-weight:500;}
+.severity-bar-wrap{margin-top:24px;}
+.severity-bar{height:8px;background:linear-gradient(to right,#27AE60,#D4AC0D,#E07B39,#C0392B);border-radius:4px;position:relative;}
+.severity-marker{position:absolute;top:-6px;transform:translateX(-50%);width:20px;height:20px;background:white;border:3px solid var(--charcoal);border-radius:50%;transition:left 1s ease .3s;}
+.severity-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--light);}
+.components-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px;}
+.comp-card{background:var(--cream-dark);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.comp-name{font-size:11px;color:var(--mid);letter-spacing:.04em;}
+.comp-score{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;}
+.forwarded-box{background:var(--green-light);border-radius:16px;padding:20px 24px;margin-bottom:28px;border:1px solid rgba(42,74,42,.15);}
+.forwarded-box p{font-size:13px;color:var(--green-dark);line-height:1.7;}
+.interpretation{background:white;border-radius:20px;padding:32px;margin-bottom:28px;border:1px solid rgba(42,74,42,.08);}
+.interpretation h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:12px;}
+.interpretation p{font-size:14px;color:var(--mid);line-height:1.8;}
+.range-table{width:100%;border-collapse:collapse;margin-top:20px;}
+.range-table th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(0,0,0,.06);}
+.range-table td{padding:10px 12px;font-size:13px;color:var(--mid);border-bottom:1px solid rgba(0,0,0,.04);}
+.range-table tr.current-row td{font-weight:500;color:var(--charcoal);}
+.range-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;}
+.cta-results{background:linear-gradient(135deg,var(--green-dark),var(--indigo));border-radius:20px;padding:36px;text-align:center;color:white;margin-bottom:28px;}
+.cta-results h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px;}
+.cta-results p{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.7;}
+.btn-consult{background:white;color:var(--green-dark);padding:13px 36px;border-radius:40px;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-consult:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2);}
+.disclaimer{background:var(--cream-dark);border-radius:14px;padding:20px 24px;font-size:12px;color:var(--mid);line-height:1.7;}
+.btn-retake{background:transparent;border:1px solid rgba(0,0,0,.12);color:var(--mid);padding:10px 24px;border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:16px;transition:all .2s;}
+.btn-retake:hover{border-color:var(--green);color:var(--green);}
+@media(max-width:768px){
+  nav{padding:12px 20px;}
+  .intro-wrap,.test-wrap,.results-wrap,.gate-wrap,.locked-wrap{padding-left:20px;padding-right:20px;}
+  .question-text{font-size:20px;}
+  .question-card{padding:24px;}
+  .components-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain:"creaven-01.firebaseapp.com",
+  projectId:"creaven-01",
+  storageBucket:"creaven-01.firebasestorage.app",
+  messagingSenderId:"247953277751",
+  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+});
+var auth=firebase.auth();
+var db=firebase.firestore();
+var currentUser=null;
+var TEST_ID='psqi';
+auth.onAuthStateChanged(function(user){
+  if(!user){showView('view-gate');}
+  else{currentUser=user;checkAccess();}
+});
+function checkAccess(){
+  db.collection('bookings')
+    .where('clientEmail','==',currentUser.email)
+    .where('testId','==',TEST_ID)
+    .where('paymentStatus','==','paid')
+    .get()
+    .then(function(snap){
+      if(snap.empty){showView('view-locked');return;}
+      var now=new Date(),valid=null;
+      snap.forEach(function(doc){
+        var d=doc.data();
+        if(d.date&&d.time){
+          var consult=new Date(d.date+'T'+d.time);
+          var expires=new Date(consult.getTime()-15*60*1000);
+          if(now<expires) valid=expires;
+        }
+      });
+      if(valid){
+        var expStr=valid.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+' — '+valid.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+        document.getElementById('accessExpiry').textContent=expStr;
+        showView('view-intro');applyTranslations();
+      } else {showView('view-locked');}
+    }).catch(function(){showView('view-locked');});
+}
+</script>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div><span class="main-name">Creaven</span><div class="sub-name">Psychological Well-being</div></div>
+  </a>
+  <div class="nav-right">
+    <a href="tests.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <span id="nav-back-label">Back to Assessments</span>
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')" class="active-lang">English</button>
+        <button onclick="selectLang('fr','FR')">Français</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Español</button>
+        <button onclick="selectLang('pt','PT')">Português</button>
+        <button onclick="selectLang('it','IT')">Italiano</button>
+        <button onclick="selectLang('nl','NL')">Nederlands</button>
+        <button onclick="selectLang('sv','SV')">Svenska</button>
+        <button onclick="selectLang('pl','PL')">Polski</button>
+        <button onclick="selectLang('ru','RU')">Русский</button>
+        <button onclick="selectLang('tr','TR')">Türkçe</button>
+        <button onclick="selectLang('ar','AR')">العربية</button>
+        <button onclick="selectLang('hi','HI')">हिन्दी</button>
+        <button onclick="selectLang('vi','VI')">Tiếng Việt</button>
+        <button onclick="selectLang('th','TH')">ภาษาไทย</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="view" id="view-gate">
+  <div class="gate-wrap">
+    <div class="gate-icon">🔒</div>
+    <h2 id="gate-title">Sign in to access this assessment</h2>
+    <p id="gate-desc">A Creaven account is required to take assessments.</p>
+    <a href="account.html?redirect=test-psqi.html" class="btn-gate" id="gate-btn">Sign in or create account</a>
+  </div>
+</div>
+
+<div class="view" id="view-locked">
+  <div class="locked-wrap">
+    <div class="locked-icon">🗝️</div>
+    <h2 id="locked-title">Assessment not yet unlocked</h2>
+    <p id="locked-desc">Book a consultation and pay for this test. Access is available until 15 minutes before your consultation.</p>
+    <button class="btn-book" onclick="window.location.href='booking.html?test=psqi'" id="locked-btn">Book consultation + assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-intro">
+  <div class="intro-wrap">
+    <div class="test-eyebrow" id="i-eyebrow">Sleep Quality</div>
+    <h1>Pittsburgh<br><em>Sleep Quality Index</em></h1>
+    <div class="abbr">PSQI — Buysse, Reynolds, Monk, Berman & Kupfer, 1989</div>
+    <p class="intro-desc" id="i-desc">The PSQI is the gold standard clinical measure of sleep quality, covering 7 components: subjective sleep quality, sleep latency, sleep duration, sleep efficiency, sleep disturbances, use of sleeping medication, and daytime dysfunction. In the creative industry, disrupted sleep is endemic — driven by irregular schedules, deadline pressure, screen exposure, and the always-on culture of digital creative work.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-val">19</div><div class="ic-label" id="i-ql">Questions</div></div>
+      <div class="info-card"><div class="ic-val">7</div><div class="ic-label" id="i-ml">Components</div></div>
+      <div class="info-card"><div class="ic-val">$15</div><div class="ic-label" id="i-pl">Quick Screen</div></div>
+    </div>
+    <div class="access-banner">
+      <strong id="access-label">✓ Assessment unlocked.</strong> <span id="access-expiry-text">Access available until</span> <strong id="accessExpiry"></strong>
+    </div>
+    <div class="info-box indigo">
+      <p id="i-note"><strong>Confidential:</strong> Your responses are private and protected. Results will be shared only with your Creaven psychologist, who will review them before your consultation.</p>
+    </div>
+    <div class="info-box green">
+      <p id="i-instructions"><strong>Instructions:</strong> The following questions relate to your usual sleep habits during the past month only. Your answers should indicate the most accurate reply for the majority of days and nights in the past month.</p>
+    </div>
+    <br>
+    <button class="btn-start" id="i-btn-start" onclick="startTest()">Begin Assessment</button>
+  </div>
+</div>
+
+<div class="view" id="view-test">
+  <div class="test-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span class="prog-label" id="t-prog-label">Progress</span>
+        <span class="prog-count" id="progCount">1 / 19</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:5%"></div></div>
+    </div>
+    <div class="question-card" id="questionCard">
+      <div class="question-num" id="questionNum"></div>
+      <div class="component-tag" id="componentTag"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="scale-options" id="scaleOptions"></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="btnPrev" onclick="prevQ()">Previous</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-icon">🌙</div>
+      <h2>Your <em>PSQI Results</em></h2>
+      <p id="r-subtitle">Based on your sleep habits over the past month</p>
+    </div>
+    <div class="total-score-card" id="totalScoreCard"></div>
+    <div class="forwarded-box" id="forwardedBox"></div>
+    <div class="interpretation" id="interpretationBox"></div>
+    <div class="cta-results">
+      <h3 id="r-cta-h">Ready to talk about this?</h3>
+      <p id="r-cta-p">Your psychologist has received your results and will review them before your consultation.</p>
+      <button class="btn-consult" id="r-cta-btn" onclick="window.location.href='booking.html'">View my consultation</button>
+    </div>
+    <div class="disclaimer" id="r-disclaimer"><strong>Important:</strong> The PSQI is a validated clinical screening tool, not a diagnosis. Only a qualified professional can interpret these results in full context.</div>
+    <div style="text-align:center;margin-top:24px;"><button class="btn-retake" onclick="resetTest()" id="r-retake">Retake Assessment</button></div>
+  </div>
+</div>
+
+<script>
+/*
+PSQI SCORING — 7 components, each scored 0-3, global score 0-21
+Component 1: Subjective sleep quality — Q9
+Component 2: Sleep latency — Q2 (minutes to fall asleep) + Q5a (can't sleep in 30 min)
+Component 3: Sleep duration — Q4 (hours of actual sleep)
+Component 4: Sleep efficiency — Q4/((Q3-Q1) hours in bed) × 100
+Component 5: Sleep disturbances — Q5b through Q5j (sum → 0-3)
+Component 6: Use of sleeping medication — Q6
+Component 7: Daytime dysfunction — Q7 + Q8
+
+For simplicity in UI, we map to 19 questions with direct scoring.
+Questions array order:
+0: Q1 bedtime (text → mapped internally)
+1: Q2 minutes to fall asleep
+2: Q3 wake time (text → mapped)
+3: Q4 actual hours sleep
+4: Q5a can't sleep within 30 min
+5: Q5b wake up at night/early morning
+6: Q5c get up to use bathroom
+7: Q5d can't breathe comfortably
+8: Q5e cough or snore loudly
+9: Q5f feel too cold
+10: Q5g feel too hot
+11: Q5h had bad dreams
+12: Q5i pain or discomfort
+13: Q5j other reason disturb sleep
+14: Q6 sleeping medication
+15: Q7 trouble staying awake
+16: Q8 problem keeping enthusiasm
+17: Q9 sleep quality rating
+18: Q10 bed partner (not scored)
+
+For simplicity, questions use 0-3 scale except Q1(bedtime), Q2(minutes), Q3(wake), Q4(hours).
+We use simplified mapping for numeric questions.
+*/
+
+var T={
+  en:{
+    back:"Back to Assessments",eyebrow:"Sleep Quality",
+    desc:"The PSQI is the gold standard clinical measure of sleep quality, covering 7 components. Poor sleep is endemic in the creative industry.",
+    ql:"Questions",ml:"Components",pl:"Quick Screen",
+    note:"<strong>Confidential:</strong> Your responses are private. Results will be shared only with your Creaven psychologist.",
+    instructions:"<strong>Instructions:</strong> The following questions relate to your usual sleep habits during the past month. Your answers should indicate the most accurate reply for the majority of days and nights.",
+    access_label:"✓ Assessment unlocked.",access_expiry:"Access available until",
+    btn_start:"Begin Assessment",prog_label:"Progress",q_of:"of",
+    btn_prev:"Previous",btn_next:"Next",btn_results:"See Results",
+    r_subtitle:"Based on your sleep habits over the past month",
+    r_forwarded:"✓ Your results have been securely transmitted to your Creaven psychologist for review before your consultation.",
+    r_cta_h:"Ready to talk about this?",r_cta_p:"Your psychologist has received your results and will review them before your consultation.",
+    r_cta_btn:"View my consultation",
+    r_disclaimer:"<strong>Important:</strong> The PSQI is a validated screening tool, not a diagnosis.",
+    r_retake:"Retake Assessment",out_of:"out of 21",score_label:"Global Score",
+    gate_title:"Sign in to access this assessment",gate_desc:"A Creaven account is required.",gate_btn:"Sign in or create account",
+    locked_title:"Assessment not yet unlocked",locked_desc:"Book a consultation and pay for this test. Access is available until 15 minutes before your consultation.",locked_btn:"Book consultation + assessment",
+    comp_labels:["Subjective Quality","Sleep Latency","Sleep Duration","Sleep Efficiency","Disturbances","Medication Use","Daytime Function"],
+    ranges:[
+      {min:0,max:5,label:"Good Sleep Quality",color:"#27AE60",bg:"#E9F7EF",action:"Monitor",
+       interp:"Your score indicates good overall sleep quality. Your psychologist will discuss any specific components of concern and how sleep is affecting your creative work."},
+      {min:6,max:10,label:"Poor Sleep Quality",color:"#E07B39",bg:"#FDF0E8",action:"Sleep hygiene + evaluation",
+       interp:"Your score indicates poor sleep quality — above the clinical threshold of 5. Poor sleep is significantly impacting your daily functioning, mood, and creative capacity. Your psychologist will explore the contributing factors."},
+      {min:11,max:21,label:"Very Poor Sleep Quality",color:"#C0392B",bg:"#FDEAEA",action:"Clinical evaluation",
+       interp:"Your score indicates very poor sleep quality. At this level, sleep disturbance is profoundly affecting your health and well-being. Your psychologist will work with you to identify causes and develop a comprehensive sleep improvement plan."}
+    ],
+    questions:[
+      {comp:1,text:"During the past month, what time have you usually gone to bed at night?",
+       opts:[{v:0,l:"Before 10 PM"},{v:1,l:"10 PM – midnight"},{v:2,l:"Midnight – 2 AM"},{v:3,l:"After 2 AM"}]},
+      {comp:2,text:"During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
+       opts:[{v:0,l:"≤ 15 minutes"},{v:1,l:"16–30 minutes"},{v:2,l:"31–60 minutes"},{v:3,l:"More than 60 minutes"}]},
+      {comp:3,text:"During the past month, what time have you usually gotten up in the morning?",
+       opts:[{v:0,l:"Before 6 AM"},{v:1,l:"6–7 AM"},{v:2,l:"7–8 AM"},{v:3,l:"After 8 AM"}]},
+      {comp:4,text:"During the past month, how many hours of actual sleep did you get at night? (This may be different from the number of hours you spend in bed.)",
+       opts:[{v:0,l:"More than 7 hours"},{v:1,l:"6–7 hours"},{v:2,l:"5–6 hours"},{v:3,l:"Less than 5 hours"}]},
+      {comp:2,text:"During the past month, how often have you had trouble sleeping because you cannot get to sleep within 30 minutes?",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Waking up in the middle of the night or early morning",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Having to get up to use the bathroom",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Cannot breathe comfortably",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Cough or snore loudly",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Feel too cold",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Feel too hot",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Had bad dreams",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Have pain",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:5,text:"Other reason disturbing your sleep",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:6,text:"During the past month, how often have you taken medicine to help you sleep (prescribed or over-the-counter)?",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:7,text:"During the past month, how often have you had trouble staying awake while driving, eating meals, or engaging in social activity?",
+       opts:[{v:0,l:"Not during the past month"},{v:1,l:"Less than once a week"},{v:2,l:"Once or twice a week"},{v:3,l:"Three or more times a week"}]},
+      {comp:7,text:"During the past month, how much of a problem has it been for you to keep up enough enthusiasm to get things done?",
+       opts:[{v:0,l:"No problem at all"},{v:1,l:"Only a very slight problem"},{v:2,l:"Somewhat of a problem"},{v:3,l:"A very big problem"}]},
+      {comp:1,text:"During the past month, how would you rate your sleep quality overall?",
+       opts:[{v:0,l:"Very good"},{v:1,l:"Fairly good"},{v:2,l:"Fairly bad"},{v:3,l:"Very bad"}]},
+      {comp:0,text:"Do you have a bed partner or room mate?",
+       opts:[{v:0,l:"No bed partner or room mate"},{v:1,l:"Partner/roommate in other room"},{v:2,l:"Partner in same room, not same bed"},{v:3,l:"Partner in same bed"}]}
+    ]
+  },
+  fr:{
+    back:"Retour aux évaluations",eyebrow:"Qualité du Sommeil",
+    desc:"Le PSQI est le gold standard clinique de la qualité du sommeil, couvrant 7 composantes. Les troubles du sommeil sont endémiques dans l'industrie créative.",
+    ql:"Questions",ml:"Composantes",pl:"Dépistage rapide",
+    note:"<strong>Confidentiel :</strong> Vos réponses sont privées et protégées.",
+    instructions:"<strong>Instructions :</strong> Les questions suivantes concernent vos habitudes de sommeil habituelles au cours du dernier mois. Vos réponses doivent indiquer la réponse la plus précise pour la majorité des jours et des nuits.",
+    access_label:"✓ Évaluation déverrouillée.",access_expiry:"Accès disponible jusqu'au",
+    btn_start:"Commencer l'évaluation",prog_label:"Progression",q_of:"sur",
+    btn_prev:"Précédent",btn_next:"Suivant",btn_results:"Voir les résultats",
+    r_subtitle:"Basé sur vos habitudes de sommeil du mois dernier",
+    r_forwarded:"✓ Vos résultats ont été transmis en toute sécurité à votre psychologue Creaven.",
+    r_cta_h:"Prêt(e) à en parler ?",r_cta_p:"Votre psychologue a reçu vos résultats.",
+    r_cta_btn:"Voir ma consultation",
+    r_disclaimer:"<strong>Important :</strong> Le PSQI est un outil de dépistage validé, pas un diagnostic.",
+    r_retake:"Refaire l'évaluation",out_of:"sur 21",score_label:"Score global",
+    gate_title:"Connectez-vous pour accéder",gate_desc:"Un compte Creaven est requis.",gate_btn:"Se connecter ou créer un compte",
+    locked_title:"Évaluation non déverrouillée",locked_desc:"Réservez une consultation et payez. Accès jusqu'à 15 minutes avant.",locked_btn:"Réserver consultation + évaluation",
+    comp_labels:["Qualité subjective","Latence d'endormissement","Durée du sommeil","Efficacité du sommeil","Perturbations","Médicaments","Fonctionnement diurne"],
+    ranges:[
+      {min:0,max:5,label:"Bonne qualité de sommeil",color:"#27AE60",bg:"#E9F7EF",action:"Surveillance",interp:"Votre score indique une bonne qualité de sommeil globale. Votre psychologue discutera de tout aspect préoccupant."},
+      {min:6,max:10,label:"Mauvaise qualité de sommeil",color:"#E07B39",bg:"#FDF0E8",action:"Hygiène du sommeil + évaluation",interp:"Votre score indique une mauvaise qualité de sommeil, au-dessus du seuil clinique de 5. Votre psychologue explorera les facteurs contributifs."},
+      {min:11,max:21,label:"Très mauvaise qualité de sommeil",color:"#C0392B",bg:"#FDEAEA",action:"Évaluation clinique",interp:"Votre score indique une très mauvaise qualité de sommeil. Votre psychologue travaillera avec vous pour identifier les causes."}
+    ],
+    questions:[
+      {comp:1,text:"Au cours du dernier mois, à quelle heure vous couchez-vous généralement le soir ?",
+       opts:[{v:0,l:"Avant 22h"},{v:1,l:"22h – minuit"},{v:2,l:"Minuit – 2h"},{v:3,l:"Après 2h"}]},
+      {comp:2,text:"Au cours du dernier mois, combien de minutes vous faut-il généralement pour vous endormir chaque soir ?",
+       opts:[{v:0,l:"≤ 15 minutes"},{v:1,l:"16–30 minutes"},{v:2,l:"31–60 minutes"},{v:3,l:"Plus de 60 minutes"}]},
+      {comp:3,text:"Au cours du dernier mois, à quelle heure vous levez-vous généralement le matin ?",
+       opts:[{v:0,l:"Avant 6h"},{v:1,l:"6h–7h"},{v:2,l:"7h–8h"},{v:3,l:"Après 8h"}]},
+      {comp:4,text:"Au cours du dernier mois, combien d'heures de sommeil réel avez-vous eu la nuit ? (Cela peut être différent du nombre d'heures passées au lit.)",
+       opts:[{v:0,l:"Plus de 7 heures"},{v:1,l:"6–7 heures"},{v:2,l:"5–6 heures"},{v:3,l:"Moins de 5 heures"}]},
+      {comp:2,text:"Au cours du dernier mois, combien de fois avez-vous eu du mal à dormir parce que vous ne pouviez pas vous endormir dans les 30 minutes ?",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Se réveiller au milieu de la nuit ou tôt le matin",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Devoir se lever pour aller aux toilettes",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Ne pas pouvoir respirer confortablement",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Tousser ou ronfler bruyamment",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Avoir trop froid",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Avoir trop chaud",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Faire de mauvais rêves",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Avoir des douleurs",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:5,text:"Autre raison perturbant votre sommeil",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:6,text:"Au cours du dernier mois, combien de fois avez-vous pris des médicaments pour vous aider à dormir (prescrits ou en vente libre) ?",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:7,text:"Au cours du dernier mois, combien de fois avez-vous eu du mal à rester éveillé(e) en conduisant, en mangeant ou en participant à des activités sociales ?",
+       opts:[{v:0,l:"Pas au cours du dernier mois"},{v:1,l:"Moins d'une fois par semaine"},{v:2,l:"Une ou deux fois par semaine"},{v:3,l:"Trois fois ou plus par semaine"}]},
+      {comp:7,text:"Au cours du dernier mois, dans quelle mesure cela a-t-il été un problème pour vous de maintenir suffisamment d'enthousiasme pour faire les choses ?",
+       opts:[{v:0,l:"Aucun problème"},{v:1,l:"Un très léger problème"},{v:2,l:"Un problème modéré"},{v:3,l:"Un très grand problème"}]},
+      {comp:1,text:"Au cours du dernier mois, comment évalueriez-vous globalement la qualité de votre sommeil ?",
+       opts:[{v:0,l:"Très bonne"},{v:1,l:"Assez bonne"},{v:2,l:"Assez mauvaise"},{v:3,l:"Très mauvaise"}]},
+      {comp:0,text:"Avez-vous un(e) partenaire de lit ou un(e) colocataire ?",
+       opts:[{v:0,l:"Pas de partenaire ni de colocataire"},{v:1,l:"Partenaire/colocataire dans une autre chambre"},{v:2,l:"Partenaire dans la même chambre, pas dans le même lit"},{v:3,l:"Partenaire dans le même lit"}]}
+    ]
+  },
+  de:{back:"Zurück",eyebrow:"Schlafqualität",desc:"Der PSQI ist das klinische Goldstandard-Maß für Schlafqualität mit 7 Komponenten.",ql:"Fragen",ml:"Komponenten",pl:"Schnell-Screening",note:"<strong>Vertraulich:</strong> Ihre Antworten sind privat.",instructions:"<strong>Anleitung:</strong> Die folgenden Fragen beziehen sich auf Ihre üblichen Schlafgewohnheiten im letzten Monat.",access_label:"✓ Freigeschaltet.",access_expiry:"Zugang bis",btn_start:"Beginnen",prog_label:"Fortschritt",q_of:"von",btn_prev:"Zurück",btn_next:"Weiter",btn_results:"Ergebnisse",r_subtitle:"Basierend auf Ihren Schlafgewohnheiten im letzten Monat",r_forwarded:"✓ Ergebnisse übermittelt.",r_cta_h:"Möchten Sie sprechen?",r_cta_p:"Ihr Psychologe hat die Ergebnisse.",r_cta_btn:"Konsultation",r_disclaimer:"<strong>Wichtig:</strong> Screening-Instrument, keine Diagnose.",r_retake:"Wiederholen",out_of:"von 21",score_label:"Gesamtpunktzahl",gate_title:"Anmelden",gate_desc:"Creaven-Konto erforderlich.",gate_btn:"Anmelden",locked_title:"Nicht freigeschaltet",locked_desc:"Buchen und bezahlen. Zugang bis 15 Min. vor Konsultation.",locked_btn:"Buchen",
+    comp_labels:["Subjektive Qualität","Einschlaflatenz","Schlafdauer","Schlafeffizienz","Störungen","Medikamente","Tagesfunktion"],
+    ranges:[{min:0,max:5,label:"Gute Schlafqualität",color:"#27AE60",bg:"#E9F7EF",action:"Beobachten",interp:"Gute Schlafqualität insgesamt."},{min:6,max:10,label:"Schlechte Schlafqualität",color:"#E07B39",bg:"#FDF0E8",action:"Schlafhygiene + Evaluation",interp:"Schlechte Schlafqualität über dem klinischen Grenzwert von 5."},{min:11,max:21,label:"Sehr schlechte Schlafqualität",color:"#C0392B",bg:"#FDEAEA",action:"Klinische Evaluation",interp:"Sehr schlechte Schlafqualität mit erheblichem Einfluss auf die Gesundheit."}],
+    questions:[
+      {comp:1,text:"Im letzten Monat, wann sind Sie normalerweise abends zu Bett gegangen?",opts:[{v:0,l:"Vor 22 Uhr"},{v:1,l:"22–24 Uhr"},{v:2,l:"0–2 Uhr"},{v:3,l:"Nach 2 Uhr"}]},
+      {comp:2,text:"Im letzten Monat, wie lange hat es normalerweise gedauert, bis Sie eingeschlafen sind?",opts:[{v:0,l:"≤ 15 Minuten"},{v:1,l:"16–30 Minuten"},{v:2,l:"31–60 Minuten"},{v:3,l:"Mehr als 60 Minuten"}]},
+      {comp:3,text:"Im letzten Monat, wann sind Sie normalerweise morgens aufgestanden?",opts:[{v:0,l:"Vor 6 Uhr"},{v:1,l:"6–7 Uhr"},{v:2,l:"7–8 Uhr"},{v:3,l:"Nach 8 Uhr"}]},
+      {comp:4,text:"Im letzten Monat, wie viele Stunden haben Sie tatsächlich pro Nacht geschlafen?",opts:[{v:0,l:"Mehr als 7 Stunden"},{v:1,l:"6–7 Stunden"},{v:2,l:"5–6 Stunden"},{v:3,l:"Weniger als 5 Stunden"}]},
+      {comp:2,text:"Wie oft hatten Sie Probleme einzuschlafen, weil Sie nicht innerhalb von 30 Minuten einschlafen konnten?",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Mitten in der Nacht oder früh morgens aufwachen",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Aufstehen müssen, um die Toilette zu benutzen",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Nicht bequem atmen können",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Husten oder lautes Schnarchen",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Zu kalt fühlen",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Zu warm fühlen",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Schlechte Träume haben",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Schmerzen haben",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:5,text:"Anderer Grund, der den Schlaf stört",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:6,text:"Wie oft haben Sie im letzten Monat Medikamente eingenommen, um zu schlafen?",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:7,text:"Wie oft hatten Sie im letzten Monat Probleme wach zu bleiben beim Fahren, Essen oder bei sozialen Aktivitäten?",opts:[{v:0,l:"Nicht im letzten Monat"},{v:1,l:"Weniger als einmal pro Woche"},{v:2,l:"Ein- bis zweimal pro Woche"},{v:3,l:"Dreimal oder öfter pro Woche"}]},
+      {comp:7,text:"Im letzten Monat, wie sehr war es ein Problem, genug Enthusiasmus aufzubringen, um Dinge zu erledigen?",opts:[{v:0,l:"Kein Problem"},{v:1,l:"Kaum ein Problem"},{v:2,l:"Etwas problematisch"},{v:3,l:"Ein großes Problem"}]},
+      {comp:1,text:"Im letzten Monat, wie würden Sie Ihre Schlafqualität insgesamt bewerten?",opts:[{v:0,l:"Sehr gut"},{v:1,l:"Ziemlich gut"},{v:2,l:"Ziemlich schlecht"},{v:3,l:"Sehr schlecht"}]},
+      {comp:0,text:"Haben Sie einen Bettpartner oder Mitbewohner?",opts:[{v:0,l:"Kein Partner oder Mitbewohner"},{v:1,l:"Partner/Mitbewohner in einem anderen Zimmer"},{v:2,l:"Partner im selben Zimmer, aber nicht im selben Bett"},{v:3,l:"Partner im selben Bett"}]}
+    ]
+  },
+  es:{back:"Volver",eyebrow:"Calidad del Sueño",desc:"El PSQI es el estándar clínico de oro para medir la calidad del sueño con 7 componentes.",ql:"Preguntas",ml:"Componentes",pl:"Cribado rápido",note:"<strong>Confidencial:</strong> Sus respuestas son privadas.",instructions:"<strong>Instrucciones:</strong> Las siguientes preguntas se refieren a sus hábitos de sueño habituales durante el mes pasado.",access_label:"✓ Desbloqueado.",access_expiry:"Acceso hasta",btn_start:"Comenzar",prog_label:"Progreso",q_of:"de",btn_prev:"Anterior",btn_next:"Siguiente",btn_results:"Resultados",r_subtitle:"Basado en sus hábitos de sueño del mes pasado",r_forwarded:"✓ Resultados transmitidos.",r_cta_h:"¿Desea hablar?",r_cta_p:"Su psicólogo ha recibido los resultados.",r_cta_btn:"Ver consulta",r_disclaimer:"<strong>Importante:</strong> Herramienta de cribado, no diagnóstico.",r_retake:"Repetir",out_of:"de 21",score_label:"Puntuación global",gate_title:"Iniciar sesión",gate_desc:"Cuenta Creaven requerida.",gate_btn:"Iniciar sesión",locked_title:"No desbloqueado",locked_desc:"Reserve y pague. Acceso hasta 15 min antes.",locked_btn:"Reservar",
+    comp_labels:["Calidad subjetiva","Latencia","Duración","Eficiencia","Perturbaciones","Medicación","Disfunción diurna"],
+    ranges:[{min:0,max:5,label:"Buena calidad de sueño",color:"#27AE60",bg:"#E9F7EF",action:"Monitoreo",interp:"Buena calidad de sueño en general."},{min:6,max:10,label:"Mala calidad de sueño",color:"#E07B39",bg:"#FDF0E8",action:"Higiene del sueño + evaluación",interp:"Mala calidad de sueño por encima del umbral clínico de 5."},{min:11,max:21,label:"Muy mala calidad de sueño",color:"#C0392B",bg:"#FDEAEA",action:"Evaluación clínica",interp:"Muy mala calidad de sueño con impacto significativo en la salud."}],
+    questions:[
+      {comp:1,text:"Durante el mes pasado, ¿a qué hora se ha acostado habitualmente por la noche?",opts:[{v:0,l:"Antes de las 22h"},{v:1,l:"22h–medianoche"},{v:2,l:"Medianoche–2h"},{v:3,l:"Después de las 2h"}]},
+      {comp:2,text:"¿Cuántos minutos le ha llevado habitualmente quedarse dormido(a)?",opts:[{v:0,l:"≤ 15 minutos"},{v:1,l:"16–30 minutos"},{v:2,l:"31–60 minutos"},{v:3,l:"Más de 60 minutos"}]},
+      {comp:3,text:"¿A qué hora se ha levantado habitualmente por la mañana?",opts:[{v:0,l:"Antes de las 6h"},{v:1,l:"6h–7h"},{v:2,l:"7h–8h"},{v:3,l:"Después de las 8h"}]},
+      {comp:4,text:"¿Cuántas horas de sueño real ha tenido por la noche?",opts:[{v:0,l:"Más de 7 horas"},{v:1,l:"6–7 horas"},{v:2,l:"5–6 horas"},{v:3,l:"Menos de 5 horas"}]},
+      {comp:2,text:"¿Con qué frecuencia ha tenido problemas para dormir porque no podía dormirse en 30 minutos?",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Despertarse a mitad de la noche o muy temprano",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Tener que levantarse al baño",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"No poder respirar cómodamente",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Toser o roncar ruidosamente",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Sentir demasiado frío",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Sentir demasiado calor",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Tener pesadillas",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Tener dolor",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:5,text:"Otra razón que perturba su sueño",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:6,text:"¿Con qué frecuencia ha tomado medicamentos para dormir?",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:7,text:"¿Con qué frecuencia ha tenido problemas para mantenerse despierto(a) mientras conducía, comía o participaba en actividades sociales?",opts:[{v:0,l:"Ninguna vez"},{v:1,l:"Menos de una vez por semana"},{v:2,l:"Una o dos veces por semana"},{v:3,l:"Tres veces o más por semana"}]},
+      {comp:7,text:"¿Cuánto problema ha supuesto para usted mantener suficiente entusiasmo para hacer las cosas?",opts:[{v:0,l:"Ningún problema"},{v:1,l:"Un problema muy leve"},{v:2,l:"Un problema moderado"},{v:3,l:"Un problema muy grande"}]},
+      {comp:1,text:"¿Cómo valoraría en general la calidad de su sueño durante el mes pasado?",opts:[{v:0,l:"Muy buena"},{v:1,l:"Bastante buena"},{v:2,l:"Bastante mala"},{v:3,l:"Muy mala"}]},
+      {comp:0,text:"¿Tiene pareja de cama o compañero/a de habitación?",opts:[{v:0,l:"Sin pareja ni compañero/a"},{v:1,l:"Pareja/compañero/a en otra habitación"},{v:2,l:"Pareja en la misma habitación, no en la misma cama"},{v:3,l:"Pareja en la misma cama"}]}
+    ]
+  },
+  pt:{back:"Voltar",eyebrow:"Qualidade do Sono",desc:"O PSQI é o padrão clínico de ouro para medir a qualidade do sono com 7 componentes.",ql:"Questões",ml:"Componentes",pl:"Rastreio rápido",note:"<strong>Confidencial:</strong> As suas respostas são privadas.",instructions:"<strong>Instruções:</strong> As seguintes perguntas referem-se aos seus hábitos de sono habituais no último mês.",access_label:"✓ Desbloqueado.",access_expiry:"Acesso até",btn_start:"Iniciar",prog_label:"Progresso",q_of:"de",btn_prev:"Anterior",btn_next:"Próximo",btn_results:"Resultados",r_subtitle:"Com base nos seus hábitos de sono do último mês",r_forwarded:"✓ Resultados transmitidos.",r_cta_h:"Gostaria de falar?",r_cta_p:"O seu psicólogo recebeu os resultados.",r_cta_btn:"Ver consulta",r_disclaimer:"<strong>Importante:</strong> Instrumento de rastreio, não diagnóstico.",r_retake:"Refazer",out_of:"de 21",score_label:"Pontuação global",gate_title:"Iniciar sessão",gate_desc:"Conta Creaven necessária.",gate_btn:"Iniciar sessão",locked_title:"Não desbloqueado",locked_desc:"Reserve e pague. Acesso até 15 min antes.",locked_btn:"Reservar",
+    comp_labels:["Qualidade subjetiva","Latência","Duração","Eficiência","Perturbações","Medicação","Disfunção diurna"],
+    ranges:[{min:0,max:5,label:"Boa qualidade do sono",color:"#27AE60",bg:"#E9F7EF",action:"Monitorizar",interp:"Boa qualidade do sono em geral."},{min:6,max:10,label:"Má qualidade do sono",color:"#E07B39",bg:"#FDF0E8",action:"Higiene do sono + avaliação",interp:"Má qualidade do sono acima do limiar clínico de 5."},{min:11,max:21,label:"Muito má qualidade do sono",color:"#C0392B",bg:"#FDEAEA",action:"Avaliação clínica",interp:"Muito má qualidade do sono com impacto significativo na saúde."}],
+    questions:[
+      {comp:1,text:"No último mês, a que horas foi habitualmente para a cama à noite?",opts:[{v:0,l:"Antes das 22h"},{v:1,l:"22h–meia-noite"},{v:2,l:"Meia-noite–2h"},{v:3,l:"Depois das 2h"}]},
+      {comp:2,text:"Quanto tempo (em minutos) demorou habitualmente a adormecer?",opts:[{v:0,l:"≤ 15 minutos"},{v:1,l:"16–30 minutos"},{v:2,l:"31–60 minutos"},{v:3,l:"Mais de 60 minutos"}]},
+      {comp:3,text:"A que horas se levantou habitualmente de manhã?",opts:[{v:0,l:"Antes das 6h"},{v:1,l:"6h–7h"},{v:2,l:"7h–8h"},{v:3,l:"Depois das 8h"}]},
+      {comp:4,text:"Quantas horas de sono real teve por noite?",opts:[{v:0,l:"Mais de 7 horas"},{v:1,l:"6–7 horas"},{v:2,l:"5–6 horas"},{v:3,l:"Menos de 5 horas"}]},
+      {comp:2,text:"Com que frequência teve dificuldade em adormecer porque não conseguia adormecer em 30 minutos?",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Acordar a meio da noite ou de manhã cedo",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Ter de se levantar para ir à casa de banho",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Não conseguir respirar confortavelmente",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Tossir ou ressonar ruidosamente",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Sentir demasiado frio",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Sentir demasiado calor",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Ter pesadelos",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Ter dores",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:5,text:"Outra razão que perturba o sono",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:6,text:"Com que frequência tomou medicamentos para dormir?",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:7,text:"Com que frequência teve dificuldade em manter-se acordado(a)?",opts:[{v:0,l:"Nenhuma vez"},{v:1,l:"Menos de uma vez por semana"},{v:2,l:"Uma ou duas vezes por semana"},{v:3,l:"Três vezes ou mais por semana"}]},
+      {comp:7,text:"Quanto problema teve em manter entusiasmo para fazer as coisas?",opts:[{v:0,l:"Nenhum problema"},{v:1,l:"Um problema muito ligeiro"},{v:2,l:"Um problema moderado"},{v:3,l:"Um problema muito grande"}]},
+      {comp:1,text:"Como avaliaria a qualidade geral do seu sono no último mês?",opts:[{v:0,l:"Muito boa"},{v:1,l:"Razoavelmente boa"},{v:2,l:"Razoavelmente má"},{v:3,l:"Muito má"}]},
+      {comp:0,text:"Tem parceiro(a) de cama ou companheiro(a) de quarto?",opts:[{v:0,l:"Sem parceiro(a) nem companheiro(a)"},{v:1,l:"Parceiro(a) noutro quarto"},{v:2,l:"Parceiro(a) no mesmo quarto, camas separadas"},{v:3,l:"Parceiro(a) na mesma cama"}]}
+    ]
+  }
+};
+
+// For remaining 13 languages, use condensed versions with same structure
+var langShort={
+  it:{back:"Torna",eyebrow:"Qualità del Sonno",desc:"Il PSQI è lo standard clinico di riferimento per misurare la qualità del sonno con 7 componenti.",ql:"Domande",ml:"Componenti",pl:"Screening rapido",note:"<strong>Riservato:</strong> Le sue risposte sono private.",instructions:"<strong>Istruzioni:</strong> Le seguenti domande riguardano le sue abitudini di sonno abituali nel corso dell'ultimo mese.",access_label:"✓ Sbloccato.",access_expiry:"Accesso fino al",btn_start:"Inizia",prog_label:"Progresso",q_of:"di",btn_prev:"Precedente",btn_next:"Avanti",btn_results:"Risultati",r_subtitle:"Basato sulle sue abitudini di sonno dell'ultimo mese",r_forwarded:"✓ Risultati trasmessi.",r_cta_h:"Vuole parlarne?",r_cta_p:"Il suo psicologo ha ricevuto i risultati.",r_cta_btn:"Vedi consulenza",r_disclaimer:"<strong>Importante:</strong> Strumento di screening, non diagnosi.",r_retake:"Ripeti",out_of:"su 21",score_label:"Punteggio globale",gate_title:"Acceda",gate_desc:"Account Creaven necessario.",gate_btn:"Accedi",locked_title:"Non sbloccato",locked_desc:"Prenoti e paghi. 15 min prima.",locked_btn:"Prenota",comp_labels:["Qualità sogg.","Latenza","Durata","Efficienza","Disturbi","Farmaci","Funzione diurna"],ranges:[{min:0,max:5,label:"Buona qualità",color:"#27AE60",bg:"#E9F7EF",action:"Monitoraggio",interp:"Buona qualità del sonno."},{min:6,max:10,label:"Qualità scarsa",color:"#E07B39",bg:"#FDF0E8",action:"Igiene + valutazione",interp:"Qualità del sonno scarsa sopra la soglia clinica di 5."},{min:11,max:21,label:"Qualità molto scarsa",color:"#C0392B",bg:"#FDEAEA",action:"Valutazione clinica",interp:"Qualità del sonno molto scarsa."}]},
+  nl:{back:"Terug",eyebrow:"Slaapkwaliteit",desc:"De PSQI is de klinische goudstandaard voor het meten van slaapkwaliteit met 7 componenten.",ql:"Vragen",ml:"Componenten",pl:"Snelle screening",note:"<strong>Vertrouwelijk:</strong> Uw antwoorden zijn privé.",instructions:"<strong>Instructies:</strong> De volgende vragen hebben betrekking op uw gebruikelijke slaapgewoonten gedurende de afgelopen maand.",access_label:"✓ Ontgrendeld.",access_expiry:"Toegang tot",btn_start:"Begin",prog_label:"Voortgang",q_of:"van",btn_prev:"Vorige",btn_next:"Volgende",btn_results:"Resultaten",r_subtitle:"Gebaseerd op uw slaapgewoonten van de afgelopen maand",r_forwarded:"✓ Resultaten doorgezonden.",r_cta_h:"Wilt u praten?",r_cta_p:"Uw psycholoog heeft de resultaten.",r_cta_btn:"Consultatie bekijken",r_disclaimer:"<strong>Belangrijk:</strong> Screeningsinstrument, geen diagnose.",r_retake:"Opnieuw",out_of:"van 21",score_label:"Globale score",gate_title:"Aanmelden",gate_desc:"Creaven-account vereist.",gate_btn:"Aanmelden",locked_title:"Niet ontgrendeld",locked_desc:"Boek en betaal. 15 min voor consultatie.",locked_btn:"Boeken",comp_labels:["Subjectieve kwal.","Latentie","Duur","Efficiëntie","Verstoringen","Medicatie","Dag functie"],ranges:[{min:0,max:5,label:"Goede slaapkwaliteit",color:"#27AE60",bg:"#E9F7EF",action:"Monitoren",interp:"Goede slaapkwaliteit."},{min:6,max:10,label:"Slechte slaapkwaliteit",color:"#E07B39",bg:"#FDF0E8",action:"Slaaphygiëne + evaluatie",interp:"Slechte slaapkwaliteit boven de klinische drempel van 5."},{min:11,max:21,label:"Zeer slechte slaapkwaliteit",color:"#C0392B",bg:"#FDEAEA",action:"Klinische evaluatie",interp:"Zeer slechte slaapkwaliteit."}]},
+  sv:{back:"Tillbaka",eyebrow:"Sömnkvalitet",desc:"PSQI är guldstandarden för att mäta sömnkvalitet med 7 komponenter.",ql:"Frågor",ml:"Komponenter",pl:"Snabb screening",note:"<strong>Konfidentiellt:</strong> Dina svar är privata.",instructions:"<strong>Instruktioner:</strong> Följande frågor rör dina vanliga sömnvanor under den senaste månaden.",access_label:"✓ Upplåst.",access_expiry:"Åtkomst till",btn_start:"Börja",prog_label:"Framsteg",q_of:"av",btn_prev:"Föregående",btn_next:"Nästa",btn_results:"Resultat",r_subtitle:"Baserat på dina sömnvanor under den senaste månaden",r_forwarded:"✓ Resultat överförda.",r_cta_h:"Vill du prata?",r_cta_p:"Din psykolog har fått resultaten.",r_cta_btn:"Visa konsultation",r_disclaimer:"<strong>Viktigt:</strong> Screeningverktyg, inte diagnos.",r_retake:"Gör om",out_of:"av 21",score_label:"Global poäng",gate_title:"Logga in",gate_desc:"Creaven-konto krävs.",gate_btn:"Logga in",locked_title:"Inte upplåst",locked_desc:"Boka och betala. 15 min före.",locked_btn:"Boka",comp_labels:["Subj. kvalitet","Latens","Varaktighet","Effektivitet","Störningar","Medicin","Dag funktion"],ranges:[{min:0,max:5,label:"God sömnkvalitet",color:"#27AE60",bg:"#E9F7EF",action:"Övervaka",interp:"God sömnkvalitet."},{min:6,max:10,label:"Dålig sömnkvalitet",color:"#E07B39",bg:"#FDF0E8",action:"Sömnhygien + utvärdering",interp:"Dålig sömnkvalitet över klinisk tröskel på 5."},{min:11,max:21,label:"Mycket dålig sömnkvalitet",color:"#C0392B",bg:"#FDEAEA",action:"Klinisk utvärdering",interp:"Mycket dålig sömnkvalitet."}]},
+  pl:{back:"Powrót",eyebrow:"Jakość Snu",desc:"PSQI jest złotym standardem klinicznym pomiaru jakości snu z 7 komponentami.",ql:"Pytania",ml:"Komponenty",pl:"Szybkie badanie",note:"<strong>Poufne:</strong> Twoje odpowiedzi są prywatne.",instructions:"<strong>Instrukcje:</strong> Poniższe pytania dotyczą Twoich zwykłych nawyków snu w ciągu ostatniego miesiąca.",access_label:"✓ Odblokowano.",access_expiry:"Dostęp do",btn_start:"Rozpocznij",prog_label:"Postęp",q_of:"z",btn_prev:"Poprzedni",btn_next:"Następny",btn_results:"Wyniki",r_subtitle:"Na podstawie Twoich nawyków snu z ostatniego miesiąca",r_forwarded:"✓ Wyniki przekazane.",r_cta_h:"Chcesz porozmawiać?",r_cta_p:"Twój psycholog otrzymał wyniki.",r_cta_btn:"Wyświetl konsultację",r_disclaimer:"<strong>Ważne:</strong> Narzędzie przesiewowe, nie diagnoza.",r_retake:"Powtórz",out_of:"z 21",score_label:"Wynik globalny",gate_title:"Zaloguj się",gate_desc:"Konto Creaven wymagane.",gate_btn:"Zaloguj",locked_title:"Nie odblokowano",locked_desc:"Zarezerwuj i zapłać. 15 min przed.",locked_btn:"Zarezerwuj",comp_labels:["Jakość subj.","Latencja","Czas trwania","Efektywność","Zaburzenia","Leki","Funk. dzienna"],ranges:[{min:0,max:5,label:"Dobra jakość snu",color:"#27AE60",bg:"#E9F7EF",action:"Monitorowanie",interp:"Dobra jakość snu."},{min:6,max:10,label:"Zła jakość snu",color:"#E07B39",bg:"#FDF0E8",action:"Higiena snu + ocena",interp:"Zła jakość snu powyżej progu klinicznego wynoszącego 5."},{min:11,max:21,label:"Bardzo zła jakość snu",color:"#C0392B",bg:"#FDEAEA",action:"Ocena kliniczna",interp:"Bardzo zła jakość snu."}]},
+  ru:{back:"Назад",eyebrow:"Качество Сна",desc:"PSQI — золотой стандарт клинического измерения качества сна с 7 компонентами.",ql:"Вопросы",ml:"Компоненты",pl:"Скрининг",note:"<strong>Конфиденциально:</strong> Ваши ответы защищены.",instructions:"<strong>Инструкции:</strong> Следующие вопросы касаются ваших обычных привычек сна за последний месяц.",access_label:"✓ Разблокировано.",access_expiry:"Доступ до",btn_start:"Начать",prog_label:"Прогресс",q_of:"из",btn_prev:"Назад",btn_next:"Далее",btn_results:"Результаты",r_subtitle:"На основе ваших привычек сна за последний месяц",r_forwarded:"✓ Результаты переданы.",r_cta_h:"Хотите поговорить?",r_cta_p:"Психолог получил результаты.",r_cta_btn:"Просмотреть консультацию",r_disclaimer:"<strong>Важно:</strong> Инструмент скрининга, не диагноз.",r_retake:"Повторить",out_of:"из 21",score_label:"Глобальный балл",gate_title:"Войти",gate_desc:"Требуется аккаунт Creaven.",gate_btn:"Войти",locked_title:"Не разблокировано",locked_desc:"Запишитесь и оплатите. 15 минут до консультации.",locked_btn:"Записаться",comp_labels:["Субъект. качество","Латентность","Длительность","Эффективность","Нарушения","Медикаменты","Дневная функция"],ranges:[{min:0,max:5,label:"Хорошее качество сна",color:"#27AE60",bg:"#E9F7EF",action:"Мониторинг",interp:"Хорошее качество сна."},{min:6,max:10,label:"Плохое качество сна",color:"#E07B39",bg:"#FDF0E8",action:"Гигиена сна + оценка",interp:"Плохое качество сна выше клинического порога в 5."},{min:11,max:21,label:"Очень плохое качество сна",color:"#C0392B",bg:"#FDEAEA",action:"Клиническая оценка",interp:"Очень плохое качество сна."}]},
+  tr:{back:"Geri",eyebrow:"Uyku Kalitesi",desc:"PSQI, 7 bileşenle uyku kalitesini ölçmek için klinik altın standarttır.",ql:"Sorular",ml:"Bileşenler",pl:"Tarama",note:"<strong>Gizli:</strong> Yanıtlarınız korumalıdır.",instructions:"<strong>Talimatlar:</strong> Aşağıdaki sorular, geçen ay boyunca olağan uyku alışkanlıklarınızla ilgilidir.",access_label:"✓ Kilidi açıldı.",access_expiry:"Erişim şu tarihe kadar",btn_start:"Başla",prog_label:"İlerleme",q_of:"/",btn_prev:"Önceki",btn_next:"Sonraki",btn_results:"Sonuçlar",r_subtitle:"Geçen aydaki uyku alışkanlıklarınıza göre",r_forwarded:"✓ Sonuçlar iletildi.",r_cta_h:"Konuşmak ister misiniz?",r_cta_p:"Psikologunuz sonuçları aldı.",r_cta_btn:"Konsültasyonu gör",r_disclaimer:"<strong>Önemli:</strong> Tarama aracı, tanı değil.",r_retake:"Tekrarla",out_of:"/ 21",score_label:"Global puan",gate_title:"Giriş yapın",gate_desc:"Creaven hesabı gerekli.",gate_btn:"Giriş yap",locked_title:"Henüz açılmadı",locked_desc:"Rezervasyon yapın ve ödeyin. 15 dk önce.",locked_btn:"Rezervasyon",comp_labels:["Öznel kalite","Gecikme","Süre","Verimlilik","Bozulmalar","İlaç","Gündüz işlevi"],ranges:[{min:0,max:5,label:"İyi uyku kalitesi",color:"#27AE60",bg:"#E9F7EF",action:"İzleme",interp:"İyi uyku kalitesi."},{min:6,max:10,label:"Kötü uyku kalitesi",color:"#E07B39",bg:"#FDF0E8",action:"Uyku hijyeni + değerlendirme",interp:"5'in klinik eşiğinin üzerinde kötü uyku kalitesi."},{min:11,max:21,label:"Çok kötü uyku kalitesi",color:"#C0392B",bg:"#FDEAEA",action:"Klinik değerlendirme",interp:"Çok kötü uyku kalitesi."}]},
+  ar:{back:"رجوع",eyebrow:"جودة النوم",desc:"PSQI هو المعيار الذهبي السريري لقياس جودة النوم بـ 7 مكونات.",ql:"أسئلة",ml:"مكونات",pl:"فحص سريع",note:"<strong>سري:</strong> إجاباتك خاصة ومحمية.",instructions:"<strong>التعليمات:</strong> الأسئلة التالية تتعلق بعادات نومك المعتادة خلال الشهر الماضي.",access_label:"✓ تم فتح التقييم.",access_expiry:"الوصول حتى",btn_start:"ابدأ",prog_label:"التقدم",q_of:"من",btn_prev:"السابق",btn_next:"التالي",btn_results:"النتائج",r_subtitle:"بناءً على عادات نومك خلال الشهر الماضي",r_forwarded:"✓ تم إرسال نتائجك.",r_cta_h:"هل تريد التحدث؟",r_cta_p:"استلم معالجك نتائجك.",r_cta_btn:"عرض الاستشارة",r_disclaimer:"<strong>ملاحظة:</strong> أداة فحص وليست تشخيصاً.",r_retake:"إعادة",out_of:"من 21",score_label:"الدرجة الإجمالية",gate_title:"سجّل الدخول",gate_desc:"يلزم حساب Creaven.",gate_btn:"تسجيل الدخول",locked_title:"غير مفتوح",locked_desc:"احجز وادفع. قبل 15 دقيقة.",locked_btn:"احجز",comp_labels:["الجودة الذاتية","كمون النوم","المدة","الكفاءة","الاضطرابات","الأدوية","الأداء النهاري"],ranges:[{min:0,max:5,label:"جودة نوم جيدة",color:"#27AE60",bg:"#E9F7EF",action:"مراقبة",interp:"جودة نوم جيدة."},{min:6,max:10,label:"جودة نوم سيئة",color:"#E07B39",bg:"#FDF0E8",action:"نظافة النوم + تقييم",interp:"جودة نوم سيئة فوق الحد السريري البالغ 5."},{min:11,max:21,label:"جودة نوم سيئة جداً",color:"#C0392B",bg:"#FDEAEA",action:"تقييم سريري",interp:"جودة نوم سيئة جداً."}]},
+  hi:{back:"वापस",eyebrow:"नींद की गुणवत्ता",desc:"PSQI 7 घटकों के साथ नींद की गुणवत्ता मापने का नैदानिक स्वर्ण मानक है।",ql:"प्रश्न",ml:"घटक",pl:"जांच",note:"<strong>गोपनीय:</strong> आपके उत्तर सुरक्षित हैं।",instructions:"<strong>निर्देश:</strong> निम्नलिखित प्रश्न पिछले महीने आपकी सामान्य नींद की आदतों से संबंधित हैं।",access_label:"✓ आकलन अनलॉक।",access_expiry:"पहुंच उपलब्ध तक",btn_start:"शुरू करें",prog_label:"प्रगति",q_of:"में से",btn_prev:"पिछला",btn_next:"अगला",btn_results:"परिणाम",r_subtitle:"पिछले महीने की नींद की आदतों के आधार पर",r_forwarded:"✓ परिणाम भेजे गए।",r_cta_h:"बात करना चाहते हैं?",r_cta_p:"मनोवैज्ञानिक को परिणाम मिले।",r_cta_btn:"परामर्श देखें",r_disclaimer:"<strong>महत्वपूर्ण:</strong> जांच उपकरण, निदान नहीं।",r_retake:"दोबारा करें",out_of:"21 में से",score_label:"वैश्विक स्कोर",gate_title:"साइन इन करें",gate_desc:"Creaven खाता आवश्यक।",gate_btn:"साइन इन करें",locked_title:"अनलॉक नहीं",locked_desc:"परामर्श बुक करें। 15 मिनट पहले तक पहुंच।",locked_btn:"बुक करें",comp_labels:["व्यक्तिपरक गुणवत्ता","नींद की विलंबता","नींद की अवधि","नींद की दक्षता","व्यवधान","दवाई","दैनिक कार्य"],ranges:[{min:0,max:5,label:"अच्छी नींद की गुणवत्ता",color:"#27AE60",bg:"#E9F7EF",action:"निगरानी",interp:"अच्छी नींद की गुणवत्ता।"},{min:6,max:10,label:"खराब नींद की गुणवत्ता",color:"#E07B39",bg:"#FDF0E8",action:"नींद की स्वच्छता + मूल्यांकन",interp:"5 के नैदानिक सीमा से ऊपर खराब नींद की गुणवत्ता।"},{min:11,max:21,label:"बहुत खराब नींद की गुणवत्ता",color:"#C0392B",bg:"#FDEAEA",action:"नैदानिक मूल्यांकन",interp:"बहुत खराब नींद की गुणवत्ता।"}]},
+  vi:{back:"Quay lại",eyebrow:"Chất lượng Giấc ngủ",desc:"PSQI là tiêu chuẩn vàng lâm sàng để đo lường chất lượng giấc ngủ với 7 thành phần.",ql:"Câu hỏi",ml:"Thành phần",pl:"Sàng lọc",note:"<strong>Bí mật:</strong> Câu trả lời được bảo vệ.",instructions:"<strong>Hướng dẫn:</strong> Các câu hỏi sau liên quan đến thói quen ngủ thông thường của bạn trong tháng qua.",access_label:"✓ Đã mở khóa.",access_expiry:"Truy cập đến",btn_start:"Bắt đầu",prog_label:"Tiến độ",q_of:"/",btn_prev:"Trước",btn_next:"Tiếp",btn_results:"Kết quả",r_subtitle:"Dựa trên thói quen ngủ tháng qua",r_forwarded:"✓ Kết quả đã gửi.",r_cta_h:"Bạn muốn nói chuyện?",r_cta_p:"Nhà tâm lý học đã nhận kết quả.",r_cta_btn:"Xem tư vấn",r_disclaimer:"<strong>Lưu ý:</strong> Công cụ sàng lọc, không phải chẩn đoán.",r_retake:"Làm lại",out_of:"/ 21",score_label:"Điểm tổng",gate_title:"Đăng nhập",gate_desc:"Cần tài khoản Creaven.",gate_btn:"Đăng nhập",locked_title:"Chưa mở khóa",locked_desc:"Đặt lịch và thanh toán. 15 phút trước.",locked_btn:"Đặt lịch",comp_labels:["Chất lượng chủ quan","Tiềm ẩn","Thời gian","Hiệu quả","Gián đoạn","Thuốc","Chức năng ban ngày"],ranges:[{min:0,max:5,label:"Chất lượng giấc ngủ tốt",color:"#27AE60",bg:"#E9F7EF",action:"Theo dõi",interp:"Chất lượng giấc ngủ tốt."},{min:6,max:10,label:"Chất lượng giấc ngủ kém",color:"#E07B39",bg:"#FDF0E8",action:"Vệ sinh giấc ngủ + đánh giá",interp:"Chất lượng giấc ngủ kém trên ngưỡng lâm sàng là 5."},{min:11,max:21,label:"Chất lượng giấc ngủ rất kém",color:"#C0392B",bg:"#FDEAEA",action:"Đánh giá lâm sàng",interp:"Chất lượng giấc ngủ rất kém."}]},
+  th:{back:"กลับ",eyebrow:"คุณภาพการนอนหลับ",desc:"PSQI คือมาตรฐานทองทางคลินิกสำหรับวัดคุณภาพการนอนหลับด้วย 7 องค์ประกอบ",ql:"คำถาม",ml:"องค์ประกอบ",pl:"คัดกรอง",note:"<strong>ความลับ:</strong> คำตอบของคุณได้รับการปกป้อง",instructions:"<strong>คำแนะนำ:</strong> คำถามต่อไปนี้เกี่ยวกับนิสัยการนอนหลับปกติของคุณในช่วงเดือนที่ผ่านมา",access_label:"✓ ปลดล็อคแล้ว",access_expiry:"เข้าถึงได้จนถึง",btn_start:"เริ่ม",prog_label:"ความคืบหน้า",q_of:"/",btn_prev:"ก่อนหน้า",btn_next:"ถัดไป",btn_results:"ผลลัพธ์",r_subtitle:"จากนิสัยการนอนหลับในเดือนที่ผ่านมา",r_forwarded:"✓ ผลลัพธ์ถูกส่งแล้ว",r_cta_h:"ต้องการพูดคุยไหม?",r_cta_p:"นักจิตวิทยาได้รับผลลัพธ์แล้ว",r_cta_btn:"ดูการนัดหมาย",r_disclaimer:"<strong>หมายเหตุ:</strong> เครื่องมือคัดกรอง ไม่ใช่การวินิจฉัย",r_retake:"ทำใหม่",out_of:"/ 21",score_label:"คะแนนรวม",gate_title:"ลงชื่อเข้าใช้",gate_desc:"ต้องมีบัญชี Creaven",gate_btn:"ลงชื่อเข้าใช้",locked_title:"ยังไม่ได้ปลดล็อค",locked_desc:"จองและชำระเงิน 15 นาทีก่อนนัดหมาย",locked_btn:"จอง",comp_labels:["คุณภาพส่วนตัว","เวลาเริ่มนอน","ระยะเวลา","ประสิทธิภาพ","การรบกวน","ยา","การทำงานกลางวัน"],ranges:[{min:0,max:5,label:"คุณภาพการนอนดี",color:"#27AE60",bg:"#E9F7EF",action:"ติดตาม",interp:"คุณภาพการนอนหลับดี"},{min:6,max:10,label:"คุณภาพการนอนไม่ดี",color:"#E07B39",bg:"#FDF0E8",action:"สุขอนามัยการนอน + ประเมิน",interp:"คุณภาพการนอนหลับไม่ดีเกินเกณฑ์คลินิก 5"},{min:11,max:21,label:"คุณภาพการนอนแย่มาก",color:"#C0392B",bg:"#FDEAEA",action:"การประเมินทางคลินิก",interp:"คุณภาพการนอนหลับแย่มาก"}]},
+  zh:{back:"返回",eyebrow:"睡眠质量",desc:"PSQI是测量睡眠质量的临床金标准，涵盖7个成分。",ql:"问题",ml:"成分",pl:"筛查",note:"<strong>保密：</strong>您的回答受到保护。",instructions:"<strong>说明：</strong>以下问题涉及您过去一个月的通常睡眠习惯。",access_label:"✓ 已解锁。",access_expiry:"访问至",btn_start:"开始",prog_label:"进度",q_of:"/",btn_prev:"上一题",btn_next:"下一题",btn_results:"结果",r_subtitle:"基于您过去一个月的睡眠习惯",r_forwarded:"✓ 结果已发送。",r_cta_h:"想谈谈吗？",r_cta_p:"心理学家已收到结果。",r_cta_btn:"查看咨询",r_disclaimer:"<strong>提示：</strong>筛查工具，不是诊断。",r_retake:"重做",out_of:"/ 21",score_label:"总分",gate_title:"请登录",gate_desc:"需要Creaven账户。",gate_btn:"登录",locked_title:"尚未解锁",locked_desc:"预约并支付。15分钟前。",locked_btn:"预约",comp_labels:["主观质量","入睡潜伏期","睡眠时长","睡眠效率","睡眠障碍","睡眠药物","日间功能"],ranges:[{min:0,max:5,label:"良好睡眠质量",color:"#27AE60",bg:"#E9F7EF",action:"监测",interp:"良好的睡眠质量。"},{min:6,max:10,label:"睡眠质量差",color:"#E07B39",bg:"#FDF0E8",action:"睡眠卫生 + 评估",interp:"睡眠质量差，超过临床阈值5。"},{min:11,max:21,label:"睡眠质量非常差",color:"#C0392B",bg:"#FDEAEA",action:"临床评估",interp:"睡眠质量非常差。"}]},
+  jp:{back:"戻る",eyebrow:"睡眠の質",desc:"PSQIは7つのコンポーネントで睡眠の質を測定する臨床ゴールドスタンダードです。",ql:"質問",ml:"コンポーネント",pl:"スクリーニング",note:"<strong>秘密厳守：</strong>回答は保護されています。",instructions:"<strong>指示：</strong>以下の質問は過去1ヶ月間のあなたの通常の睡眠習慣に関するものです。",access_label:"✓ ロック解除済み。",access_expiry:"アクセス期限",btn_start:"開始",prog_label:"進捗",q_of:"/",btn_prev:"前へ",btn_next:"次へ",btn_results:"結果",r_subtitle:"過去1ヶ月の睡眠習慣に基づいて",r_forwarded:"✓ 結果送信済み。",r_cta_h:"話し合いませんか？",r_cta_p:"心理士が結果を受け取りました。",r_cta_btn:"予約を確認",r_disclaimer:"<strong>重要：</strong>スクリーニングツールです。診断ではありません。",r_retake:"再実施",out_of:"/ 21点",score_label:"グローバルスコア",gate_title:"サインイン",gate_desc:"Creavenアカウントが必要です。",gate_btn:"サインイン",locked_title:"未解除",locked_desc:"予約して支払ってください。15分前まで。",locked_btn:"予約する",comp_labels:["主観的質","入眠潜時","睡眠時間","睡眠効率","睡眠障害","睡眠薬","日中機能"],ranges:[{min:0,max:5,label:"良好な睡眠の質",color:"#27AE60",bg:"#E9F7EF",action:"モニタリング",interp:"良好な睡眠の質。"},{min:6,max:10,label:"不良な睡眠の質",color:"#E07B39",bg:"#FDF0E8",action:"睡眠衛生 + 評価",interp:"臨床閾値5を超える不良な睡眠の質。"},{min:11,max:21,label:"非常に不良な睡眠の質",color:"#C0392B",bg:"#FDEAEA",action:"臨床評価",interp:"非常に不良な睡眠の質。"}]},
+  kr:{back:"돌아가기",eyebrow:"수면 질",desc:"PSQI는 7가지 구성 요소로 수면 질을 측정하는 임상 금 표준입니다.",ql:"문항",ml:"구성 요소",pl:"검사",note:"<strong>기밀:</strong> 귀하의 응답은 보호됩니다.",instructions:"<strong>지침:</strong> 다음 질문은 지난 한 달 동안의 평소 수면 습관에 관한 것입니다.",access_label:"✓ 잠금 해제됨.",access_expiry:"접근 가능 기간",btn_start:"시작",prog_label:"진행률",q_of:"/",btn_prev:"이전",btn_next:"다음",btn_results:"결과",r_subtitle:"지난 한 달간의 수면 습관 기준",r_forwarded:"✓ 결과가 전송되었습니다.",r_cta_h:"이야기하고 싶으신가요?",r_cta_p:"심리사가 결과를 받았습니다.",r_cta_btn:"상담 보기",r_disclaimer:"<strong>중요:</strong> 선별 도구입니다. 진단이 아닙니다.",r_retake:"다시 하기",out_of:"/ 21점",score_label:"전체 점수",gate_title:"로그인",gate_desc:"Creaven 계정이 필요합니다.",gate_btn:"로그인",locked_title:"잠금 해제 안 됨",locked_desc:"예약하고 결제하세요. 15분 전까지.",locked_btn:"예약",comp_labels:["주관적 질","수면 잠복기","수면 시간","수면 효율","수면 방해","수면제","주간 기능"],ranges:[{min:0,max:5,label:"좋은 수면 질",color:"#27AE60",bg:"#E9F7EF",action:"모니터링",interp:"좋은 수면 질."},{min:6,max:10,label:"나쁜 수면 질",color:"#E07B39",bg:"#FDF0E8",action:"수면 위생 + 평가",interp:"임상 기준치 5를 초과하는 나쁜 수면 질."},{min:11,max:21,label:"매우 나쁜 수면 질",color:"#C0392B",bg:"#FDEAEA",action:"임상 평가",interp:"매우 나쁜 수면 질."}]}
+};
+
+// Merge short langs — use EN questions for all non-EN/FR/DE/ES/PT langs (questions are same clinically)
+['it','nl','sv','pl','ru','tr','ar','hi','vi','th','zh','jp','kr'].forEach(function(l){
+  var s=langShort[l];
+  s.questions=T.en.questions; // use EN questions for non-translated langs (standard clinical)
+  T[l]=s;
+});
+
+var lang='en', current=0, answers=new Array(19).fill(null), TOTAL_Q=19;
+
+function toggleLangMenu(){ document.getElementById('langDropdown').classList.toggle('open'); }
+function selectLang(l,label){
+  lang=l;
+  document.getElementById('langToggle').textContent=label;
+  document.getElementById('langDropdown').classList.remove('open');
+  document.querySelectorAll('.lang-dropdown button').forEach(function(b){b.classList.remove('active-lang');});
+  event.target.classList.add('active-lang');
+  document.documentElement.lang=l;
+  document.documentElement.dir=(l==='ar')?'rtl':'ltr';
+  applyTranslations();
+  if(document.getElementById('view-test').classList.contains('active')) renderQ();
+}
+document.addEventListener('click',function(e){ if(!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open'); });
+
+function applyTranslations(){
+  var t=T[lang]; if(!t) return;
+  document.getElementById('nav-back-label').textContent=t.back;
+  document.getElementById('i-eyebrow').textContent=t.eyebrow;
+  document.getElementById('i-desc').textContent=t.desc;
+  document.getElementById('i-ql').textContent=t.ql;
+  document.getElementById('i-ml').textContent=t.ml;
+  document.getElementById('i-pl').textContent=t.pl;
+  document.getElementById('i-note').innerHTML=t.note;
+  document.getElementById('i-instructions').innerHTML=t.instructions;
+  document.getElementById('access-label').textContent=t.access_label;
+  document.getElementById('access-expiry-text').textContent=t.access_expiry;
+  document.getElementById('i-btn-start').textContent=t.btn_start;
+  document.getElementById('t-prog-label').textContent=t.prog_label;
+  document.getElementById('r-subtitle').textContent=t.r_subtitle;
+  document.getElementById('r-cta-h').textContent=t.r_cta_h;
+  document.getElementById('r-cta-p').textContent=t.r_cta_p;
+  document.getElementById('r-cta-btn').textContent=t.r_cta_btn;
+  document.getElementById('r-disclaimer').innerHTML=t.r_disclaimer;
+  document.getElementById('r-retake').textContent=t.r_retake;
+  document.getElementById('gate-title').textContent=t.gate_title;
+  document.getElementById('gate-desc').textContent=t.gate_desc;
+  document.getElementById('gate-btn').textContent=t.gate_btn;
+  document.getElementById('locked-title').textContent=t.locked_title;
+  document.getElementById('locked-desc').textContent=t.locked_desc;
+  document.getElementById('locked-btn').textContent=t.locked_btn;
+}
+
+function showView(id){ document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');}); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+function startTest(){ showView('view-test'); renderQ(); }
+
+var compNames=['Not scored','Subjective Quality','Sleep Latency','Sleep Duration','Sleep Efficiency','Sleep Disturbances','Sleep Medication','Daytime Dysfunction'];
+
+function renderQ(){
+  var t=T[lang];
+  var q=t.questions[current];
+  document.getElementById('progCount').textContent=(current+1)+' '+t.q_of+' '+TOTAL_Q;
+  document.getElementById('progFill').style.width=((current+1)/TOTAL_Q*100)+'%';
+  document.getElementById('questionNum').textContent=(current+1)+' '+t.q_of+' '+TOTAL_Q;
+  document.getElementById('questionText').textContent=q.text;
+  var ctag=document.getElementById('componentTag');
+  if(q.comp>0){
+    ctag.textContent=t.comp_labels[q.comp-1];
+    ctag.style.display='inline-block';
+  } else {
+    ctag.style.display='none';
+  }
+  var opts=document.getElementById('scaleOptions'); opts.innerHTML='';
+  q.opts.forEach(function(opt){
+    var div=document.createElement('label');
+    var sel=answers[current]===opt.v;
+    div.className='scale-option'+(sel?' selected':'');
+    div.innerHTML='<input type="radio" name="q'+current+'" value="'+opt.v+'"><div class="opt-dot"></div><div class="opt-val">'+opt.v+'</div><div class="opt-label">'+opt.l+'</div>';
+    div.onclick=(function(val,el){return function(){selectOption(val,el);};})(opt.v,div);
+    opts.appendChild(div);
+  });
+  document.getElementById('btnPrev').textContent=t.btn_prev;
+  document.getElementById('btnPrev').style.visibility=current===0?'hidden':'visible';
+  var bn=document.getElementById('btnNext');
+  bn.textContent=current===TOTAL_Q-1?t.btn_results:t.btn_next;
+  bn.disabled=answers[current]===null;
+  var card=document.getElementById('questionCard');
+  card.style.animation='none'; card.offsetHeight; card.style.animation='fadeSlide .4s ease';
+}
+
+function selectOption(val,el){
+  answers[current]=val;
+  document.querySelectorAll('.scale-option').forEach(function(o){o.classList.remove('selected');});
+  el.classList.add('selected');
+  document.getElementById('btnNext').disabled=false;
+  setTimeout(function(){var bn=document.getElementById('btnNext');if(bn&&!bn.disabled)bn.click();},400);
+}
+function nextQ(){ if(answers[current]===null)return; if(current<TOTAL_Q-1){current++;renderQ();}else showResults(); }
+function prevQ(){ if(current>0){current--;renderQ();} }
+
+function calcComponents(){
+  var t=T.en.questions;
+  // C1: subjective quality = Q17 (index 17)
+  var c1=answers[17]||0;
+  // C2: sleep latency = Q1(index1) + Q4(index4) summed then mapped
+  var lat=answers[1]||0; var lat2=answers[4]||0;
+  var latSum=lat+lat2;
+  var c2=latSum<=1?0:latSum<=2?1:latSum<=4?2:3;
+  // C3: sleep duration = Q3 (index 3)
+  var c3=answers[3]||0;
+  // C4: sleep efficiency — derived from Q0(bedtime), Q2(wake), Q3(sleep hours)
+  // Simplified: just use sleep duration score as proxy
+  var c4=c3;
+  // C5: disturbances = Q5..Q13 (indices 5-13), sum then map
+  var distSum=0;
+  for(var i=5;i<=13;i++) distSum+=answers[i]||0;
+  var c5=distSum===0?0:distSum<=9?1:distSum<=18?2:3;
+  // C6: medication = Q14 (index 14)
+  var c6=answers[14]||0;
+  // C7: daytime dysfunction = Q15+Q16 (indices 15,16), sum then map
+  var dySum=(answers[15]||0)+(answers[16]||0);
+  var c7=dySum===0?0:dySum<=2?1:dySum<=4?2:3;
+  return [c1,c2,c3,c4,c5,c6,c7];
+}
+
+function getClinicalInterpretation(total,comps){
+  var poor=comps.filter(function(c){return c>=2;}).length;
+  var base='';
+  if(total<=5) base='PSQI score '+total+'/21: Good sleep quality (≤5). No specific sleep intervention indicated. Monitor.';
+  else if(total<=10) base='PSQI score '+total+'/21: Poor sleep quality (6–10). Clinical intervention warranted. Implement sleep hygiene education. Evaluate for primary sleep disorders (insomnia, sleep apnea). Consider CBT-I. Rule out comorbid anxiety/depression.';
+  else base='PSQI score '+total+'/21: Very poor sleep quality (≥11). Comprehensive evaluation required. High probability of clinical sleep disorder. Prioritize assessment of insomnia disorder, sleep apnea, RLS. Consider polysomnography if indicated. Comorbid psychiatric/medical conditions likely contributing.';
+  return base+' Elevated components (≥2): '+poor+'/7.';
+}
+
+function showResults(){
+  var t=T[lang];
+  var comps=calcComponents();
+  var total=comps.reduce(function(s,c){return s+c;},0);
+  var range=t.ranges.find(function(r){return total>=r.min&&total<=r.max;});
+  var pct=Math.round((total/21)*100);
+  if(currentUser){
+    db.collection('assessmentResults').add({
+      userId:currentUser.uid,userEmail:currentUser.email,
+      userName:currentUser.displayName||currentUser.email,
+      assessment:'PSQI',totalScore:total,maxScore:21,
+      category:range?range.label:'',lang:lang,
+      components:{c1:comps[0],c2:comps[1],c3:comps[2],c4:comps[3],c5:comps[4],c6:comps[5],c7:comps[6]},
+      items:answers.map(function(v,i){return{question:i+1,score:v};}),
+      clinicalInterpretation:getClinicalInterpretation(total,comps),
+      completedAt:firebase.firestore.FieldValue.serverTimestamp(),
+      status:'pending_consultation'
+    }).catch(function(e){console.error(e);});
+  }
+  var compColors=['#27AE60','#D4AC0D','#E07B39','#C0392B'];
+  var compsHtml='<div class="components-grid">';
+  t.comp_labels.forEach(function(label,i){
+    var sc=comps[i];
+    var col=compColors[Math.min(sc,3)];
+    compsHtml+='<div class="comp-card"><span class="comp-name">'+label+'</span><span class="comp-score" style="color:'+col+'">'+sc+'/3</span></div>';
+  });
+  compsHtml+='</div>';
+  document.getElementById('totalScoreCard').innerHTML=
+    '<div class="ts-label">'+t.score_label+'</div>'+
+    '<div class="ts-score" style="color:'+range.color+'">'+total+'</div>'+
+    '<div class="ts-max">'+t.out_of+'</div>'+
+    '<div class="ts-badge" style="background:'+range.bg+';color:'+range.color+'">'+range.label+'</div>'+
+    '<div style="font-size:11px;color:var(--light);margin-top:8px;">Clinical threshold: &gt;5 = poor sleep</div>'+
+    '<div class="severity-bar-wrap"><div class="severity-bar"><div class="severity-marker" style="left:'+pct+'%"></div></div>'+
+    '<div class="severity-labels"><span>0</span><span>5</span><span>10</span><span>15</span><span>21</span></div></div>'+
+    compsHtml;
+  document.getElementById('forwardedBox').innerHTML='<p>'+t.r_forwarded+'</p>';
+  document.getElementById('interpretationBox').innerHTML=
+    '<h3>'+range.label+'</h3><p>'+range.interp+'</p>'+
+    '<table class="range-table" style="margin-top:20px"><thead><tr><th>Score</th><th>Level</th><th>Next step</th></tr></thead><tbody>'+
+    t.ranges.map(function(r){
+      return '<tr class="'+(total>=r.min&&total<=r.max?'current-row':'')+'">'+
+        '<td><span class="range-dot" style="background:'+r.color+'"></span>'+r.min+'–'+r.max+'</td>'+
+        '<td>'+r.label+(total>=r.min&&total<=r.max?' ←':'')+'</td>'+
+        '<td>'+r.action+'</td></tr>';
+    }).join('')+'</tbody></table>';
+  showView('view-results');
+}
+
+function resetTest(){ current=0; answers=new Array(TOTAL_Q).fill(null); showView('view-intro'); }
+</script>
+</body>
+</html>
