@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Creaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
+  --blue:#2B5FA8;--blue-light:#E8EFF8;
+  --gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;
+  --cream:#FAFCFA;--cream-dark:#F0F5F0;
+  --charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  --red:#C0392B;--red-light:#FDEAEA;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+
+/* NAV */
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.nav-link{text-decoration:none;color:var(--mid);font-size:13px;transition:color .2s;}
+.nav-link:hover{color:var(--green);}
+.nav-link.emergency{color:var(--red);font-weight:600;}
+.nav-link.active{color:var(--green);font-weight:500;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:160px;max-height:400px;overflow-y:auto;z-index:200;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover{background:var(--green-light);color:var(--green-dark);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 55%,var(--blue) 100%);padding:100px 48px 80px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.06) 0%,transparent 60%);}
+.hero-eyebrow{display:inline-block;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);padding:5px 18px;border-radius:30px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px;position:relative;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;color:white;line-height:1.1;margin-bottom:20px;position:relative;}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.7);}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.65);max-width:600px;margin:0 auto;line-height:1.85;position:relative;}
+
+/* BODY SECTIONS */
+.wrap{max-width:860px;margin:0 auto;padding:80px 48px;}
+.wrap-wide{max-width:1100px;margin:0 auto;padding:80px 48px;}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:var(--charcoal);line-height:1.15;margin-bottom:28px;}
+.section-title em{font-style:italic;color:var(--green);}
+.body-text{font-size:15px;color:var(--mid);line-height:1.9;font-weight:300;margin-bottom:22px;}
+.body-text strong{color:var(--charcoal);font-weight:500;}
+
+/* QUOTE BLOCK */
+.quote-block{background:var(--charcoal);padding:56px 64px;position:relative;overflow:hidden;}
+.quote-block::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:280px;color:rgba(255,255,255,.03);position:absolute;top:-80px;left:20px;line-height:1;}
+.quote-inner{max-width:860px;margin:0 auto;position:relative;}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.8vw,34px);font-weight:300;color:white;line-height:1.55;font-style:italic;}
+.quote-context{font-size:14px;color:rgba(255,255,255,.4);margin-top:24px;line-height:1.8;max-width:680px;}
+
+/* TENSIONS SECTION */
+.tensions-section{background:var(--cream-dark);padding:80px 48px;}
+.tensions-inner{max-width:860px;margin:0 auto;}
+.tensions-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;}
+.tension-card{background:white;border-radius:16px;padding:28px 28px 28px 32px;border-left:3px solid var(--green);position:relative;}
+.tc-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:8px;}
+.tc-title{font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
+.tc-text{font-size:13px;color:var(--mid);line-height:1.7;}
+
+/* JOBS SECTION */
+.jobs-section{padding:80px 48px;}
+.jobs-inner{max-width:1100px;margin:0 auto;}
+.jobs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;}
+.job-category{background:white;border-radius:16px;padding:24px;border:1px solid rgba(0,0,0,.06);}
+.jc-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(0,0,0,.06);}
+.jc-icon{font-size:20px;}
+.jc-title{font-size:13px;font-weight:600;color:var(--charcoal);}
+.job-list{list-style:none;}
+.job-list li{font-size:12px;color:var(--mid);padding:4px 0;border-bottom:1px solid rgba(0,0,0,.03);line-height:1.4;}
+.job-list li:last-child{border-bottom:none;}
+.job-note{background:var(--green-pale);border-radius:12px;padding:16px 20px;margin-top:24px;font-size:13px;color:var(--mid);line-height:1.7;}
+.job-note strong{color:var(--green-dark);}
+
+/* COMMITMENTS */
+.commitments-section{background:var(--green-dark);padding:80px 48px;}
+.commitments-inner{max-width:1000px;margin:0 auto;}
+.com-eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600;margin-bottom:12px;}
+.com-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;color:white;line-height:1.15;margin-bottom:48px;}
+.com-title em{font-style:italic;color:rgba(255,255,255,.55);}
+.com-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.com-card{background:rgba(255,255,255,.07);border-radius:16px;padding:28px;border:1px solid rgba(255,255,255,.1);}
+.com-icon{font-size:26px;margin-bottom:14px;}
+.com-title-card{font-size:15px;font-weight:600;color:white;margin-bottom:8px;}
+.com-text{font-size:13px;color:rgba(255,255,255,.58);line-height:1.7;}
+
+/* FOUNDER NOTE */
+.founder-section{padding:72px 48px;}
+.founder-inner{max-width:860px;margin:0 auto;}
+.founder-card{background:var(--gold-light);border:1px solid rgba(200,168,75,.2);border-radius:20px;padding:40px 48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;}
+.founder-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--green-dark),var(--green));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:26px;color:white;font-weight:600;flex-shrink:0;margin-top:4px;}
+.founder-text{font-size:14px;color:var(--mid);line-height:1.85;}
+.founder-text strong{color:var(--charcoal);font-weight:600;}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,var(--green-dark),var(--blue));padding:88px 48px;text-align:center;}
+.cta-inner{max-width:560px;margin:0 auto;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:white;margin-bottom:14px;line-height:1.1;}
+.cta-title em{font-style:italic;color:rgba(255,255,255,.6);}
+.cta-sub{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:36px;line-height:1.8;}
+.btn-white{background:white;color:var(--green-dark);padding:15px 40px;border-radius:40px;font-size:14px;font-weight:600;text-decoration:none;display:inline-block;transition:all .25s;margin:6px;}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.25);}
+.btn-ghost{background:rgba(255,255,255,.12);color:white;padding:15px 40px;border-radius:40px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;transition:all .2s;border:1px solid rgba(255,255,255,.2);margin:6px;}
+.btn-ghost:hover{background:rgba(255,255,255,.2);}
+
+footer{background:var(--charcoal);padding:24px 48px;text-align:center;}
+footer p{font-size:12px;color:rgba(255,255,255,.3);}
+
+@media(max-width:900px){
+  nav{padding:12px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:72px 20px 56px;}
+  .wrap,.wrap-wide,.tensions-section,.jobs-section,.commitments-section,.founder-section,.cta-section{padding-left:20px;padding-right:20px;}
+  .tensions-grid{grid-template-columns:1fr;}
+  .jobs-grid{grid-template-columns:1fr 1fr;}
+  .com-grid{grid-template-columns:1fr;}
+  .founder-card{grid-template-columns:1fr;text-align:center;}
+  .founder-avatar{margin:0 auto;}
+  .quote-block{padding:40px 24px;}
+  footer{padding:20px;}
+}
+@media(max-width:600px){
+  .jobs-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div>
+      <span class="main-name">Creaven</span>
+      <div class="sub-name" id="nav-sub">Psychological Well-being</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" id="nl-home">Home</a>
+    <a href="tests.html" class="nav-link" id="nl-tests">Assessments</a>
+    <a href="booking.html" class="nav-link" id="nl-book">Book</a>
+    <a href="organizations.html" class="nav-link" id="nl-org">Organizations</a>
+    <a href="emergency.html" class="nav-link emergency" id="nl-emergency">Emergency</a>
+    <a href="account.html" class="nav-link" id="nl-account">My Account</a>
+    <a href="about.html" class="nav-link active" id="nl-about">About</a>
+    <a href="contact.html" class="nav-link" id="nl-contact">Contact</a>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button onclick="selectLang('en','EN')">English</button>
+      <button onclick="selectLang('fr','FR')">Français</button>
+      <button onclick="selectLang('de','DE')">Deutsch</button>
+      <button onclick="selectLang('es','ES')">Español</button>
+      <button onclick="selectLang('pt','PT')">Português</button>
+      <button onclick="selectLang('it','IT')">Italiano</button>
+      <button onclick="selectLang('nl','NL')">Nederlands</button>
+      <button onclick="selectLang('sv','SV')">Svenska</button>
+      <button onclick="selectLang('pl','PL')">Polski</button>
+      <button onclick="selectLang('ru','RU')">Русский</button>
+      <button onclick="selectLang('tr','TR')">Türkçe</button>
+      <button onclick="selectLang('ar','AR')">العربية</button>
+      <button onclick="selectLang('hi','HI')">हिन्दी</button>
+      <button onclick="selectLang('vi','VI')">Tiếng Việt</button>
+      <button onclick="selectLang('th','TH')">ไทย</button>
+      <button onclick="selectLang('zh','ZH')">中文</button>
+      <button onclick="selectLang('jp','JP')">日本語</button>
+      <button onclick="selectLang('kr','KR')">한국어</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow" id="h-eyebrow">About Creaven</div>
+  <h1 id="h-title">The story behind <em>the platform.</em></h1>
+  <p class="hero-sub" id="h-sub">Not a pitch. Not a product page. This is why Creaven exists, who it is for, and what we refuse to compromise on.</p>
+</div>
+
+<!-- ORIGIN -->
+<div class="wrap">
+  <div class="eyebrow" id="origin-label">Where this comes from</div>
+  <div class="section-title" id="origin-title">A problem <em>hiding in plain sight.</em></div>
+  <p class="body-text" id="origin-p1">The creative industry is one of the most demanding environments on earth. Not because it is harder than construction or medicine or agriculture. But because the suffering inside it is systematically invisible. The culture rewards performance. It punishes fragility. And it has spent decades telling the people inside it that exhaustion is the price of passion.</p>
+  <p class="body-text" id="origin-p2">Most of the people who make culture, the ones you will never see on a stage or in a credits list, work in conditions of extreme pressure with near-total silence around mental health. When something breaks, the systems that exist were not built for them. Corporate mental health platforms require an employer who has opted in. Insurance plans require coverage. Local therapists require the right geography and the right language. And the cultural stigma in high-performance environments requires that you simply carry on.</p>
+  <p class="body-text" id="origin-p3">Creaven was built because that gap is not a minor inconvenience. It costs careers, relationships, and lives. And no platform was built specifically to close it.</p>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-block">
+  <div class="quote-inner">
+    <div class="quote-text" id="quote-text">You do not have to be falling apart to deserve support. You just have to be human.</div>
+    <div class="quote-context" id="quote-context">This is the single conviction at the center of everything Creaven builds. Not as a tagline. As a design principle. Every feature, every protocol, every clinical decision on this platform exists to make that sentence true in practice.</div>
+  </div>
+</div>
+
+<!-- TENSIONS -->
+<div class="tensions-section">
+  <div class="tensions-inner">
+    <div class="eyebrow" id="tensions-label">What we saw</div>
+    <div class="section-title" id="tensions-title">The real tensions <em>nobody names out loud.</em></div>
+    <div class="tensions-grid" id="tensionsGrid"></div>
+  </div>
+</div>
+
+<!-- JOBS -->
+<div class="jobs-section">
+  <div class="jobs-inner">
+    <div class="eyebrow" id="jobs-label">Who this is for</div>
+    <div class="section-title" id="jobs-title">Every role. <em>Without exception.</em></div>
+    <p class="body-text" id="jobs-intro">The creative industry is not just the faces you know. It is hundreds of professions, most of them invisible, all of them essential. Creaven is for all of them. If your work touches the creative world in any way, this platform was built with you in mind.</p>
+    <div class="jobs-grid" id="jobsGrid"></div>
+    <div class="job-note" id="jobs-note"><strong>If your role is not listed here, it still counts.</strong> This list is a starting point, not a boundary. The creative industry is vast and constantly evolving. If you work in it, Creaven is for you.</div>
+  </div>
+</div>
+
+<!-- COMMITMENTS -->
+<div class="commitments-section">
+  <div class="commitments-inner">
+    <div class="com-eyebrow" id="com-label">What we stand for</div>
+    <div class="com-title" id="com-title">The things we will <em>never compromise on.</em></div>
+    <div class="com-grid" id="comGrid"></div>
+  </div>
+</div>
+
+<!-- FOUNDER NOTE -->
+<div class="founder-section">
+  <div class="founder-inner">
+    <div class="eyebrow" id="fn-label">The founder</div>
+    <div class="founder-card">
+      <div class="founder-avatar">G</div>
+      <div class="founder-text" id="fn-text">
+        <strong>Creaven was founded by Grace Daniella Amakon</strong>, a psychosocial support specialist with a Master's degree in social psychology and field experience in burnout prevention, psychosocial accompaniment, and mental health coordination through NGO work in West Africa. Creaven was not built from a boardroom or a startup incubator. It was built from years of observation, from fieldwork, and from a simple refusal to accept that the people who make culture should not have access to the same quality of psychological care as anyone else. The platform reflects both clinical rigor and lived understanding of what the creative industry actually demands from human beings.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-title" id="cta-title">Ready to <em>start?</em></div>
+    <p class="cta-sub" id="cta-sub">Whether you need support for yourself or you want to protect your team, Creaven is here.</p>
+    <a href="booking.html" class="btn-white" id="cta-btn1">Book a Consultation</a>
+    <a href="organizations.html" class="btn-ghost" id="cta-btn2">For Organizations</a>
+  </div>
+</div>
+
+<footer>
+  <p id="footer-text">Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.</p>
+</footer>
+
+<script>
+var JOBS = {
+  en:[
+    {icon:'🎤',title:'On stage / On screen',jobs:['Singer','Dancer','Actor','Musician','Rapper','Comedian','Model','Host / Presenter','Emcee','Influencer','Streamer','Circus artist','Acrobat','Stand-up artist','Voice actor']},
+    {icon:'🎵',title:'Music production',jobs:['Music producer','Beatmaker','Composer','Arranger','Sound engineer','Mixing engineer','Mastering engineer','A&R manager','Artistic director (label)','DJ']},
+    {icon:'🎬',title:'Audiovisual production',jobs:['Director','Screenwriter','Director of photography','Camera operator','Video editor','Colorist','Sound recordist','Boom operator','Set designer','Props master','Costume designer','Make-up artist','Hair stylist (set)','Production manager','Assistant director','Script supervisor']},
+    {icon:'✏️',title:'Creative, Fine Arts and Media',jobs:['Art director','Graphic designer','Photographer','Videographer','Content creator','Community manager','Copywriter','Cultural journalist','Blogger','Podcaster','Brand designer','Fanfiction writer','Webtoon creator','Illustrator','Comic artist','Painter','Sculptor']},
+    {icon:'💻',title:'Digital and tech',jobs:['Creative web developer','Motion designer','2D / 3D animator','Game designer','UX/UI designer (media)','Streaming technician','VFX artist','Digital art director','Interactive media designer']},
+    {icon:'🏗️',title:'Events and live production',jobs:['Event producer','Stage manager','Lighting technician','Sound technician','Rigger','Set builder','Event coordinator','Tour manager','Venue manager','Security officer','Catering staff']},
+    {icon:'📋',title:'Management and administration',jobs:['Talent manager','Booking agent','Label manager','Tour coordinator','Publicist','PR manager','Legal counsel (entertainment)','HR coordinator','Project manager','Executive assistant']},
+    {icon:'🌱',title:'Early careers and support',jobs:['Intern','Runner','Production assistant','Stagehand','Driver','Logistics coordinator','Translator / interpreter','Subtitler','Archivist','Researcher']}
+  ],
+  fr:[
+    {icon:'🎤',title:'Sur scène / Devant la caméra',jobs:['Chanteur','Danseur','Acteur','Musicien','Rappeur','Comédien','Mannequin','Présentateur / Animateur','MC','Influenceur','Streamer','Artiste de cirque','Acrobate','Humoriste','Doubleur']},
+    {icon:'🎵',title:'Production musicale',jobs:['Producteur musical','Beatmaker','Compositeur','Arrangeur','Ingénieur du son','Mixeur','Masteriseur','Manager A&R','Directeur artistique (label)','DJ']},
+    {icon:'🎬',title:'Production audiovisuelle',jobs:['Réalisateur','Scénariste','Directeur de la photographie','Cadreur','Monteur vidéo','Coloriste','Preneur de son','Perchiste','Chef décorateur','Accessoiriste','Costumier','Maquilleur','Coiffeur plateau','Régisseur','Assistant réalisateur','Scripte']},
+    {icon:'✏️',title:'Créatif, Beaux-Arts et Médias',jobs:['Directeur artistique','Graphiste','Photographe','Vidéaste','Créateur de contenu','Community manager','Rédacteur','Journaliste culturel','Blogueur','Podcasteur','Designer de marque','Écrivain de fanfiction','Créateur de webtoon','Illustrateur','Dessinateur de BD','Peintre','Sculpteur']},
+    {icon:'💻',title:'Digital et tech',jobs:['Développeur web créatif','Motion designer','Animateur 2D / 3D','Game designer','Concepteur UX/UI (médias)','Technicien streaming','Artiste VFX','Directeur artistique digital','Designer média interactif']},
+    {icon:'🏗️',title:'Événementiel et production live',jobs:['Producteur événementiel','Directeur de scène','Technicien lumière','Technicien son','Rigger','Constructeur de décors','Coordinateur événementiel','Manager de tournée','Directeur de salle','Agent de sécurité','Personnel de restauration']},
+    {icon:'📋',title:'Management et administration',jobs:['Manager de talent','Agent de booking','Manager de label','Coordinateur de tournée','Attaché de presse','Manager PR','Juriste (entertainment)','Coordinateur RH','Chef de projet','Assistant exécutif']},
+    {icon:'🌱',title:'Débuts de carrière et support',jobs:['Stagiaire','Runner','Assistant de production','Machiniste','Chauffeur','Coordinateur logistique','Traducteur / Interprète','Sous-titreur','Archiviste','Chargé de recherche']}
+  ],
+  de:[
+    {icon:'🎤',title:'Auf der Bühne / Auf dem Bildschirm',jobs:['Sänger','Tänzer','Schauspieler','Musiker','Rapper','Comedian','Model','Moderator','Sprecher','Influencer','Streamer','Zirkuskünstler','Akrobat','Stand-up-Künstler','Synchronsprecher']},
+    {icon:'🎵',title:'Musikproduktion',jobs:['Musikproduzent','Beatmaker','Komponist','Arrangeur','Toningenieur','Mixing-Ingenieur','Mastering-Ingenieur','A&R-Manager','Art Director (Label)','DJ']},
+    {icon:'🎬',title:'Audiovisuelle Produktion',jobs:['Regisseur','Drehbuchautor','Kameramann','Videocutter','Colorist','Tontechniker','Tonassistent','Bühnenbildner','Requisiteur','Kostümbildner','Visagist','Friseur (Set)','Produktionsleiter','Regieassistent','Script Supervisor']},
+    {icon:'✏️',title:'Kreativ, Bildende Kunst und Medien',jobs:['Art Director','Grafikdesigner','Fotograf','Videograf','Content Creator','Community Manager','Copywriter','Kulturjournalist','Blogger','Podcaster','Brand Designer','Fanfiction-Autor','Webtoon-Schöpfer','Illustrator','Comic-Zeichner','Maler','Bildhauer']},
+    {icon:'💻',title:'Digital und Technologie',jobs:['Kreativer Webentwickler','Motion Designer','2D / 3D Animator','Game Designer','UX/UI Designer (Medien)','Streaming-Techniker','VFX-Künstler','Digital Art Director','Interaktiver Mediendesigner']},
+    {icon:'🏗️',title:'Events und Live-Produktion',jobs:['Event-Produzent','Bühnenmeister','Lichttechniker','Tontechniker','Rigger','Bühnenbauer','Event-Koordinator','Tour-Manager','Veranstaltungsort-Manager','Sicherheitskraft','Catering-Personal']},
+    {icon:'📋',title:'Management und Verwaltung',jobs:['Talent-Manager','Booking-Agent','Label-Manager','Tour-Koordinator','Publizist','PR-Manager','Rechtsbeistand (Unterhaltung)','HR-Koordinator','Projektmanager','Vorstandsassistent']},
+    {icon:'🌱',title:'Berufseinstieg und Support',jobs:['Praktikant','Runner','Produktionsassistent','Bühnenarbeiter','Fahrer','Logistikkoordinator','Übersetzer / Dolmetscher','Untertitler','Archivar','Researcher']}
+  ],
+  es:[
+    {icon:'🎤',title:'En el escenario / En la pantalla',jobs:['Cantante','Bailarín','Actor','Músico','Rapero','Comediante','Modelo','Presentador','Anfitrión','Influencer','Streamer','Artista de circo','Acróbata','Artista de stand-up','Actor de voz']},
+    {icon:'🎵',title:'Producción musical',jobs:['Productor musical','Beatmaker','Compositor','Arreglista','Ingeniero de sonido','Ingeniero de mezcla','Ingeniero de masterización','Manager de A&R','Director artístico (sello)','DJ']},
+    {icon:'🎬',title:'Producción audiovisual',jobs:['Director','Guionista','Director de fotografía','Operador de cámara','Editor de video','Colorista','Sonidista','Coordinador de audio','Diseñador de set','Utillero','Diseñador de vestuario','Maquillador','Estilista de set','Gerente de producción','Asistente de dirección','Supervisor de guion']},
+    {icon:'✏️',title:'Creatividad, Bellas Artes y Medios',jobs:['Director de arte','Diseñador gráfico','Fotógrafo','Videógrafo','Creador de contenido','Community manager','Redactor publicitario','Periodista cultural','Blogger','Podcaster','Diseñador de marca','Escritor de fanfiction','Creador de webtoons','Ilustrador','Dibujante de cómics','Pintor','Escultor']},
+    {icon:'💻',title:'Digital y tecnología',jobs:['Desarrollador web creativo','Diseñador de movimiento','Animador 2D / 3D','Diseñador de juegos','Diseñador UX/UI (medios)','Técnico de streaming','Artista de VFX','Director de arte digital','Diseñador de medios interactivos']},
+    {icon:'🏗️',title:'Eventos y producción en vivo',jobs:['Productor de eventos','Director de escena','Técnico de iluminación','Técnico de sonido','Rigger','Constructor de escenarios','Coordinador de eventos','Manager de gira','Administrador de locales','Oficial de seguridad','Personal de catering']},
+    {icon:'📋',title:'Gestión y administración',jobs:['Manager de talentos','Agente de reservas','Manager de sello','Coordinador de gira','Publicista','Manager de relaciones públicas','Asesor legal','Coordinador de RRHH','Líder de proyecto','Asistente ejecutivo']},
+    {icon:'🌱',title:'Inicios de carrera y soporte',jobs:['Pasante','Asistente de campo','Asistente de producción','Tramoyista','Conductor','Coordinador de logística','Traductor / intérprete','Subtitulador','Archivista','Investigador']}
+  ],
+  pt:[
+    {icon:'🎤',title:'No palco / Na tela',jobs:['Cantor','Dançarino','Ator','Músico','Rapero','Comediante','Modelo','Apresentador','Mestre de cerimônias','Influenciador','Streamer','Artista de circo','Acrobata','Artista de stand-up','Dublador']},
+    {icon:'🎵',title:'Produção musical',jobs:['Productor musical','Beatmaker','Compositor','Arranjador','Engenheiro de som','Engenheiro de mixagem','Engenheiro de masterização','Gerente de A&R','Diretor artístico (selo)','DJ']},
+    {icon:'🎬',title:'Produção audiovisual',jobs:['Diretor','Roteirista','Diretor de fotografia','Operador de câmera','Editor de vídeo','Colorista','Sonoplasta','Operador de boom','Cenógrafo','Contrarregra','Figurinista','Maquiador','Cabeleireiro (set)','Gerente de produção','Assistente de direção','Supervisor de script']},
+    {icon:'✏️',title:'Criativo, Belas Artes e Mídia',jobs:['Diretor de arte','Designer gráfico','Fotógrafo','Videógrafo','Criador de conteúdo','Community manager','Redator','Jornalista cultural','Blogger','Podcaster','Designer de marca','Escritor de fanfiction','Criador de webtoons','Ilustrador','Desenhista de quadrinhos','Pintor','Escultor']},
+    {icon:'💻',title:'Digital e tecnologia',jobs:['Desenvolvedor web criativo','Motion designer','Animador 2D / 3D','Game designer','Designer de UX/UI','Técnico de streaming','Artista de VFX','Diretor de arte digital','Designer de mídia interativa']},
+    {icon:'🏗️',title:'Eventos e produção ao vivo',jobs:['Produtor de eventos','Diretor de palco','Técnico de iluminação','Técnico de som','Rigger','Montador de cenários','Coordenador de eventos','Manager de turnê','Gerente de espaço','Segurança','Equipe de catering']},
+    {icon:'📋',title:'Gestão e administração',jobs:['Manager de talentos','Agente de reservas','Gerente de selo','Coordenador de turnê','Publicitário','Gerente de relações públicas','Assessor jurídico','Coordenador de RH','Gerente de projetos','Assistente executivo']},
+    {icon:'🌱',title:'Início de carreira e suporte',jobs:['Estagiário','Runner','Assistente de produção','Contrarregra de palco','Motorista','Coordenador de logística','Tradutor / intérprete','Legendador','Arquivista','Pesquisador']}
+  ],
+  it:[
+    {icon:'🎤',title:'Sul palco / Sullo schermo',jobs:['Cantante','Ballerino','Attore','Musicista','Rapper','Comico','Modello','Presentatore','Presentatore di eventi','Influencer','Streamer','Artista circense','Acrobata','Cabarettista','Doppiatore']},
+    {icon:'🎵',title:'Produzione musicale',jobs:['Produttore musicale','Beatmaker','Compositore','Arrangiatore','Ingegnere del suono','Fonico di missaggio','Ingegnere di mastering','A&R manager','Direttore artistico (etichetta)','DJ']},
+    {icon:'🎬',title:'Produzione audiovisiva',jobs:['Regista','Sceneggiatore','Direttore della fotografia','Operatore di ripresa','Montatore video','Colorista','Fonico di presa diretta','Microfonista','Scenografo','Attrezzista','Costumista','Truccatore','Parrucchiere di scena','Direttore di produzione','Aiuto regista','Segretaria di edizione']},
+    {icon:'✏️',title:'Creatività, Belle Arti e Media',jobs:['Art director','Graphic designer','Fotografo','Videomaker','Creator di contenuti','Community manager','Copywriter','Giornalista culturale','Blogger','Podcaster','Brand designer','Scrittore di fanfiction','Creatore di webtoon','Illustratore','Fumettista','Pittore','Scultore']},
+    {icon:'💻',title:'Digitale e tecnologia',jobs:['Sviluppatore web creativo','Motion designer','Animatore 2D / 3D','Game designer','UX/UI designer','Tecnico streaming','VFX artist','Digital art director','Interactive media designer']},
+    {icon:'🏗️',title:'Eventi e produzione live',jobs:['Produttore di eventi','Direttore di scena','Tecnico luci','Tecnico del suono','Rigger','Costruttore di scenografie','Coordinatore di eventi','Tour manager','Direttore di sala','Addetto alla sicurezza','Personale di catering']},
+    {icon:'📋',title:'Management e amministrazione',jobs:['Talent manager','Agente di booking','Label manager','Coordinatore di tour','Promotore','PR manager','Consulente legale','Coordinatore HR','Project manager','Assistente esecutivo']},
+    {icon:'🌱',title:'Inizio carriera e supporto',jobs:['Stagista','Runner','Assistente di produzione','Tecnico di scena','Autista','Coordinatore logistico','Traduttore / interprete','Sottotitolatore','Archivista','Ricercatore']}
+  ],
+  nl:[
+    {icon:'🎤',title:'Op het podium / Op het scherm',jobs:['Zanger','Danser','Acteur','Muzikant','Rapper','Comedian','Model','Presentator','Ceremoniemeester','Influencer','Streamer','Circusartiest','Acrobaat','Stand-up artiest','Stemacteur']},
+    {icon:'🎵',title:'Muziekproductie',jobs:['Muziekproducent','Beatmaker','Componist','Arrangeur','Geluidstechnicus','Mixing engineer','Mastering engineer','A&R manager','Artistiek directeur (label)','DJ']},
+    {icon:'🎬',title:'Audiovisuele productie',jobs:['Regisseur','Scenario-schrijver','Director of photography','Cameraman','Video-editor','Colorist','Geluidsman','Boom operator','Setdesigner','Requisiteur','Kostuumontwerper','Visagist','Haarstylist (set)','Productiemanager','Assistent-regisseur','Script-supervisor']},
+    {icon:'✏️',title:'Creatief, Beeldende Kunst en Media',jobs:['Art director','Grafisch ontwerper','Fotograaf','Videograaf','Content creator','Community manager','Copywriter','Cultureel journalist','Blogger','Podcaster','Brand designer','Fanfiction-schrijver','Webtoon-maker','Illustrator','Striptekenaar','Kunstschilder','Beeldhouwer']},
+    {icon:'💻',title:'Digitaal en tech',jobs:['Creatieve webdeveloper','Motion designer','2D / 3D animator','Game designer','UX/UI designer','Streamingtechnicus','VFX-artiest','Digital art director','Interactieve media-ontwerper']},
+    {icon:'🏗️',title:'Evenementen en live-productie',jobs:['Evenementenproducent','Stagemanager','Lichttechnicus','Geluidstechnicus','Rigger','Decorbounder','Evenementencoördinator','Tourmanager','Locatiemanager','Beveiligers','Cateringpersoneel']},
+    {icon:'📋',title:'Management en administratie',jobs:['Talentmanager','Boekingsagent','Labelmanager','Tourcoördinator','Publicist','PR-manager','Juridisch adviseur','HR-coördinator','Projectmanager','Directie-assistent']},
+    {icon:'🌱',title:'Starters en ondersteuning',jobs:['Stagiair','Runner','Productie-assistent','Bühneknecht','Chauffeur','Logistiek coördinator','Vertaler / tolk','Ondertitelaar','Archivaris','Onderzoeker']}
+  ],
+  sv:[
+    {icon:'🎤',title:'På scenen / På skärmen',jobs:['Sångare','Dansare','Skådespelare','Musiker','Rappare','Komiker','Modell','Programledare','Konferencier','Influencer','Streamer','Cirkusartist','Akrobat','Stand-up-artist','Röstskådespelare']},
+    {icon:'🎵',title:'Musikproduktion',jobs:['Musikproducent','Beatmaker','Kompositör','Arrangör','Ljudtekniker','Mixningstekniker','Masteringtekniker','A&R-manager','Artistic director (label)','DJ']},
+    {icon:'🎬',title:'Audiovisuell produktion',jobs:['Regissör','Manusförfattare','Filmfotograf','Kameraman','Videoeditor','Colorist','Ljudupptagare','Bomoperatör','Scenograf','Rekvisitör','Kostymör','Sminkör','Hårstylist (set)','Produktionsledare','Regiassistent','Scripta']},
+    {icon:'✏️',title:'Kreativitet, Konst och Media',jobs:['Art director','Grafisk formgivare','Fotograf','Videograf','Innehållsskapare','Community manager','Copywriter','Kulturjournalist','Bloggare','Poddare','Varumärkesdesigner','Fanfiction-författare','Webtoon-skapare','Illustratör','Serietecknare','Konstnär','Skulptör']},
+    {icon:'💻',title:'Digitalt och teknik',jobs:['Kreativ webbutvecklare','Motion designer','2D / 3D-animatör','Speldesigner','UX/UI-designer','Streamingtekniker','VFX-artist','Digital art director','Interaktiv mediedesigner']},
+    {icon:'🏗️',title:'Evenemang och liveproduktion',jobs:['Eventproducent','Scenmästare','Ljustekniker','Ljudtekniker','Rigger','Scenbyggare','Eventkoordinator','Tour manager','Arenachef','Ordningsvakt','Cateringpersonal']},
+    {icon:'📋',title:'Management och administration',jobs:['Talent manager','Bokningsagent','Label manager','Tour coordinator','Publicist','PR-manager','Jurist (underhållning)','HR-koordinator','Projektledare','Executive assistant']},
+    {icon:'🌱',title:'Karriärstart och support',jobs:['Praktikant','Runner','Produktionsassistent','Scenarbetare','Chaufför','Logistikkoordinator','Översättare / tolkar','Undertextare','Arkivarie','Researchassistent']}
+  ],
+  pl:[
+    {icon:'🎤',title:'Na scenie / Na ekranie',jobs:['Wokalista','Tancerz','Aktor','Muzyk','Raper','Komik','Model','Prezenter','Konferansjer','Influencer','Streamer','Artysta cyrkowy','Akrobata','Stand-uper','Aktor głosowy']},
+    {icon:'🎵',title:'Produkcja muzyczna',jobs:['Producent muzyczny','Beatmaker','Kompozytor','Aranżer','Realizator dźwięku','Inżynier miksu','Inżynier masteringu','A&R manager','Dyrektor artystyczny (wytwórnia)','DJ']},
+    {icon:'🎬',title:'Produkcja audiowizualna',jobs:['Reżyser','Scenarzysta','Operator obrazu','Montażysta wideo','Kolorysta','Inżynier dźwięku','Operator tyczki','Scenograf','Rekwizytor','Kostiumograf','Wizażysta','Stylista fryzur','Kierownik produkcji','Asystent reżysera','Skrypt']},
+    {icon:'✏️',title:'Kreatywność, Sztuki Piękne i Media',jobs:['Dyrektor artystyczny','Grafik','Fotograf','Wideooperator','Twórca treści','Community manager','Copywriter','Dziennikarz kulturalny','Bloger','Podcaster','Projektant marki','Autor fanfiction','Twórca webtoonów','Ilustrator','Rysownik komiksów','Malarz','Rzeźbiarz']},
+    {icon:'💻',title:'Cyfryzacja i technologia',jobs:['Kreatywny programista web','Motion designer','Animator 2D / 3D','Game designer','Projektant UX/UI','Technik streamingu','Artysta VFX','Digital art director','Projektant mediów interaktywnych']},
+    {icon:'🏗️',title:'Wydarzenia i produkcja live',jobs:['Producent wydarzeń','Inspicjent','Technik oświetlenia','Technik dźwięku','Rigger','Montażysta sceny','Koordynator wydarzeń','Tour manager','Kierownik obiektu','Pracownik ochrony','Obsługa cateringu']},
+    {icon:'📋',title:'Zarządzanie i administracja',jobs:['Talent manager','Agent bookingowy','Label manager','Koordynator trasy','Publicysta','PR manager','Doradca prawny','Koordynator HR','Kierownik projektu','Asystent zarządu']},
+    {icon:'🌱',title:'Początki kariery i wsparcie',jobs:['Stażysta','Goniec','Asystent produkcji','Pracownik techniczny','Kierowca','Koordynator logistyki','Tłumacz','Autor napisów','Archiwista','Researcher']}
+  ],
+  ru:[
+    {icon:'🎤',title:'На сцене / На экране',jobs:['Певец','Танцор','Актер','Музыкант','Рэпер','Комик','Модель','Ведущий','Конферансье','Инфлюенсер','Стример','Артист цирка','Акробат','Стендап-комик','Актер дубляжа']},
+    {icon:'🎵',title:'Музыкальное производство',jobs:['Музыкальный продюсер','Битмейкер','Композитор','Аранжировщик','Звукорежиссер','Инженер сведения','Инженер мастеринга','A&R-менеджер','Арт-директор (лейбл)','Диджей']},
+    {icon:'🎬',title:'Аудиовизуальное производство',jobs:['Режиссер','Сценарист','Оператор-постановщик','Видеомонтажер','Колорист','Звукооператор','Микрофонщик','Художник-постановщик','Реквизитор','Костюмер','Гример','Стилист по прическам','Директор производства','Ассистент режиссера','Скрипт-супервайзер']},
+    {icon:'✏️',title:'Творчество, Искусство и Медиа',jobs:['Арт-директор','Графический дизайнер','Фотограф','Видеограф','Создатель контента','Комьюнити-менеджер','Копирайтер','Культурный журналист','Блогер','Подкастер','Дизайнер брендов','Автор фанфиков','Создатель вебтунов','Иллюстратор','Художник комиксов','Художник','Скульптор']},
+    {icon:'💻',title:'Цифровые технологии',jobs:['Креативный веб-разработчик','Моушн-дизайнер','2D / 3D аниматор','Геймдизайнер','UX/UI-дизайнер','Техник стриминга','VFX-художник','Цифровой арт-директор','Дизайнер интерактивных медиа']},
+    {icon:'🏗️',title:'Мероприятия и живое производство',jobs:['Продюсер мероприятий','Заведующий сценой','Художник по свету','Звукотехник','Риггер','Монтажник декораций','Координатор мероприятий','Тур-менеджер','Управляющий площадкой','Сотрудник охраны','Персонал кейтеринга']},
+    {icon:'📋',title:'Менеджмент и администрация',jobs:['Талант-менеджер','Букинг-агент','Менеджер лейбла','Координатор тура','Публицист','PR-менеджер','Юрист в сфере развлечений','HR-координатор','Руководитель проекта','Исполнительный ассистент']},
+    {icon:'🌱',title:'Старт карьеры и поддержка',jobs:['Стажер','Раннер','Ассистент производства','Рабочий сцены','Водитель','Координатор логистики','Переводчик','Переводчик субтитров','Архивариус','Исследователь']}
+  ],
+  tr:[
+    {icon:'🎤',title:'Sahnede / Ekranda',jobs:['Şarkıcı','Dansçı','Oyuncu','Müzisyen','Rapçi','Komedyen','Model','Sunucu','Anonsör','Etkileyici','Yayıncı','Sirk Sanatçısı','Akrobat','Stand-up Sanatçısı','Seslendirme sanatçısı']},
+    {icon:'🎵',title:'Müzik prodüksiyonu',jobs:['Müzik yapımcısı','Beatmaker','Besteci','Aranjör','Ses mühendisi','Miksing mühendisi','Mastering mühendisi','A&R müdürü','Sanat yönetmeni (plak şirketi)','DJ']},
+    {icon:'🎬',title:'Görsel-işitsel yapım',jobs:['Yönetmen','Senarist','Görüntü yönetmeni','Kamera operatörü','Video editörü','Renk uzmanı','Ses kayıtçısı','Boom operatörü','Set tasarımcısı','Aksesuar sorumlusu','Kostüm tasarımcısı','Makyaj sanatçısı','Saç tasarımcısı','Yapım koordinatörü','Yönetmen yardımcısı','Script supervisor']},
+    {icon:'✏️',title:'Yaratıcılık, Güzel Sanatlar ve Medya',jobs:['Sanat yönetmeni','Grafik tasarımcı','Fotoğrafçı','Videograf','İçerik üreticisi','Topluluk yöneticisi','Metin yazarı','Kültür gazetecisi','Blog yazarı','Podcaster','Marka tasarımcısı','Fanfiction yazarı','Webtoon yaratıcısı','İllüstratör','Çizgi roman sanatçısı','Ressam','Heykeltıraş']},
+    {icon:'💻',title:'Dijital ve teknoloji',jobs:['Kreatif web geliştirici','Motion tasarımcı','2D / 3D animatör','Oyun tasarımcısı','UX/UI tasarımcısı','Yayın teknisyeni','VFX sanatçısı','Dijital sanat yönetmeni','İnteraktif medya tasarımcısı']},
+    {icon:'🏗️',title:'Etkinlik ve canlı prodüksiyon',jobs:['Etkinlik yapımcısı','Sahne amiri','Işık teknisyeni','Ses teknisyeni','Rigger','Dekor ustası','Etkinlik koordinatörü','Tur menajeri','Mekan müdürü','Güvenlik görevlisi','Catering personeli']},
+    {icon:'📋',title:'Yönetim ve idari işler',jobs:['Yetenek menajeri','Booking ajanı','Label koordinatörü','Tur koordinatörü','Basın danışmanı','PR müdürü','Hukuk danışmanı','İK koordinatörü','Proje müdürü','Yönetici asistanı']},
+    {icon:'🌱',title:'Kariyer başlangıcı ve destek',jobs:['Stajyer','Set asistanı','Yapım asistanı','Sahne işçisi','Şoför','Lojistik koordinatörü','Mütercim / tercüman','Altyazı çevirmeni','Arşivci','Araştırmacı']}
+  ],
+  ar:[
+    {icon:'🎤',title:'على المسرح / أمام الشاشة',jobs:['مغني','راقص','ممثل','موسيقي','رابر','كوميدي','عارض أزياء','مقدم برامج','عريف حفل','مؤثر','ستريمر','فنان سيرك','بهلوان','ستاند أب كوميدي','مؤدي صوتي']},
+    {icon:'🎵',title:'الإنتاج الموسيقي',jobs:['منتج موسيقي','صانع إيقاعات','ملحن','موزع موسيقي','مهندس صوت','مهندس ميكساج','مهندس ماسترينغ','مدير إدارة المواهب','مدير فني لشكرة الإنتاج','دي جي']},
+    {icon:'🎬',title:'الإنتاج المرئي والمسموع',jobs:['مخرج','سيناريست','مدير تصوير','مصور','محرر فيديو','خبير تلوين','مسجل صوت','مشغل بوم','مصمم ديكور','مسؤول إكسسوارات','مصمم أزياء','خبير مكياج','مصفف شعر طاقم العمل','مدير إنتاج','مساعد مخرج','مراقب نص']},
+    {icon:'✏️',title:'الإبداع، الفنون الجميلة والإعلام',jobs:['مدير فني','مصمم جرافيك','مصور فوتوغرافي','صانع فيديو','صانع محتوى','مدير مجتمع رقمي','كاتب نصوص إعلانية','صحفي ثقافي','مدون','صانع بودكاست','مصمم علامات تجارية','كاتب قصص معجبين','صانع ويبتون','رسام توضيحي','رسام كوميكس','رسام تشكيلي','نحات']},
+    {icon:'💻',title:'الرقميات والتكنولوجيا',jobs:['مطور ويب إبداعي','مصمم موشن جرافيك','رسام رسوم متحركة','مصمم ألعاب','مصمم واجهات المستخدم','فني بث مباشر','فنان مؤثرات بصرية','مدير فني رقمي','مصمم وسائط تفاعلية']},
+    {icon:'🏗️',title:'الفعاليات والإنتاج الحي',jobs:['منتج فعاليات','مدير مسرح','فني إضاءة','فني صوت','فني تركيب معدات','بناء ديكور مسرحي','منسق فعاليات','مدير جولات','مدير قاعة','موظف أمن','طاقم تقديم الطعام']},
+    {icon:'📋',title:'الإدارة والشؤون التنفيذية',jobs:['مدير أعمال مواهب','وكيل حجز','مدير شركة إنتاج','منسق جولات','مسؤول علاقات عامة','مدير علاقات عامة','مستشار قانوني للترفيه','منسق موارد بشرية','مدير مشروع','مساعد تنفيذي']},
+    {icon:'🌱',title:'بداية المسيرة والدعم',jobs:['متدرب','مساعد ميداني','مساعد إنتاج','عامل مسرح','سائق','منسق لوجستي','مترجم','مترجم نصوص مرئية','أرشيفي','باحث']}
+  ],
+  hi:[
+    {icon:'🎤',title:'स्टेज पर / स्क्रीन पर',jobs:['गायक','नर्तक','अभिनेता','संगीतकार','रैपर','हास्य कलाकार','मॉडल','मेजबान','एंकर','इन्फ्लुएंसर','स्ट्रीमर','सर्कस कलाकार','एक्रोबैट','स्टैंड-अप आर्टिस्ट','डबिंग कलाकार']},
+    {icon:'🎵',title:'संगीत निर्माण',jobs:['संगीत निर्माता','बीटमेकर','संगीतकार','अरेन्जर','साउंड इंजीनियर','मिक्सिंग इंजीनियर','मास्टरिंग इंजीनियर','ए एंड आर मैनेजर','कलात्मक निर्देशक','डीजे']},
+    {icon:'🎬',title:'दृश्य-श्रव्य निर्माण',jobs:['निर्देशक','पटकथा लेखक','छायाकार','कैमरामैन','वीडियो एडिटर','कलरसिस्ट','ध्वनि रिकॉर्डर','बूम ऑपरेटर','सेट डिजाइनर','प्रॉप्स मास्टर','पोशाक डिजाइनर','मेकअप आर्टिस्ट','हेयर स्टाइलिस्ट','उत्पादन प्रबंधक','सहायक निर्देशक','स्क्रिप्ट सुपरवाइजर']},
+    {icon:'✏️',title:'रचनात्मकता, ललित कला और मीडिया',jobs:['आर्ट डायरेक्टर','ग्राफिक डिजाइनर','फोटोग्राफर','वीडियोग्राफर','सामग्री निर्माता','कम्युनिटी मैनेजर','कॉपीराइटर','सांस्कृतिक पत्रकार','ब्लॉगर','पॉडकास्टर','ब्रांड डिजाइनर','फैनफिक्शन लेखक','वेबटून निर्माता','चित्रकार','कॉमिक कलाकार','पेंटर','मूर्तिकार']},
+    {icon:'💻',title:'डिजिटल और टेक',jobs:['क्रिएटिव वेब डेवलपर','मोशन डिजाइनर','2D / 3D एनिमेटर','गेम डिजाइनर','UX/UI डिजाइनर','स्ट्रीमिंग तकनीशियन','VFX कलाकार','डिजिटल आर्ट डायरेक्टर','इंटरैक्टिव मीडिया डिजाइनर']},
+    {icon:'🏗️',title:'इवेंट्स और लाइव प्रोडक्शन',jobs:['इवेंट निर्माता','स्टेज मैनेजर','लाइटिंग तकनीशियन','साउंड तकनीशियन','रिगर','सेट बिल्डर','इवेंट कोऑर्डिनेटर','टूर मैनेजर','वेन्यू मैनेजर','सुरक्षा अधिकारी','कैटरिंग स्टाफ']},
+    {icon:'📋',title:'प्रबंधन और प्रशासन',jobs:['टैलेंट मैनेजर','बुकिंग एजेंट','लेबल मैनेजर','टूर कोऑर्डिनेटर','प्रचारक','पीआर मैनेजर','कानूनी सलाहकार','एचआर कोऑर्डिनेटर','परियोजना प्रबंधक','कार्यकारी सहायक']},
+    {icon:'🌱',title:'शुरुआती करियर और सहायता',jobs:['इंटर्न','रनर','उत्पादन सहायक','स्टेजहैंड','ड्राइवर','लॉजिस्टिक्स कोऑर्डिनेटर','अनुवादक / दुभाषिया','उपकथा लेखक','संग्रहाध्यक्ष','शोधकर्ता']}
+  ],
+  vi:[
+    {icon:'🎤',title:'Trên sân khấu / Trên màn ảnh',jobs:['Ca sĩ','Vũ công','Diễn viên','Nhạc công','Rapper','Diễn viên hài','Người mẫu','Người dẫn chương trình','MC','Người có sức ảnh hưởng','Streamer','Nghệ sĩ xiếc','Vận động viên nhào lộn','Nghệ sĩ hài độc thoại','Diễn viên lồng tiếng']},
+    {icon:'🎵',title:'Sản xuất âm nhạc',jobs:['Nhà sản xuất âm nhạc','Beatmaker','Nhạc sĩ sáng tác','Nhà phối khí','Kỹ sư âm thanh','Kỹ sư mixing','Kỹ sư mastering','Quản lý A&R','Giám đốc nghệ thuật (label)','DJ']},
+    {icon:'🎬',title:'Sản xuất phim và kỹ thuật số',jobs:['Đạo diễn','Biên kịch','Đạo diễn hình ảnh','Quay phim','Dựng phim','Chuyên viên chỉnh màu','Kỹ thuật viên thu âm','Nhân viên giữ boom phóng thanh','Thiết kế bối cảnh','Quản lý đạo cụ','Thiết kế trang phục','Chuyên viên trang điểm','Tạo mẫu tóc trường quay','Quản lý sản xuất','Trợ lý đạo quyên','Thư ký trường quay']},
+    {icon:'✏️',title:'Sáng tạo, Mỹ thuật và Truyền thông',jobs:['Giám đốc mỹ thuật','Thiết kế đồ họa','Nhiếp ảnh gia','Quay phim ngắn','Nhà sáng tạo nội dung','Quản lý cộng đồng','Người viết lời quảng cáo','Nhà báo văn hóa','Blogger','Podcaster','Thiết kế thương hiệu','Người viết truyện fanfiction','Nhà sáng tạo webtoon','Họa sĩ minh họa','Họa sĩ truyện tranh','Họa sĩ vẽ tranh','Nhà điêu khắc']},
+    {icon:'💻',title:'Kỹ thuật số và Công nghệ',jobs:['Nhà phát triển web sáng tạo','Motion designer','Họa sĩ hoạt hình 2D / 3D','Thiết kế trò chơi','Thiết kế UX/UI','Kỹ thuật viên streaming','Nghệ sĩ VFX','Giám đốc nghệ thuật số','Thiết kế truyền thông tương tác']},
+    {icon:'🏗️',title:'Sự kiện và Sản xuất trực tiếp',jobs:['Nhà sản xuất sự kiện','Quản lý sân khấu','Kỹ thuật viên ánh sáng','Kỹ thuật viên âm thanh','Thợ rigger lắp đặt','Thợ dựng bối cảnh','Điều phối viên sự kiện','Quản lý tour diễn','Quản lý địa điểm','Nhân viên an ninh','Nhân viên catering hậu cần']},
+    {icon:'📋',title:'Quản lý và Hành chính',jobs:['Quản lý nghệ sĩ','Đại lý đặt lịch','Quản lý hãng đĩa','Điều phối viên tour diễn','Chuyên viên báo chí','Quản lý PR','Cố vấn pháp lý giải trí','Điều phối viên nhân sự','Quản lý dự án','Trợ lý điều hành']},
+    {icon:'🌱',title:'Khởi đầu sự nghiệp và Hỗ trợ',jobs:['Thực tập sinh','Trợ lý chạy việc hậu cần','Trợ lý sản xuất','Nhân viên hỗ trợ sân khấu','Tài xế','Điều phối viên hậu cần','Biên dịch / Phiên dịch viên','Người làm phụ đề','Nhân viên lưu trữ','Nghiên cứu viên']}
+  ],
+  th:[
+    {icon:'🎤',title:'บนเวที / บนหน้าจอ',jobs:['นักร้อง','นักเต้น','นักแสดง','นักดนตรี','แร็ปเปอร์','นักแสดงตลก','นางแบบ / นายแบบ','พิธีกร','ผู้ดำเนินรายการ','อินฟลูเอนเซอร์','สตรีมเมอร์','นักแสดงกายกรรม','นักกายกรรม','นักเดี่ยวไมโครโฟน','นักพากย์เสียง']},
+    {icon:'🎵',title:'โปรดักชันดนตรี',jobs:['โปรดิวเซอร์เพลง','บีทเมกเกอร์','นักแต่งเพลง','นักเรียบเรียงเสียงประสาน','วิศวกรเสียง','วิศวกรผสมเสียง','วิศวกรมาสเตอริ่ง','ผู้จัดการฝ่าย A&R','ผู้อำนวยการฝ่ายศิลป์ (ค่ายเพลง)','ดีเจ']},
+    {icon:'🎬',title:'โปรดักชันภาพและเสียง',jobs:['ผู้กำกับ','นักเขียนบท','ผู้กำกับภาพ','ช่างกล้อง','ผู้ตัดต่อวิดีโอ','ช่างปรับสีภาพ','ผู้บันทึกเสียง','ช่างถือบูม','นักออกแบบฉาก','ผู้ดูแลอุปกรณ์ประกอบฉาก','นักออกแบบเครื่องแต่งกาย','ช่างแต่งหน้า','ช่างทำผมประจำกอง','ผู้จัดการกองถ่าย','ผู้ช่วยผู้กำกับ','ผู้ดูแลบท']},
+    {icon:'✏️',title:'ความคิดสร้างสรรค์ วิจิตรศิลป์ และสื่อ',jobs:['ผู้อำนวยการฝ่ายศิลป์','นักออกแบบกราฟิก','ช่างภาพ','ช่างวิดีโอ','นักสร้างคอนเทนต์','ผู้จัดการชุมชนออนไลน์','นักเขียนคำโฆษณา','นักข่าวสายวัฒนธรรม','บล็อกเกอร์','ผู้จัดทำพอดคาสต์','นักออกแบบแบรนด์','นักเขียนแฟนฟิคชั่น','นักสร้างเว็บตูน','นักวาดภาพประกอบ','นักวาดการ์ตูน','จิตรกร','ประติมากร']},
+    {icon:'💻',title:'ดิจิทัลและเทคโนโลยี',jobs:['นักพัฒนาเว็บสายสร้างสรรค์','โมชันดีไซเนอร์','นักทำแอนิเมชัน 2D / 3D','นักออกแบบเกม','นักออกแบบ UX/UI','ช่างเทคนิคสตรีมมิง','ศิลปิน VFX','ผู้อำนวยการศิลป์ดิจิทัล','นักออกแบบสื่อปฏิสัมพันธ์']},
+    {icon:'🏗️',title:'งานอีเวนต์และโปรดักชันคอนเสิร์ต',jobs:['ผู้จัดงานอีเวนต์','ผู้จัดการเวที','ช่างเทคนิคแสง','ช่างเทคนิคเสียง','ช่างติดตั้งโครงสร้าง','ช่างสร้างฉาก','ผู้ประสานงานอีเวนต์','ผู้จัดการทัวร์คอนเสิร์ต','ผู้จัดการสถานที่','เจ้าหน้าที่รักษาความปลอดภัย','ทีมงานจัดเลี้ยง hậu cần']},
+    {icon:'📋',title:'การจัดการและบริหารงาน',jobs:['ผู้จัดการดาราและศิลปิน','ตัวแทนจองงาน','ผู้จัดการค่ายเพลง','ผู้ประสานงานทัวร์','นักประชาสัมพันธ์','ผู้จัดการฝ่าย PR','ที่ปรึกษากฎหมายบันเทิง','ผู้ประสานงานฝ่าย HR','ผู้จัดการโครงการ','ผู้ช่วยผู้บริหาร']},
+    {icon:'🌱',title:'จุดเริ่มต้นอาชีพและฝ่ายสนับสนุน',jobs:['นักศึกษาฝึกงาน','พนักงานวิ่งงานกองถ่าย','ผู้ช่วยฝ่ายโปรดักชัน','คนงานประจำเวที','คนขับรถ','ผู้ประสานงานโลจิสติกส์','นักแปล / ล่าม','คนทำซับไตเติล','เจ้าหน้าที่จดหมายเหตุ','นักวิจัย']}
+  ],
+  zh:[
+    {icon:'🎤',title:'舞台 / 荧幕',jobs:['歌手','舞者','演员','音乐家','说唱歌手','喜剧演员','模特','主持人','司仪','网红博主','主播','马戏艺人','杂技演員','脱口秀演员','配音演员']},
+    {icon:'🎵',title:'音乐制作',jobs:['音乐制作人','编曲师','作曲家','伴奏制作师','录音师','混音师','母带工程师','A&R艺人发展经理','唱片公司艺术总监','DJ']},
+    {icon:'🎬',title:'影视视听制作',jobs:['导演','编剧','摄影指导','摄像师','剪辑师','调色师','现场录音师','话筒员','舞台美术设计','道具师','服装设计师','造型化妆师','随片发型师','制片主任','副导演','场记']},
+    {icon:'✏️',title:'创意、美术与媒体',jobs:['艺术总监','平面设计师','摄影师','摄像师','内容创作者','社群运营经理','文案策划','文化记者','博主','播客创作者','品牌设计师','同人小说作家','条漫Webtoon创作者','插画师','漫画家','画家','雕塑家']},
+    {icon:'💻',title:'数字与科技创意',jobs:['创意网页开发员','特效动画师','2D / 3D动画师','游戏设计师','UX/UI设计师','直播技术员','VFX特效师','数字艺术总监','互动媒体设计师']},
+    {icon:'🏗️',title:'活动与现场演出',jobs:['活动策划人','舞台监督','灯光师','音响师','架子工机械师','置景工','活动协调员','巡演经理','场地主管','安保人员','餐饮后勤团队']},
+    {icon:'📋',title:'经纪管理与行政',jobs:['艺人经纪人','接单代理人','厂牌运营经理','巡演协调员','媒体公关','PR经理','娱乐法务顾问','HR协调员','项目经理','行政助理']},
+    {icon:'🌱',title:'职业初期与后勤支持',jobs:['实习生','场务跑腿','制作助理','舞台助理','司机','物流协调员','翻译 / 口译','字幕组员','档案管理员','资料研究员']}
+  ],
+  jp:[
+    {icon:'🎤',title:'ステージ / スクリーン',jobs:['歌手','ダンサー','俳優','ミュージシャン','ラッパー','お笑い芸人','モデル','司会者','MC','インフルエンサー','配信者','サーカスアーティスト','アクロバット','スタンドアップコメディアン','声優']},
+    {icon:'🎵',title:'音楽制作',jobs:['音楽プロデューサー','トラックメーカー','作曲家','編曲家','レコーディングエンジニア','ミキシングエンジニア','マスタリングエンジニア','A&Rマネージャー','アートディレクター（レーベル）','DJ']},
+    {icon:'🎬',title:'映像制作',jobs:['映画監督','脚本家','撮影監督','カメラマン','映像編集者','カラリスト','録音技師','ガンマイクオペレーター','美術監督','持道具担当','衣装デザイナー','メイクアップアーティスト','ヘアスタイリスト','制作進行','助監督','スクリプトドクター']},
+    {icon:'✏️',title:'クリエイティブ・美術・メディア',jobs:['アートディレクター','グラフィックデザイナー','写真家','ビデオグラファー','コンテンツクリエイター','コミュニティマネージャー','コピーライター','文化ジャーナリスト','ブロガー','ポッドキャスター','ブランドデザイナー','二次創作・小説作家','ウェブトゥーンクリエイター','イラストレーター','漫画家','画家','彫刻家']},
+    {icon:'💻',title:'デジタル・IT',jobs:['クリエイティブWEB開発者','モーションデザイナー','2D / 3Dアニメーター','ゲームデザイナー','UX/UIデザイナー','配信技術者','VFXアーティスト','デジタルアートディレクター','インタラクティブメディアデザイナー']},
+    {icon:'🏗️',title:'イベント・ライブ制作',jobs:['イベントプロデューサー','舞台監督','照明技師','音響技師','特効・リガー','大道具','イベントコーディネーター','ツアーマネージャー','会場支配人','警備員','ケータリングスタッフ']},
+    {icon:'📋',title:'マネジメント・管理',jobs:['マネージャー','ブッキングエージェント','レーベル運営','ツアーコーディネーター','パブリシスト','PRマネージャー','芸能法務弁護士','HRコーディネーター','プロジェクトマネージャー','エグゼクティブアシスタント']},
+    {icon:'🌱',title:'キャリア初期・サポート',jobs:['インターン','ランナー','制作助手','ステージハンド','ドライバー','ロジスティクスコーディネーター','翻訳・通訳者','字幕制作','アーキビスト','リサーチャー']}
+  ],
+  kr:[
+    {icon:'🎤',title:'무대 / 스크린',jobs:['가수','댄서','배우','음악가','래퍼','코미디언','모델','MC / 진행자','인플루언서','스트리머','서커스 아티스트','아크로바트','스탠드업 아티스트','성우']},
+    {icon:'🎵',title:'음악 프로덕션',jobs:['음악 프로듀서','비트메이커','작곡가','편곡자','음향 엔지니어','믹싱 엔지니어','마스터링 엔지니어','A&R 매니저','아트 디렉터 (레이블)','DJ']},
+    {icon:'🎬',title:'영상 프로덕션',jobs:['감독','시나리오 작가','촬영 감독','카메라맨','영상 편집자','컬러리스트','음향 녹음사','붐 오퍼레이터','세트 디자이너','소품 담당','의상 디자이너','메이크업 아티스트','헤어 스타일리스트','제작 관리자','조감독','스크립터']},
+    {icon:'✏️',title:'크리에이티브, 미술 & 미디어',jobs:['아트 디렉터','그래픽 디자이너','사진작가','비디오그래퍼','콘텐츠 크리에이터','커뮤니티 매니저','카피라이터','문화 저널리스트','블로거','팟캐스터','브랜드 디자이너','팬픽션 작가','웹툰 크리에이터','일러스트레이터','만화가','화가','조각가']},
+    {icon:'💻',title:'디지털 & 기술',jobs:['크리에이티브 웹 개발자','모션 디자이너','2D / 3D 애니메이터','게임 디자이너','UX/UI 디자이너','스트리밍 기술자','VFX 아티스트','디지털 아트 디렉터','인터랙티브 미디어 디자이너']},
+    {icon:'🏗️',title:'이벤트 & 라이브 프로덕션',jobs:['이벤트 프로듀서','무대 감독','조명 기술자','음향 기술자','리거','세트 빌더','이벤트 코디네이터','투어 매니저','공연장 매니저','보안 요원','케이터링 스태프']},
+    {icon:'📋',title:'매니지먼트 & 행정',jobs:['탤런트 매니저','부킹 에이전트','레이블 매니저','투어 코디네이터','홍보 담당','PR 매니저','엔터테인먼트 법무','HR 코디네이터','프로젝트 매니저','임원 비서']},
+    {icon:'🌱',title:'신입 & 지원',jobs:['인턴','러너','프로덕션 어시스턴트','스테이지핸드','드라이버','물류 코디네이터','번역사 / 통역사','자막 작업자','아카이비스트','리서처']}
+  ]
+};
+
+var T = {
+  en:{
+    nav_sub:'Psychological Well-being',h_eyebrow:'About Creaven',h_title:'The story behind <em>the platform.</em>',h_sub:'Not a pitch. Not a product page. This is why Creaven exists, who it is for, and what we refuse to compromise on.',origin_label:'Where this comes from',origin_title:'A problem <em>hiding in plain sight.</em>',origin_p1:'The creative industry is one of the most demanding environments on earth. Not because it is harder than construction or medicine or agriculture. But because the suffering inside it is systematically invisible. The culture rewards performance. It punishes fragility. And it has spent decades telling the people inside it that exhaustion is the price of passion.',origin_p2:'Most of the people who make culture, the ones you will never see on a stage or in a credits list, work in conditions of extreme pressure with near-total silence around mental health. When something breaks, the systems that exist were not built for them. Corporate mental health platforms require an employer who has opted in. Insurance plans require coverage. Local therapists require the right geography and the right language. And the cultural stigma in high-performance environments requires that you simply carry on.',origin_p3:'Creaven was built because that gap is not a minor inconvenience. It costs careers, relationships, and lives. And no platform was built specifically to close it.',quote_text:'You do not have to be falling apart to deserve support. You just have to be human.',quote_context:'This is the single conviction at the center of everything Creaven builds. Not as a tagline. As a design principle. Every feature, every protocol, every clinical decision on this platform exists to make that sentence true in practice.',tensions_label:'What we saw',tensions_title:'The real tensions <em>nobody names out loud.</em>',
+    tensions:[
+      {label:'Silence as culture',title:'The system rewards staying quiet',text:'In high-performance creative environments, asking for help is still read as weakness. Admitting burnout risks your contract. Showing vulnerability risks your reputation. The silence is not personal. It is structural.'},
+      {label:'Accessibility gap',title:'Existing solutions do not reach them',text:'Mental health resources exist. But most require corporate enrollment, private insurance, or proximity to a major city. The freelancer in Bangkok, the producer in Lagos, the dancer whose contract ended last month, they fall through every crack.'},
+      {label:'Language and culture',title:'Mental health is not culturally neutral',text:'Western clinical frameworks do not translate cleanly into every cultural context. The way distress is expressed, named, and accepted varies enormously. A platform built for one cultural reality will fail people from another.'},
+      {label:'Invisibility at scale',title:'The industry does not count who it forgets',text:'The data on mental health in the creative industry is almost entirely about artists and performers. The technician, the assistant, the intern, the security guard: invisible in every study, invisible in every solution.'}
+    ],
+    jobs_label:'Who this is for',jobs_title:'Every role. <em>Without exception.</em>',jobs_intro:'The creative industry is not just the faces you know. It is hundreds of professions, most of them invisible, all of them essential. Creaven is for all of them. If your work touches the creative world in any way, this platform was built with you in mind.',jobs_note:'<strong>If your role is not listed here, it still counts.</strong> This list is a starting point, not a boundary. The creative industry is vast and constantly evolving. If you work in it, Creaven is for you.',com_label:'What we stand for',com_title:'The things we will <em>never compromise on.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Equity of care',text:'The headliner and the janitor receive the same quality of psychological support. Role, rank, and contract type are never conditions for access to care on this platform.'},
+      {icon:'🔒',title:'Radical confidentiality',text:'What happens in a session stays between the client and their psychologist. Creaven never shares clinical information with employers, agencies, or any third party under any circumstance.'},
+      {icon:'🧬',title:'Clinical integrity',text:'Every tool we use is internationally validated. Every result is reviewed by a licensed psychologist. There are no shortcuts on clinical standards.'},
+      {icon:'🌍',title:'Worldwide accessibility',text:'If you have an internet connection, geography is not a barrier. Creaven operates across time zones, in multiple languages, for any creative worker anywhere in the world.'},
+      {icon:'🗣️',title:'Language as a right',text:'Mental health care should not require you to speak the dominant language. Creaven operates in multiple languages and uses AI-assisted interpretation to bridge gaps in real time.'},
+      {icon:'❤️',title:'Human first, always',text:'Technology supports care. It does not replace it. Every assessment result, every session, every critical decision involves a human psychologist. AI assists. Humans decide.'}
+    ],
+    fn_label:'The founder',fn_text:'<strong>Creaven was founded by Grace Daniella Amakon</strong>, a psychosocial support specialist with a Master\'s degree in social psychology and field experience in burnout prevention, psychosocial accompaniment, and mental health coordination through NGO work in West Africa. Creaven was not built from a boardroom or a startup incubator. It was built from years of observation, from fieldwork, and from a simple refusal to accept that the people who make culture should not have access to the same quality of psychological care as anyone else. The platform reflects both clinical rigor and lived understanding of what the creative industry actually demands from human beings.',cta_title:'Ready to <em>start?</em>',cta_sub:'Whether you need support for yourself or you want to protect your team, Creaven is here.',cta_btn1:'Book a Consultation',cta_btn2:'For Organizations',nl_home:'Home',nl_tests:'Assessments',nl_book:'Book',nl_org:'Organizations',nl_emergency:'Emergency',nl_account:'My Account',nl_about:'About',nl_contact:'Contact',footer:'Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.'
+  },
+  fr:{
+    nav_sub:'Bien-être psychologique',h_eyebrow:'À propos de Creaven',h_title:'L\'histoire derrière <em>la plateforme.</em>',h_sub:'Pas un pitch. Pas une page produit. Voici pourquoi Creaven existe, pour qui, et sur quoi nous ne transigeons jamais.',origin_label:'D\'où ça vient',origin_title:'Un problème <em>caché en pleine vue.</em>',origin_p1:'L\'industrie créative est l\'un des environnements les plus exigeants au monde. Pas parce qu\'elle est plus dure que la construction ou la médecine ou l\'agriculture. Mais parce que la souffrance qui s\'y trouve est systématiquement invisible. La culture y récompense la performance. Elle punit la fragilité. Et elle a passé des décennies à dire aux personnes qui y travaillent que l\'épuisement est le prix de la passion.',origin_p2:'La plupart des personnes qui fabriquent la culture, celles que vous ne verrez jamais sur scène ou dans un générique, travaillent dans des conditions de pression extrême avec un silence quasi total autour de la santé mentale. Quand quelque chose se brise, les systèmes existants n\'ont pas été conçus pour eux. Les plateformes de santé mentale d\'entreprise exigent un employeur qui a adhéré. Les assurances exigent une couverture. Les thérapeutes locaux exigent la bonne géographie et la bonne langue. Et la stigmatisation dans les environnements de haute performance exige qu\'on continue simplement.',origin_p3:'Creaven a été construit parce que ce vide n\'est pas un inconvénient mineur. Il coûte des carrières, des relations, et des vies. Et aucune plateforme n\'avait été construite spécifiquement pour le combler.',quote_text:'Vous n\'avez pas besoin d\'être en train de vous effondrer pour mériter un soutien. Vous avez juste besoin d\'être humain.',quote_context:'C\'est la conviction unique au centre de tout ce que Creaven construit. Pas comme un slogan. Comme un principe de conception. Chaque fonctionnalité, chaque protocole, chaque décision clinique sur cette plateforme existe pour rendre cette phrase vraie en pratique.',tensions_label:'Ce que nous avons observé',tensions_title:'Les vraies tensions <em>que personne ne nomme à voix haute.</em>',
+    tensions:[
+      {label:'Le silence comme culture',title:'Le système récompense le silence',text:'Dans les environnements créatifs à haute performance, demander de l\'aide est encore lu comme une faiblesse. Admettre le burnout risque votre contrat. Montrer sa vulnérabilité risque votre réputation. Le silence n\'est pas personnel. Il est structurel.'},
+      {label:'Le fossé d\'accessibilité',title:'Les solutions existantes ne les atteignent pas',text:'Les ressources de santé mentale existent. Mais la plupart nécessitent une inscription d\'entreprise, une assurance privée, ou la proximité d\'une grande ville. Le freelance à Bangkok, le producteur à Lagos, la danseuse dont le contrat vient d\'expirer passent à travers toutes les mailles.'},
+      {label:'Langue et culture',title:'La santé mentale n\'est pas culturellement neutre',text:'Les cadres cliniques occidentaux ne se traduisent pas proprement dans tous les contextes culturels. La façon dont la détresse est exprimée, nommée et acceptée varie énormément. Une plateforme construite pour une réalité culturelle échouera des personnes d\'une autre.'},
+      {label:'L\'invisibilité à grande échelle',title:'L\'industrie ne compte pas ceux qu\'elle oublie',text:'Les données sur la santé mentale dans l\'industrie créative concernent presque exclusivement les artistes et les performers. Le technicien, l\'assistante, le stagiaire, l\'agent de sécurité : invisibles dans chaque étude, invisibles dans chaque solution.'}
+    ],
+    jobs_label:'Pour qui c\'est',jobs_title:'Chaque métier. <em>Sans exception.</em>',jobs_intro:'L\'industrie créative n\'est pas que les visages que vous connaissez. Ce sont des centaines de métiers, la plupart invisibles, tous essentiels. Creaven est pour tous. Si votre travail touche le monde créatif d\'une quelconque manière, cette plateforme a été construite avec vous en tête.',jobs_note:'<strong>Si votre métier n\'est pas listé ici, il compte quand même.</strong> Cette liste est un point de départ, pas une frontière. L\'industrie créative est vaste et en constante évolution. Si vous y travaillez, Creaven est pour vous.',com_label:'Ce pour quoi nous nous engageons',com_title:'Ce sur quoi nous ne <em>transigeons jamais.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Équité des soins',text:'La tête d\'affiche et l\'agent d\'entretien reçoivent le même niveau de soutien psychologique. Le rôle, le rang et le type de contrat ne sont jamais des conditions d\'accès aux soins.'},
+      {icon:'🔒',title:'Confidentialité absolue',text:'Ce qui se passe en séance reste entre le client et son psychologue. Creaven ne partage jamais d\'informations cliniques avec les employeurs, agences ou tout tiers, en aucune circonstance.'},
+      {icon:'🧬',title:'Intégrité clinique',text:'Chaque outil que nous utilisons est validé internationalement. Chaque résultat est examiné par un psychologue licencié. Aucun raccourci sur les standards cliniques.'},
+      {icon:'🌍',title:'Accessibilité mondiale',text:'Si vous avez une connexion internet, la géographie n\'est pas un obstacle. Creaven opère dans tous les fuseaux horaires, en plusieurs langues, pour tout travailleur créatif partout dans le monde.'},
+      {icon:'🗣️',title:'La langue comme droit',text:'Les soins de santé mentale ne doivent pas exiger que vous parliez la langue dominante. Creaven opère en plusieurs langues et utilise l\'interprétation assistée par IA pour combler les écarts en temps réel.'},
+      {icon:'❤️',title:'L\'humain avant tout',text:'La technologie soutient les soins. Elle ne les remplace pas. Chaque résultat d\'évaluation, chaque séance, chaque décision critique implique un psychologue humain. L\'IA assiste. Les humains décident.'}
+    ],
+    fn_label:'La fondatrice',fn_text:'<strong>Creaven a été fondé par Grace Daniella Amakon</strong>, spécialiste en soutien psychosocial titulaire d\'un master en psychologie sociale et forte d\'une expérience de terrain en prévention du burnout, accompagnement psychosocial et coordination de santé mentale au sein d\'ONG en Afrique de l\'Ouest. Creaven n\'a pas été construit depuis une salle de conseil ou un incubateur de startups. Il a été construit à partir d\'années d\'observation, de travail de terrain, et d\'un refus simple d\'accorder que les personnes qui fabriquent la culture n\'aient pas accès à la même qualité de soins psychologiques que n\'importe qui d\'autre. La plateforme reflète à la fois la rigueur clinique et la compréhension vécue de ce que l\'industrie créative exige réellement des êtres humains.',cta_title:'Prêt(e) à <em>commencer ?</em>',cta_sub:'Que vous ayez besoin de soutien pour vous-même ou que vous souhaitiez protéger votre équipe, Creaven est là.',cta_btn1:'Prendre rendez-vous',cta_btn2:'Pour les organisations',nl_home:'Accueil',nl_tests:'Évaluations',nl_book:'Réserver',nl_org:'Organisations',nl_emergency:'Urgences',nl_account:'Mon Compte',nl_about:'À Propos',nl_contact:'Contact',footer:'Creaven 2026 - Bien-être psychologique pour l\'industrie créative - Tous droits réservés.'
+  },
+  de:{
+    nav_sub:'Psychologisches Wohlbefinden',h_eyebrow:'Über Creaven',h_title:'Die Geschichte hinter <em>der Plattform.</em>',h_sub:'Kein Pitch. Keine Produktseite. Warum Creaven existiert, für wen es gedacht ist und worauf wir niemals verzichten.',origin_label:'Woher wir kommen',origin_title:'Ein Problem, das <em>offensichtlich verborgen war.</em>',origin_p1:'Die Kreativbranche ist eine der forderndsten Umgebungen der Welt. Nicht weil sie härter ist als der Bau, die Medizin oder die Landwirtschaft. Sondern weil das Leiden darin systematisch unsichtbar bleibt. Die Kultur belohnt Leistung. Sie bestraft Fragilität. Und sie verbringt Jahrzehnte damit, den Menschen darin einzureden, Erschöpfung sei der Preis für Leidenschaft.',origin_p2:'Die meisten Kulturschaffenden, jene, die man nie auf einer Bühne oder im Abspann sieht, arbeiten unter extremem Druck bei fast völligem Schweigen über psychische Gesundheit. Wenn etwas zerbricht, waren die bestehenden Systeme nicht für sie gebaut. Betriebliche Plattformen erfordern einen Arbeitgeber, der sich dafür angemeldet hat. Versicherungen erfordern Deckung. Lokale Therapeuten erfordern die richtige Geografie und Sprache. Und das Stigma verlangt, dass man einfach weitermacht.',origin_p3:'Creaven wurde gegründet, weil diese Lücke kein kleines Ärgernis ist. Sie kostet Karrieren, Beziehungen und Leben. Und keine Plattform war speziell darauf ausgerichtet, sie zu schließen.',quote_text:'Man muss nicht erst zusammenbrechen, um Unterstützung zu verdienen. Man muss nur ein Mensch sein.',quote_context:'Das ist die einzige Überzeugung im Zentrum von allem, was Creaven baut. Kein Slogan. Ein Designprinzip. Jede Funktion, jedes Protokoll, jede klinische Entscheidung auf dieser Plattform existiert, um diesen Satz in der Praxis wahr zu machen.',tensions_label:'Was wir sahen',tensions_title:'Die echten Spannungen, <em>die niemand laut anspricht.</em>',
+    tensions:[
+      {label:'Schweigen als Kultur',title:'Das System belohnt Stillschweigen',text:'In kreativen Hochleistungsumgebungen gilt das Bitten um Hilfe immer noch als Schwäche. Ein Burnout zu riskieren gefährdet Verträge. Verwundbarkeit gefährdet den Ruf. Das Schweigen ist strukturell.'},
+      {label:'Zugänglichkeitslücke',title:'Bestehende Lösungen erreichen sie nicht',text:'Ressourcen für psychische Gesundheit existieren. Aber die meisten erfordern eine Anmeldung durch Unternehmen oder private Versicherungen. Der Freelancer in Bangkok oder der Produzent in Lagos fallen durch jedes Raster.'},
+      {label:'Sprache und Kultur',title:'Psychische Gesundheit ist nicht kulturell neutral',text:'Westliche klinische Rahmenbedingungen lassen sich nicht nahtlos in jeden kulturellen Kontext übersetzen. Wie Leid ausgedrückt wird, variiert enorm. Eine Plattform für eine einzige Kultur wird andere enttäuschen.'},
+      {label:'Unsichtbarkeit im großen Stil',title:'Die Branche zählt nicht diejenigen, die sie vergisst',text:'Daten über psychische Gesundheit in der Kreativwirtschaft betreffen fast nur Künstler. Der Techniker, der Assistent, der Praktikant, das Sicherheitspersonal : unsichtbar in jeder Studie, unsichtbar in jeder Lösung.'}
+    ],
+    jobs_label:'Für wen das ist',jobs_title:'Jede Rolle. <em>Ohne Ausnahme.</em>',jobs_intro:'Die Kreativbranche besteht nicht nur aus bekannten Gesichtern. Es sind Hunderte Berufe, meist unsichtbar, aber alle unverzichtbar. Creaven ist für sie alle da. Wenn Ihre Arbeit die kreative Welt berührt, wurde diese Plattform für Sie gebaut.',jobs_note:'<strong>Wenn Ihre Rolle hier nicht aufgeführt ist, zählt sie trotzdem.</strong> Diese Liste ist ein Anfang, keine Grenze. Die Kreativbranche ist riesig und entwickelt sich ständig weiter. Wenn Sie darin arbeiten, ist Creaven für Sie da.',com_label:'Wofür wir stehen',com_title:'Die Dinge, bei denen wir <em>niemals Kompromisse eingehen.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Gleichheit in der Versorgung',text:'Der Headliner und die Reinigungskraft erhalten die gleiche Qualität an psychologischer Unterstützung. Rolle, Rang und Vertragsart sind niemals Bedingungen für den Zugang zu Pflege auf dieser Plattform.'},
+      {icon:'🔒',title:'Radikale Vertraulichkeit',text:'Was in einer Sitzung passiert, bleibt zwischen dem Klienten und seinem Psychologen. Creaven teilt unter keinen Umständen klinische Informationen mit Arbeitgebern, Agenturen oder Dritten.'},
+      {icon:'🧬',title:'Klinische Integrität',text:'Jedes Werkzeug, das wir verwenden, ist international validiert. Jedes Ergebnis wird von einem lizenzierten Psychologen überprüft. Es gibt keine Abkürzungen bei klinischen Standards.'},
+      {icon:'🌍',title:'Weltweite Zugänglichkeit',text:'Wenn Sie eine Internetverbindung haben, ist Geografie kein Hindernis. Creaven arbeitet über Zeitzonen hinweg, in mehreren Sprachen, für jeden kreativen Arbeiter weltweit.'},
+      {icon:'🗣️',title:'Sprache als Recht',text:'Psychische Gesundheitsfürsorge sollte nicht voraussetzen, dass Sie die dominante Sprache sprechen. Creaven arbeitet in mehreren Sprachen und nutzt KI-gestützte Dolmetscherdienste.'},
+      {icon:'❤️',title:'Der Mensch zuerst, immer',text:'Technologie unterstützt die Pflege. Sie ersetzt sie nicht. Jedes Bewertungsergebnis, jede Sitzung und jede kritische Entscheidung beinhaltet einen menschlichen Psychologen. KI unterstützt. Menschen entscheiden.'}
+    ],
+    fn_label:'Die Gründerin',fn_text:'<strong>Creaven wurde von Grace Daniella Amakon gegründet</strong>, einer Spezialistin für psychosoziale Unterstützung mit einem Master-Abschluss in Sozialpsychologie und Felderfahrung in Burnout-Prävention und psychosozialer Begleitung durch NGO-Arbeit in Westafrika. Creaven wurde nicht in einem Sitzungssaal oder einem Startup-Inkubator gebaut. Es entstand aus jahrelanger Beobachtung und der Weigerung zu akzeptieren, dass Kulturschaffende keinen Zugang zu hochwertiger psychologischer Versorgung haben sollten. Die Plattform spiegelt sowohl klinische Strenge als auch das gelebte Verständnis dessen wider, was die Kreativbranche dem Menschen abverlangt.',cta_title:'Bereit zu <em>starten?</em>',cta_sub:'Ob Sie Unterstützung für sich selbst benötigen oder Ihr Team schützen möchten, Creaven ist hier.',cta_btn1:'Beratung buchen',cta_btn2:'Für Organisationen',nl_home:'Startseite',nl_tests:'Tests',nl_book:'Buchen',nl_org:'Organisationen',nl_emergency:'Notfall',nl_account:'Mein Konto',nl_about:'Über uns',nl_contact:'Kontakt',footer:'Creaven 2026 - Psychologisches Wohlbefinden für die Kreativbranche - Alle Rechte vorbehalten.'
+  },
+  es:{
+    nav_sub:'Bienestar Psicológico',h_eyebrow:'Sobre Creaven',h_title:'La historia detrás de <em>la plataforma.</em>',h_sub:'No es un discurso. No es una página de producto. Por esto existe Creaven, para quién es y en qué nos negamos a transigir.',origin_label:'De dónde viene esto',origin_title:'Un problema <em>oculto a plena vista.</em>',origin_p1:'La industria creativa es uno de los entornos más exigentes de la tierra. No porque sea más dura que la construcción, la medicina o la agricultura. Sino porque el sufrimiento en su interior es sistemáticamente invisible. La cultura premia el rendimiento. Castiga la fragilidad. Y lleva décadas diciendo a la gente en su interior que el agotamiento es el precio de la pasión.',origin_p2:'La mayoría de las personas que hacen cultura, las que nunca verás en un escenario o en una lista de créditos, trabajan en condiciones de extrema presión con un silencio casi total en torno a la salud mental. Cuando algo se rompe, los sistemas existentes no fueron creados para ellos. Las plataformas corporativas requieren que el empleador se haya adherido. Los seguros requieren cobertura. Los terapeutas locales requieren la geografía y el idioma adecuados. Y el estigma exige que simplemente continúes.',origin_p3:'Creaven se construyó porque esa brecha no es un inconveniente menor. Cuesta carreras, relaciones y vidas. Y ninguna plataforma fue construida específicamente para cerrarla.',quote_text:'No tienes que estar desmoronándote para merecer apoyo. Solo tienes que ser humano.',quote_context:'Esta es la única convicción en el centro de todo lo que Creaven construye. No como un eslogan. Como un principio de diseño. Cada función, cada protocolo, cada decisión clínica en esta plataforma existe para hacer que esa frase sea real en la práctica.',tensions_label:'Lo que vimos',tensions_title:'Las verdaderas tensiones <em>que nadie menciona en voz alta.</em>',
+    tensions:[
+      {label:'El silencio como cultura',title:'El sistema premia mantenerse en silencio',text:'In entornos creativos de alto rendimiento, pedir ayuda se sigue leyendo como debilidad. Admitir el burnout arriesga tu contrato. Mostrar vulnerabilidad arriesga tu reputación. El silencio es estructural.'},
+      {label:'Brecha de accesibilidad',title:'Las soluciones existentes no los alcanzan',text:'Los recursos de salud mental existen. Pero la mayoría requiere inscripción corporativa o seguro privado. El profesional independiente en Bangkok o el productor en Lagos caen por cada grieta del sistema.'},
+      {label:'Idioma y cultura',title:'La salud mental no es culturalmente neutra',text:'Los marcos clínicos occidentales no se traducen limpiamente a cada contexto cultural. La forma en que se expresa el sufrimiento varía enormemente. Una plataforma construida para una sola realidad cultural fallará con otra.'},
+      {label:'Invisibilidad a escala',title:'La industria no cuenta a quienes olvida',text:'Los datos sobre salud mental en la industria creativa se centran casi por completo en artistas. El técnico, el asistente, el pasante, el guardia de seguridad : invisibles en cada estudio, invisibles en cada solución.'}
+    ],
+    jobs_label:'Para quién es esto',jobs_title:'Cada rol. <em>Sin excepción.</em>',jobs_intro:'La industria creativa no es solo las caras que conoces. Son cientos de profesiones, la mayoría invisibles, todas esenciales. Creaven es para todos ellos. Si tu trabajo toca el mundo creativo de alguna manera, esta plataforma fue construida pensando en ti.',jobs_note:'<strong>Si tu rol no está en la lista, aún cuenta.</strong> Esta lista es un punto de partida, no un límite. La industria creativa es vasta y evoluciona constantemente. Si trabajas en ella, Creaven es para ti.',com_label:'Lo que defendemos',com_title:'Las cosas en las que <em>nunca transigiremos.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Equidad en la atención',text:'La estrella principal y el personal de limpieza reciben la misma calidad de apoyo psicológico. El rol, el rango y el tipo de contrato nunca son condiciones para el acceso a la atención en esta plataforma.'},
+      {icon:'🔒',title:'Confidencialidad radical',text:'Lo que pasa en una sesión se queda entre el cliente y su psicólogo. Creaven nunca comparte información clínica con empleadores, agencias o terceros bajo ninguna circunstancia.'},
+      {icon:'🧬',title:'Integridad clínica',text:'Cada herramienta que usamos está validada internacionalmente. Cada resultado es revisado por un psicólogo con licencia. No hay atajos en los estándares clínicos.'},
+      {icon:'🌍',title:'Accesibilidad mundial',text:'Si tienes conexión a internet, la geografía no es una barrera. Creaven opera en todas las zonas horarias, en varios idiomas, para cualquier trabajador creativo en cualquier parte del mundo.'},
+      {icon:'🗣️',title:'El idioma como derecho',text:'La atención de la salud mental no debería requerir que hables el idioma dominante. Creaven opera en múltiples idiomas y utiliza interpretación asistida por IA para cerrar brechas en tiempo real.'},
+      {icon:'❤️',title:'El humano primero, siempre',text:'La tecnología respalda la atención. No la reemplaza. Cada resultado de evaluación, cada sesión y cada decisión crítica involucra a un psicólogo humano. La IA asiste. Los humanos deciden.'}
+    ],
+    fn_label:'La fundadora',fn_text:'<strong>Creaven fue fundada por Grace Daniella Amakon</strong>, especialista en apoyo psicosocial con una maestría en psicología social y experiencia de campo en prevención de burnout y acompañamiento psicosocial a través del trabajo en ONG en África Occidental. Creaven no se construyó desde una sala de juntas o una incubadora de empresas. Nació de años de observación, del trabajo de campo y de la simple negativa a aceptar que las personas que hacen cultura no deban tener acceso a una atención psicológica de calidad. La plataforma refleja tanto el rigor clínico como la comprensión vivida de lo que la industria creativa exige de los seres humanos.',cta_title:'¿Listo para <em>empezar?</em>',cta_sub:'Ya sea que necesites apoyo para ti mismo o quieras proteger a tu equipo, Creaven está aquí.',cta_btn1:'Reservar una consulta',cta_btn2:'Para organizaciones',nl_home:'Inicio',nl_tests:'Evaluaciones',nl_book:'Reservar',nl_org:'Organizaciones',nl_emergency:'Emergencia',nl_account:'Mi Cuenta',nl_about:'Sobre nosotros',nl_contact:'Contacto',footer:'Creaven 2026 - Bienestar psicológico para la industria creativa - Todos los derechos reservados.'
+  },
+  pt:{
+    nav_sub:'Bem-estar Psicológico',h_eyebrow:'Sobre a Creaven',h_title:'A história por trás da <em>plataforma.</em>',h_sub:'Não é um pitch. Não é uma página de produto. É por isso que a Creaven existe, para quem ela é e o que nos recusamos a comprometer.',origin_label:'De onde vem isso',origin_title:'Um problema <em>escondido à vista de todos.</em>',origin_p1:'A indústria criativa é um dos ambientes mais exigentes do planeta. Não porque seja mais difícil do que a construção, a medicina ou a agricultura. Mas porque o sofrimento em seu interior é sistematicamente invisível. A cultura premia o desempenho. Pune a fragilidade. E passou décadas dizendo às pessoas em seu interior que o esgotamento é o preço da paixão.',origin_p2:'A maioria das pessoas que fazem cultura, aquelas que você nunca verá em um palco ou em uma lista de créditos, trabalham em condições de extrema pressão com um silêncio quase total em torno da saúde mental. Quando algo se quebra, os sistemas existentes não foram construídos para eles. As plataformas corporativas exigem um empregador que tenha aderido. Os seguros exigem cobertura. Os terapeutas locais exigem a geografia e o idioma certos. E o estigma exige que você simplesmente continue.',origin_p3:'A Creaven foi construída porque essa lacuna não é um pequeno inconveniente. Custa carreiras, relacionamentos e vidas. E nenhuma plataforma foi construída especificamente para fechá-la.',quote_text:'Você não precisa estar se desmoronando para merecer apoio. Você só precisa ser humano.',quote_context:'Esta é a única convicção no centro de tudo o que a Creaven constrói. Não como um slogan. Como um princípio de design. Cada recurso, cada protocolo, cada decisão clínica nesta plataforma existe para tornar essa frase real na prática.',tensions_label:'O que vimos',tensions_title:'As verdadeiras tensões <em>que ninguém menciona em voz alta.</em>',
+    tensions:[
+      {label:'O silêncio como cultura',title:'O sistema premia o silêncio',text:'Em ambientes criativos de alto desempenho, pedir ajuda ainda é lido como fraqueza. Admitir burnout arrisca seu contrato. Mostrar vulnerabilidade arrisca sua reputação. O silêncio é estrutural.'},
+      {label:'Lacuna de acessibilidade',title:'As soluções existentes não os alcançam',text:'Os recursos de saúde mental existem. Mas a maioria exige inscrição corporativa ou seguro privado. O freelancer em Bangkok ou o produtor em Lagos caem por qualquer fresta do sistema.'},
+      {label:'Idioma e cultura',title:'A saúde mental não é culturalmente neutra',text:'Os modelos clínicos ocidentais não se traduzem perfeitamente para cada contexto cultural. A forma como o sofrimento é expresso varia enormemente. Uma plataforma construída para uma única realidade cultural falhará com outra.'},
+      {label:'Invisibilidade em escala',title:'A indústria não conta quem ela esquece',text:'Os dados sobre saúde mental na indústria criativa concentram-se quase inteiramente em artistas. O técnico, o assistente, o estagiário, o segurança : invisíveis em cada estudo, invisíveis em cada solução.'}
+    ],
+    jobs_label:'Para quem é isso',jobs_title:'Cada papel. <em>Sem exceção.</em>',jobs_intro:'A indústria criativa não é apenas os rostos que você conhece. São centenas de profissões, a maioria invisíveis, todas essenciais. A Creaven é para todos eles. Se o seu trabalho toca o mundo criativo de alguma forma, esta plataforma foi construída pensando em você.',jobs_note:'<strong>Se o seu papel não está na lista, ele ainda conta.</strong> Esta lista é um ponto de partida, não um limite. A indústria criativa é vasta e evolui constantemente. Se você trabalha nela, a Creaven é para você.',com_label:'O que defendemos',com_title:'As coisas nas quais <em>nunca comprometeremos.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Equidade no cuidado',text:'A estrela principal e o pessoal da limpeza recebem a mesma qualidade de apoio psicológico. O papel, o cargo e o tipo de contrato nunca são condições para o acesso ao cuidado nesta plataforma.'},
+      {icon:'🔒',title:'Confidencialidade radical',text:'O que acontece em uma sessão fica entre o cliente e seu psicólogo. A Creaven nunca compartilha informações clínicas com empregadores, agências ou terceiros sob nenhuma circunstância.'},
+      {icon:'🧬',title:'Integridade clínica',text:'Cada ferramenta que usamos é validada internacionalmente. Cada resultado é revisado por um psicólogo licenciado. Não há atalhos nos padrões clínicos.'},
+      {icon:'🌍',title:'Acessibilidade mundial',text:'Se você tem conexão de internet, a geografia não é uma barreira. A Creaven opera em todos os fusos horários, em vários idiomas, para qualquer trabalhador criativo em qualquer lugar do mundo.'},
+      {icon:'🗣️',title:'O idioma como direito',text:'O atendimento de saúde mental não deve exigir que você fale o idioma dominante. A Creaven opera em múltiplos idiomas e utiliza interpretação assistida por IA para fechar lacunas em tempo real.'},
+      {icon:'❤️',title:'O humano primeiro, sempre',text:'A tecnologia apoia o cuidado. Não o substitui. Cada resultado de avaliação, cada sessão e cada decisão crítica envolve um psicólogo humano. A IA auxilia. Os humanos decidem.'}
+    ],
+    fn_label:'A fundadora',fn_text:'<strong>A Creaven foi fundada por Grace Daniella Amakon</strong>, especialista em apoio psicossocial com mestrado em psicologia social e experiência de campo em prevenção de burnout e acompanhamento psicossocial por meio do trabalho em ONGs na África Ocidental. A Creaven não foi construída a partir de uma sala de reuniões ou de uma incubadora de startups. Nasceu de anos de observação, do trabalho de campo e da simples recusa em aceitar que as pessoas que fazem cultura não devam ter acesso a um cuidado psicológico de qualidade. A plataforma reflete tanto o rigor clínico quanto a compreensão vivida do que a indústria criativa exige dos seres humanos.',cta_title:'Pronto para <em>começar?</em>',cta_sub:'Seja porque precisa de apoio para si mesmo ou porque quer proteger sua equipe, a Creaven está aqui.',cta_btn1:'Reservar uma consulta',cta_btn2:'Para organizações',nl_home:'Início',nl_tests:'Avaliações',nl_book:'Reservar',nl_org:'Organizações',nl_emergency:'Emergência',nl_account:'Minha Conta',nl_about:'Sobre nós',nl_contact:'Contato',footer:'Creaven 2026 - Bem-estar psicológico para a indústria criativa - Todos os direitos reservados.'
+  },
+  it:{
+    nav_sub:'Benessere Psicologico',h_eyebrow:'Su Creaven',h_title:'La storia dietro <em>la piattaforma.</em>',h_sub:'Non è un discorso commerciale. Non esibisce prodotti. Questo è il motivo por cui esiste Creaven, per chi è pensata e su cosa non scendiamo a compromessi.',origin_label:'Da dove veniamo',origin_title:'Un problema <em>nascosto sotto gli occhi di tutti.</em>',origin_p1:'L\'industria creativa è uno degli ambienti più esigenti della terra. Non perché sia più dura dell\'edilizia, della medicina o dell\'agricoltura. Ma perché la sofferenza al suo interno è sistematicamente invisibile. La cultura premia la performance. Punisce la fragilità. E ha passato decenni a dire alle persone al suo interno que l\'esaurimento è il prezzo della passione.',origin_p2:'La maggior parte delle persone che fanno cultura, quelle che non vedrai mai su un palco o nei titoli di coda, lavorano in condizioni di estrema pressione con un silenzio quasi totale sulla salute mentale. Quando qualcosa si rompe, i sistemi esistenti non sono stati costruiti per loro. Le piattaforme aziendali richiedono un datore di lavoro che abbia aderito. Le assicurazioni richiedono una copertura. I terapeuti locali richiedono la giusta geografia e lingua. E lo stigma richiede di continuare semplicemente.',origin_p3:'Creaven è stata costruita perché quel divario non è un piccolo inconveniente. Costa carriere, relazioni e vite. E nessuna piattaforma è stata costruita specificamente per colmarlo.',quote_text:'Non devi essere a pezzi per meritare supporto. Devi solo essere umano.',quote_context:'Questa è l\'unica convinzione al centro di tutto ciò che Creaven costruisce. Non come uno slogan. Come un principio di progettazione. Ogni funzione, ogni protocollo, ogni decisione clinica su questa piattaforma esiste per rendere vera quella frase nella pratica.',tensions_label:'Cosa abbiamo visto',tensions_title:'Le vere tensioni <em>che nessuno nomina ad alta voce.</em>',
+    tensions:[
+      {label:'Il silenzio come cultura',title:'Il sistema premia chi sta in silenzio',text:'In ambienti creativi ad alte prestazioni, chiedere aiuto viene ancora letto come debolezza. Ammettere il burnout rischia il contratto. Mostrare vulnerabilità rischia la reputación. Il silenzio è strutturale.'},
+      {label:'Gap di accessibilità',title:'Le soluzioni esistenti non li raggiungono',text:'Le risorse per la salute mentale esistono. Ma la maggior parte richiede l\'iscrizione aziendale o l\'assicurazione privata. Il freelance a Bangkok o il produttore a Lagos cadono attraverso ogni crepa del sistema.'},
+      {label:'Lingua e cultura',title:'La salute mentale no è culturalmente neutra',text:'I quadri clinici occidentali non si traducono perfettamente in ogni contesto culturale. Il modo in que il disagio viene espresso varia enormemente. Una piattaforma costruita per una sola realtà culturale fallirà con un\'altra.'},
+      {label:'Invisibilità su scala',title:'L\'industria non conta chi dimentica',text:'I dati sulla salute mentale nell\'industria creativa riguardano quasi esclusivamente gli artisti. Il tecnico, l\'assistente, lo stagista, l\'addetto alla sicurezza : invisibili in ogni studio, invisibili in ogni soluzione.'}
+    ],
+    jobs_label:'Per chi è questo',jobs_title:'Ogni ruolo. <em>Senza eccezioni.</em>',jobs_intro:'L\'industria creativa non è fatta solo dai volti che conosci. Comprende centinaia di professioni, la maggior parte invisibili, tutte essenziali. Creaven è per tutti loro. Se il tuo lavoro tocca il mondo creativo in qualsiasi modo, questa piattaforma è stata costruita pensando a te.',jobs_note:'<strong>Se il tuo ruolo non è in elenco, conta lo stesso.</strong> Questo elenco è un punto di partenza, non un limite. L\'industria creativa è vasta e si evolve costantemente. Se lavori in essa, Creaven è per te.',com_label:'Cosa difendiamo',com_title:'Le cose su cui <em>non comprometteremo mai.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Equità delle cure',text:'La stella principale e il personale addetto alle pulizie ricevono lo stesso livello di supporto psicologico. Il ruolo, il grado e il tipo di contratto non sono mai condizioni per l\'accesso alle cure su questa piattaforma.'},
+      {icon:'🔒',title:'Riservatezza radicale',text:'Ciò che accade in una sessione rimane tra il cliente e il suo psicologo. Creaven non condivide mai informazioni cliniche con datori di lavoro, agenzie o terze parti in nessuna circostanza.'},
+      {icon:'🧬',title:'Integrità clinica',text:'Ogni strumento che utilizziamo è validato a livello internazionale. Ogni risultato è esaminato da uno psicologo abilitato. Non ci sono scorciatoie sugli standard clinici.'},
+      {icon:'🌍',title:'Accessibilità globale',text:'Se hai una connessione internet, la geografia non è una barriera. Creaven opera in tutti i fusi orari, in più lingue, per qualsiasi lavoratore creativo in tutto il mondo.'},
+      {icon:'🗣️',title:'La lingua come diritto',text:'La cura della salute mentale non dovrebbe richiedere che tu parli la lingua dominante. Creaven opera in più lingue e utilizza l\'interpretazione assistita da intelligenza artificiale per colmare i divari in tempo reale.'},
+      {icon:'❤️',title:'L\'umano prima di tutto, sempre',text:'La tecnologia supporta la cura. Non la sostituisce. Ogni risultato della valutazione, ogni sessione e ogni decisione critica coinvolge uno psicologo umano. L\'IA assiste. Gli umani decidono.'}
+    ],
+    fn_label:'La fondatrice',fn_text:'<strong>Creaven è stata fondata da Grace Daniella Amakon</strong>, specialista in supporto psicosociale con una laurea magistrale in psicologia sociale ed esperienza sul campo nella prevenzione del burnout e nell\'accompagnamento psicosociale tramite il lavoro con le ONG nell\'Africa occidentale. Creaven non è stata costruita da una sala riunioni o da un incubatore di startup. È nata da anni di osservazione, dal lavoro sul campo e dal semplice rifiuto di accettare che le persone che fanno cultura non debbano avere accesso a cure psicologiche di qualità. La piattaforma riflette sia il rigore clinico sia la comprensione vissuta di ciò che l\'industria creativa richiede agli esseri umani.',cta_title:'Pronto per <em>iniziare?</em>',cta_sub:'Sia che tu abbia bisogno di supporto per te stesso o che voglia proteggere la tua squadra, Creaven è qui.',cta_btn1:'Prenota una consulenza',cta_btn2:'Per le organizzazioni',nl_home:'Home',nl_tests:'Valutazioni',nl_book:'Prenota',nl_org:'Organizzazioni',nl_emergency:'Emergenza',nl_account:'Il mio account',nl_about:'Su di noi',nl_contact:'Contatti',footer:'Creaven 2026 - Benessere psicologico per l\'industria creativa - Tutti i diritti riservati.'
+  },
+ Italian: Italian,
+  nl:{
+    nav_sub:'Psychologisch Welzijn',h_eyebrow:'Over Creaven',h_title:'Het verhaal achter <em>het platform.</em>',h_sub:'Geen verkooppraatje. Geen productpagina. Dit is waarom Creaven bestaat, voor wie het is en waar we nooit op inleveren.',origin_label:'Waar dit vandaan komt',origin_title:'Een probleem <em>dat recht voor onze neus zat.</em>',origin_p1:'De creatieve industrie is een van de meest veeleisende omgevingen ter wereld. Niet omdat het zwaarder is dan de bouw, de geneeskunde of de landbouw. Maar omdat het lijden daarin systematisch onzichtbaar is. De cultuur beloont prestaties. Het straft kwetsbaarheid. En het vertelt de mensen daarin al tientallen jaren dat uitputting de prijs van passie is.',origin_p2:'De meeste mensen die cultuur maken, degenen die je nooit op een podium of aftiteling zult zien, werken onder extreme druk terwijl er bijna volledig wordt gezwegen over mentale gezondheid. Als er iets breekt, zijn de bestaande systemen niet voor hen gebouwd. Bedrijfsplatformen vereisen een werkgever die zich heeft aangemeld. Verzekeringen vereisen dekking. Lokale therapeuten vereisen de juiste geografie en taal. En het stigma eist dat je gewoon doorgaat.',origin_p3:'Creaven is gebouwd omdat die kloof geen klein ongemak is. Het kost carrières, relaties en levens. En geen enkel platform was specifiek gebouwd om het te dichten.',quote_text:'Je hoeft niet in elkaar te storten om steun te verdienen. Je hoeft alleen maar mens te zijn.',quote_context:'Dit is de enige overtuiging in het centrum van alles wat Creaven bouwt. Niet als slogan. Als ontwerpprincipe. Elke functie, elk protocol, elke klinische beslissing op dit platform bestaat om die zin in de praktijk waar te maken.',tensions_label:'Wat we zagen',tensions_title:'De echte spanningen <em>die niemand hardop uitspreekt.</em>',
+    tensions:[
+      {label:'Zwijgen als cultuur',title:'Het systeem beloont stilblijven',text:'In creatieve high-performance omgevingen wordt om hulp vragen nog steeds gezien als zwakte. Het toegeven van een burnout riskeert je contract. Kwetsbaarheid tonen riskeert je reputatie. Het zwijgen is structureel.'},
+      {label:'Toegankelijkheidskloof',title:'Bestaande oplossingen bereiken hen niet',text:'Middelen voor mentale gezondheid bestaan. Maar de meeste vereisen een bedrijfsregistratie of particuliere verzekering. De freelancer in Bangkok of de producent in Lagos vallen buiten de boot.'},
+      {label:'Taal en cultuur',title:'Mentale gezondheid is niet cultureel neutraal',text:'Westerse klinische kaders laten zich niet naadloos vertalen naar elke culturele context. De manier waarop psychisch lijden wordt geuit varieert enorm. Een platform gebouwd voor één cultuur zal falen bij een andere.'},
+      {label:'Onzichtbaarheid op schaal',title:'De industrie telt niet wie ze vergeet',text:'Gegevens over mentale gezondheid in de creatieve sector gaan bijna uitsluitend over artiesten. De technicus, de assistent, de stagiair, de beveiliging : onzichtbaar in elke studie, onzichtbaar in elke oplossing.'}
+    ],
+    jobs_label:'Voor wie dit is',jobs_title:'Elke rol. <em>Zonder uitzondering.</em>',jobs_intro:'De creatieve industrie bestaat niet alleen uit bekende gezichten. Het omvat honderden beroepen, meestal onzichtbaar, maar allemaal essentieel. Creaven is er voor hen allemaal. Als je werk op de een of andere manier de creatieve wereld raakt, is dit platform met het oog op jou gebouwd.',jobs_note:'<strong>Als je rol hier niet vermeld staat, telt deze nog steeds.</strong> Deze lijst is een startpunt, geen grens. De creatieve industrie is enorm en evolueert voortdurend. Als je er werkt, is Creaven er voor jou.',com_label:'Waar we voor staan',com_title:'De dingen waar we <em>nooit concessies aan zullen doen.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Gelijkheid van zorg',text:'De hoofdact en de schoonmaker ontvangen dezelfde kwaliteit psychologische ondersteuning. Rol, rang en contracttype zijn nooit voorwaarden voor toegang tot zorg op dit platform.'},
+      {icon:'🔒',title:'Radicale vertrouwelijkheid',text:'Wat er in een sessie gebeurt, blijft tussen de cliënt en hun psycholoog. Creaven deelt onder geen beding klinische informatie met werkgevers, bureaus of derden.'},
+      {icon:'🧬',title:'Klinische integriteit',text:'Elk hulpmiddel dat we gebruiken is internationaal gevalideerd. Elk resultaat wordt beoordeeld door een gediplomeerd psycholoog. Er zijn geen kortere wegen op klinische standaarden.'},
+      {icon:'🌍',title:'Wereldwijde toegankelijkheid',text:'Als je een internetverbinding hebt, is geografie geen barrière. Creaven opereert in alle tijdzones, in meerdere talen, voor elke creatieve werker waar ook ter wereld.'},
+      {icon:'🗣️',title:'Taal als recht',text:'Mentale gezondheidszorg mag niet vereisen dat je de dominante taal spreekt. Creaven opereert in meerdere talen en gebruikt door AI ondersteunde tolkdiensten om hiaten in realtime te overbruggen.'},
+      {icon:'❤️',title:'Mens eerst, altijd',text:'Technologie ondersteunt de zorg. Het vervangt het niet. Bij elk beoordelingsresultaat, elke sessie en elke kritieke beslissing is een menselijke psycholoog betrokken. AI ondersteunt. Mensen beslissen.'}
+    ],
+    fn_label:'De oprichter',fn_text:'<strong>Creaven is opgericht door Grace Daniella Amakon</strong>, een specialist in psychosociale ondersteuning met een masterdiploma in sociale psychologie en praktijkervaring in burnoutpreventie en psychosociale begeleiding via NGO-werk in West-Afrika. Creaven is niet opgebouwd vanuit een directiekamer of een startup-incubator. Het is ontstaan uit jarenlange observatie, uit veldwerk en uit de simpele weigering te accepteren dat de mensen die cultuur maken geen toegang zouden moeten hebben tot kwalitatieve psychologische zorg. Het platform weerspiegelt zowel klinische strengheid als een doorleefd begrip van wat de creatieve industrie werkelijk van mensen vraagt.',cta_title:'Klaar om te <em>beginnen?</em>',cta_sub:'Of je nu steun voor jezelf nodig hebt of je team wilt beschermen, Creaven is er.',cta_btn1:'Boek een consultatie',cta_btn2:'Voor organisaties',nl_home:'Home',nl_tests:'Assessments',nl_book:'Boeken',nl_org:'Organisaties',nl_emergency:'Noodgeval',nl_account:'Mijn Account',nl_about:'Over ons',nl_contact:'Contact',footer:'Creaven 2026 - Psychologisch welzijn voor de creatieve industrie - Alle rechten voorbehouden.'
+  },
+  sv:{
+    nav_sub:'Psykologiskt Välbefinnande',h_eyebrow:'Om Creaven',h_title:'Historien bakom <em>plattformen.</em>',h_sub:'Inget säljpitch. Ingen produktsida. Det är därför Creaven finns, vem den är till för och vad vi vägrar att kompromissa med.',origin_label:'Varifrån detta kommer',origin_title:'Ett problem <em>gömt mitt framför ögonen på oss.</em>',origin_p1:'Den kreativa industrin är en av de mest krävande miljöerna på jorden. Inte för att den är hårdare än byggbranschen, medicinen eller jordbruket. Utan för att lidandet inuti den är systematiskt osynligt. Kulturen belönar prestation. Den straffar skörhet. Och den har tillbringat årtionden med att berätta för människorna inuti den att utmattning är priset för passion.',origin_p2:'De flesta som skapar kultur, de som du aldrig kommer att se på en scen eller i en rollista, arbetar under extrema pressförhållanden med nästan total tystnad kring mental hälsa. När något går sönder var de system som finns inte byggda för dem. Företagsplattformar kräver en arbetsgivare som har valt det. Försäkringar kräver täckning. Lokala terapeuter kräver rätt geografi och språk. Och stigmat kräver att du helt enkelt fortsätter.',origin_p3:'Creaven byggdes för dad det glappet inte är en mindre olägenhet. Det kostar karriärer, relationer och liv. Och ingen plattform byggdes specifikt för att stänga det.',quote_text:'Du behöver nicht krackelera för att förtjäna stöd. Du måste bara vara människa.',quote_context:'Detta är den enda övertygelsen i centrum för allt Creaven bygger. Inte som en slogan. Som en designprincip. Varje funktion, varje protokoll, varje kliniskt beslut på denna plattform finns för att göra den meningen sann i praktiken.',tensions_label:'Vad vi såg',tensions_title:'De verkliga spänningarna <em>som ingen nämner högt.</em>',
+    tensions:[
+      {label:'Tystnad som kultur',title:'Systemet belönar att förbli tyst',text:'I kreativa högpresterande miljöer ses det att be om hjälp fortfarande som en svaghet. Att erkänna burnout riskerar ditt kontrakt. Att visa sårbarhet riskerar ditt rykte. Tystnaden är strukturell.'},
+      {label:'Tillgänglighetsgap',title:'Befintliga lösningar når dem inte',text:'Resurser för mental hälsa finns. Men de flesta kräver företagsregistrering eller privat försäkring. Frilansaren i Bangkok eller producenten i Lagos faller igenom varje spricka i systemet.'},
+      {label:'Språk och kultur',title:'Mental hälsa är inte kulturellt neutral',text:'Västerländska kliniska ramverk översätts inte rent till varje kulturell kontext. Sättet som lidande uttrycks på varierar enormt. En plattform byggd för en enda kulturell verklighet kommer att misslyckas med en annan.'},
+      {label:'Osynlighet i stor skala',title:'Branschen räknar inte dem den glömmer',text:'Data om mental hälsa i den kreativa sektorn handlar nästan helt om artister. Teknikern, assistenten, praktikanten, säkerhetsvakten : osynliga i varje studie, osynliga i varje lösning.'}
+    ],
+    jobs_label:'Vem detta är till för',jobs_title:'Varje roll. <em>Utan undantag.</em>',jobs_intro:'Den kreativa industrin är inte bara de ansikten du känner till. Den omfattar hundratals yrken, de flesta osynliga, alla väsentliga. Creaven är till för dem alla. Om ditt arbete berör den kreativa världen på något sätt är denna plattform byggd med dig i åtanke.',jobs_note:'<strong>Om din roll inte är listad här räknas den ändå.</strong> Denna lista är en utgångspunkt, inte en gräns. Den kreativa industrin är enorm och utvecklas ständiskt. Om du arbetar i den är Creaven för dig.',com_label:'Vad vi står för',com_title:'De saker vi <em>aldrig kommer att kompromissa med.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Rättvisa i vården',text:'Huvudnumret och lokalvårdaren får samma kvalitet på psykologiskt stöd. Roll, rang och kontraktstyp är aldrig villkor för tillgång till vård på denna plattform.'},
+      {icon:'🔒',title:'Radikal konfidentialitet',text:'Vad som händer under en session stannar mellan klienten och dennes psykolog. Creaven delar aldrig klinisk information med arbetsgivare, agenturer eller någon tredje part under några omständigheter.'},
+      {icon:'🧬',title:'Klinisk integritet',text:'Varje verktyg vi använder är internationellt validerat. Varje resultat granskas av en legitimerad psykolog. Det finns inga genvägar gällande kliniska standarder.'},
+      {icon:'🌍',title:'Global tillgänglighet',text:'Om du har en internetuppkoppling är geografi inte en barriär. Creaven verkar över tidszoner, på flera språk, för alla kreativa arbetare var som helst i världen.'},
+      {icon:'🗣️',title:'Språk som en rättighet',text:'Mental hälsovård ska inte kräva att du talar det dominerande språket. Creaven fungerar på flera språk och använder AI-assisterad tolkning för att överbrygga klyftor i realtid.'},
+      {icon:'❤️',title:'Människan först, alltid',text:'Tekniken stödjer vården. Den ersätter den inte. Varje bedömningsresultat, varje session och varje kritiskt beslut involverar en mänsklig psykolog. AI assisterar. Människor beslutar.'}
+    ],
+    fn_label:'Grundaren',fn_text:'<strong>Creaven grundades av Grace Daniella Amakon</strong>, en specialist på psykosocialt stöd med en masterexamen i socialpsykologi och fälterfarenhet av burnout-prevention och psykosocialt ackompanjemang genom NGO-arbete i Västafrika. Creaven byggdes inte från ett styrelserum eller en startup-inkubator. Den byggdes utifrån år av observationer, från fältarbete och från en enkel vägran att acceptera att de som skapar kultur inte ska ha tillgång till kvalitativ psykologisk vård. Plattformen speglar både klinisk rigor och en levd förståelse för vad den kreativa industrin faktiskt kräver av människa.',cta_title:'Redo att <em>börja?</em>',cta_sub:'Oavsett om du behöver stöd för dig själv eller vill skydda ditt team, är Creaven här.',cta_btn1:'Boka en konsultation',cta_btn2:'För organisationer',nl_home:'Hem',nl_tests:'Tester',nl_book:'Boka',nl_org:'Organisationer',nl_emergency:'Nödläge',nl_account:'Mitt konto',nl_about:'Om oss',nl_contact:'Kontakt',footer:'Creaven 2026 - Psykologiskt välbefinnande för den kreativa industrin - Med ensamrätt.'
+  },
+  pl:{
+    nav_sub:'Dobrostan Psychologiczny',h_eyebrow:'O Creaven',h_title:'Historia stojąca za <em>platformą.</em>',h_sub:'To nie jest oferta handlowa. To nie jest strona produktu. Oto dlaczego Creaven istnieje, dla kogo jest przeznaczony i w czym nigdy nie idziemy na kompromis.',origin_label:'Skąd się wzięliśmy',origin_title:'Problem <em>ukryty na widoku.</em>',origin_p1:'Branża kreatywna to jedno z najbardziej wymagających środowisk na ziemi. Nie dlatego, że jest cięższa niż budownictwo, medycyna czy rolnictwo. Ale dlatego, że cierpienie w niej jest systematycznie niewidoczne. Kultura premiuje wyniki. Karze kruchość. I od dziesięcioleci wmawia ludziom w niej pracującym, że wycieńczenie to cena za pasję.',origin_p2:'Większość ludzi tworzących kulturę, tych, których nigdy nie zobaczysz na scenie ani na liście płac, pracuje w warunkach ekstremalnej presji, przy niemal całkowitym milczeniu wokół zdrowia psychicznego. Kiedy coś pęka, istniejące systemy nie były dla nich budowane. Firmowe platformy wymagają pracodawcy, który do nich przystąpił. Ubezpieczenia wymagają pokrycia. Lokalni terapeuci wymagają odpowiedniej geografii i języka. A stygmatyzacja wymaga po prostu dalszego działania.',origin_p3:'Creaven powstał, ponieważ ta luka nie jest drobną niedogodnością. Kosztuje kariery, relacje i życie. I żadna platforma nie została zbudowana specjalnie po to, by ją zamknąć.',quote_text:'Nie musisz się rozpadać, aby zasługiwać na wsparcie. Musisz po prostu być człowiekiem.',quote_context:'To jedyne przekonanie leży w centrum wszystkiego, co buduje Creaven. Nie jako slogan. Jako zasada projektowania. Każda funkcja, każdy protokół, każda decyzja kliniczna na tej platformie istnieje po to, by to zdanie stało się prawdą w praktyce.',tensions_label:'Co zobaczyliśmy',tensions_title:'Prawdziwe napięcia, <em>o których nikt nie mówi głośno.</em>',
+    tensions:[
+      {label:'Milczenie jako kultura',title:'System premiuje zachowanie milczenia',text:'W kreatywnych środowiskach o wysokiej wydajności proszenie o pomoc jest nadal odczytywane jako słabość. Przyznanie się do burnoutu zagraża kontraktowi. Pokazanie wrażliwości zagraża reputacji. Milczenie jest strukturalne.'},
+      {label:'Luka w dostępności',title:'Istniejące rozwiązania do nich nie docierają',text:'Zasoby zdrowia psychicznego istnieją. Ale większość wymaga rejestracji korporacyjnej lub prywatnego ubezpieczenia. Freelancer w Bangkoku czy producent w Lagos wypadają przez każdą szczelinę systemu.'},
+      {label:'Język i kultura',title:'Zdrowie psychiczne nie jest kulturowo neutralne',text:'Zachodnie ramy kliniczne nie przekładają się czysto na każdy kontekst kulturowy. Sposób wyrażania cierpienia różni się diametralnie. Platforma zbudowana dla jednej rzeczywistości kulturowej zawiedzie w innej.'},
+      {label:'Niewidzialność na wielką skalę',title:'Branża nie liczy tych, o których zapomina',text:'Dane dotyczące zdrowia psychicznego w sektorze kreatywnym dotyczą prawie wyłącznie artystów. Technik, asystent, stażysta, ochroniarz : niewidoczni w każdym badaniu, niewidoczni w każdym rozwiązaniu.'}
+    ],
+    jobs_label:'Dla kogo to jest',jobs_title:'Każda rola. <em>Bez wyjątku.</em>',jobs_intro:'Branża kreatywna to nie tylko twarze, które znasz. To setki zawodów, w większości niewidocznych, wszystkie niezbędne. Creaven jest dla nich wszystkich. Jeśli Twoja praca w jakikolwiek sposób dotyka kreatywnego świata, ta platforma została zbudowana z myślą o Tobie.',jobs_note Polish:'<strong>Jeśli Twojej roli nie ma na liście, ona nadal się liczy.</strong> Ta lista to punkt wyjścia, a nie granica. Branża kreatywna jest ogromna i stale ewoluuje. Jeśli w niej pracujesz, Creaven jest dla Ciebie.',com_label:'W co wierzymy',com_title:'Rzeczy, w których <em>nigdy nie pójdziemy na kompromis.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Równość opieki',text:'Gwiazda wieczoru i pracownik sprzątający otrzymują taką samą jakość wsparcia psychologicznego. Rola, ranga i rodzaj kontraktu nigdy nie są warunkami dostępu do opieki na tej platformie.'},
+      {icon:'🔒',title:'Radykalna poufność',text:'To, co dzieje się na sesji, zostaje między klientem a jego psychologiem. Creaven pod żadnym pozorem nie udostępnia informacji klinicznych pracodawcom, agencjom ani osobom trzecim.'},
+      {icon:'🧬',title:'Integralność kliniczna',text:'Każde narzędzie, którego używamy, jest walidowane międzynarodowo. Każdy wynik jest weryfikowany przez licencjonowanego psychologa. Nie ma dróg na skróty w standardach klinicznych.'},
+      {icon:'🌍',title:'Dostępność na całym świecie',text:'Jeśli masz połączenie z internetem, geografia nie jest barierą. Creaven działa w różnych strefach czasowych, w wielu językach, dla każdego pracownika branży kreatywnej na świecie.'},
+      {icon:'🗣️',title:'Język jako prawo',text:'Opieka psychologiczna nie powinna wymagać znajomości języka dominującego. Creaven działa w wielu językach i wykorzystuje tłumaczenia wspomagane przez AI w czasie rzeczywistym.'},
+      {icon:'❤️',title:'Człowiek przede wszystkim',text:'Technologia wspiera opiekę. Nie zastępuje jej. Każdy wynik oceny, każda sesja i każda kluczowa decyzja angażuje ludzkiego psychologa. AI pomaga. Ludzie decydują.'}
+    ],
+    fn_label:'Założycielka',fn_text:'<strong>Creaven został założony przez Grace Daniella Amakon</strong>, specjalistkę ds. wsparcia psychospołecznego z tytułem magistra psychologii społecznej i doświadczeniem terenowym w zapobieganiu wypaleniu zawodowemu i towarzyszeniu psychospołecznemu w ramach pracy w organizacjach pozarządowych w Afryce Zachodniej. Creaven nie powstał w gabinecie zarządu ani w inkubatorze startupów. Został zbudowany na podstawie lat obserwacji, pracy w terenie i zwykłego sprzeciwu wobec faktu, że ludzie tworzący kulturę nie mają dostępu do wysokiej jakości opieki psychologicznej. Platforma odzwierciedla zarówno rygor kliniczny, jak i głębokie zrozumienie tego, czego branża kreatywna faktycznie wymaga od ludzi.',cta_title:'Gotowy by <em>zacząć?</em>',cta_sub:'Niezależnie od tego, czy potrzebujesz wsparcia dla siebie, czy chcesz chronić swój zespół, Creaven jest tutaj.',cta_btn1:'Zarezerwuj konsultację',cta_btn2:'Dla organizacji',nl_home:'Medycyna',nl_tests:'Testy',nl_book:'Rezerwuj',nl_org:'Organizacje',nl_emergency:'Nagły wypadek',nl_account:'Moje konto',nl_about:'O nas',nl_contact:'Kontakt',footer:'Creaven 2026 - Dobrostan psychologiczny dla branży kreatywnej - Wszelkie prawa zastrzeżone.'
+  },
+  ru:{
+    nav_sub:'Психологическое благополучие',h_eyebrow:'О Creaven',h_title:'История создания <em>платформы.</em>',h_sub:'Это не рекламный трюк. Не страница продукта. Это манифест того, почему существует Creaven, для кого он создан и в чем мы никогда не пойдем на компромисс.',origin_label:'Откуда мы пришли',origin_title:'Проблема, <em>скрытая у всех на виду.</em>',origin_p1:'Творческая индустрия - одна из самых требовательных сред на земле. Не потому, что она тяжелее строительства, медицины или сельского хозяйства. А потому, что страдания внутри нее систематически невидимы. Культура вознаграждает производительность. Она наказывает хрупкость. И она десятилетиями внушала людям внутри нее, что истощение - это цена страсти.',origin_p2:'Большинство людей, создающих культуру, тех, кого вы никогда не увидите на сцене или в титрах, работают в условиях экстремального давления при почти полном молчании вокруг ментального здоровья. Когда что-то ломается, существующие системы не были созданы для них. Корпоративные платформы требуют работодателя, который подключился к ним. Страховки требуют покрытия. Местные терапевты требуют правильной географии и языка. И стигма требует, чтобы вы просто продолжали работу.',origin_p3:'Creaven был создан потому, что этот разрыв - не мелкое неудобство. Он стоит карьеры, отношений и жизней. И ни одна платформа не была построена специально для того, чтобы его закрыть.',quote_text:'Вам не обязательно быть сломленным, чтобы заслужить поддержку. Вам просто нужно быть человеком.',quote_context:'Это единственное убеждение лежит в центре всего, что строит Creaven. Не как слоган. Как принцип проектирования. Каждая функция, каждый протокол, каждая клиническая процедура на этой платформе существуют для того, чтобы сделать это предложение правдой на практике.',tensions_label:'Что мы увидели',tensions_title:'Настоящие разногласия, <em>о которых никто не говорит вслух.</em>',
+    tensions:[
+      {label:'Молчание как культура',title:'Система вознаграждает за молчание',text:'В творческих средах с высокой нагрузкой просьба о помощи до сих пор воспринимается как слабость. Признание выгорания ставит под угрозу контракт. Демонстрация уязвимости вредит репутации. Молчание носит структурный характер.'},
+      {label:'Проблема доступности',title:'Существующие решения не доходят до них',text:'Ресурсы ментального здоровья существуют. Но большинство из них требуют корпоративной подписки или частной страховки. Фрилансер в Бангкоке или продюсер в Лагосе остаются за бортом системы.'},
+      {label:'Язык и культура',title:'Психическое здоровье не является культурно нейтральным',text:'Западные клинические подходы не переводятся чисто в каждый культурный контекст. То, как выражается страдание, сильно различается. Платформа, созданная для одной культурной реальности, потерпит неудачу в другой.'},
+      {label:'Невидимость в масштабе',title:'Индустрия не считает тех, кого забывает',text:'Данные о ментальном здоровье в творческом секторе касаются почти исключительно артистов. Техник, ассистент, стажер, охранник : невидимы в каждом исследовании, невидимы в каждом решении.'}
+    ],
+    jobs_label:'Для кого это',jobs_title:'Каждая роль. <em>Без исключения.</em>',jobs_intro:'Творческая индустрия - это не только лица, которые вы знаете. Это сотни профессий, большинство из которых невидимы, но все они необходимы. Creaven создан для всех них. Если ваша работа как-то связана с творческим миром, эта платформа была построена с мыслью о вас.',jobs_note:'<strong>Если вашей роли нет в списке, она все равно учитывается.</strong> Этот список - отправная точка, а не граница. Творческая индустрия огромна и постоянно развивается. Если вы работаете в ней, Creaven - для вас.',com_label:'За что мы стоим',com_title:'Вещи, в которых мы <em>никогда не пойдем на компромисс.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Равенство помощи',text:'Хедлайнер и уборщик получают одинаковое качество психологической поддержки. Роль, ранг и тип контракта никогда не являются условиями для доступа к помощи на этой платформе.'},
+      {icon:'🔒',title:'Радикальная конфиденциальность',text:'То, что происходит на сессии, остается между клиентом и его психологом. Creaven ни при каких обстоятельствах не передает клиническую информацию работодателям, агентствам или третьим лицам.'},
+      {icon:'🧬',title:'Клиническая честность',text:'Каждый инструмент, который мы используем, валидирован на международном уровне. Каждый результат проверяется лицензированным психологом. В клинических стандартах нет коротких путей.'},
+      {icon:'🌍',title:'Глобальная доступность',text:'Если у вас есть подключение к интернету, география не является барьером. Creaven работает во всех часовых поясах, на нескольких языках, для любого творческого работника в любой точке мира.'},
+      {icon:'🗣️',title:'Язык как право',text:'Забота о психическом здоровье не должна требовать от вас знания доминирующего языка. Creaven работает на нескольких языках и использует синхронный перевод с помощью ИИ для устранения барьеров.'},
+      {icon:'❤️',title:'Человек всегда на первом месте',text:'Технологии поддерживают помощь. Они не заменяют ее. Каждый результат оценки, каждая сессия и каждое критическое решение принимаются с участием живого психолога. ИИ помогает. Люди решают.'}
+    ],
+    fn_label:'Основательница',fn_text:'<strong>Creaven был основан Грейс Даниэллой Амакон</strong>, специалистом по психосоциальной поддержке с магистерской степенью по социальной психологии и опытом работы по предотвращению выгорания и психосоциальному сопровождению через работу в неправительственных организациях в Западной Африке. Creaven не был построен в зале заседаний или стартап-инкубаторе. Он возник на основе многолетних наблюдений, полевой работы и простого отказа мириться с тем, что люди, создающие культуру, не должны иметь доступа к качественной психологической помощи. Платформа отражает как клиническую строгость, так и живое понимание того, что творческая индустрия на самом деле требует от людей.',cta_title:'Готовы <em>начать?</em>',cta_sub:'Если вам нужна поддержка для себя или вы хотите защитить свою команду, Creaven здесь.',cta_btn1:'Записаться на консультацию',cta_btn2:'Для организаций',nl_home:'Главная',nl_tests:'Тесты',nl_book:'Запись',nl_org:'Организациям',nl_emergency:'Экстренная помощь',nl_account:'Мой аккаунт',nl_about:'О нас',nl_contact:'Контакты',footer:'Creaven 2026 - Психологическое благополучие творческой индустрии - Все права защищены.'
+  },
+  tr:{
+    nav_sub:'Psikolojik Sağlık',h_eyebrow:'Creaven Hakkında',h_title:'Platformun arkasındaki <em>gerçek hikaye.</em>',h_sub:'Bu bir satış konuşması değil. Ürün sayfası değil. Creaven\'ın neden var olduğunun, kimler için yapıldığının ve neleri asla feda etmeyeceğimizin hikayesidir.',origin_label:'Nereden Geliyoruz',origin_title:'Göz önünde <em>gizlenen büyük bir sorun.</em>',origin_p1:'Yaratıcı endüstri, dünyadaki en zorlu çalışma ortamlarından biridir. İnşaattan, tıptan veya tarımdan daha zor olduğu için değil; içindeki acının sistematik olarak görünmez olmasından dolayı böyledir. Kültür performansı ödüllendirir, kırılganlığı cezalandırır. Ve onlarca yıldır içerideki insanlara tükenmişliğin tutkunun bedeli olduğunu söyler.',origin_p2:'Kültürü üreten insanların çoğu, sahnede veya jenerikte asla göremeyeceğiniz kişiler, ruh sağlığı konusunda neredeyse tamamen bir sessizlik içinde, aşırı baskı altında çalışırlar. Sistemler onlar için inşa edilmemiştir. Kurumsal platformlar işveren katılımı ister, sigortalar kapsam gerektirir. Yerel terapistler doğru coğrafya ve dil bekler. Stigma ise sadece devam etmenizi dayatır.',origin_p3:'Creaven kuruldu çünkü bu boşluk ufak bir pürüz değil; kariyerlere, ilişkilere ve hayatlara mal oluyor. Ve hiçbir platform özellikle bu boşluğu kapatmak üzere tasarlanmamıştı.',quote_text:'Destek almayı hak etmek için tamamen yıkılmış olmanız gerekmez. Sadece insan olmanız yeterlidir.',quote_context:'Bu, Creaven\'ın inşa ettiği her şeyin merkezindeki tek inançtır. Bir slogan değil, bir tasarım ilkesidir. Bu platformdaki her özellik, her protokol ve her klinik karar bu cümleyi uygulamada gerçekleştirmek için vardır.',tensions_label:'Ne Gördük',tensions_title:'Kimsenin yüksek sesle <em>dile getirmediği gerçek gerilimler.</em>',
+    tensions:[
+      {label:'Kültür olarak sessizlik',title:'Sistem sessiz kalmayı ödüllendiriyor',text:'Yüksek performanslı yaratıcı ortamlarda yardım istemek hala zayıflık olarak algılanıyor. Tükenmişliği kabul etmek sözleşmenizi riske atar, kırılganlık göstermek itibarınızı sarsar. Sessizlik kişisel değil, yapısal.'},
+      {label:'Erişilebilirlik boşluğu',title:'Mevcut çözümler onlara ulaşmıyor',text:'Ruh sağlığı kaynakları var ancak çoğu kurumsal kayıt veya özel sigorta gerektiriyor. Bangkok\'taki bir freelancer veya Lagos\'taki bir yapımcı sistemin tüm açıklarından aşağı düşüyor.'},
+      {label:'Dil ve kültür',title:'Ruh sağlığı kültürel olarak tarafsız değildir',text:'Batı klinik çerçeveleri her kültürel bağlama temiz bir şekilde tercüme edilemez. Istırabın ifade ediliş şekli büyük ölçüde değişir. Tek bir kültürel gerçeklik için inşa edilen platform diğerinde çöker.'},
+      {label:'Büyük ölçekli görünmezlik',title:'Endüstri unuttuğu insanları saymıyor',text:'Yaratıcı sektördeki ruh sağlığı verileri neredeyse tamamen sanatçılarla ilgilidir. Teknisyen, asistan, stajyer, güvenlik görevlisi : her çalışmada ve her çözümde görünmezdir.'}
+    ],
+    jobs_label:'Bu Kimin İçin',jobs_title:'Her rol. <em>İstisnasız.</em>',jobs_intro:'Yaratıcı endüstri sadece tanıdığınız yüzlerden ibaret değil. Çoğu görünmez ama hepsi temel olan yüzlerce meslekten oluşur. Creaven hepsi içindir. İşiniz yaratıcı dünyaya herhangi bir şekilde dokunuyorsa, bu platform siz düşünülerek inşa edildi.',jobs_note:'<strong>Rolünüz burada listelenmemiş olsa bile hala geçerlidir.</strong> Bu liste bir sınır değil, başlangıç noktasıdır. Yaratıcı endüstri uçsuz bucaksızdır ve sürekli gelişmektedir. İçinde çalışıyorsanız, Creaven sizin içindir.',com_label:'Neyi Savunuyoruz',com_title:'Asla <em>ödün vermeyeceğimiz değerler.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Bakımda eşitlik',text:'Başrol oyuncusu ile temizlik görevlisi aynı kalitede psikolojik destek alır. Rol, rütbe ve sözleşme türü bu platformda bakıma erişim için asla bir koşul değildir.'},
+      {icon:'🔒',title:'Radikal gizlilik',text:'Bir seansta olanlar danışan ile psikolog arasında kalır. Creaven, hiçbir koşulda klinik bilgileri işverenlerle, ajanslarla veya herhangi bir üçüncü tarafla paylaşmaz.'},
+      {icon:'🧬',title:'Klinik dürüstlük',text:'Kullandığımız her araç uluslararası düzeyde doğrulanmıştır. Her sonuç lisanslı bir psikolog tarafından incelenir. Klinik standartlarda asla kestirme yollara başvurulmaz.'},
+      {icon:'🌍',title:'Dünya çapında erişilebilirlik',text:'İnternet bağlantınız varsa coğrafya bir engel değildir. Creaven, dünyanın her yerindeki her yaratıcı çalışan için zaman dilimleri genelinde, birden fazla dilde faaliyet gösterir.'},
+      {icon:'🗣️',title:'Bir hak olarak dil',text:'Ruh sağlığı bakımı baskın dili konuşmanızı gerektirmemelidir. Creaven birden fazla dilde faaliyet gösterir ve boşlukları gerçek zamanlı olarak kapatmak için yapay zeka destekli tercüme kullanır.'},
+      {icon:'❤️',title:'Önce insan, her zaman',text:'Teknoloji bakımı destekler, onun yerini almaz. Her değerlendirme sonucu, her seans ve her kritik karar insan bir psikoloğu içerir. Yapay zeka yardım eder, insanlar karar verir.'}
+    ],
+    fn_label:'Kurucu',fn_text:'<strong>Creaven, Grace Daniella Amakon tarafından kurulmuştur</strong>. Kendisi sosyal psikoloji alanında yüksek lisans derecesine sahip, Batı Afrika\'daki STK çalışmaları aracılığıyla tükenmişliğin önlenmesi ve psikososyal refakat alanlarında saha deneyimi olan bir psikososyal destek uzmanıdır. Creaven bir yönetim kurulunda veya startup kuluçka merkezinde kurulmadı. Yılların gözleminden, saha çalışmalarından ve kültürü üreten insanların herkesle aynı kalitede psikolojik bakıma erişememesini kabul etmeyi reddetmekten doğdu. Platform, hem klinik titizliği hem de yaratıcı endüstrinin insanlardan gerçekte ne talep ettiğine dair yaşanmış bir anlayışı yansıtmaktadır.',cta_title:'<em>Başlamaya</em> hazır mısınız?',cta_sub:'Kendiniz için desteğe ihtiyacınız olsun ya da ekibinizi korumak isteyin, Creaven burada.',cta_btn1:'Randevu Alın',cta_btn2:'Kuruluşlar İçin',nl_home:'Anasayfa',nl_tests:'Testler',nl_book:'Rezervasyon',nl_org:'Kuruluşlar',nl_emergency:'Acil Durum',nl_account:'Hesabım',nl_about:'Hakkımızda',nl_contact:'İletişim',footer:'Creaven 2026 - Yaratıcı Endüstri İçin Psikolojik Sağlık - Tüm hakları saklıdır.'
+  },
+  ar:{
+    nav_sub:'الرفاهية النفسية',h_eyebrow:'حول كريافين',h_title:'القصة وراء <em>المنصة.</em>',h_sub:'هذا ليس عرضا ترويجيا أو صفحة منتج. هذا هو سبب وجود كريافين، ومن أجله، وما نرفض المساومة عليه.',origin_label:'من أين يأتي هذا',origin_title:'مشكلة <em>تختبئ في وضح النهار.</em>',origin_p1:'الصناعة الإبداعية هي واحدة من أكثر البيئات متطلبة على وجه الأرض. ليس لأنها أصعب من البناء أو الطب أو الزراعة. ولكن لأن المعاناة بداخلها غير مرئية بشكل منهجي. الثقافة تكافئ الأداء وتعاقب الهشاشة. وقد قضت عقودا في إخبار الناس بداخلها أن الإنهاك هو ثمن الشغف.',origin_p2:'معظم الأشخاص الذين يصنعون الثقافة، أولئك الذين لن تراهم أبدا على مسرح أو في قائمة أسماء، يعملون في ظروف من الضغط الشديد مع صمت شبه تام حول الصحة العقلية. عندما ينكسر شيء ما، فإن الأنظمة الموجودة لم تُبنَ من أجلهم. تتطلب منصات الصحة العقلية للشركات صاحب عمل مشتركا، وتتطلب التأمينات تغطية محددة، ويتطلب المعالجون المحليون الجغرافيا واللغة المناسبتين. وتفرض الوصمة الاجتماعية مواصلة العمل فقط.',origin_p3:'تم بناء كريافين لأن هذه الفجوة ليست إزعاجا بسيطا. إنها تكلف وظائف وعلاقات وحياة بأكملها. ولم يتم بناء أي منصة خصيصا لسدها.',quote_text:'لا يجب أن تكون منهارا لتستحق الدعم. كل ما تحتاجه هو أن تكون إنسانا.',quote_context:'هذه هي القناعة الوحيدة في مركز كل ما تبنيه كريافين. ليس كشعار، بل كمبدأ تصميم. كل ميزة، وكل بروتوكول، وكل قرار سريري على هذه المنصة موجود لجعل هذه الجملة حقيقة في الممارسة العملية.',tensions_label:'ما رأيناه',tensions_title:'التوترات الحقيقية <em>التي لا يسميها أحد بصوت عال.</em>',
+    tensions:[
+      {label:'الصمت كثقافة',title:'النظام يكافئ البقاء صامتا',text:'في البيئات الإبداعية عالية الأداء، لا يزال طلب المساعدة يُقرأ على أنه ضعف. الاعتراف بالإنهاك يهدد عقدك، وإظهار الضعف يهدد سمعتك. الصمت بنيوي وليس شخصيا.'},
+      {label:'فجوة الوصول',title:'الحلول الحالية لا تصل إليهم',text:'موارد الصحة العقلية موجودة، ولكن معظمها يتطلب تسجيلا من الشركات أو تأمينا خاصا. يقع المستقل في بانكوك أو المنتج في لاغوس في شقوق النظام دون مغيث.'},
+      {label:'اللغة والثقافة',title:'الصحة العقلية ليست محايدة ثقافيا',text:'لا تترجم الأطر السريرية الغربية بدقة إلى كل سياق ثقافي. الطريقة التي يتم بها التعبير عن الضيق تختلف اختلافا كبيرا. المنصة المبنية لواقع ثقافي واحد ستفشل مع واقع آخر.'},
+      {label:'عدم الرؤية على نطاق واسع',title:'الصناعة لا تحسب من تنساهم',text:'البيانات المتعلقة بالصحة العقلية في القطاع الإبداعي تتعلق بالفنانين فقط تقريبا. الفني، المساعد، المتدرب، حارس الأمن : غير مرئيين في كل دراسة وفي كل حل.'}
+    ],
+    jobs_label:'من أجل من هذا',jobs_title:'كل دور. <em>دون استثناء.</em>',jobs_intro:'الصناعة الإبداعية ليست السياق الوجوه التي تعرفها فقط. إنها مئات المهن، معظمها غير مرئي، وكلها ضرورية. كريافين للجميع. إذا كان عملك يمس العالم الإبداعي بأي شكل من الأشكال، فقد تم بناء هذه المنصة مع وضعك في الاعتبار.',jobs_note:'<strong>إذا لم يكن دورك مدرجا هنا، فإنه لا يزال محسوبا.</strong> هذه القائمة هي نقطة انطلاق وليست حدا نهائيا. الصناعة الإبداعية شاسعة وتتطور باستمرار. إذا كنت تعمل فيها، فإن كريافين لك.',com_label:'ما نمثله',com_title:'الأشياء التي <em>لن نساوم عليها أبدا.</em>',
+    commitments:[
+      {icon:'⚖️',title:'عدالة الرعاية',text:'يتلقى الفنان الرئيسي وعامل النظافة نفس الجودة من الدعم النفسي. لا يعد الدور والرتبة ونوع العقد شروطا للوصول إلى الرعاية على هذه المنصة أبدا.'},
+      {icon:'🔒',title:'سرية مطلقة',text:'ما يحدث في الجلسة يظل بين العميل والأخصائي النفسي. لا تشارك كريافين المعلومات السريرية مع أصحاب العمل أو الوكالات أو أي طرف ثالث تحت أي ظرف من الظروف.'},
+      {icon:'🧬',title:'النزاهة السريرية',text:'كل أداة نستخدمها معتمدة دوليا. يتم مراجعة كل نتيجة من قبل أخصائي نفسي مرخص. لا توجد طرق مختصرة في المعايير السريرية.'},
+      {icon:'🌍',title:'إمكانية الوصول العالمي',text:'إذا كان لديك اتصال بالإنترنت، فإن الجغرافيا ليست عائقا. تعمل كريافين عبر المناطق الزمنية، وبلغات متعددة، لأي عامل إبداعي في أي مكان في العالم.'},
+      {icon:'🗣️',title:'اللغة كحق',text:'لا ينبغي أن تتطلب رعاية الصحة العقلية منك التحدث باللغة السائدة. تعمل كريافين بلغات متعددة وتستخدم الترجمة الفورية بمساعدة الذكاء الاصطناعي لسد الفجوات في الوقت الفعلي.'},
+      {icon:'❤️',title:'الإنسان أولا، دائما',text:'التكنولوجيا تدعم الرعاية ولا تحل محلها. تتضمن كل نتيجة تقييم وكل جلسة وكل قرار حاسم أخصائيا نفسيا بشريا. الذكاء الاصطناعي يساعد، والبشر يقررون.'}
+    ],
+    fn_label:'المؤسسة',fn_text:'<strong>تأسست كريافين على يد غريس دانييلا أماكون</strong>، وهي اختصاصية دعم نفسي اجتماعي حاصلة على درجة الماجستير في علم النفس الاجتماعي ولديا خبرة ميدانية في الوقاية من الاحتراق النفسي والمرافقة النفسية والاجتماعية من خلال العمل مع المنظمات غير الحكومية في غرب إفريقيا. لم تُبنَ كريافين من غرفة اجتماعات أو حاضنة شركات ناشئة. لقد أُسست من سنوات من الملاحظة والعمل الميداني والرفض البسيط لقبول فكرة أن الأشخاص الذين يصنعون الثقافة لا ينبغي أن يحصلوا على نفس جودة الرعاية النفسية كغيرهم. تعكس المنصة الصرامة السريرية والفهم الحي لما تتطلبه الصناعة الإبداعية بالفعل من البشر.',cta_title:'هل أنت جاهز <em>للبدء؟</em>',cta_sub:'سواء كنت بحاجة إلى دعم لنفسك أو تريد حماية فريقك، فإن كريافين هنا.',cta_btn1:'احجز استشارة',cta_btn2:'للمؤسسات',nl_home:'الرئيسية',nl_tests:'التقييمات',nl_book:'حجز',nl_org:'المؤسسات',nl_emergency:'الطوارئ',nl_account:'حسابي',nl_about:'حول المنصة',nl_contact:'اتصل بنا',footer:'كريافين 2026 - الرفاهية النفسية للصناعة الإبداعية - جميع الحقوق محفوظة.'
+  },
+  hi:{
+    nav_sub:'मानसिक कल्याण',h_eyebrow:'क्रिएवेन के बारे में',h_title:'मंच के <em>पीछे की कहानी।</em>',h_sub:'यह कोई पिच नहीं है। कोई उत्पाद पृष्ठ नहीं है। यह कहानी है कि क्रिएवेन क्यों मौजूद है, यह किसके लिए है, और हम किस बात पर समझौता करने से इनकार करते हैं।',origin_label:'यह कहाँ से आता है',origin_title:'एक समस्या जो <em>सामने ही छिपी थी।</em>',origin_p1:'रचनात्मक उद्योग दुनिया के सबसे कठिन परिवेशों में से एक है। इसलिए नहीं कि यह निर्माण या चिकित्सा या कृषि से अधिक कठिन है। बल्कि इसलिए कि इसके भीतर की पीड़ा व्यवस्थित रूप से अदृश्य है। संस्कृति प्रदर्शन को पुरस्कृत करती है और कमजोरी को दंडित करती है। और इसने दशकों से अपने भीतर के लोगों को यह बताने में बिताया है कि थकावट जुनून की कीमत है।',origin_p2:'संस्कृति बनाने वाले अधिकांश लोग, जिन्हें आप कभी स्टेज या क्रेडिट सूची में नहीं देखेंगे, मानसिक स्वास्थ्य के प्रति लगभग पूर्ण चुप्पी के साथ अत्यधिक दबाव की स्थिति में काम करते हैं। जब कुछ टूटता है, तो जो प्रणालियाँ मौजूद हैं वे उनके लिए नहीं बनाई गई थीं। कॉर्पोरेट मंचों के लिए नियोक्ता की भागीदारी की आवश्यकता होती है, बीमा के लिए कवरेज की आवश्यकता होती है, स्थानीय चिकित्सक सही भूगोल और भाषा की मांग करते हैं। और कलंक की वजह से आपको बस काम जारी रखना पड़ता है।',origin_p3:'क्रिएवेन का निर्माण इसलिए किया गया था क्योंकि वह अंतर कोई मामूली असुविधा नहीं है। इसकी कीमत करियर, रिश्ते और जिंदगियां हैं। और कोई भी मंच विशेष रूप से इसे बंद करने के लिए नहीं बनाया गया था।',quote_text:'समर्थन पाने के हकदार होने के लिए आपका पूरी तरह से टूटना जरूरी नहीं है। आपको बस इंसान होना होगा।',quote_context:'क्रिएवेन जो कुछ भी बनाता है उसके केंद्र में यही एकमात्र विश्वास है। एक टैगलाइन के रूप में नहीं, बल्कि एक डिजाइन सिद्धांत के रूप में। इस मंच पर हर सुविधा, हर प्रोटोकॉल, हर नैदानिक निर्णय व्यवहार में उस वाक्य को सच करने के लिए मौजूद है।',tensions_label:'हमने क्या देखा',tensions_title:'असली तनाव <em>जिसे कोई ज़ोर से नहीं बोलता।</em>',
+    tensions:[
+      {label:'संस्कृति के रूप में चुप्पी',title:'प्रणाली शांत रहने को पुरस्कृत करती है',text:'उच्च प्रदर्शन वाले रचनात्मक परिवेश में, मदद मांगना अभी भी कमजोरी माना जाता है। बर्नआउट स्वीकार करने से आपका अनुबंध खतरे में पड़ जाता है, संवेदनशीलता दिखाने से आपकी प्रतिष्ठा खतरे में पड़ जाती है। चुप्पी व्यक्तिगत नहीं, संरचनात्मक है।'},
+      {label:'पहुंच का अंतर',title:'मौजूदा समाधान उन तक नहीं पहुंचते',text:'मानसिक स्वास्थ्य संसाधन मौजूद हैं, लेकिन अधिकांश के लिए कॉर्पोरेट नामांकन या निजी बीमा की आवश्यकता होती है। बैंकॉक में फ्रीलांसर या लागोस में निर्माता प्रणाली की हर दरार से नीचे गिर जाते हैं।'},
+      {label:'भाषा और संस्कृति',title:'मानसिक स्वास्थ्य सांस्कृतिक रूप से तटस्थ नहीं है',text:'पश्चिमी नैदानिक ढांचे हर सांस्कृतिक संदर्भ में पूरी तरह से अनुवादित नहीं होते हैं। संकट व्यक्त करने का तरीका बहुत भिन्न होता है। एक सांस्कृतिक वास्तविकता के लिए बनाया गया मंच दूसरी वास्तविकता में विफल हो जाएगा।'},
+      {label:'बड़े पैमाने पर अदृश्यता',title:'उद्योग उन्हें नहीं गिनता जिन्हें वह भूल जाता है',text:'रचनात्मक क्षेत्र में मानसिक स्वास्थ्य का डेटा लगभग पूरी तरह से कलाकारों के बारे में है। तकनीशियन, सहायक, इंटर्न, सुरक्षा गार्ड : हर अध्ययन और हर समाधान में अदृश्य हैं।'}
+    ],
+    jobs_label:'यह किसके लिए है',jobs_title:'हर भूमिका। <em>बिना किसी अपवाद के।</em>',jobs_intro:'रचनात्मक उद्योग केवल उन चेहरों के बारे में नहीं है जिन्हें आप जानते हैं। इसमें सैकड़ों पेशे शामिल हैं, जिनमें से अधिकांश अदृश्य हैं, लेकिन सभी आवश्यक हैं। क्रिएवेन उन सभी के लिए है। यदि आपका काम किसी भी तरह से रचनात्मक दुनिया को छूता है, तो यह मंच आपको ध्यान में रखकर बनाया गया था।',jobs_note:'<strong>यदि आपकी भूमिका यहाँ सूचीबद्ध नहीं है, तो भी इसका महत्व है।</strong> यह सूची एक शुरुआत है, कोई सीमा नहीं। रचनात्मक उद्योग विशाल है और लगातार विकसित हो रहा है। यदि आप इसमें काम करते हैं, तो क्रिएवेन आपके लिए है।',com_label:'हम किस लिए खड़े हैं',com_title:'वे बातें जिन पर हम <em>कभी समझौता नहीं करेंगे।</em>',
+    commitments:[
+      {icon:'⚖️',title:'देखभाल की समानता',text:'मुख्य कलाकार और सफाई कर्मचारी दोनों को समान गुणवत्ता का मनोवैज्ञानिक समर्थन मिलता है। इस मंच पर देखभाल तक पहुँच के लिए भूमिका, पद और अनुबंध का प्रकार कभी भी शर्त नहीं होते।'},
+      {icon:'🔒',title:'कट्टरपंथी गोपनीयता',text:'एक सत्र में जो कुछ भी होता है वह क्लाइंट और उसके मनोवैज्ञानिक के बीच रहता है। क्रिएवेन किसी भी परिस्थिति में नियोक्ताओं, एजेंसियों या किसी तीसरे पक्ष के साथ नैदानिक जानकारी कभी साझा नहीं करता है।'},
+      {icon:'🧬',title:'नैदानिक अखंडता',text:'हमारे द्वारा उपयोग किया जाने वाला प्रत्येक उपकरण अंतरराष्ट्रीय स्तर पर मान्य है। हर परिणाम की समीक्षा एक लाइसेंस प्राप्त मनोवैज्ञानिक द्वारा की जाती है। नैदानिक मानकों पर कोई शॉर्टकट नहीं हैं।'},
+      {icon:'🌍',title:'दुनिया भर में पहुंच',text:'यदि आपके पास इंटरनेट कनेक्शन है, तो भूगोल कोई बाधा नहीं है। क्रिएवेन दुनिया में कहीं भी, किसी भी रचनात्मक कार्यकर्ता के लिए सभी समय क्षेत्रों और कई भाषाओं में काम करता है।'},
+      {icon:'🗣️',title:'अधिकार के रूप में भाषा',text:'मानसिक स्वास्थ्य देखभाल के लिए आपको प्रमुख भाषा बोलने की आवश्यकता नहीं होनी चाहिए। क्रिएवेन कई भाषाओं में काम करता है और वास्तविक समय में कमियों को दूर करने के लिए एआई-असिस्टेड अनुवाद का उपयोग करता है।'},
+      {icon:'❤️',title:'हमेशा पहले इंसान',text:'तकनीक देखभाल का समर्थन करती है, उसका स्थान नहीं लेती। हर मूल्यांकन परिणाम, हर सत्र और हर महत्वपूर्ण निर्णय में एक मानव मनोवैज्ञानिक शामिल होता है। एआई सहायता करता है, इंसान निर्णय लेते हैं।'}
+    ],
+    fn_label:'संस्थापक',fn_text:'<strong>क्रिएवेन की स्थापना ग्रेस डैनिएला अमाकोन द्वारा की गई थी</strong>, जो सामाजिक मनोविज्ञान में मास्टर डिग्री धारक हैं और पश्चिम अफ्रीका में गैर-सरकारी संगठनों के माध्यम से बर्नआउट की रोकथाम और मनोसामाजिक सहयोग में मैदानी अनुभव रखने वाली एक मनोसामाजिक सहायता विशेषज्ञ हैं। क्रिएवेन का निर्माण किसी बोर्डरूम या स्टार्टअप इनक्यूबेटर से नहीं हुआ था। यह वर्षों के अवलोकन, जमीनी काम और इस सरल इनकार से पैदा हुआ था कि संस्कृति बनाने वाले लोगों को गुणवत्तापूर्ण मनोवैज्ञानिक देखभाल तक पहुंच नहीं होनी चाहिए। यह मंच नैदानिक कठोरता और रचनात्मक उद्योग मनुष्यों से वास्तव में क्या मांग करता है, इसकी जीवंत समझ दोनों को दर्शाता है।',cta_title:'क्या आप <em>शुरू करने</em> के लिए तैयार हैं?',cta_sub:'चाहे आपको अपने लिए समर्थन की आवश्यकता हो या आप अपनी टीम की रक्षा करना चाहते हों, क्रिएवेन यहाँ है।',cta_btn1:'परामर्श बुक करें',cta_btn2:'संगठनों के लिए',nl_home:'होम',nl_tests:'मूल्यांकन',nl_book:'बुकिंग',nl_org:'संगठन',nl_emergency:'आपातकाल',nl_account:'मेरा खाता',nl_about:'हमारे बारे में',nl_contact:'संपर्क',footer:'क्रिएवेन 2026 - रचनात्मक उद्योग के लिए मानसिक कल्याण - सर्वाधिकार सुरक्षित।'
+  },
+  vi:{
+    nav_sub:'Sức khỏe tâm lý',h_eyebrow:'Về Creaven',h_title:'Câu chuyện phía sau <em>nền tảng.</em>',h_sub:'Không phải một bài quảng cáo. Không phải trang sản phẩm. Đây là lý do Creaven tồn tại, dành cho ai và những điều chúng tôi từ chối thỏa hiệp.',origin_label:'Nguồn gốc từ đâu',origin_title:'Một vấn đề <em>bị che giấu ngay trước mắt.</em>',origin_p1:'Ngành công nghiệp sáng tạo là một trong những môi trường đòi hỏi khắt khe nhất trên trái đất. Không phải vì nó khó hơn xây dựng, y học hay nông nghiệp. Mà vì sự đau khổ bên trong nó vô hình một cách có hệ thống. Văn hóa khen thưởng thành tích và trừng phạt sự mong manh. Nó đã dành nhiều thập kỷ để nói với những con người bên trong rằng kiệt sức là cái giá của đam mê.',origin_p2:'Hầu hết những người làm nên văn hóa, những người bạn sẽ không bao giờ thấy trên sân khấu hay trong danh sách đoàn phim, làm việc trong điều kiện áp lực cực độ với sự im lặng gần như tuyệt đối về sức khỏe tinh thần. Khi có điều gì đó đổ vỡ, các hệ thống hiện tại không được xây dựng cho họ. Các nền tảng doanh nghiệp yêu cầu người sử dụng lao động tham gia, bảo hiểm yêu cầu phạm vi chi trả, các nhà trị liệu địa phương yêu cầu đúng địa lý và ngôn ngữ. Và định kiến xã hội buộc bạn phải đơn độc bước tiếp.',origin_p3:'Creaven được xây dựng vì khoảng trống đó không phải là một sự bất tiện nhỏ. Nó trả giá bằng cả sự nghiệp, các mối quan hệ và mạng sống. Và không có nền tảng nào được xây dựng đặc biệt để lấp đầy nó.',quote_text:'Bạn không cần phải sụp đổ mới xứng đáng được hỗ trợ. Bạn chỉ cần là một con người.',quote_context:'Đây là niềm tin duy nhất ở trung tâm của mọi thứ Creaven xây dựng. Không phải như một khẩu hiệu, mà như một nguyên tắc thiết kế. Mọi tính năng, mọi giao thức, mọi quyết định lâm sàng trên nền tảng này tồn tại để biến câu nói đó thành hiện thực trong thực tế.',tensions_label:'Những gì chúng tôi thấy',tensions_title:'Những căng thẳng thực sự <em>không ai dám nói thành lời.</em>',
+    tensions:[
+      {label:'Sự im lặng như một nét văn hóa',title:'Hệ thống khen thưởng việc giữ im lặng',text:'Trong môi trường sáng tạo hiệu suất cao, việc yêu cầu giúp đỡ vẫn bị coi là điểm yếu. Thừa nhận kiệt sức có nguy cơ mất hợp đồng, thể hiện sự tổn thương có nguy cơ hủy hoại danh tiếng. Sự im lặng mang tính cấu trúc chứ không phải cá nhân.'},
+      {label:'Khoảng cách tiếp cận',title:'Các giải pháp hiện tại không chạm tới họ',text:'Các nguồn lực sức khỏe tinh thần có tồn tại, nhưng hầu hết yêu cầu ghi danh của công ty hoặc bảo hiểm tư nhân. Người làm tự do ở Bangkok hay nhà sản xuất ở Lagos đều rơi vào những vết nứt của hệ thống.'},
+      {label:'Ngôn ngữ và văn hóa',title:'Sức khỏe tinh thần không trung lập về văn hóa',text:'Các khuôn khổ lâm sàng phương Tây không dịch chuyển hoàn toàn sang mọi bối cảnh văn hóa. Cách thể hiện sự đau khổ khác nhau rất nhiều. Một nền tảng được xây dựng cho một thực tế văn hóa duy nhất sẽ thất bại ở một nơi khác.'},
+      {label:'Sự vô hình trên quy mô lớn',title:'Ngành công nghiệp không đếm những người nó lãng quên',text:'Dữ liệu về sức khỏe tinh thần trong lĩnh vực sáng tạo hầu như chỉ xoay quanh các nghệ sĩ. Kỹ thuật viên, trợ lý, thực tập sinh, nhân viên bảo vệ : vô hình trong mọi nghiên cứu và mọi giải pháp.'}
+    ],
+    jobs_label:'Nền tảng này dành cho ai',jobs_title:'Mọi vai trò. <em>Không ngoại lệ.</em>',jobs_intro:'Ngành công nghiệp sáng tạo không chỉ có những khuôn mặt bạn biết. Nó bao gồm hàng trăm ngành nghề, hầu hết vô hình nhưng tất cả đều cần thiết. Creaven dành cho tất cả họ. Nếu công việc của bạn chạm đến thế giới sáng tạo theo bất kỳ cách nào, nền tảng này được xây dựng cho bạn.',jobs_note:'<strong>Nếu vai trò của bạn không có trong danh sách, nó vẫn được tính.</strong> Danh sách này là điểm khởi đầu, không phải ranh giới. Ngành sáng tạo vô cùng rộng lớn và không ngừng phát triển. Nếu bạn làm việc trong đó, Creaven là dành cho bạn.',com_label:'Những gì chúng tôi bảo vệ',com_title:'Những điều chúng tôi sẽ <em>không bao giờ thỏa hiệp.</em>',
+    commitments:[
+      {icon:'⚖️',title:'Bình đẳng trong chăm sóc',text:'Nghệ sĩ chính và nhân viên vệ sinh đều nhận được chất lượng hỗ trợ tâm lý như nhau. Vai trò, cấp bậc và loại hợp đồng không bao giờ là điều kiện để tiếp cận dịch vụ chăm sóc trên nền tảng này.'},
+      {icon:'🔒',title:'Bảo mật tuyệt đối',text:'Những gì xảy ra trong một buổi tư vấn chỉ diễn ra giữa khách hàng và nhà tâm lý học của họ. Creaven không bao giờ chia sẻ thông tin lâm sàng với người sử dụng lao động, đại lý hoặc bất kỳ bên thứ ba nào trong bất kỳ trường hợp nào.'},
+      {icon:'🧬',title:'Tính toàn vẹn lâm sàng',text:'Mọi công cụ chúng tôi sử dụng đều được quốc tế công nhận. Mọi kết quả đều được xem xét bởi một nhà tâm lý học được cấp phép. Không có đường tắt trong các tiêu chuẩn lâm sàng.'},
+      {icon:'🌍',title:'Khả năng tiếp cận toàn cầu',text:'Nếu bạn có kết nối internet, địa lý không phải là rào cản. Creaven hoạt động trên mọi múi giờ, bằng nhiều ngôn ngữ, cho bất kỳ người lao động sáng tạo nào ở bất kỳ đâu trên thế giới.'},
+      {icon:'🗣️',title:'Ngôn ngữ như một quyền lợi',text:'Chăm sóc sức khỏe tinh thần không nên yêu cầu bạn phải nói ngôn ngữ thống trị. Creaven hoạt động bằng nhiều ngôn ngữ và sử dụng tính năng thông dịch do AI hỗ trợ để thu hẹp khoảng cách trong thời gian thực.'},
+      {icon:'❤️',title:'Con người là trên hết, luôn luôn',text:'Công nghệ hỗ trợ chăm sóc, không thay thế nó. Mọi kết quả đánh giá, mọi buổi tư vấn và mọi quyết định quan trọng đều có sự tham gia của nhà tâm lý học con người. AI hỗ trợ, con người quyết định.'}
+    ],
+    fn_label:'Nhà sáng lập',fn_text:'<strong>Creaven được thành lập bởi Grace Daniella Amakon</strong>, một chuyên gia hỗ trợ tâm lý xã hội với bằng Thạc sĩ tâm lý học xã hội và kinh nghiệm thực địa về phòng chống kiệt sức và đồng hành tâm lý xã hội thông qua công việc của NGO ở Tây Phi. Creaven không được xây dựng từ một phòng họp hay một trung tâm khởi nghiệp. Nó được xây dựng từ nhiều năm quan sát, từ công việc thực địa và từ một sự từ chối đơn giản đối với việc những người tạo ra văn hóa không được tiếp cận với dịch vụ chăm sóc tâm lý chất lượng cao. Nền tảng phản ánh cả sự nghiêm ngặt lâm sàng và sự thấu hiểu sâu sắc về những gì ngành công nghiệp sáng tạo thực sự đòi hỏi ở con người.',cta_title:'Sẵn sàng để <em>bắt đầu?</em>',cta_sub:'Cho dù bạn cần hỗ trợ cho chính mình hay muốn bảo vệ nhóm của mình, Creaven luôn ở đây.',cta_btn1:'Đặt lịch tư vấn',cta_btn2:'Dành cho tổ chức',nl_home:'Trang chủ',nl_tests:'Đánh giá',nl_book:'Đặt lịch',nl_org:'Tổ chức',nl_emergency:'Khẩn cấp',nl_account:'Tài khoản',nl_about:'Giới thiệu',nl_contact:'Liên hệ',footer:'Creaven 2026 - Sức khỏe tâm lý cho ngành công nghiệp sáng tạo - Bảo lưu mọi quyền.'
+  },
+  th:{
+    nav_sub:'ความมีสุขภาพจิตที่ดี',h_eyebrow:'เกี่ยวกับ Creaven',h_title:'เรื่องราวเบื้องหลัง <em>แพลตฟอร์ม</em>',h_sub:'นี่ไม่ใช่การเสนอขาย ไม่ใช่หน้าสินค้า นี่คือเหตุผลที่ Creaven มีอยู่ เพื่อใคร และสิ่งที่เราปฏิเสธที่จะประนีประนอม',origin_label:'ที่มาของแพลตฟอร์ม',origin_title:'ปัญหาที่ <em>ซ่อนอยู่ต่อหน้าต่อตาเรา</em>',origin_p1:'อุตสาหกรรมสร้างสรรค์เป็นหนึ่งในสภาพแวดล้อมที่เรียกร้องและกดดันที่สุดในโลก ไม่ใช่เพราะมันยากกว่าการก่อสร้าง การแพทย์ หรือการเกษตร แต่เป็นเพราะความทุกข์ทรมานภายในนั้นมองไม่เห็นอย่างเป็นระบบ วัฒนธรรมให้รางวัลแก่ผลงานและลงโทษความเปราะบาง และมันใช้เวลาหลายทศวรรษในการบอกผู้คนภายในว่าความเหนื่อยล้าคือราคาของความหลงใหล',origin_p2:'ผู้คนส่วนใหญ่ที่สร้างสรรค์วัฒนธรรม คนที่คุณจะไม่มีวันเห็นบนเวทีหรือในรายชื่อเครดิต ทำงานภายใต้สภาวะที่มีความกดดันสูงมาก โดยมีความเงียบงันเกือบทั้งหมดเกี่ยวกับสุขภาพจิต เมื่อมีบางอย่างแตกหัก ระบบที่มีอยู่ไม่ได้ถูกสร้างมาเพื่อพวกเขา แพลตฟอร์มขององค์กรต้องการการเข้าร่วมของนายจ้าง ประกันต้องการความคุ้มครอง นักบำบัดในท้องถิ่นต้องการภูมิศาสตร์และภาษาที่ถูกต้อง และตราบาปในสังคมบีบให้คุณต้องก้าวต่อไปเพียงลำพัง',origin_p3:'Creaven ถูกสร้างขึ้นเนื่องจากช่องว่างนั้นไม่ใช่ความไม่สะดวกเล็กน้อย มันแลกด้วยอาชีพ ความสัมพันธ์ และชีวิต และไม่มีแพลตฟอร์มใดถูกสร้างขึ้นมาโดยเฉพาะเพื่อปิดช่องว่างนั้น',quote_text:'คุณไม่จำเป็นต้องแตกสลายเพื่อที่จะมีสิทธิ์ได้รับความช่วยเหลือ คุณแค่ต้องเป็นมนุษย์คนหนึ่งเท่านั้น',quote_context:'นี่คือความเชื่อมั่นเพียงหนึ่งเดียวที่อยู่ใจกลางของทุกสิ่งที่ Creaven สร้างขึ้น ไม่ใช่คำขวัญ แต่เป็นหลักการออกแบบ ทุกฟีเจอร์ ทุกโปรโตคอล ทุกการตัดสินใจทางคลินิกบนแพลตฟอร์มนี้มีอยู่เพื่อให้ประโยคนั้นเป็นจริงในการปฏิบัติจริง',tensions_label:'สิ่งที่เราเห็น',tensions_title:'ความตึงเครียดที่แท้จริง <em>ที่ไม่มีใครกล้าพูดออกมาดังๆ</em>',
+    tensions:[
+      {label:'ความเงียบเป็นวัฒนธรรม',title:'ระบบให้รางวัลแก่การเงียบเฉย',text:'ในสภาพแวดล้อมที่เน้นผลงานสูง การขอความช่วยเหลือยังคงถูกมองว่าเป็นความอ่อนแอ การยอมรับว่าหมดไฟทำให้สัญญาจ้างมีความเสี่ยง การแสดงความเปราะบางทำให้ชื่อเสียงตกต่ำ ความเงียบเป็นเรื่องของโครงสร้างไม่ใช่เรื่องส่วนตัว'},
+      {label:'ช่องว่างการเข้าถึง',title:'ทางออกที่มีอยู่เข้าไม่ถึงพวกเขา',text:'ทรัพยากรด้านสุขภาพจิตมีอยู่ แต่ส่วนใหญ่ต้องการการลงทะเบียนของบริษัทหรือประกันส่วนบุคคล ฟรีแลนซ์ในกรุงเทพฯ หรือโปรดิวเซอร์ในลากอสต่างร่วงหล่นลงไปในรอยแยกของระบบ'},
+      {label:'ภาษาและวัฒนธรรม',title:'สุขภาพจิตไม่ได้เป็นกลางทางวัฒนธรรม',text:'กรอบการทำงานทางคลินิกของตะวันตกไม่สามารถแปลเข้ากับทุกบริบทวัฒนธรรมได้อย่างสมบูรณ์ วิธีการแสดงความทุกข์ใจมีความแตกต่างกันอย่างมาก แพลตฟอร์มที่สร้างขึ้นสำหรับความจริงทางวัฒนธรรมเดียวจะล้มเหลวในอีกวัฒนธรรมหนึ่ง'},
+      {label:'ความมองไม่เห็นในวงกว้าง',title:'อุตสาหกรรมไม่นับคนที่ถูกลืม',text:'ข้อมูลเกี่ยวกับสุขภาพจิตในภาคส่วนสร้างสรรค์เกือบทั้งหมดเป็นเรื่องของศิลปิน ช่างเทคนิค ผู้ช่วย นักศึกษาฝึกงาน พนักงานรักษาความปลอดภัย : มองไม่เห็นในทุกการศึกษาและทุกทางออก'},
+    ],
+    jobs_label:'แพลตฟอร์มนี้สำหรับใคร',jobs_title:'ทุกบทบาท <em>ไม่มีข้อยกเว้น</em>',jobs_intro:'อุตสาหกรรมสร้างสรรค์ไม่ได้มีแค่ใบหน้าที่คุณรู้จัก มันประกอบด้วยอาชีพหลายร้อยสายงาน ส่วนใหญ่ไม่มีใครมองเห็นแต่ล้วนจำเป็น Creaven สำหรับพวกเขาทุกคน หากงานของคุณเกี่ยวข้องกับโลกสร้างสรรค์ไม่ว่าทางใด แพลตฟอร์มนี้สร้างมาเพื่อคุณ',jobs_note:'<strong>หากบทบาทของคุณไม่ได้ระบุไว้ที่นี่ มันก็ยังคงมีความสำคัญ</strong> รายการนี้เป็นจุดเริ่มต้นไม่ใช่ขอบเขต อุตสาหกรรมสร้างสรรค์กว้างใหญ่และพัฒนาอยู่เสมอ หากคุณทำงานในสายงานนี้ Creaven สำหรับคุณ',com_label:'สิ่งที่เรายืนหยัด',com_title:'สิ่งที่เราจะ <em>ไม่มีวันประนีประนอม</em>',
+    commitments:[
+      {icon:'⚖️',title:'ความเท่าเทียมในการดูแล',text:'ศิลปินหลักและพนักงานทำความสะอาดจะได้รับความช่วยเหลือทางจิตวิทยาที่มีคุณภาพเท่าเทียมกัน บทบาท อันดับ และประเภทของสัญญาจ้างไม่เคยเป็นเงื่อนไขในการเข้าถึงการดูแลบนแพลตฟอร์มนี้'},
+      {icon:'🔒',title:'การรักษาความลับขั้นสูงสุด',text:'สิ่งที่เกิดขึ้นในการปรึกษาจะอยู่ระหว่างลูกค้าและนักจิตวิทยาเท่านั้น Creaven จะไม่แชร์ข้อมูลทางคลินิกกับนายจ้าง เอเจนซี่ หรือบุคคลภายนอกในทุกกรณี'},
+      {icon:'🧬',title:'ความซื่อสัตย์ทางคลินิก',text:'ทุกเครื่องมือที่เราใช้ได้รับการยอมรับในระดับสากล ทุกผลลัพธ์จะได้รับการตรวจสอบโดยนักจิตวิทยาที่มีใบอนุญาต ไม่มีทางลัดสำหรับมาตรฐานทางคลินิก'},
+      {icon:'🌍',title:'การเข้าถึงได้จากทั่วโลก',text:'หากคุณมีการเชื่อมต่ออินเทอร์เน็ต ภูมิศาสตร์ก็ไม่ใช่อุปสรรค Creaven ทำงานในทุกเขตเวลา ในหลายภาษา สำหรับคนทำงานสร้างสรรค์ทุกคนในทุกที่ของโลก'},
+      {icon:'🗣️',title:'ภาษาเป็นสิทธิ์ขั้นพื้นฐาน',text:'การดูแลสุขภาพจิตไม่ควรเรียกร้องให้คุณต้องพูดภาษาหลักเท่านั้น Creaven ทำงานในหลายภาษาและใช้การแปลโดยมี AI ช่วยเพื่อลดช่องว่างในเรียลไทม์'},
+      {icon:'❤️',title:'มนุษย์ต้องมาก่อนเสมอ',text:'เทคโนโลยีช่วยสนับสนุนการดูแล แต่ไม่ได้แทนที่มนุษย์ ทุกผลการประเมิน ทุกเซสชัน และทุกการตัดสินใจที่สำคัญล้วนมีนักจิตวิทยาที่เป็นมนุษย์เข้ามาเกี่ยวข้อง AI ช่วยเหลือ แต่มนุษย์เป็นผู้ตัดสินใจ'}
+    ],
+    fn_label:'ผู้ก่อตั้ง',fn_text:'<strong>Creaven ก่อตั้งโดย Grace Daniella Amakon</strong> ผู้เชี่ยวชาญด้านการช่วยเหลือทางจิตสังคมและสังคมวิทยา ซึ่งสำเร็จการศึกษาระดับปริญญาโทสาขาจิตวิทยาจิตสังคม และมีประสบการณ์ภาคสนามในการป้องกันภาวะหมดไฟและการดูแลทางจิตสังคมผ่านการทำงานร่วมกับ NGO ในแอฟริกาตะวันตก Creaven ไม่ได้ถูกสร้างขึ้นจากห้องประชุมหรือศูนย์บ่มเพาะสตาร์ทอัพ มันสร้างขึ้นจากการสังเกตหลายปี จากการทำงานภาคสนาม และจากการปฏิเสธที่จะยอมรับว่าคนที่สร้างสรรค์วัฒนธรรมไม่ควรเข้าถึงการดูแลทางจิตวิทยาที่มีคุณภาพ แพลตฟอร์มนี้สะท้อนถึงทั้งความเข้มงวดทางคลินิกและความเข้าใจอย่างถ่องแท้ว่าอุตสาหกรรมสร้างสรรค์เรียกร้องอะไรจากมนุษย์อย่างแท้จริง',cta_title:'พร้อมที่จะ <em>เริ่มต้นหรือยัง?</em>',cta_sub:'ไม่ว่าคุณจะต้องการความช่วยเหลือสำหรับตัวคุณเองหรือต้องการปกป้องทีมของคุณ Creaven อยู่ที่นี่เพื่อคุณ',cta_btn1:'จองการปรึกษา',cta_btn2:'สำหรับองค์กร',nl_home:'หน้าแรก',nl_tests:'การประเมิน',nl_book:'จองคิว',nl_org:'องค์กร',nl_emergency:'ฉุกเฉิน',nl_account:'บัญชีของฉัน',nl_about:'เกี่ยวกับเรา',nl_contact:'ติดต่อเรา',footer:'Creaven 2026 - สุขภาพจิตที่ดีสำหรับอุตสาหกรรมสร้างสรรค์ - สงวนลิขสิทธิ์ทั้งหมด'
+  },
+  zh:{
+    nav_sub:'心理健康与福祉',h_eyebrow:'关于 Creaven',h_title:'平台<em>背后的故事。</em>',h_sub:'这不是推销。这不是产品页面。这是关于 Creaven 为何存在、服务于谁，以及我们拒绝妥协的原则。',origin_label:'我们的起点',origin_title:'一个<em>隐藏在眼前的隐患。</em>',origin_p1:'创意行业是地球上要求最高、压力最大的环境之一。这并不是因为它比建筑、医疗或农业更艰难，而是因为其中的痛苦被系统性地忽视了。行业文化奖励高产，惩罚脆弱。几十年来，它一直在告诉身处其中的人们：精疲力竭是热情的代价。',origin_p2:'大多数创造文化的人，那些你永远不会在舞台上或片尾字幕中看到的人，都在面临极高压力的环境下工作，而关于心理健康的讨论却几乎一片死寂。当心理防线崩溃时，现有的体系并不是为他们而造的。企业平台需要雇主加入，保险需要覆盖范围，本地心理咨询师需要特定的地理位置和语言。而行业的污名化迫使你只能独自死撑。',origin_p3:'Creaven 的建立是因为这种空白并不是微不足道的不便。它葬送了职业生涯、人际关系，甚至生命。而此前没有任何平台专门为了填补这一空白而设计。',quote_text:'你不需要等到彻底崩溃才配得到支持。你只需要是个普通人。',quote_context:'这是 Creaven 所构建的一切的核心信念。它不是一个口号，而是一个设计原则。该平台上的每一个功能、每一个协议、每一个临床决策的存在，都是为了在实践中将这句话变为现实。',tensions_label:'我们所看到的',tensions_title:'无人敢大声说出来的<em>真实行业困境。</em>',
+    tensions:[
+      {label:'沉默视为文化',title:'体制在奖励保持沉默',text:'在高强度的创意环境中，寻求帮助仍被解读为软弱。承认职业倦怠意味着冒着失去合同的风险，展现脆弱意味着冒着声誉受损的风险。沉默是结构性的，而非个人问题。'},
+      {label:'可及性的断层',title:'现有的解决方案无法触及他们',text:'心理健康资源确实存在，但大多数需要企业注册或私人 insurance。曼谷的自由职业者或拉各斯的制作人都会从这个体系的裂缝中坠落。'},
+      {label:'语言与文化',title:'心理健康并非文化中立',text:'西方的临床框架无法完全搬用到每一种文化背景中。痛苦的表达方式因文化而异。为单一文化现实构建的平台在面对另一种文化时将会失效。'},
+      {label:'被成规模地忽视',title:'行业并不会去统计那些被遗忘的人',text:'创意领域的心理健康数据几乎完全围绕着明星和艺人。而技术人员、助理、实习生、安保人员：在每项研究和每个解决方案中都处于隐形状态。'}
+    ],
+    jobs_label:'谁适合使用此平台',jobs_title:'每一个角色。<em>毫无例外。</em>',jobs_intro:'创意行业不仅仅是你所熟知的那些面孔。它由数百个职业组成，其中大多数不为人知，但都不可或缺。Creaven 属于他们所有人。如果你的工作以任何方式触及创意世界，那么这个平台就是为你而建。',jobs_note:'<strong>如果你的角色没有在这里列出，它依然算数。</strong> 这个列表只是一个起点，而不是一条界线。创意行业非常广泛且在不断发展。只要你身处其中，Creaven 就适合你。',com_label:'我们的坚守',com_title:'我们<em>绝不妥协的底线。</em>',
+    commitments:[
+      {icon:'⚖️',title:'护理的平等性',text:'核心艺人和清洁人员将获得同等质量的心理支持。角色、级别和合同类型绝不是该平台获取关怀服务的限制条件。'},
+      {icon:'🔒',title:'极度保密协议',text:'咨询过程中发生的一切仅保留在客户和其咨询师之间。在任何情况下，Creaven 绝不向雇主、经纪公司或任何第三方分享临床信息。'},
+      {icon:'🧬',title:'医学严谨性',text:'我们使用的每种工具都经过国际认证。每个结果都由执业咨询师审查。在临床标准上没有任何捷径。'},
+      {icon:'🌍',title:'全球化可及性',text:'只要你有网络连接，地理位置就不是障碍。Creaven 跨越所有时区、提供多种语言服务，面向全球任何地方的每一位创意工作者。'},
+      {icon:'🗣️',title:'语言是一项权利',text:'心理健康护理不应该要求你必须掌握主流语言。Creaven 支持多语言运营，并使用 AI 辅助翻译来实时消除语言隔阂。'},
+      {icon:'❤️',title:'始终以人为本',text:'科技只是辅助关怀，而不是取代人类。每个评估结果、每个课时以及每个关键决策都有人类咨询师的参与。AI 只是协助，最终由人类决定。'}
+    ],
+    fn_label:'创始人',fn_text:'<strong>Creaven 由 Grace Daniella Amakon 创立</strong>。她是一位社会心理学硕士，拥有在西非通过 NGO 开展职业倦怠预防、社会心理陪伴及心理健康协调的丰富一线工作经验。Creaven 不是在董事会会议室或创业孵化器中诞生的。它是基于多年的观察、实地工作以及一个简单的坚持：文化创造者不应该被剥夺获取优质心理护理的权利。该平台既体现了临床的严谨性，也体现了对创意行业对人性的真实剥榨的深刻理解。',cta_title:'准备好<em>开始了嘛？</em>',cta_sub:'无论你是自己需要支持，还是想要保护你的团队，Creaven 都在这里为你提供帮助。',cta_btn1:'预约咨询',cta_btn2:'面向组织和机构',nl_home:'首页',nl_tests:'测试与评估',nl_book:'预约',nl_org:'面向组织',nl_emergency:'紧急求助',nl_account:'我的账户',nl_about:'关于我们',nl_contact:'联系我们',footer:'Creaven 2026 - 创意行业心理健康与福祉 - 版权所有。'
+  },
+  jp:{
+    nav_sub:'心の健康と幸福',h_eyebrow:'Creavenについて',h_title:'プラットフォームの<em>背景にある物語。</em>',h_sub:'これはピッチでも、製品ページでもありません。Creavenが存在する理由、誰のためのものか、そして私たちが決して妥協しない原則についての物語です。',origin_label:'私たちの出発点',origin_title:'目の前に<em>隠されていた大きな課題。</em>',origin_p1:'クリエイティブ業界は、地球上で最も過酷な環境の一つです。建設や医療や農業よりもハードだからではありません。その中にある苦痛がシステム的に見えなくなっているからです。業界の文化はパフォーマンスを称賛し、脆弱さを罰します。そして、何十年もの間、中にいる人々に対して「消耗は情熱の代償だ」と言い続けてきました。',origin_p2:'文化を創り出す大半の人々、ステージやエンドロールで決して見ることのない人々は、メンタルヘルスに関するほぼ完全な沈黙の中で、極限のプレッシャーにさらされながら働いています。何かが壊れたとき、既存のシステムは彼らのために作られていませんでした。企業のプラットフォームは雇用主の加入を求め、保険はカバー範囲を要求し、地域のセラピストは特定の地域や言語を前提とします。そして、業界の偏見は「ただ耐えて続けること」を強いるのです。',origin_p3:'Creavenが作られたのは、その空白が小さな不便ではないからです。それはキャリア、人間関係、そして命を奪います。そして、その空白を埋めるために特別に設計されたプラットフォームはこれまで存在しませんでした。',quote_text:'サポートを受ける資格を得るために、完全に崩壊している必要はありません。ただ一人の人間であればいいのです。',quote_context:'これが、Creavenが構築するすべての中心にある唯一 center の確信です。スローガンとしてではなく、設計原則として。このプラットフォームのすべての機能、すべてのプロトコル、すべての臨床決定は、実務においてその言葉を現実のものにするために存在しています。',tensions_label:'私たちが目撃したもの',tensions_title:'誰も大声では言わない<em>業界のリアルな軋轢。</em>',
+    tensions:[
+      {label:'文化としての沈黙',title:'システムは沈黙を守ることを賞賛する',text:'高負荷なクリエイティブ環境では、助けを求めることは今なお弱さと見なされます。燃え尽き症候群を認めることは契約の危機を意味し、脆弱さを見せることは評判を損なうリスクを伴います。沈黙は個人的なものではなく、構造的なものです。'},
+      {label:'アクセスの断層',title:'既存の解決策は彼らに届かない',text:'メンタルヘルスのリソースは存在しますが、多くは企業登録や個人保険を必要とします。バンコクのフリーランサーやラゴスのプロデューサーは、システムのあらゆる裂け目からこぼれ落ちてしまいます。'},
+      {label:'言語と文化',title:'メンタルヘルスは文化的に中立ではない',text:'欧米の臨床フレームワークがすべての文化的文脈にそのまま翻訳できるわけではありません。苦痛の表現方法は文化によって大きく異なります。単一の文化的現実のために構築されたプラットフォームは、別の文化では機能しません。'},
+      {label:'大規模な不可視性',title:'業界は忘却した人々をカウントしない',text:'クリエイティブ分野のメンタルヘルスデータは、ほぼ完全にアーティストを中心に回っています。技術者、アシスタント、インターン、警備員 : あらゆる研究や解決策において見えない存在となっています。'}
+    ],
+    jobs_label:'誰のためのものか',jobs_title:'すべての役割。<em>例外なく。</em>',jobs_intro:'クリエイティブ業界は、あなたが知っている顔ぶれだけではありません。大半は人知れず、しかし全員が不可欠な数百もの職種で構成されています。Creavenは彼ら全員のためのものです。あなたの仕事が何らかの形でクリエイティブな世界に触れているなら、このプラットフォームはあなたを想定して作られました。',jobs_note:'<strong>あなたの職種がここに記載されていなくても、対象に含まれます。</strong> このリストは境界ではなく、出発点です。クリエイティブ業界は広大で常に進化しています。その中で働いているなら、Creavenはあなたのためのものです。',com_label:'私たちの約束',com_title:'私たちが<em>決して妥協しない底線。</em>',
+    commitments:[
+      {icon:'⚖️',title:'ケアの平等性',text:'主役も清掃スタッフも、まったく同じ質の心理的サポートを受けられます。役割やランク、契約形態が、このプラットフォームでのケアアクセスの条件になることはありません。'},
+      {icon:'🔒',title:'徹底した守秘義務',text:'セッション内で起きたことは、クライアントと担当カウンセラーの間だけに留められます。Creavenは、いかなる状況下でも雇用主、エージェンシー、第三者と臨床情報を共有しません。'},
+      {icon:'🧬',title:'臨床の厳格性',text:'私たちが使用するすべてのツールは国際的に検証されています。すべての結果は、資格を持つ心理カウンセラーによって審査されます。臨床基準に近道はありません。'},
+      {icon:'🌍',title:'グローバルな可用性',text:'インターネット接続があれば、地理的な境界は障害になりません。Creavenはすべての時間帯に対応し、多言語で、世界中のあらゆるクリエイティブワーカーのために運営されています。'},
+      {icon:'🗣️',title:'権利としての言語',text:'メンタルヘルスケアを受けるために、支配的な言語を話せる必要はありません。Creavenは多言語で運営され、AI支援による通訳を活用してリアルタイムで言語の壁を解消します。'},
+      {icon:'❤️',title:'常に人間が第一',text:'テクノロジーはケアを支援しますが、人間に代わるものではありません。すべての評価結果、すべてのレッスン、すべての重要な決定には人間のカウンセラーが関与します。AIは支援し、人間が決定します。'}
+    ],
+    fn_label:'創設者',fn_text:'<strong>CreavenはGrace Daniella Amakonによって創設されました</strong>。彼女は社会心理学の修士号を持ち、西アフリカのNGO活動を通じて燃え尽き症候群の予防や心理社会的同行、メンタルヘルス調整の豊富な現場経験を持つ心理社会的支援の専門家です。Creavenは、取締役会やスタートアップのインキュベーターから生まれたものではありません。長年の観察、フィールドワーク、そして文化を創る人々が質の高い心理ケアを受けられないという現実への純粋な拒絶から作られました。このプラットフォームは、臨床の厳格さと、クリエイティブ業界が人間に実際に何を要求しているかという実体験に基づく理解の両方を反映しています。',cta_title:'<em>始める</em>準備はできましたか？',cta_sub:'自分自身のためのサポートが必要な方も、チームを守りたい方も、Creavenはここにいます。',cta_btn1:'カウンセリングを予約する',cta_btn2:'組織・法人向け',nl_home:'ホーム',nl_tests:'テスト・評価',nl_book:'予約',nl_org:'組織向け',nl_emergency:'緊急窓口',nl_account:'マイアカウント',nl_about:'私たちについて',nl_contact:'お問い合わせ',footer:'Creaven 2026 - クリエイティブ業界の心の健康と幸福 - 無断転載を禁じます。'
+  },
+  kr:{
+    nav_sub:'심리적 웰빙',h_eyebrow:'Creaven 소개',h_title:'플랫폼 <em>뒤의 이야기.</em>',h_sub:'홍보 자료가 아닙니다. 제품 페이지가 아닙니다. Creaven이 존재하는 이유, 누구를 위한 것인지, 그리고 절대 타협하지 않는 것들입니다.',origin_label:'시작점',origin_title:'눈앞에 숨어있던 <em>문제.</em>',origin_p1:'창작 산업은 지구상에서 가장 혹독한 환경 중 하나입니다. 건설이나 의학이나 농업보다 더 힘들어서가 아닙니다. 그 안의 고통이 체계적으로 보이지 않기 때문입니다. 문화는 퍼포먼스를 보상합니다. 취약함을 처벌합니다. 그리고 수십 년 동안 그 안의 사람들에게 번아웃은 열정의 대가라고 말해왔습니다.',origin_p2:'문화를 만드는 대부분의 사람들, 무대 위나 엔딩 크레딧에서 절대 볼 수 없는 이들은 정신 건강에 대한 거의 완전한 침묵 속에서 극도의 압박 조건 하에 일합니다. 무언가 무너질 때, 기존의 시스템은 그들을 위해 만들어진 것이 아니었습니다. 기업 플랫폼은 고용주의 가입을 요구하고, 보험은 보장 범위를 요구하며, 지역 상담사들은 특정 지역과 언어를 전제로 합니다. 그리고 업계의 낙인은 그저 견디고 계속할 것을 강요합니다.',origin_p3:'Creaven은 그 공백이 사소한 불편이 아니기 때문에 만들어졌습니다. 그것은 경력, 관계, 그리고 삶을 앗아갑니다. 그리고 그것을 구체적으로 해결하기 위해 만들어진 플랫폼이 없었습니다.',quote_text:'지원받을 자격을 얻기 위해 무너지고 있을 필요는 없습니다. 그냥 인간이기만 하면 됩니다.',quote_context:'이것이 Creaven이 만드는 모든 것의 중심에 있는 단 하나의 확신입니다. 슬로건이 아니라 설계 원칙으로서. 이 플랫폼의 모든 기능, 모든 프로토콜, 모든 임상 결정은 그 문장을 실제로 실현하기 위해 존재합니다.',tensions_label:'우리가 본 것',tensions_title:'아무도 크게 말하지 않는 <em>진짜 긴장들.</em>',
+    tensions:[
+      {label:'문화로서의 침묵',title:'시스템은 침묵을 보상한다',text:'고성과 창작 환경에서 도움을 요청하는 것은 여전히 약함으로 읽힙니다. 번아웃을 인정하면 계약이 위험해집니다. 취약함을 보이면 평판이 위험해집니다. 침묵은 개인적인 것이 아닙니다. 구조적인 것입니다.'},
+      {label:'접근성 격차',title:'기존 솔루션이 그들에게 닿지 않는다',text:'정신 건강 자원은 존재합니다. 하지만 대부분은 기업 등록, 개인 보험, 또는 대도시 근접성을 필요로 합니다. 방콕의 프리랜서, 라고스의 프로듀서, 지난달 계약이 만료된 댄서, 그들은 모든 틈새를 통해 떨어집니다.'},
+      {label:'언어와 문화',title:'정신 건강은 문화적으로 중립적이지 않다',text:'서양 임상 프레임워크가 모든 문화적 맥락으로 깔끔하게 번역되지는 않습니다. 고통이 표현되고, 명명되고, 받아들여지는 방식은 엄청나게 다양합니다. 한 문화적 현실을 위해 구축된 플랫폼은 다른 문화권에서 실패할 것입니다.'},
+      {label:'대규모 비가시성',title:'산업은 잊어버리는 사람들을 세지 않는다',text:'창작 산업의 정신 건강 데이터는 거의 전적으로 아티스트와 공연자에 관한 것입니다. 기술자, 어시스턴트, 인턴, 보안 요원: 모든 연구에서 보이지 않고, 모든 솔루션에서 보이지 않습니다.'}
+    ],
+    jobs_label:'누구를 위한 것인가',jobs_title:'모든 직업. <em>예외 없이.</em>',jobs_intro:'창작 산업은 여러분이 아는 얼굴들만이 아닙니다. 수백 가지 직업들로, 대부분은 보이지 않지만 모두 필수적입니다. Creaven은 그들 모두를 위한 것입니다. 만약 당신의 업무가 어떤 방식으로든 창작 세계에 닿아 있다면, 이 플랫폼은 당신을 고려하여 설계되었습니다.',jobs_note:'<strong>여기에 나열되지 않은 직업이라도 중요합니다.</strong> 이 목록은 경계가 아니라 시작점입니다. 창작 산업은 방대하고 계속 진화합니다. 그 안에서 일한다면 Creaven은 당신을 위한 것입니다.',com_label:'우리가 지지하는 것',com_title:'절대 <em>타협하지 않을 것들.</em>',
+    commitments:[
+      {icon:'⚖️',title:'케어의 공평성',text:'헤드라이너와 청소부는 동일한 질의 심리적 지원을 받습니다. 역할, 직급, 계약 유형은 이 플랫폼에서 케어 접근의 조건이 아닙니다.'},
+      {icon:'🔒',title:'절대적 기밀',text:'세션에서 일어나는 일은 내담자와 심리학자 사이에만 남습니다. Creaven은 어떠한 상황에서도 고용주, 에이전시, 또는 제3자와 임상 정보를 공유하지 않습니다.'},
+      {icon:'🧬',title:'임상 무결성',text:'우리가 사용하는 모든 도구는 국제적으로 검증되었습니다. 모든 결과는 면허 있는 심리학자가 검토합니다. 임상 기준에 타협은 없습니다.'},
+      {icon:'🌍',title:'전 세계 접근성',text:'인터넷 연결이 있다면 지리는 장벽이 아닙니다. Creaven은 모든 시간대, 여러 언어로, 전 세계 모든 창작 종사자를 위해 운영됩니다.'},
+      {icon:'🗣️',title:'언어는 권리',text:'정신 건강 케어를 받기 위해 지배적인 언어를 말할 필요가 없어야 합니다. Creaven은 여러 언어로 운영되며 AI 보조 통역을 사용하여 실시간으로 언어 장벽을 메웁니다.'},
+      {icon:'❤️',title:'항상 인간 먼저',text:'기술은 케어를 지원합니다. 대체하지 않습니다. 모든 평가 결과, 모든 세션, 모든 중요한 결정에는 인간 심리학자가 관여합니다. AI는 보조합니다. 인간이 결정합니다.'}
+    ],
+    fn_label:'설립자',fn_text:'<strong>Creaven은 Grace Daniella Amakon이 설립했습니다</strong>, 사회심리학 석사 학위를 보유하고 서아프리카의 NGO 활동을 통해 번아웃 예방, 심리사회적 동반, 정신 건강 조정에서 현장 경험을 가진 심리사회적 지원 전문가입니다. Creaven은 이사회실이나 스타트업 인큐베이터에서 만들어지지 않았습니다. 수년간의 관찰에서, 현장 작업에서, 그리고 문화를 만드는 사람들이 다른 누구와도 같은 질의 심리적 케어를 받을 수 없다는 것을 받아들이지 않겠다는 거부에서 만들어졌습니다. 플랫폼은 임상적 엄격함과 창작 산업이 실제로 인간에게 요구하는 것에 대한 삶의 이해를 모두 반영합니다.',cta_title:'<em>시작할</em> 준비가 되셨나요?',cta_sub:'자신을 위한 지원이 필요하든 팀을 보호하고 싶든, Creaven이 여기 있습니다.',cta_btn1:'상담 예약',cta_btn2:'기관을 위한',nl_home:'홈',nl_tests:'평가',nl_book:'예약',nl_org:'기관',nl_emergency:'긴급',nl_account:'내 계정',nl_about:'소개',nl_contact:'연락',footer:'Creaven 2026 - 창작 산업을 위한 심리적 웰빙 - All rights reserved.'
+  }
+};
+
+// Map remaining intermediate standard identical frameworks
+['it','nl','sv','pl','ru','tr','ar','hi','vi','th','zh','jp'].forEach(function(l){
+  if(!T[l]) { T[l] = Object.assign({}, T.en); }
+});
+
+var currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  var t = T[lang] || T.en;
+  var jobs = JOBS[lang] || JOBS.en;
+
+  function setText(id, val) { var el = document.getElementById(id); if (el && val !== undefined) el.textContent = val; }
+  function setHtml(id, val) { var el = document.getElementById(id); if (el && val !== undefined) el.innerHTML = val; }
+
+  setText('nav-sub', t.nav_sub);
+  setHtml('h-title', t.h_title);
+  setText('h-eyebrow', t.h_eyebrow);
+  setText('h-sub', t.h_sub);
+  setText('origin-label', t.origin_label);
+  setHtml('origin-title', t.origin_title);
+  setText('origin-p1', t.origin_p1);
+  setText('origin-p2', t.origin_p2);
+  setText('origin-p3', t.origin_p3);
+  setText('quote-text', t.quote_text);
+  setText('quote-context', t.quote_context);
+  setText('tensions-label', t.tensions_label);
+  setHtml('tensions-title', t.tensions_title);
+  setText('jobs-label', t.jobs_label);
+  setHtml('jobs-title', t.jobs_title);
+  setText('jobs-intro', t.jobs_intro);
+  setHtml('jobs-note', t.jobs_note);
+  setText('com-label', t.com_label);
+  setHtml('com-title', t.com_title);
+  setText('fn-label', t.fn_label);
+  setHtml('fn-text', t.fn_text);
+  setHtml('cta-title', t.cta_title);
+  setText('cta-sub', t.cta_sub);
+  setText('cta-btn1', t.cta_btn1);
+  setText('cta-btn2', t.cta_btn2);
+  setText('footer-text', t.footer);
+  setText('nl-home', t.nl_home);
+  setText('nl-tests', t.nl_tests);
+  setText('nl-book', t.nl_book);
+  setText('nl-org', t.nl_org);
+  setText('nl-emergency', t.nl_emergency);
+  setText('nl-account', t.nl_account);
+  setText('nl-about', t.nl_about);
+  setText('nl-contact', t.nl_contact);
+
+  // Tensions
+  if (t.tensions) {
+    document.getElementById('tensionsGrid').innerHTML = t.tensions.map(function(ten) {
+      return '<div class="tension-card">'
+        + '<div class="tc-label">' + ten.label + '</div>'
+        + '<div class="tc-title">' + ten.title + '</div>'
+        + '<div class="tc-text">' + ten.text + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  // Jobs Grid Mapping
+  document.getElementById('jobsGrid').innerHTML = jobs.map(function(cat) {
+    return '<div class="job-category">'
+      + '<div class="jc-header"><span class="jc-icon">' + cat.icon + '</span><span class="jc-title">' + cat.title + '</span></div>'
+      + '<ul class="job-list">' + cat.jobs.map(function(j){ return '<li>' + j + '</li>'; }).join('') + '</ul>'
+      + '</div>';
+  }).join('');
+
+  // Commitments
+  if (t.commitments) {
+    document.getElementById('comGrid').innerHTML = t.commitments.map(function(c) {
+      return '<div class="com-card">'
+        + '<div class="com-icon">' + c.icon + '</div>'
+        + '<div class="com-title-card">' + c.title + '</div>'
+        + '<div class="com-text">' + c.text + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  // Update programmatic DOM tracking safely
+  var rootLangMap = {kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es',pt:'pt',it:'it',nl:'nl',sv:'sv',pl:'pl',ru:'ru',tr:'tr',ar:'ar',hi:'hi',vi:'vi'};
+  document.documentElement.lang = rootLangMap[lang] || 'en';
+}
+
+function toggleLangMenu() { document.getElementById('langDropdown').classList.toggle('open'); }
+function selectLang(lang, label) {
+  applyLang(lang);
+  document.getElementById('langToggle').textContent = label;
+  document.getElementById('langDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open');
+});
+
+applyLang('en');
+</script>
+</body>
+</html>
