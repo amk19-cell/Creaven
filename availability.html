@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Availability - Creaven Practitioner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script>
+function toggleLangMenu(){var d=document.getElementById('langDropdown');if(d)d.classList.toggle('open');}
+function selectLang(lang,label){
+  currentLang=lang;applyTranslations();
+  var b=document.getElementById('langToggle');if(b)b.textContent=label;
+  var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');
+  document.documentElement.lang={kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es',it:'it',pt:'pt',nl:'nl',pl:'pl',ru:'ru',se:'sv',no:'no',dk:'da',ar:'ar',vn:'vi'}[lang]||'en';
+  loadSlots();loadBookings();
+}
+document.addEventListener('click',function(e){if(!e.target.closest('.lang-switcher')){var d=document.getElementById('langDropdown');if(d)d.classList.remove('open');}});
+</script>
+<style>
+:root{--green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--green-pale:#F2F8F2;--blue:#2B5FA8;--blue-light:#E8EFF8;--gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;--cream:#FAFCFA;--cream-dark:#F0F5F0;--charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;--red:#C0392B;--red-light:#FDEAEA;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:100;}
+.nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo img{height:44px;width:auto;}
+.nav-logo .main-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--green-dark);}
+.nav-logo .sub-name{font-size:9px;color:var(--light);letter-spacing:.18em;text-transform:uppercase;margin-top:2px;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.lang-switcher{position:relative;}
+.lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.lang-toggle:hover{background:var(--green);color:white;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+.lang-dropdown.open{display:block;}
+.lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
+.lang-dropdown button:last-child{border-bottom:none;}
+.lang-dropdown button:hover{background:var(--green-light);color:var(--green-dark);}
+.btn-sm{background:none;border:1.5px solid rgba(0,0,0,.1);color:var(--mid);padding:7px 16px;border-radius:20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all .2s;}
+.btn-sm:hover{border-color:var(--green);color:var(--green);}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+.main{max-width:1000px;margin:0 auto;padding:48px 24px;}
+.page-header{margin-bottom:40px;}
+.page-eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:8px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--charcoal);}
+.page-title em{font-style:italic;color:var(--green);}
+.page-sub{font-size:14px;color:var(--mid);margin-top:8px;line-height:1.6;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.card{background:white;border-radius:20px;padding:28px;border:1px solid rgba(0,0,0,.06);}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:6px;}
+.card-sub{font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.5;}
+.form-group{margin-bottom:16px;}
+.form-label{font-size:11px;color:var(--mid);letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-bottom:7px;display:block;}
+.form-input,.form-select{width:100%;padding:12px 16px;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;font-size:14px;color:var(--charcoal);background:var(--cream);font-family:'DM Sans',sans-serif;transition:border-color .2s;outline:none;}
+.form-input:focus,.form-select:focus{border-color:var(--green);background:white;}
+.btn-add{width:100%;background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;padding:13px;border-radius:40px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;margin-top:4px;}
+.btn-add:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(58,107,58,.3);}
+.slots-list{margin-top:20px;}
+.slot-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--green-pale);border-radius:10px;margin-bottom:8px;font-size:13px;}
+.slot-item-info{display:flex;flex-direction:column;gap:2px;}
+.slot-date{font-weight:600;color:var(--charcoal);}
+.slot-time{color:var(--mid);}
+.slot-status{font-size:11px;padding:2px 10px;border-radius:10px;}
+.status-available{background:var(--green-light);color:var(--green-dark);}
+.status-booked{background:var(--gold-light);color:var(--gold-dark);}
+.btn-delete{background:none;border:none;color:var(--light);cursor:pointer;font-size:18px;padding:4px;transition:color .2s;}
+.btn-delete:hover{color:var(--red);}
+.bookings-list{margin-top:8px;}
+.booking-item{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:16px;margin-bottom:12px;background:white;}
+.booking-client{font-weight:600;font-size:14px;color:var(--charcoal);margin-bottom:6px;}
+.booking-meta{font-size:12px;color:var(--mid);display:flex;flex-direction:column;gap:3px;}
+.booking-code{font-family:monospace;background:var(--charcoal);color:var(--gold);padding:3px 10px;border-radius:6px;font-size:12px;letter-spacing:.1em;}
+.msg-box{padding:12px 16px;border-radius:10px;font-size:13px;margin-top:12px;display:none;}
+.msg-box.show{display:block;}
+.msg-box.success{background:var(--green-light);color:var(--green-dark);}
+.msg-box.error{background:var(--red-light);color:var(--red);}
+.msg-box.info{background:var(--blue-light);color:var(--blue);}
+.no-items{text-align:center;padding:28px;color:var(--light);font-size:13px;}
+.recurring-check{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:13px;color:var(--mid);}
+.recurring-check input{cursor:pointer;}
+.recurring-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:16px;}
+.day-btn{border:1.5px solid rgba(0,0,0,.1);border-radius:8px;padding:8px 4px;text-align:center;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;background:white;color:var(--mid);}
+.day-btn.selected{border-color:var(--green);background:var(--green-light);color:var(--green-dark);}
+footer{background:var(--charcoal);padding:20px 48px;text-align:center;margin-top:40px;}
+footer p{font-size:12px;color:rgba(255,255,255,.3);}
+@media(max-width:768px){nav{padding:12px 20px;}.main{padding:24px 16px;}.grid-2{grid-template-columns:1fr;}footer{padding:20px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-creaven.png" alt="Creaven" onerror="this.style.display='none'">
+    <div class="nav-logo-text">
+      <span class="main-name">Creaven</span>
+      <span class="sub-name" data-i18n="nav_portal">Practitioner Portal</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="account.html" class="btn-sm" data-i18n="nav_account">My Account</a>
+    <button class="btn-sm btn-logout" onclick="signOut()" data-i18n="nav_signout">Sign Out</button>
+    <div class="lang-switcher">
+      <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button onclick="selectLang('en','EN')">English</button>
+        <button onclick="selectLang('fr','FR')">Français</button>
+        <button onclick="selectLang('kr','KR')">한국어</button>
+        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('zh','ZH')">中文</button>
+        <button onclick="selectLang('th','TH')">ไทย</button>
+        <button onclick="selectLang('de','DE')">Deutsch</button>
+        <button onclick="selectLang('es','ES')">Español</button>
+        <button onclick="selectLang('it','IT')">Italiano</button>
+        <button onclick="selectLang('pt','PT')">Português</button>
+        <button onclick="selectLang('nl','NL')">Nederlands</button>
+        <button onclick="selectLang('pl','PL')">Polski</button>
+        <button onclick="selectLang('ru','RU')">Русский</button>
+        <button onclick="selectLang('se','SE')">Svenska</button>
+        <button onclick="selectLang('no','NO')">Norsk</button>
+        <button onclick="selectLang('dk','DK')">Dansk</button>
+        <button onclick="selectLang('ar','AR')">العربية</button>
+        <button onclick="selectLang('vn','VN')">Tiếng Việt</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <div class="page-eyebrow" data-i18n="nav_portal">Practitioner Portal</div>
+    <div class="page-title"><span data-i18n="page_title_prefix">My</span> <em data-i18n="page_title_em">Availability</em></div>
+    <div class="page-sub" data-i18n="page_sub">Add your available time slots. Clients will see them in the booking calendar and choose a time that works for them. You will receive an email for each confirmed booking.</div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- ADD SLOT -->
+    <div class="card">
+      <div class="card-title" data-i18n="card_add_title">Add Available Slots</div>
+      <div class="card-sub" data-i18n="card_add_sub">Choose a date and time to add to your calendar. You can add single slots or recurring weekly availability.</div>
+
+      <div class="recurring-check">
+        <input type="checkbox" id="isRecurring" onchange="toggleRecurring()">
+        <label for="isRecurring" data-i18n="label_recurring">Recurring weekly availability</label>
+      </div>
+
+      <div id="singleDateSection">
+        <div class="form-group">
+          <label class="form-label" data-i18n="label_date">Date</label>
+          <input type="date" class="form-input" id="slotDate">
+        </div>
+      </div>
+
+      <div id="recurringSection" style="display:none;">
+        <div class="form-group">
+          <label class="form-label" data-i18n="label_days">Days of the week</label>
+          <div class="recurring-days">
+            <div class="day-btn data-day" data-day="1" onclick="toggleDay(1)" data-i18n="day_mon">Mon</div>
+            <div class="day-btn data-day" data-day="2" onclick="toggleDay(2)" data-i18n="day_tue">Tue</div>
+            <div class="day-btn data-day" data-day="3" onclick="toggleDay(3)" data-i18n="day_wed">Wed</div>
+            <div class="day-btn data-day" data-day="4" onclick="toggleDay(4)" data-i18n="day_thu">Thu</div>
+            <div class="day-btn data-day" data-day="5" onclick="toggleDay(5)" data-i18n="day_fri">Fri</div>
+            <div class="day-btn data-day" data-day="6" onclick="toggleDay(6)" data-i18n="day_sat">Sat</div>
+            <div class="day-btn data-day" data-day="0" onclick="toggleDay(0)" data-i18n="day_sun">Sun</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="label_until">Valid until</label>
+          <input type="date" class="form-input" id="recUntil">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" data-i18n="label_time_slot">Time Slot</label>
+        <select class="form-select" id="slotTime">
+          <option value="08:00">08:00 - 09:00</option>
+          <option value="09:00" selected>09:00 - 10:00</option>
+          <option value="10:00">10:00 - 11:00</option>
+          <option value="11:00">11:00 - 12:00</option>
+          <option value="12:00">12:00 - 13:00</option>
+          <option value="13:00">13:00 - 14:00</option>
+          <option value="14:00">14:00 - 15:00</option>
+          <option value="15:00">15:00 - 16:00</option>
+          <option value="16:00">16:00 - 17:00</option>
+          <option value="17:00">17:00 - 18:00</option>
+          <option value="18:00">18:00 - 19:00</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="label_duration">Duration</label>
+        <select class="form-select" id="slotDuration">
+          <option value="45" selected data-i18n="opt_45">45 minutes (Standard session)</option>
+          <option value="60" data-i18n="opt_60">60 minutes (New consultation)</option>
+        </select>
+      </div>
+      <button class="btn-add" onclick="addSlot()" data-i18n="btn_add">Add to Calendar</button>
+      <div class="msg-box" id="addMsg"></div>
+    </div>
+
+    <!-- MY SLOTS -->
+    <div class="card">
+      <div class="card-title" data-i18n="card_calendar_title">My Calendar</div>
+      <div class="card-sub" data-i18n="card_calendar_sub">Your upcoming available and booked slots.</div>
+      <div class="slots-list" id="slotsList">
+        <div class="no-items" data-i18n="loading_slots">Loading your slots...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MY BOOKINGS -->
+  <div class="card" style="margin-top:28px;">
+    <div class="card-title" data-i18n="card_bookings_title">Confirmed Bookings</div>
+    <div class="card-sub" data-i18n="card_bookings_sub">Clients who have booked a session with you. Share the session code with them through the session room.</div>
+    <div class="bookings-list" id="bookingsList">
+      <div class="no-items" data-i18n="loading_bookings">Loading your bookings...</div>
+    </div>
+  </div>
+
+</div>
+
+<footer><p data-i18n="footer_text">Creaven 2026 - Practitioner Portal - All rights reserved.</p></footer>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDQsBvVIPG8MeaLf1sjWVSgXMOuOhoOi1U",
+  authDomain: "safemind-f96ad.firebaseapp.com",
+  projectId: "safemind-f96ad",
+  storageBucket: "safemind-f96ad.firebasestorage.app",
+  messagingSenderId: "1023142792047",
+  appId: "1:1023142792047:web:c441cddbd9634523adf69a"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+let currentUser = null;
+let selectedDays = [1,2,3,4,5]; // Mon-Fri by default
+
+var i18n = {
+  en: {
+    nav_portal:"Practitioner Portal",nav_account:"My Account",nav_signout:"Sign Out",page_title_prefix:"My",page_title_em:"Availability",page_sub:"Add your available time slots. Clients will see them in the booking calendar and choose a time that works for them. You will receive an email for each confirmed booking.",card_add_title:"Add Available Slots",card_add_sub:"Choose a date and time to add to your calendar. You can add single slots or recurring weekly availability.",label_recurring:"Recurring weekly availability",label_date:"Date",label_days:"Days of the week",label_until:"Valid until",label_time_slot:"Time Slot",label_duration:"Duration",opt_45:"45 minutes (Standard session)",opt_60:"60 minutes (New consultation)",btn_add:"Add to Calendar",card_calendar_title:"My Calendar",card_calendar_sub:"Your upcoming available and booked slots.",card_bookings_title:"Confirmed Bookings",card_bookings_sub:"Clients who have booked a session with you. Share the session code with them through the session room.",loading_slots:"Loading your slots...",loading_bookings:"Loading your bookings...",no_slots:"No upcoming slots. Add your first available time above.",no_bookings:"No bookings yet. Your confirmed sessions will appear here.",err_load_slots:"Could not load slots.",err_load_bookings:"Could not load bookings.",day_mon:"Mon",day_tue:"Tue",day_wed:"Wed",day_thu:"Thu",day_fri:"Fri",day_sat:"Sat",day_sun:"Sun",msg_select_time:"Please select a time.",msg_adding:"Adding slots...",msg_select_date:"Please select a date.",msg_no_days:"No days selected.",msg_success:"slots added successfully.",msg_err_add:"Error adding slots. Please try again.",status_booked:"Booked",status_available:"Available",confirm_delete:"Delete this slot?",err_delete:"Could not delete slot.",footer_text:"Creaven 2026 - Practitioner Portal - All rights reserved."
+  },
+  fr: {
+    nav_portal:"Portail Praticien",nav_account:"Mon Compte",nav_signout:"Se déconnecter",page_title_prefix:"Mes",page_title_em:"Disponibilités",page_sub:"Ajoutez vos créneaux horaires disponibles. Les clients les verront dans le calendrier et choisiront l'heure qui leur convient.",card_add_title:"Ajouter des créneaux",card_add_sub:"Choisissez une date et une heure. Vous pouvez ajouter des créneaux uniques ou une récurrence hebdomadaire.",label_recurring:"Disponibilité hebdomadaire récurrente",label_date:"Date",label_days:"Jours de la semaine",label_until:"Valide jusqu'au",label_time_slot:"Tranche horaire",label_duration:"Durée",opt_45:"45 minutes (Séance standard)",opt_60:"60 minutes (Nouvelle consultation)",btn_add:"Ajouter au calendrier",card_calendar_title:"Mon Calendrier",card_calendar_sub:"Vos créneaux à venir (disponibles et réservés).",card_bookings_title:"Réservations Confirmées",card_bookings_sub:"Clients ayant réservé une séance. Partagez le code de session avec eux via la salle de session.",loading_slots:"Chargement des créneaux...",loading_bookings:"Chargement des réservations...",no_slots:"Aucun créneau à venir. Ajoutez vos premières disponibilités ci-dessus.",no_bookings:"Aucune réservation pour le moment. Vos séances confirmées s'afficheront ici.",err_load_slots:"Impossible de charger les créneaux.",err_load_bookings:"Impossible de charger les réservations.",day_mon:"Lun",day_tue:"Mar",day_wed:"Mer",day_thu:"Jeu",day_fri:"Ven",day_sat:"Sam",day_sun:"Dim",msg_select_time:"Veuillez sélectionner une heure.",msg_adding:"Ajout des créneaux...",msg_select_date:"Veuillez sélectionner une date.",msg_no_days:"Aucun jour sélectionné.",msg_success:"créneaux ajoutés avec succès.",msg_err_add:"Erreur lors de l'ajout. Veuillez réessayer.",status_booked:"Réservé",status_available:"Disponible",confirm_delete:"Supprimer ce créneau ?",err_delete:"Impossible de supprimer le créneau.",footer_text:"Creaven 2026 - Portail Praticien - Tous droits réservés."
+  },
+  kr: {
+    nav_portal:"전문가 포털",nav_account:"내 계정",nav_signout:"로그아웃",page_title_prefix:"나의",page_title_em:"일정 관리",page_sub:"예약 가능한 시간대를 추가하세요. 고객이 캘린더에서 확인 후 선택하게 됩니다.",card_add_title:"시간대 추가",card_add_sub:"날짜와 시간을 선택하세요. 단일 시간대 또는 주간 반복 일정을 추가할 수 있습니다.",label_recurring:"매주 반복 일정",label_date:"날짜",label_days:"요일",label_until:"종료일",label_time_slot:"시간대",label_duration:"소요 시간",opt_45:"45분 (일반 상담)",opt_60:"60분 (초진 상담)",btn_add:"캘린더에 추가",card_calendar_title:"내 일정",card_calendar_sub:"향후 예약 가능 및 완료된 시간대 목록입니다.",card_bookings_title:"확정된 예약",card_bookings_sub:"상담을 예약한 고객 목록입니다. 세션 룸을 통해 세션 코드를 공유하세요.",loading_slots:"일정을 불러오는 중...",loading_bookings:"예약을 불러오는 중...",no_slots:"예정된 일정이 없습니다. 위에 시간을 추가해 주세요.",no_bookings:"아직 예약이 없습니다. 확정된 세션이 여기에 표시됩니다.",day_mon:"월",day_tue:"화",day_wed:"수",day_thu:"목",day_fri:"금",day_sat:"토",day_sun:"일",status_booked:"예약됨",status_available:"가능함",confirm_delete:"이 시간대를 삭제하시겠습니까?",footer_text:"Creaven 2026 - 전문가 포털 - All rights reserved."
+  }
+};
+
+// Population des 15 autres langues basées sur l'anglais
+['jp','zh','th','de','es','it','pt','nl','pl','ru','se','no','dk','ar','vn'].forEach(l => { if(!i18n[l]) i18n[l] = Object.assign({}, i18n.en); });
+i18n.jp.nav_portal="治療名簿포털"; i18n.zh.nav_portal="咨询师专业后台"; i18n.de.nav_portal="Therapeuten-Portal"; i18n.es.nav_portal="Portal del Profesional";
+i18n.it.nav_portal="Portale Professionisti"; i18n.pt.nav_portal="Portal do Profissional"; i18n.nl.nav_portal="Zorgverlener Portal"; i18n.pl.nav_portal="Portal Terapeuty";
+i18n.ru.nav_portal="Портал Специалиста"; i18n.se.nav_portal="Behandlarportal"; i18n.no.nav_portal="Behandlerportal"; i18n.dk.nav_portal="Behandlerportal";
+i18n.ar.nav_portal="بوابة الممارس"; i18n.vn.nav_portal="Cổng thông tin chuyên gia";
+
+let currentLang = 'en';
+function L(k){ return (i18n[currentLang] || i18n.en)[k] || (i18n.en[k] || ''); }
+
+function applyTranslations(){
+  var lang = i18n[currentLang] || i18n.en;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if(lang[k] !== undefined) el.textContent = lang[k];
+  });
+  document.getElementById('langToggle').textContent = currentLang.toUpperCase();
+}
+
+auth.onAuthStateChanged(user => {
+  if (!user) { window.location.href = 'account.html'; return; }
+  currentUser = user;
+  
+  // Set initial day states on buttons
+  document.querySelectorAll('.day-btn.data-day').forEach(btn => {
+    const day = parseInt(btn.getAttribute('data-day'));
+    if(selectedDays.includes(day)) btn.classList.add('selected');
+    else btn.classList.remove('selected');
+  });
+
+  loadSlots();
+  loadBookings();
+  
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('slotDate').min = today;
+  document.getElementById('slotDate').value = today;
+  document.getElementById('recUntil').min = today;
+  const monthOut = new Date();
+  monthOut.setMonth(monthOut.getMonth() + 3);
+  document.getElementById('recUntil').value = monthOut.toISOString().split('T')[0];
+});
+
+function toggleRecurring() {
+  const isRec = document.getElementById('isRecurring').checked;
+  document.getElementById('singleDateSection').style.display = isRec ? 'none' : 'block';
+  document.getElementById('recurringSection').style.display = isRec ? 'block' : 'none';
+}
+
+function toggleDay(idx) {
+  const btns = document.querySelectorAll('.day-btn.data-day');
+  let targetBtn = null;
+  btns.forEach(b => { if(parseInt(b.getAttribute('data-day')) === idx) targetBtn = b; });
+  
+  if (selectedDays.includes(idx)) {
+    selectedDays = selectedDays.filter(d => d !== idx);
+    if(targetBtn) targetBtn.classList.remove('selected');
+  } else {
+    selectedDays.push(idx);
+    if(targetBtn) targetBtn.classList.add('selected');
+  }
+}
+
+async function addSlot() {
+  const msg = document.getElementById('addMsg');
+  const time = document.getElementById('slotTime').value;
+  const duration = parseInt(document.getElementById('slotDuration').value);
+  const isRecurring = document.getElementById('isRecurring').checked;
+
+  if (!time) { showMsg(msg, L('msg_select_time'), 'error'); return; }
+
+  msg.textContent = L('msg_adding');
+  msg.className = 'msg-box info show';
+
+  try {
+    const batch = db.batch();
+    const slotsToAdd = [];
+
+    if (!isRecurring) {
+      const date = document.getElementById('slotDate').value;
+      if (!date) { showMsg(msg, L('msg_select_date'), 'error'); return; }
+      slotsToAdd.push(date);
+    } else {
+      const until = new Date(document.getElementById('recUntil').value);
+      const cur = new Date();
+      while (cur <= until) {
+        if (selectedDays.includes(cur.getDay())) {
+          slotsToAdd.push(cur.toISOString().split('T')[0]);
+        }
+        cur.setDate(cur.getDate() + 1);
+      }
+    }
+
+    if (slotsToAdd.length === 0) { showMsg(msg, L('msg_no_days'), 'error'); return; }
+
+    slotsToAdd.forEach(date => {
+      const ref = db.collection('availability').doc();
+      batch.set(ref, {
+        practitionerUid: currentUser.uid,
+        date,
+        time,
+        duration,
+        status: 'available',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+
+    await batch.commit();
+    showMsg(msg, `${slotsToAdd.length} ${L('msg_success')}`, 'success');
+    loadSlots();
+  } catch (err) {
+    console.error(err);
+    showMsg(msg, L('msg_err_add'), 'error');
+  }
+}
+
+async function loadSlots() {
+  const list = document.getElementById('slotsList');
+  if(!currentUser) return;
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const snap = await db.collection('availability')
+      .where('practitionerUid', '==', currentUser.uid)
+      .where('date', '>=', today)
+      .orderBy('date')
+      .orderBy('time')
+      .limit(30)
+      .get();
+
+    if (snap.empty) {
+      list.innerHTML = `<div class="no-items">${L('no_slots')}</div>`;
+      return;
+    }
+
+    let html = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      const statusClass = d.status === 'booked' ? 'status-booked' : 'status-available';
+      const statusLabel = d.status === 'booked' ? L('status_booked') : L('status_available');
+      const deleteBtn = d.status !== 'booked' ? `<button class="btn-delete" onclick="deleteSlot('${doc.id}')" title="Delete">×</button>` : '';
+      
+      // Calcul de la fin du bloc d'1h fixe
+      let startHour = parseInt(d.time.split(':')[0]);
+      let endHour = startHour + 1;
+      let timeString = `${d.time} - ${(endHour < 10 ? '0' : '') + endHour}:00`;
+
+      html += `
+        <div class="slot-item">
+          <div class="slot-item-info">
+            <div class="slot-date">${formatDate(d.date)}</div>
+            <div class="slot-time">${timeString} (${d.duration || 45} min)</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="slot-status ${statusClass}">${statusLabel}</span>
+            ${deleteBtn}
+          </div>
+        </div>`;
+    });
+    list.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = `<div class="no-items">${L('err_load_slots')}</div>`;
+  }
+}
+
+async function deleteSlot(docId) {
+  if (!confirm(L('confirm_delete'))) return;
+  try {
+    await db.collection('availability').doc(docId).delete();
+    loadSlots();
+  } catch (err) {
+    alert(L('err_delete'));
+  }
+}
+
+async function loadBookings() {
+  const list = document.getElementById('bookingsList');
+  if(!currentUser) return;
+  try {
+    const snap = await db.collection('bookings')
+      .where('practitionerUid', '==', currentUser.uid)
+      .orderBy('createdAt', 'desc')
+      .limit(20)
+      .get();
+
+    if (snap.empty) {
+      list.innerHTML = `<div class="no-items">${L('no_bookings')}</div>`;
+      return;
+    }
+
+    let html = '';
+    snap.forEach(doc => {
+      const d = doc.data();
+      html += `
+        <div class="booking-item">
+          <div class="booking-client">${d.clientName} - ${d.consultationType}</div>
+          <div class="booking-meta">
+            <span>${formatDate(d.date)} @ ${d.time} (${d.duration || 45} min)</span>
+            <span>Language: ${d.sessionLang}</span>
+            <span>Session code: <span class="booking-code">${d.sessionCode}</span></span>
+            ${d.note ? `<span>Note: ${d.note}</span>` : ''}
+          </div>
+        </div>`;
+    });
+    list.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = `<div class="no-items">${L('err_load_bookings')}</div>`;
+  }
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  let localeMap = { kr:'ko-KR', jp:'ja-JP', zh:'zh-CN', fr:'fr-FR' };
+  return d.toLocaleDateString(localeMap[currentLang] || 'en-GB', {weekday:'short', day:'numeric', month:'long', year:'numeric'});
+}
+
+function showMsg(el, text, type) {
+  el.textContent = text;
+  el.className = `msg-box ${type} show`;
+}
+
+function signOut() {
+  auth.signOut().then(() => window.location.href = 'account.html');
+}
+
+// Configuration initiale
+applyTranslations();
+</script>
+</body>
+</html>
