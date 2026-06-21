@@ -35,7 +35,7 @@ nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:cen
 .lang-switcher{position:relative;}
 .lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
 .lang-toggle:hover{background:var(--green);color:white;}
-.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:160px;max-height:420px;overflow-y:auto;z-index:200;}
 .lang-dropdown.open{display:block;}
 .lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
 .lang-dropdown button:last-child{border-bottom:none;}
@@ -90,7 +90,6 @@ nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:cen
 .no-results{display:none;text-align:center;padding:60px 24px;color:var(--mid);grid-column:1/-1;}
 .no-results.show{display:block;}
 
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
 .modal{background:white;border-radius:24px;padding:40px;max-width:480px;width:100%;position:relative;max-height:90vh;overflow-y:auto;}
@@ -136,35 +135,45 @@ footer{background:var(--charcoal);padding:24px 48px;display:flex;justify-content
     </div>
   </a>
   <div class="nav-links">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="tests.html" class="nav-link active">Assessments</a>
-    <a href="booking.html" class="nav-link">Book</a>
-    <a href="organizations.html" class="nav-link">Organizations</a>
-    <a href="emergency.html" class="nav-link emergency">Emergency</a>
-    <a href="account.html" class="nav-link">My Account</a>
-    <a href="about.html" class="nav-link">About</a>
-    <a href="contact.html" class="nav-link">Contact</a>
+    <a href="index.html" class="nav-link" id="nl-home">Home</a>
+    <a href="tests.html" class="nav-link active" id="nl-tests">Assessments</a>
+    <a href="booking.html" class="nav-link" id="nl-book">Book</a>
+    <a href="organizations.html" class="nav-link" id="nl-org">Organizations</a>
+    <a href="emergency.html" class="nav-link emergency" id="nl-emergency">Emergency</a>
+    <a href="account.html" class="nav-link" id="nl-account">My Account</a>
+    <a href="about.html" class="nav-link" id="nl-about">About</a>
+    <a href="contact.html" class="nav-link" id="nl-contact">Contact</a>
   </div>
   <div class="lang-switcher">
     <button class="lang-toggle" id="langToggle" onclick="toggleLangMenu()">EN</button>
     <div class="lang-dropdown" id="langDropdown">
       <button onclick="selectLang('en','EN')">English</button>
-      <button onclick="selectLang('fr','FR')">Francais</button>
-      <button onclick="selectLang('kr','KR')">한국어</button>
-      <button onclick="selectLang('jp','JP')">日本語</button>
+      <button onclick="selectLang('fr','FR')">Français</button>
+      <button onclick="selectLang('ko','KO')">한국어</button>
+      <button onclick="selectLang('ja','JA')">日本語</button>
       <button onclick="selectLang('zh','ZH')">中文</button>
       <button onclick="selectLang('th','TH')">ไทย</button>
       <button onclick="selectLang('de','DE')">Deutsch</button>
-      <button onclick="selectLang('es','ES')">Espanol</button>
+      <button onclick="selectLang('es','ES')">Español</button>
+      <button onclick="selectLang('pt','PT')">Português</button>
+      <button onclick="selectLang('it','IT')">Italiano</button>
+      <button onclick="selectLang('nl','NL')">Nederlands</button>
+      <button onclick="selectLang('sv','SV')">Svenska</button>
+      <button onclick="selectLang('pl','PL')">Polski</button>
+      <button onclick="selectLang('ru','RU')">Русский</button>
+      <button onclick="selectLang('tr','TR')">Türkçe</button>
+      <button onclick="selectLang('ar','AR')">العربية</button>
+      <button onclick="selectLang('hi','HI')">हिन्दी</button>
+      <button onclick="selectLang('vi','VI')">Tiếng Việt</button>
     </div>
   </div>
 </nav>
 
 <div class="hero">
-  <div class="hero-tag">Psychological Assessments Library</div>
-  <h1>Know <em>where you stand.</em><br>Start from understanding.</h1>
-  <p>Validated psychological assessments from quick screenings to comprehensive evaluations. Every result is reviewed by a licensed psychologist. All data is fully confidential.</p>
-  <div class="hero-notice">&#128274; A free account and a consultation are required to access results</div>
+  <div class="hero-tag" id="h-tag">Psychological Assessments Library</div>
+  <h1 id="h-title">Know <em id="h-em">where you stand.</em><br><span id="h-line2">Start from understanding.</span></h1>
+  <p id="h-desc">Validated psychological assessments from quick screenings to comprehensive evaluations. Every result is reviewed by a licensed psychologist. All data is fully confidential.</p>
+  <div class="hero-notice" id="h-notice">&#128274; A free account and a consultation are required to access results</div>
 </div>
 
 <div class="controls">
@@ -173,17 +182,17 @@ footer{background:var(--charcoal);padding:24px 48px;display:flex;justify-content
     <input type="text" id="searchInput" placeholder="Search assessments..." oninput="applyFilters()">
   </div>
   <div class="filter-tabs">
-    <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
-    <button class="filter-tab" onclick="setFilter('distress',this)">&#128308; Distress</button>
-    <button class="filter-tab" onclick="setFilter('professional',this)">&#129000; Work</button>
-    <button class="filter-tab" onclick="setFilter('addiction',this)">&#128995; Addiction</button>
-    <button class="filter-tab" onclick="setFilter('development',this)">&#128994; Development</button>
-    <button class="filter-tab" onclick="setFilter('comprehensive',this)">&#128309; Comprehensive</button>
+    <button class="filter-tab active" id="ft-all" onclick="setFilter('all',this)">All</button>
+    <button class="filter-tab" id="ft-distress" onclick="setFilter('distress',this)">&#128308; Distress</button>
+    <button class="filter-tab" id="ft-work" onclick="setFilter('professional',this)">&#129000; Work</button>
+    <button class="filter-tab" id="ft-addiction" onclick="setFilter('addiction',this)">&#128995; Addiction</button>
+    <button class="filter-tab" id="ft-development" onclick="setFilter('development',this)">&#128994; Development</button>
+    <button class="filter-tab" id="ft-comprehensive" onclick="setFilter('comprehensive',this)">&#128309; Comprehensive</button>
   </div>
 </div>
 
 <div class="currency-bar">
-  <span class="currency-bar-label">Display prices in</span>
+  <span class="currency-bar-label" id="cur-label">Display prices in</span>
   <select class="currency-select" id="currencySelect" onchange="setCurrency(this.value)">
     <option value="USD">USD $</option>
     <option value="XOF">XOF CFA</option>
@@ -545,7 +554,7 @@ footer{background:var(--charcoal);padding:24px 48px;display:flex;justify-content
 
     <div class="no-results" id="noResults">
       <div style="font-size:40px;margin-bottom:12px">&#128269;</div>
-      <p>No assessments found. Try a different search term or filter.</p>
+      <p id="no-results-text">No assessments found. Try a different search term or filter.</p>
     </div>
   </div>
 </div>
@@ -559,14 +568,12 @@ footer{background:var(--charcoal);padding:24px 48px;display:flex;justify-content
     <div class="modal-fullname" id="modalFullname"></div>
     <div class="modal-price-block">
       <div>
-        <div class="modal-price-label">Assessment price</div>
+        <div class="modal-price-label" id="modalPriceLabel">Assessment price</div>
         <div class="modal-price-sub" id="modalPriceSub"></div>
       </div>
       <div class="modal-price-val" id="modalPriceVal"></div>
     </div>
-    <div class="modal-banner red" id="modalSensitiveBanner" style="display:none;">
-      This assessment is administered exclusively by a Creaven psychologist during a consultation session. You cannot take it independently. A consultation is included in the price.
-    </div>
+    <div class="modal-banner red" id="modalSensitiveBanner" style="display:none;"></div>
     <div class="modal-banner gold" id="modalConsultBanner" style="display:none;"></div>
     <p class="modal-desc" id="modalDesc"></p>
     <div class="modal-meta" id="modalMeta"></div>
@@ -575,8 +582,8 @@ footer{background:var(--charcoal);padding:24px 48px;display:flex;justify-content
 </div>
 
 <footer>
-  <span>Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.</span>
-  <span>"The industry sees the art. Creaven sees the person behind it."</span>
+  <span id="footer-main">Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.</span>
+  <span id="footer-tagline">"The industry sees the art. Creaven sees the person behind it."</span>
 </footer>
 
 <script>
@@ -592,7 +599,355 @@ var auth = firebase.auth();
 var currentUser = null;
 auth.onAuthStateChanged(function(u){ currentUser = u; });
 
+// =============================================
+// I18N - 18 LANGUAGES (CHROME ONLY - card content next pass)
+// =============================================
+var currentLang = 'en';
+
+var T = {
+en:{nl_home:"Home",nl_tests:"Assessments",nl_book:"Book",nl_org:"Organizations",nl_emergency:"Emergency",nl_account:"My Account",nl_about:"About",nl_contact:"Contact",
+h_tag:"Psychological Assessments Library",h_em:"where you stand.",h_line2:"Start from understanding.",
+h_desc:"Validated psychological assessments from quick screenings to comprehensive evaluations. Every result is reviewed by a licensed psychologist. All data is fully confidential.",
+h_notice:"\uD83D\uDD12 A free account and a consultation are required to access results",
+search_ph:"Search assessments...",ft_all:"All",ft_distress:"\uD83D\uDD34 Distress",ft_work:"\uD83D\uDFE0 Work",ft_addiction:"\uD83D\uDFE3 Addiction",ft_development:"\uD83D\uDFE2 Development",ft_comprehensive:"\uD83D\uDD35 Comprehensive",
+cur_label:"Display prices in",
+results_all:"Showing all {n} assessments",results_partial:"Showing {x} of {y} assessments",no_results:"No assessments found. Try a different search term or filter.",
+badge_quick:"Quick screening",badge_standard:"Standard assessment",badge_reviewed:"Reviewed by psychologist",badge_comprehensive:"Consultation included",badge_sensitive:"Practitioner only",
+modal_price_label:"Assessment price",
+modal_sensitive_banner:"This assessment is administered exclusively by a Creaven psychologist during a consultation session. You cannot take it independently. A consultation is included in the price.",
+modal_consult_included:"A consultation with a Creaven psychologist is included in this price. Your results will be interpreted together with your psychologist.",
+modal_consult_required:"A paid consultation with a psychologist is required to access and interpret your results. You will book your consultation as part of the checkout process.",
+modal_book_sensitive:"Book consultation with psychologist",modal_book_standard:"Book consultation + take assessment",
+modal_create_account:"Create free account to proceed",modal_already_account:"Already have an account?",modal_signin:"Sign in",
+footer_main:"Creaven 2026 - Psychological Well-being for the Creative Industry - All rights reserved.",
+footer_tagline:"\u201CThe industry sees the art. Creaven sees the person behind it.\u201D"},
+
+fr:{nl_home:"Accueil",nl_tests:"Évaluations",nl_book:"Réserver",nl_org:"Organisations",nl_emergency:"Urgence",nl_account:"Mon Compte",nl_about:"À propos",nl_contact:"Contact",
+h_tag:"Bibliothèque d'Évaluations Psychologiques",h_em:"où vous en êtes.",h_line2:"Commencez par comprendre.",
+h_desc:"Évaluations psychologiques validées, du dépistage rapide à l'évaluation complète. Chaque résultat est revu par un psychologue agréé. Toutes les données sont strictement confidentielles.",
+h_notice:"\uD83D\uDD12 Un compte gratuit et une consultation sont requis pour accéder aux résultats",
+search_ph:"Rechercher une évaluation...",ft_all:"Toutes",ft_distress:"\uD83D\uDD34 Détresse",ft_work:"\uD83D\uDFE0 Travail",ft_addiction:"\uD83D\uDFE3 Addiction",ft_development:"\uD83D\uDFE2 Développement",ft_comprehensive:"\uD83D\uDD35 Complète",
+cur_label:"Afficher les prix en",
+results_all:"Affichage de {n} évaluations",results_partial:"Affichage de {x} sur {y} évaluations",no_results:"Aucune évaluation trouvée. Essayez un autre terme ou filtre.",
+badge_quick:"Dépistage rapide",badge_standard:"Évaluation standard",badge_reviewed:"Revu par un psychologue",badge_comprehensive:"Consultation incluse",badge_sensitive:"Praticien uniquement",
+modal_price_label:"Prix de l'évaluation",
+modal_sensitive_banner:"Cette évaluation est administrée exclusivement par un psychologue Creaven lors d'une consultation. Vous ne pouvez pas la passer seul(e). Une consultation est incluse dans le prix.",
+modal_consult_included:"Une consultation avec un psychologue Creaven est incluse dans ce prix. Vos résultats seront interprétés avec votre psychologue.",
+modal_consult_required:"Une consultation payante avec un psychologue est requise pour accéder à vos résultats et les interpréter. Vous réserverez votre consultation lors du paiement.",
+modal_book_sensitive:"Réserver une consultation avec un psychologue",modal_book_standard:"Réserver consultation + passer l'évaluation",
+modal_create_account:"Créer un compte gratuit pour continuer",modal_already_account:"Vous avez déjà un compte ?",modal_signin:"Se connecter",
+footer_main:"Creaven 2026 - Bien-être psychologique pour l'industrie créative - Tous droits réservés.",
+footer_tagline:"\u00ABL'industrie voit l'art. Creaven voit la personne derrière.\u00BB"},
+
+ko:{nl_home:"홈",nl_tests:"평가",nl_book:"예약",nl_org:"기관",nl_emergency:"긴급",nl_account:"내 계정",nl_about:"소개",nl_contact:"문의",
+h_tag:"심리 평가 라이브러리",h_em:"현재 위치를 알아보세요.",h_line2:"이해에서 시작하세요.",
+h_desc:"간단한 검진부터 종합 평가까지 검증된 심리 평가. 모든 결과는 면허를 가진 심리학자가 검토합니다. 모든 데이터는 완전히 기밀입니다.",
+h_notice:"\uD83D\uDD12 결과 접근을 위해 무료 계정과 상담이 필요합니다",
+search_ph:"평가 검색...",ft_all:"전체",ft_distress:"\uD83D\uDD34 고통",ft_work:"\uD83D\uDFE0 업무",ft_addiction:"\uD83D\uDFE3 중독",ft_development:"\uD83D\uDFE2 성장",ft_comprehensive:"\uD83D\uDD35 종합",
+cur_label:"가격 표시 화폐",
+results_all:"전체 {n}개 평가 표시 중",results_partial:"{y}개 중 {x}개 평가 표시 중",no_results:"평가를 찾을 수 없습니다. 다른 검색어나 필터를 시도해 보세요.",
+badge_quick:"간단 검진",badge_standard:"표준 평가",badge_reviewed:"심리학자 검토",badge_comprehensive:"상담 포함",badge_sensitive:"전문가 전용",
+modal_price_label:"평가 가격",
+modal_sensitive_banner:"이 평가는 Creaven 심리학자가 상담 중에만 진행합니다. 혼자서는 진행할 수 없습니다. 상담료가 가격에 포함되어 있습니다.",
+modal_consult_included:"이 가격에는 Creaven 심리학자와의 상담이 포함되어 있습니다. 결과는 심리학자와 함께 해석됩니다.",
+modal_consult_required:"결과 접근 및 해석을 위해 유료 심리학자 상담이 필요합니다. 결제 과정에서 상담을 예약하게 됩니다.",
+modal_book_sensitive:"심리학자 상담 예약",modal_book_standard:"상담 예약 + 평가 진행",
+modal_create_account:"계속하려면 무료 계정 생성",modal_already_account:"이미 계정이 있으신가요?",modal_signin:"로그인",
+footer_main:"Creaven 2026 - 창작 산업을 위한 심리적 웰빙 - All rights reserved.",
+footer_tagline:"\u201C업계는 작품을 보지만, Creaven은 그 뒤의 사람을 봅니다.\u201D"},
+
+ja:{nl_home:"ホーム",nl_tests:"評価",nl_book:"予約",nl_org:"組織向け",nl_emergency:"緊急",nl_account:"マイアカウント",nl_about:"概要",nl_contact:"お問い合わせ",
+h_tag:"心理評価ライブラリ",h_em:"あなたの今を知る。",h_line2:"理解することから始めましょう。",
+h_desc:"簡易スクリーニングから総合評価まで、検証済みの心理評価。すべての結果は資格を持つ心理士が確認します。すべてのデータは完全に機密です。",
+h_notice:"\uD83D\uDD12 結果へのアクセスには無料アカウントと相談が必要です",
+search_ph:"評価を検索...",ft_all:"すべて",ft_distress:"\uD83D\uDD34 苦痛",ft_work:"\uD83D\uDFE0 仕事",ft_addiction:"\uD83D\uDFE3 依存",ft_development:"\uD83D\uDFE2 成長",ft_comprehensive:"\uD83D\uDD35 総合",
+cur_label:"価格表示の通貨",
+results_all:"全{n}件の評価を表示中",results_partial:"{y}件中{x}件の評価を表示中",no_results:"評価が見つかりません。別の検索語やフィルターをお試しください。",
+badge_quick:"簡易スクリーニング",badge_standard:"標準評価",badge_reviewed:"心理士が確認",badge_comprehensive:"相談込み",badge_sensitive:"専門家のみ",
+modal_price_label:"評価料金",
+modal_sensitive_banner:"この評価はCreavenの心理士が相談中にのみ実施します。単独で受けることはできません。相談料は価格に含まれています。",
+modal_consult_included:"この価格にはCreaven心理士との相談が含まれています。結果は心理士と一緒に解釈されます。",
+modal_consult_required:"結果へのアクセスと解釈には、心理士との有料相談が必要です。お支払い手続きの一部として相談を予約します。",
+modal_book_sensitive:"心理士との相談を予約",modal_book_standard:"相談を予約 + 評価を受ける",
+modal_create_account:"続けるには無料アカウントを作成",modal_already_account:"すでにアカウントをお持ちですか？",modal_signin:"ログイン",
+footer_main:"Creaven 2026 - クリエイティブ産業のための心理的ウェルビーイング - All rights reserved.",
+footer_tagline:"\u201C業界は作品を見る。Creavenはその背後の人を見る。\u201D"},
+
+zh:{nl_home:"主页",nl_tests:"评估",nl_book:"预约",nl_org:"机构",nl_emergency:"紧急",nl_account:"我的账户",nl_about:"关于",nl_contact:"联系我们",
+h_tag:"心理评估库",h_em:"了解你的现状。",h_line2:"从理解开始。",
+h_desc:"经过验证的心理评估，从快速筛查到全面评估。每个结果均由持证心理学家审核。所有数据完全保密。",
+h_notice:"\uD83D\uDD12 访问结果需要免费账户和咨询",
+search_ph:"搜索评估...",ft_all:"全部",ft_distress:"\uD83D\uDD34 心理困扰",ft_work:"\uD83D\uDFE0 工作",ft_addiction:"\uD83D\uDFE3 成瘾",ft_development:"\uD83D\uDFE2 个人发展",ft_comprehensive:"\uD83D\uDD35 综合",
+cur_label:"显示价格货币",
+results_all:"显示全部 {n} 项评估",results_partial:"显示 {y} 项中的 {x} 项评估",no_results:"未找到评估。请尝试其他搜索词或筛选条件。",
+badge_quick:"快速筛查",badge_standard:"标准评估",badge_reviewed:"心理学家审核",badge_comprehensive:"含咨询",badge_sensitive:"仅限专业人员操作",
+modal_price_label:"评估价格",
+modal_sensitive_banner:"此评估仅由Creaven心理学家在咨询过程中进行。您不能独立完成。咨询费已包含在价格中。",
+modal_consult_included:"此价格包含与Creaven心理学家的咨询。您的结果将与心理学家一起解读。",
+modal_consult_required:"访问和解读结果需要付费心理咨询。您将在结账过程中预约咨询。",
+modal_book_sensitive:"预约心理学家咨询",modal_book_standard:"预约咨询 + 进行评估",
+modal_create_account:"创建免费账户以继续",modal_already_account:"已有账户？",modal_signin:"登录",
+footer_main:"Creaven 2026 - 面向创意产业的心理健康 - 保留所有权利。",
+footer_tagline:"\u201C行业看到的是作品，Creaven看到的是作品背后的人。\u201D"},
+
+th:{nl_home:"หน้าหลัก",nl_tests:"การประเมิน",nl_book:"จอง",nl_org:"องค์กร",nl_emergency:"ฉุกเฉิน",nl_account:"บัญชีของฉัน",nl_about:"เกี่ยวกับ",nl_contact:"ติดต่อ",
+h_tag:"คลังแบบประเมินทางจิตวิทยา",h_em:"จุดที่คุณอยู่ตอนนี้",h_line2:"เริ่มต้นจากความเข้าใจ",
+h_desc:"แบบประเมินทางจิตวิทยาที่ผ่านการรับรอง ตั้งแต่การคัดกรองอย่างรวดเร็วไปจนถึงการประเมินอย่างครอบคลุม ทุกผลลัพธ์ได้รับการตรวจสอบโดยนักจิตวิทยาที่มีใบอนุญาต ข้อมูลทั้งหมดเป็นความลับอย่างสมบูรณ์",
+h_notice:"\uD83D\uDD12 ต้องมีบัญชีฟรีและการปรึกษาเพื่อเข้าถึงผลลัพธ์",
+search_ph:"ค้นหาแบบประเมิน...",ft_all:"ทั้งหมด",ft_distress:"\uD83D\uDD34 ความทุกข์",ft_work:"\uD83D\uDFE0 การทำงาน",ft_addiction:"\uD83D\uDFE3 การเสพติด",ft_development:"\uD83D\uDFE2 การพัฒนา",ft_comprehensive:"\uD83D\uDD35 ครอบคลุม",
+cur_label:"แสดงราคาเป็น",
+results_all:"แสดงทั้งหมด {n} แบบประเมิน",results_partial:"แสดง {x} จาก {y} แบบประเมิน",no_results:"ไม่พบแบบประเมิน ลองใช้คำค้นหาหรือตัวกรองอื่น",
+badge_quick:"คัดกรองด่วน",badge_standard:"การประเมินมาตรฐาน",badge_reviewed:"ตรวจสอบโดยนักจิตวิทยา",badge_comprehensive:"รวมการปรึกษา",badge_sensitive:"นักวิชาชีพเท่านั้น",
+modal_price_label:"ราคาแบบประเมิน",
+modal_sensitive_banner:"แบบประเมินนี้ดำเนินการโดยนักจิตวิทยา Creaven ในระหว่างการปรึกษาเท่านั้น คุณไม่สามารถทำเองได้ ค่าปรึกษารวมอยู่ในราคาแล้ว",
+modal_consult_included:"ราคานี้รวมการปรึกษากับนักจิตวิทยา Creaven ผลลัพธ์ของคุณจะได้รับการตีความร่วมกับนักจิตวิทยา",
+modal_consult_required:"จำเป็นต้องมีการปรึกษาแบบเสียค่าใช้จ่ายกับนักจิตวิทยาเพื่อเข้าถึงและตีความผลลัพธ์ของคุณ คุณจะจองการปรึกษาในขั้นตอนการชำระเงิน",
+modal_book_sensitive:"จองการปรึกษากับนักจิตวิทยา",modal_book_standard:"จองการปรึกษา + ทำแบบประเมิน",
+modal_create_account:"สร้างบัญชีฟรีเพื่อดำเนินการต่อ",modal_already_account:"มีบัญชีอยู่แล้ว?",modal_signin:"เข้าสู่ระบบ",
+footer_main:"Creaven 2026 - สุขภาวะทางจิตสำหรับอุตสาหกรรมสร้างสรรค์ - สงวนสิทธิ์ทั้งหมด",
+footer_tagline:"\u201Cอุตสาหกรรมเห็นผลงาน Creaven เห็นคนที่อยู่เบื้องหลัง\u201D"},
+
+de:{nl_home:"Start",nl_tests:"Bewertungen",nl_book:"Buchen",nl_org:"Organisationen",nl_emergency:"Notfall",nl_account:"Mein Konto",nl_about:"Über uns",nl_contact:"Kontakt",
+h_tag:"Bibliothek psychologischer Tests",h_em:"wo Sie stehen.",h_line2:"Beginnen Sie mit Verstehen.",
+h_desc:"Validierte psychologische Tests, vom schnellen Screening bis zur umfassenden Bewertung. Jedes Ergebnis wird von einem lizenzierten Psychologen geprüft. Alle Daten sind vollständig vertraulich.",
+h_notice:"\uD83D\uDD12 Ein kostenloses Konto und eine Beratung sind erforderlich, um auf die Ergebnisse zuzugreifen",
+search_ph:"Bewertungen suchen...",ft_all:"Alle",ft_distress:"\uD83D\uDD34 Belastung",ft_work:"\uD83D\uDFE0 Arbeit",ft_addiction:"\uD83D\uDFE3 Sucht",ft_development:"\uD83D\uDFE2 Entwicklung",ft_comprehensive:"\uD83D\uDD35 Umfassend",
+cur_label:"Preise anzeigen in",
+results_all:"Alle {n} Bewertungen werden angezeigt",results_partial:"{x} von {y} Bewertungen werden angezeigt",no_results:"Keine Bewertungen gefunden. Versuchen Sie einen anderen Suchbegriff oder Filter.",
+badge_quick:"Schnelles Screening",badge_standard:"Standardbewertung",badge_reviewed:"Von Psychologe geprüft",badge_comprehensive:"Beratung inklusive",badge_sensitive:"Nur durch Fachkraft",
+modal_price_label:"Preis der Bewertung",
+modal_sensitive_banner:"Diese Bewertung wird ausschließlich von einem Creaven-Psychologen während einer Beratung durchgeführt. Sie können sie nicht eigenständig durchführen. Eine Beratung ist im Preis enthalten.",
+modal_consult_included:"In diesem Preis ist eine Beratung mit einem Creaven-Psychologen enthalten. Ihre Ergebnisse werden gemeinsam mit Ihrem Psychologen interpretiert.",
+modal_consult_required:"Eine kostenpflichtige Beratung mit einem Psychologen ist erforderlich, um auf Ihre Ergebnisse zuzugreifen und sie zu interpretieren. Sie buchen Ihre Beratung im Rahmen des Bezahlvorgangs.",
+modal_book_sensitive:"Beratung mit Psychologe buchen",modal_book_standard:"Beratung buchen + Test durchführen",
+modal_create_account:"Kostenloses Konto erstellen, um fortzufahren",modal_already_account:"Bereits ein Konto?",modal_signin:"Anmelden",
+footer_main:"Creaven 2026 - Psychisches Wohlbefinden für die Kreativbranche - Alle Rechte vorbehalten.",
+footer_tagline:"\u201ADie Branche sieht die Kunst. Creaven sieht den Menschen dahinter.\u2018"},
+
+es:{nl_home:"Inicio",nl_tests:"Evaluaciones",nl_book:"Reservar",nl_org:"Organizaciones",nl_emergency:"Emergencia",nl_account:"Mi Cuenta",nl_about:"Acerca de",nl_contact:"Contacto",
+h_tag:"Biblioteca de Evaluaciones Psicológicas",h_em:"dónde te encuentras.",h_line2:"Empieza por comprender.",
+h_desc:"Evaluaciones psicológicas validadas, desde cribados rápidos hasta evaluaciones completas. Cada resultado es revisado por un psicólogo licenciado. Todos los datos son completamente confidenciales.",
+h_notice:"\uD83D\uDD12 Se requiere una cuenta gratuita y una consulta para acceder a los resultados",
+search_ph:"Buscar evaluaciones...",ft_all:"Todas",ft_distress:"\uD83D\uDD34 Malestar",ft_work:"\uD83D\uDFE0 Trabajo",ft_addiction:"\uD83D\uDFE3 Adicción",ft_development:"\uD83D\uDFE2 Desarrollo",ft_comprehensive:"\uD83D\uDD35 Integral",
+cur_label:"Mostrar precios en",
+results_all:"Mostrando las {n} evaluaciones",results_partial:"Mostrando {x} de {y} evaluaciones",no_results:"No se encontraron evaluaciones. Prueba otro término o filtro.",
+badge_quick:"Cribado rápido",badge_standard:"Evaluación estándar",badge_reviewed:"Revisado por psicólogo",badge_comprehensive:"Consulta incluida",badge_sensitive:"Solo profesional",
+modal_price_label:"Precio de la evaluación",
+modal_sensitive_banner:"Esta evaluación es administrada exclusivamente por un psicólogo de Creaven durante una consulta. No puede realizarla de forma independiente. La consulta está incluida en el precio.",
+modal_consult_included:"Este precio incluye una consulta con un psicólogo de Creaven. Sus resultados se interpretarán junto con su psicólogo.",
+modal_consult_required:"Se requiere una consulta de pago con un psicólogo para acceder e interpretar sus resultados. Reservará su consulta como parte del proceso de pago.",
+modal_book_sensitive:"Reservar consulta con psicólogo",modal_book_standard:"Reservar consulta + realizar evaluación",
+modal_create_account:"Crear cuenta gratuita para continuar",modal_already_account:"¿Ya tienes una cuenta?",modal_signin:"Iniciar sesión",
+footer_main:"Creaven 2026 - Bienestar psicológico para la industria creativa - Todos los derechos reservados.",
+footer_tagline:"\u201CLa industria ve el arte. Creaven ve a la persona detrás.\u201D"},
+
+pt:{nl_home:"Início",nl_tests:"Avaliações",nl_book:"Agendar",nl_org:"Organizações",nl_emergency:"Emergência",nl_account:"Minha Conta",nl_about:"Sobre",nl_contact:"Contato",
+h_tag:"Biblioteca de Avaliações Psicológicas",h_em:"onde você está.",h_line2:"Comece pela compreensão.",
+h_desc:"Avaliações psicológicas validadas, de triagens rápidas a avaliações completas. Todos os resultados são revisados por um psicólogo licenciado. Todos os dados são totalmente confidenciais.",
+h_notice:"\uD83D\uDD12 É necessária uma conta gratuita e uma consulta para acessar os resultados",
+search_ph:"Buscar avaliações...",ft_all:"Todas",ft_distress:"\uD83D\uDD34 Sofrimento",ft_work:"\uD83D\uDFE0 Trabalho",ft_addiction:"\uD83D\uDFE3 Vícios",ft_development:"\uD83D\uDFE2 Desenvolvimento",ft_comprehensive:"\uD83D\uDD35 Completa",
+cur_label:"Exibir preços em",
+results_all:"Mostrando todas as {n} avaliações",results_partial:"Mostrando {x} de {y} avaliações",no_results:"Nenhuma avaliação encontrada. Tente outro termo ou filtro.",
+badge_quick:"Triagem rápida",badge_standard:"Avaliação padrão",badge_reviewed:"Revisado por psicólogo",badge_comprehensive:"Consulta incluída",badge_sensitive:"Apenas profissional",
+modal_price_label:"Preço da avaliação",
+modal_sensitive_banner:"Esta avaliação é administrada exclusivamente por um psicólogo da Creaven durante uma consulta. Você não pode realizá-la de forma independente. A consulta está incluída no preço.",
+modal_consult_included:"Este preço inclui uma consulta com um psicólogo da Creaven. Seus resultados serão interpretados junto com seu psicólogo.",
+modal_consult_required:"É necessária uma consulta paga com um psicólogo para acessar e interpretar seus resultados. Você agendará sua consulta durante o processo de pagamento.",
+modal_book_sensitive:"Agendar consulta com psicólogo",modal_book_standard:"Agendar consulta + fazer avaliação",
+modal_create_account:"Criar conta gratuita para continuar",modal_already_account:"Já tem uma conta?",modal_signin:"Entrar",
+footer_main:"Creaven 2026 - Bem-estar psicológico para a indústria criativa - Todos os direitos reservados.",
+footer_tagline:"\u201CA indústria vê a arte. A Creaven vê a pessoa por trás dela.\u201D"},
+
+it:{nl_home:"Home",nl_tests:"Valutazioni",nl_book:"Prenota",nl_org:"Organizzazioni",nl_emergency:"Emergenza",nl_account:"Il Mio Account",nl_about:"Chi siamo",nl_contact:"Contatti",
+h_tag:"Libreria di Valutazioni Psicologiche",h_em:"dove ti trovi.",h_line2:"Inizia dalla comprensione.",
+h_desc:"Valutazioni psicologiche validate, dallo screening rapido alla valutazione completa. Ogni risultato è revisionato da uno psicologo abilitato. Tutti i dati sono completamente confidenziali.",
+h_notice:"\uD83D\uDD12 Per accedere ai risultati è necessario un account gratuito e una consulenza",
+search_ph:"Cerca valutazioni...",ft_all:"Tutte",ft_distress:"\uD83D\uDD34 Disagio",ft_work:"\uD83D\uDFE0 Lavoro",ft_addiction:"\uD83D\uDFE3 Dipendenza",ft_development:"\uD83D\uDFE2 Crescita",ft_comprehensive:"\uD83D\uDD35 Completa",
+cur_label:"Mostra prezzi in",
+results_all:"Visualizzazione di tutte le {n} valutazioni",results_partial:"Visualizzazione di {x} su {y} valutazioni",no_results:"Nessuna valutazione trovata. Prova un altro termine o filtro.",
+badge_quick:"Screening rapido",badge_standard:"Valutazione standard",badge_reviewed:"Revisionato da psicologo",badge_comprehensive:"Consulenza incluso",badge_sensitive:"Solo professionista",
+modal_price_label:"Prezzo della valutazione",
+modal_sensitive_banner:"Questa valutazione è somministrata esclusivamente da uno psicologo Creaven durante una consulenza. Non può essere svolta autonomamente. La consulenza è inclusa nel prezzo.",
+modal_consult_included:"Questo prezzo include una consulenza con uno psicologo Creaven. I tuoi risultati saranno interpretati insieme al tuo psicologo.",
+modal_consult_required:"È richiesta una consulenza a pagamento con uno psicologo per accedere e interpretare i tuoi risultati. Prenoterai la consulenza durante il pagamento.",
+modal_book_sensitive:"Prenota consulenza con psicologo",modal_book_standard:"Prenota consulenza + fai la valutazione",
+modal_create_account:"Crea un account gratuito per continuare",modal_already_account:"Hai già un account?",modal_signin:"Accedi",
+footer_main:"Creaven 2026 - Benessere psicologico per l'industria creativa - Tutti i diritti riservati.",
+footer_tagline:"\u201CL'industria vede l'arte. Creaven vede la persona dietro di essa.\u201D"},
+
+nl:{nl_home:"Home",nl_tests:"Beoordelingen",nl_book:"Boeken",nl_org:"Organisaties",nl_emergency:"Noodgeval",nl_account:"Mijn Account",nl_about:"Over ons",nl_contact:"Contact",
+h_tag:"Bibliotheek met Psychologische Tests",h_em:"waar je staat.",h_line2:"Begin met begrijpen.",
+h_desc:"Gevalideerde psychologische tests, van snelle screenings tot uitgebreide evaluaties. Elk resultaat wordt beoordeeld door een erkend psycholoog. Alle gegevens zijn volledig vertrouwelijk.",
+h_notice:"\uD83D\uDD12 Een gratis account en een consult zijn vereist om toegang te krijgen tot de resultaten",
+search_ph:"Tests zoeken...",ft_all:"Alle",ft_distress:"\uD83D\uDD34 Stress",ft_work:"\uD83D\uDFE0 Werk",ft_addiction:"\uD83D\uDFE3 Verslaving",ft_development:"\uD83D\uDFE2 Ontwikkeling",ft_comprehensive:"\uD83D\uDD35 Uitgebreid",
+cur_label:"Prijzen weergeven in",
+results_all:"Alle {n} tests worden weergegeven",results_partial:"{x} van {y} tests worden weergegeven",no_results:"Geen tests gevonden. Probeer een andere zoekterm of filter.",
+badge_quick:"Snelle screening",badge_standard:"Standaardtest",badge_reviewed:"Beoordeeld door psycholoog",badge_comprehensive:"Consult inbegrepen",badge_sensitive:"Alleen via behandelaar",
+modal_price_label:"Prijs van de test",
+modal_sensitive_banner:"Deze test wordt uitsluitend uitgevoerd door een Creaven-psycholoog tijdens een consult. U kunt deze niet zelfstandig afnemen. Een consult is bij de prijs inbegrepen.",
+modal_consult_included:"Deze prijs bevat een consult met een Creaven-psycholoog. Uw resultaten worden samen met uw psycholoog geïnterpreteerd.",
+modal_consult_required:"Een betaald consult met een psycholoog is vereist om toegang te krijgen tot en uw resultaten te interpreteren. U boekt uw consult tijdens het afrekenen.",
+modal_book_sensitive:"Consult boeken met psycholoog",modal_book_standard:"Consult boeken + test afnemen",
+modal_create_account:"Maak een gratis account om door te gaan",modal_already_account:"Heeft u al een account?",modal_signin:"Inloggen",
+footer_main:"Creaven 2026 - Psychisch welzijn voor de creatieve industrie - Alle rechten voorbehouden.",
+footer_tagline:"\u201CDe industrie ziet de kunst. Creaven ziet de persoon erachter.\u201D"},
+
+sv:{nl_home:"Hem",nl_tests:"Bedömningar",nl_book:"Boka",nl_org:"Organisationer",nl_emergency:"Nödfall",nl_account:"Mitt Konto",nl_about:"Om oss",nl_contact:"Kontakt",
+h_tag:"Bibliotek för Psykologiska Bedömningar",h_em:"var du står.",h_line2:"Börja med att förstå.",
+h_desc:"Validerade psykologiska bedömningar, från snabba screeningar till omfattande utvärderingar. Varje resultat granskas av en legitimerad psykolog. All data är helt konfidentiell.",
+h_notice:"\uD83D\uDD12 Ett gratis konto och en konsultation krävs för att få tillgång till resultaten",
+search_ph:"Sök bedömningar...",ft_all:"Alla",ft_distress:"\uD83D\uDD34 Stress",ft_work:"\uD83D\uDFE0 Arbete",ft_addiction:"\uD83D\uDFE3 Beroende",ft_development:"\uD83D\uDFE2 Utveckling",ft_comprehensive:"\uD83D\uDD35 Omfattande",
+cur_label:"Visa priser i",
+results_all:"Visar alla {n} bedömningar",results_partial:"Visar {x} av {y} bedömningar",no_results:"Inga bedömningar hittades. Prova en annan sökterm eller filter.",
+badge_quick:"Snabb screening",badge_standard:"Standardbedömning",badge_reviewed:"Granskad av psykolog",badge_comprehensive:"Konsultation ingår",badge_sensitive:"Endast behandlare",
+modal_price_label:"Pris för bedömning",
+modal_sensitive_banner:"Denna bedömning genomförs endast av en Creaven-psykolog under en konsultation. Du kan inte göra den själv. En konsultation ingår i priset.",
+modal_consult_included:"Detta pris inkluderar en konsultation med en Creaven-psykolog. Dina resultat tolkas tillsammans med din psykolog.",
+modal_consult_required:"En betald konsultation med en psykolog krävs för att få tillgång till och tolka dina resultat. Du bokar din konsultation under betalningsprocessen.",
+modal_book_sensitive:"Boka konsultation med psykolog",modal_book_standard:"Boka konsultation + gör bedömningen",
+modal_create_account:"Skapa ett gratis konto för att fortsätta",modal_already_account:"Har du redan ett konto?",modal_signin:"Logga in",
+footer_main:"Creaven 2026 - Psykiskt välbefinnande för den kreativa industrin - Alla rättigheter förbehållna.",
+footer_tagline:"\u201DIndustrin ser konsten. Creaven ser personen bakom den.\u201D"},
+
+pl:{nl_home:"Strona główna",nl_tests:"Testy",nl_book:"Zarezerwuj",nl_org:"Organizacje",nl_emergency:"Pomoc doraźna",nl_account:"Moje Konto",nl_about:"O nas",nl_contact:"Kontakt",
+h_tag:"Biblioteka Testów Psychologicznych",h_em:"gdzie jesteś.",h_line2:"Zacznij od zrozumienia.",
+h_desc:"Zwalidowane testy psychologiczne, od szybkich badań przesiewowych do pełnych ocen. Każdy wynik jest sprawdzany przez licencjonowanego psychologa. Wszystkie dane są w pełni poufne.",
+h_notice:"\uD83D\uDD12 Aby uzyskać dostęp do wyników, wymagane jest darmowe konto i konsultacja",
+search_ph:"Szukaj testów...",ft_all:"Wszystkie",ft_distress:"\uD83D\uDD34 Cierpienie",ft_work:"\uD83D\uDFE0 Praca",ft_addiction:"\uD83D\uDFE3 Uzależnienie",ft_development:"\uD83D\uDFE2 Rozwój",ft_comprehensive:"\uD83D\uDD35 Kompleksowe",
+cur_label:"Wyświetlaj ceny w",
+results_all:"Wyświetlanie wszystkich {n} testów",results_partial:"Wyświetlanie {x} z {y} testów",no_results:"Nie znaleziono testów. Spróbuj innego wyszukiwania lub filtra.",
+badge_quick:"Szybkie badanie",badge_standard:"Standardowy test",badge_reviewed:"Sprawdzony przez psychologa",badge_comprehensive:"Konsultacja w cenie",badge_sensitive:"Tylko przez specjalistę",
+modal_price_label:"Cena testu",
+modal_sensitive_banner:"Ten test jest przeprowadzany wyłącznie przez psychologa Creaven podczas konsultacji. Nie można go wykonać samodzielnie. Konsultacja jest wliczona w cenę.",
+modal_consult_included:"Cena ta obejmuje konsultację z psychologiem Creaven. Twoje wyniki zostaną zinterpretowane razem z psychologiem.",
+modal_consult_required:"Aby uzyskać dostęp do wyników i je zinterpretować, wymagana jest płatna konsultacja z psychologiem. Konsultację zarezerwujesz w procesie płatności.",
+modal_book_sensitive:"Zarezerwuj konsultację z psychologiem",modal_book_standard:"Zarezerwuj konsultację + wykonaj test",
+modal_create_account:"Utwórz darmowe konto, aby kontynuować",modal_already_account:"Masz już konto?",modal_signin:"Zaloguj się",
+footer_main:"Creaven 2026 - Dobre samopoczucie psychiczne dla branży kreatywnej - Wszelkie prawa zastrzeżone.",
+footer_tagline:"\u201EPrzemysł widzi sztukę. Creaven widzi osobę za nią.\u201D"},
+
+ru:{nl_home:"Главная",nl_tests:"Тесты",nl_book:"Записаться",nl_org:"Организации",nl_emergency:"Экстренная помощь",nl_account:"Мой Аккаунт",nl_about:"О нас",nl_contact:"Контакты",
+h_tag:"Библиотека Психологических Тестов",h_em:"где вы находитесь.",h_line2:"Начните с понимания.",
+h_desc:"Проверенные психологические тесты — от быстрых скринингов до комплексных оценок. Каждый результат проверяется licensed психологом. Все данные полностью конфиденциальны.",
+h_notice:"\uD83D\uDD12 Для доступа к результатам требуется бесплатный аккаунт и консультация",
+search_ph:"Поиск тестов...",ft_all:"Все",ft_distress:"\uD83D\uDD34 Дистресс",ft_work:"\uD83D\uDFE0 Работа",ft_addiction:"\uD83D\uDFE3 Зависимость",ft_development:"\uD83D\uDFE2 Развитие",ft_comprehensive:"\uD83D\uDD35 Комплексные",
+cur_label:"Показывать цены в",
+results_all:"Показаны все {n} тестов",results_partial:"Показано {x} из {y} тестов",no_results:"Тесты не найдены. Попробуйте другой запрос или фильтр.",
+badge_quick:"Быстрый скрининг",badge_standard:"Стандартный тест",badge_reviewed:"Проверено психологом",badge_comprehensive:"Консультация включена",badge_sensitive:"Только специалист",
+modal_price_label:"Цена теста",
+modal_sensitive_banner:"Этот тест проводится исключительно психологом Creaven во время консультации. Вы не можете пройти его самостоятельно. Консультация включена в стоимость.",
+modal_consult_included:"В эту цену входит консультация с психологом Creaven. Ваши результаты будут интерпретированы совместно с психологом.",
+modal_consult_required:"Для доступа к результатам и их интерпретации требуется платная консультация с психологом. Вы забронируете консультацию в процессе оплаты.",
+modal_book_sensitive:"Записаться на консультацию к психологу",modal_book_standard:"Записаться на консультацию + пройти тест",
+modal_create_account:"Создать бесплатный аккаунт, чтобы продолжить",modal_already_account:"Уже есть аккаунт?",modal_signin:"Войти",
+footer_main:"Creaven 2026 - Психологическое благополучие для творческой индустрии - Все права защищены.",
+footer_tagline:"\u00ABИндустрия видит искусство. Creaven видит человека за ним.\u00BB"},
+
+tr:{nl_home:"Ana Sayfa",nl_tests:"Değerlendirmeler",nl_book:"Randevu Al",nl_org:"Kurumlar",nl_emergency:"Acil Durum",nl_account:"Hesabım",nl_about:"Hakkımızda",nl_contact:"İletişim",
+h_tag:"Psikolojik Değerlendirme Kütüphanesi",h_em:"nerede olduğunu bil.",h_line2:"Anlamaktan başlayın.",
+h_desc:"Hızlı taramalardan kapsamlı değerlendirmelere kadar onaylanmış psikolojik testler. Her sonuç lisanslı bir psikolog tarafından incelenir. Tüm veriler tamamen gizlidir.",
+h_notice:"\uD83D\uDD12 Sonuçlara erişmek için ücretsiz bir hesap ve danışmanlık gereklidir",
+search_ph:"Değerlendirme ara...",ft_all:"Tümü",ft_distress:"\uD83D\uDD34 Sıkıntı",ft_work:"\uD83D\uDFE0 İş",ft_addiction:"\uD83D\uDFE3 Bağımlılık",ft_development:"\uD83D\uDFE2 Gelişim",ft_comprehensive:"\uD83D\uDD35 Kapsamlı",
+cur_label:"Fiyatları göster",
+results_all:"{n} değerlendirmenin tümü gösteriliyor",results_partial:"{y} değerlendirmeden {x} tanesi gösteriliyor",no_results:"Değerlendirme bulunamadı. Farklı bir arama terimi veya filtre deneyin.",
+badge_quick:"Hızlı tarama",badge_standard:"Standart değerlendirme",badge_reviewed:"Psikolog tarafından incelendi",badge_comprehensive:"Danışmanlık dahil",badge_sensitive:"Sadece uzman",
+modal_price_label:"Değerlendirme fiyatı",
+modal_sensitive_banner:"Bu değerlendirme yalnızca bir Creaven psikoloğu tarafından danışmanlık seansı sırasında uygulanır. Bağımsız olarak alamazsınız. Danışmanlık fiyata dahildir.",
+modal_consult_included:"Bu fiyata bir Creaven psikoloğu ile danışmanlık dahildir. Sonuçlarınız psikoloğunuzla birlikte yorumlanacaktır.",
+modal_consult_required:"Sonuçlarınıza erişmek ve yorumlamak için ücretli bir psikolog danışmanlığı gereklidir. Danışmanlığınızı ödeme sürecinin bir parçası olarak rezerve edeceksiniz.",
+modal_book_sensitive:"Psikologla danışmanlık rezervasyonu yap",modal_book_standard:"Danışmanlık rezervasyonu yap + değerlendirmeyi tamamla",
+modal_create_account:"Devam etmek için ücretsiz hesap oluşturun",modal_already_account:"Zaten bir hesabınız var mı?",modal_signin:"Giriş yap",
+footer_main:"Creaven 2026 - Yaratıcı endüstri için psikolojik iyi oluş - Tüm hakları saklıdır.",
+footer_tagline:"\u201CEndüstri sanatı görür. Creaven onun ardındaki kişiyi görür.\u201D"},
+
+ar:{nl_home:"الرئيسية",nl_tests:"التقييمات",nl_book:"حجز موعد",nl_org:"المؤسسات",nl_emergency:"حالة طوارئ",nl_account:"حسابي",nl_about:"من نحن",nl_contact:"اتصل بنا",
+h_tag:"مكتبة التقييمات النفسية",h_em:"أين أنت الآن.",h_line2:"ابدأ بالفهم.",
+h_desc:"تقييمات نفسية معتمدة، من الفحوصات السريعة إلى التقييمات الشاملة. تتم مراجعة كل نتيجة من قبل طبيب نفسي مرخص. جميع البيانات سرية تمامًا.",
+h_notice:"\uD83D\uDD12 يتطلب الوصول إلى النتائج حسابًا مجانيًا واستشارة",
+search_ph:"البحث عن التقييمات...",ft_all:"الكل",ft_distress:"\uD83D\uDD34 الضيق النفسي",ft_work:"\uD83D\uDFE0 العمل",ft_addiction:"\uD83D\uDFE3 الإدمان",ft_development:"\uD83D\uDFE2 النمو الشخصي",ft_comprehensive:"\uD83D\uDD35 شامل",
+cur_label:"عرض الأسعار بـ",
+results_all:"عرض جميع التقييمات ({n})",results_partial:"عرض {x} من {y} تقييمًا",no_results:"لم يتم العثور على تقييمات. حاول استخدام كلمة بحث أو فلتر آخر.",
+badge_quick:"فحص سريع",badge_standard:"تقييم عادي",badge_reviewed:"تمت مراجعته من طبيب نفسي",badge_comprehensive:"الاستشارة مشمولة",badge_sensitive:"للمتخصص فقط",
+modal_price_label:"سعر التقييم",
+modal_sensitive_banner:"يتم إجراء هذا التقييم فقط بواسطة طبيب نفسي من Creaven خلال جلسة استشارة. لا يمكنك إجراؤه بمفردك. الاستشارة مشمولة في السعر.",
+modal_consult_included:"يشمل هذا السعر استشارة مع طبيب نفسي من Creaven. سيتم تفسير نتائجك مع طبيبك النفسي.",
+modal_consult_required:"يلزم إجراء استشارة مدفوعة مع طبيب نفسي للوصول إلى نتائجك وتفسيرها. ستحجز استشارتك كجزء من عملية الدفع.",
+modal_book_sensitive:"حجز استشارة مع طبيب نفسي",modal_book_standard:"حجز استشارة + إجراء التقييم",
+modal_create_account:"إنشاء حساب مجاني للمتابعة",modal_already_account:"هل لديك حساب بالفعل؟",modal_signin:"تسجيل الدخول",
+footer_main:"Creaven 2026 - الرفاهية النفسية لصناعة الإبداع - جميع الحقوق محفوظة.",
+footer_tagline:"\u201Cالصناعة ترى الفن. Creaven ترى الشخص الذي يقف خلفه.\u201D"},
+
+hi:{nl_home:"होम",nl_tests:"मूल्यांकन",nl_book:"बुक करें",nl_org:"संगठन",nl_emergency:"आपातकाल",nl_account:"मेरा खाता",nl_about:"हमारे बारे में",nl_contact:"संपर्क करें",
+h_tag:"मानसिक मूल्यांकन लाइब्रेरी",h_em:"आप कहाँ खड़े हैं।",h_line2:"समझने से शुरुआत करें।",
+h_desc:"त्वरित स्क्रीनिंग से लेकर व्यापक मूल्यांकन तक, मान्य मानसिक मूल्यांकन। हर परिणाम की समीक्षा एक लाइसेंस प्राप्त मनोवैज्ञानिक द्वारा की जाती है। सभी डेटा पूरी तरह गोपनीय है।",
+h_notice:"\uD83D\uDD12 परिणामों तक पहुंचने के लिए एक मुफ्त खाता और सलाह आवश्यक है",
+search_ph:"मूल्यांकन खोजें...",ft_all:"सभी",ft_distress:"\uD83D\uDD34 तकलीफ",ft_work:"\uD83D\uDFE0 कार्य",ft_addiction:"\uD83D\uDFE3 व्यसन",ft_development:"\uD83D\uDFE2 विकास",ft_comprehensive:"\uD83D\uDD35 व्यापक",
+cur_label:"मूल्य प्रदर्शित करें",
+results_all:"सभी {n} मूल्यांकन दिखाए जा रहे हैं",results_partial:"{y} में से {x} मूल्यांकन दिखाए जा रहे हैं",no_results:"कोई मूल्यांकन नहीं मिला। एक अलग खोज शब्द या फ़िल्टर आज़माएं।",
+badge_quick:"त्वरित स्क्रीनिंग",badge_standard:"मानक मूल्यांकन",badge_reviewed:"मनोवैज्ञानिक द्वारा समीक्षित",badge_comprehensive:"सलाह शामिल",badge_sensitive:"केवल विशेषज्ञ द्वारा",
+modal_price_label:"मूल्यांकन की कीमत",
+modal_sensitive_banner:"यह मूल्यांकन केवल सलाह सत्र के दौरान Creaven मनोवैज्ञानिक द्वारा ही किया जाता है। आप इसे स्वयं नहीं कर सकते। कीमत में सलाह शामिल है।",
+modal_consult_included:"इस कीमत में Creaven मनोवैज्ञानिक के साथ सलाह शामिल है। आपके परिणामों की व्याख्या आपके मनोवैज्ञानिक के साथ की जाएगी।",
+modal_consult_required:"आपके परिणामों तक पहुंचने और उनकी व्याख्या करने के लिए मनोवैज्ञानिक के साथ एक सशुल्क सलाह आवश्यक है। आप भुगतान प्रक्रिया के भाग के रूप में अपनी सलाह बुक करेंगे।",
+modal_book_sensitive:"मनोवैज्ञानिक के साथ सलाह बुक करें",modal_book_standard:"सलाह बुक करें + मूल्यांकन लें",
+modal_create_account:"जारी रखने के लिए मुफ्त खाता बनाएं",modal_already_account:"क्या आपके पास पहले से खाता है?",modal_signin:"साइन इन करें",
+footer_main:"Creaven 2026 - रचनात्मक उद्योग के लिए मानसिक स्वास्थ्य - सर्वाधिकार सुरक्षित।",
+footer_tagline:"\u201Cउद्योग कला को देखता है। Creaven उसके पीछे के व्यक्ति को देखता है।\u201D"},
+
+vi:{nl_home:"Trang chủ",nl_tests:"Bài đánh giá",nl_book:"Đặt lịch",nl_org:"Tổ chức",nl_emergency:"Khẩn cấp",nl_account:"Tài khoản của tôi",nl_about:"Giới thiệu",nl_contact:"Liên hệ",
+h_tag:"Thư viện Đánh giá Tâm lý",h_em:"bạn đang ở đâu.",h_line2:"Bắt đầu từ sự hiểu biết.",
+h_desc:"Các bài đánh giá tâm lý đã được kiểm chứng, từ sàng lọc nhanh đến đánh giá toàn diện. Mọi kết quả đều được nhà tâm lý học có giấy phép xem xét. Toàn bộ dữ liệu được bảo mật hoàn toàn.",
+h_notice:"\uD83D\uDD12 Cần có tài khoản miễn phí và một buổi tư vấn để truy cập kết quả",
+search_ph:"Tìm kiếm bài đánh giá...",ft_all:"Tất cả",ft_distress:"\uD83D\uDD34 Đau khổ",ft_work:"\uD83D\uDFE0 Công việc",ft_addiction:"\uD83D\uDFE3 Nghiện",ft_development:"\uD83D\uDFE2 Phát triển",ft_comprehensive:"\uD83D\uDD35 Toàn diện",
+cur_label:"Hiển thị giá bằng",
+results_all:"Hiển thị tất cả {n} bài đánh giá",results_partial:"Hiển thị {x} trong {y} bài đánh giá",no_results:"Không tìm thấy bài đánh giá nào. Hãy thử từ khóa hoặc bộ lọc khác.",
+badge_quick:"Sàng lọc nhanh",badge_standard:"Đánh giá tiêu chuẩn",badge_reviewed:"Được nhà tâm lý học xem xét",badge_comprehensive:"Bao gồm tư vấn",badge_sensitive:"Chỉ chuyên gia",
+modal_price_label:"Giá bài đánh giá",
+modal_sensitive_banner:"Bài đánh giá này chỉ được thực hiện bởi nhà tâm lý học của Creaven trong buổi tư vấn. Bạn không thể tự thực hiện. Buổi tư vấn đã được bao gồm trong giá.",
+modal_consult_included:"Giá này đã bao gồm một buổi tư vấn với nhà tâm lý học của Creaven. Kết quả của bạn sẽ được diễn giải cùng với nhà tâm lý học.",
+modal_consult_required:"Cần có một buổi tư vấn trả phí với nhà tâm lý học để truy cập và diễn giải kết quả của bạn. Bạn sẽ đặt lịch tư vấn trong quá trình thanh toán.",
+modal_book_sensitive:"Đặt lịch tư vấn với nhà tâm lý học",modal_book_standard:"Đặt lịch tư vấn + làm bài đánh giá",
+modal_create_account:"Tạo tài khoản miễn phí để tiếp tục",modal_already_account:"Đã có tài khoản?",modal_signin:"Đăng nhập",
+footer_main:"Creaven 2026 - Sức khỏe tâm lý cho ngành công nghiệp sáng tạo - Đã đăng ký bản quyền.",
+footer_tagline:"\u201CNgành công nghiệp nhìn thấy nghệ thuật. Creaven nhìn thấy con người phía sau nó.\u201D"}
+};
+
+function applyLang(lang){
+  var t = T[lang] || T.en;
+  currentLang = lang;
+  document.getElementById('nl-home').textContent=t.nl_home;
+  document.getElementById('nl-tests').textContent=t.nl_tests;
+  document.getElementById('nl-book').textContent=t.nl_book;
+  document.getElementById('nl-org').textContent=t.nl_org;
+  document.getElementById('nl-emergency').textContent=t.nl_emergency;
+  document.getElementById('nl-account').textContent=t.nl_account;
+  document.getElementById('nl-about').textContent=t.nl_about;
+  document.getElementById('nl-contact').textContent=t.nl_contact;
+  document.getElementById('h-tag').textContent=t.h_tag;
+  document.getElementById('h-em').textContent=t.h_em;
+  document.getElementById('h-line2').textContent=t.h_line2;
+  document.getElementById('h-desc').textContent=t.h_desc;
+  document.getElementById('h-notice').innerHTML=t.h_notice;
+  document.getElementById('searchInput').placeholder=t.search_ph;
+  document.getElementById('ft-all').textContent=t.ft_all;
+  document.getElementById('ft-distress').innerHTML=t.ft_distress;
+  document.getElementById('ft-work').innerHTML=t.ft_work;
+  document.getElementById('ft-addiction').innerHTML=t.ft_addiction;
+  document.getElementById('ft-development').innerHTML=t.ft_development;
+  document.getElementById('ft-comprehensive').innerHTML=t.ft_comprehensive;
+  document.getElementById('cur-label').textContent=t.cur_label;
+  document.getElementById('no-results-text').textContent=t.no_results;
+  document.getElementById('modalPriceLabel').textContent=t.modal_price_label;
+  document.getElementById('footer-main').textContent=t.footer_main;
+  document.getElementById('footer-tagline').textContent=t.footer_tagline;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  applyFilters(); // refresh results count text in new language
+}
+
+// =============================================
 // CURRENCY
+// =============================================
 var RATES = {
   USD:{rate:1,symbol:'$',dec:2},XOF:{rate:620,symbol:'CFA ',dec:0},
   EUR:{rate:0.93,symbol:'€',dec:2},SGD:{rate:1.35,symbol:'S$',dec:2},
@@ -615,12 +970,10 @@ function fmt(usd, cur) {
 
 function setCurrency(cur) {
   selectedCurrency = cur;
-  // Update all price tags on cards
   document.querySelectorAll('.card-price').forEach(function(el) {
     var usd = parseFloat(el.getAttribute('data-usd'));
     el.textContent = fmt(usd, cur);
   });
-  // Update modal if open
   var usdEl = document.getElementById('modalPriceVal');
   if (usdEl && usdEl.getAttribute('data-usd')) {
     usdEl.textContent = fmt(parseFloat(usdEl.getAttribute('data-usd')), cur);
@@ -638,6 +991,7 @@ function setFilter(cat, btn) {
 }
 
 function applyFilters() {
+  var t = T[currentLang] || T.en;
   var query = document.getElementById('searchInput').value.toLowerCase();
   var cards = document.querySelectorAll('.test-card[data-cat]');
   var count = 0;
@@ -655,26 +1009,25 @@ function applyFilters() {
   });
   var total = cards.length;
   document.getElementById('resultsCount').textContent = count === total
-    ? 'Showing all ' + total + ' assessments'
-    : 'Showing ' + count + ' of ' + total + ' assessments';
+    ? t.results_all.replace('{n}', total)
+    : t.results_partial.replace('{x}', count).replace('{y}', total);
   var noRes = document.getElementById('noResults');
   if (noRes) noRes.classList.toggle('show', count === 0);
 }
 
 // MODAL
 function openModal(card) {
+  var t = T[currentLang] || T.en;
   var d = card.querySelector('.modal-data');
   if (!d) return;
   var usd = parseFloat(d.getAttribute('data-usd'));
   var consultIncluded = d.getAttribute('data-consult-included') === 'true';
   var sensitive = d.getAttribute('data-sensitive') === 'true';
-  var tier = d.getAttribute('data-tier');
   var badge = d.getAttribute('data-badge');
-  var badgeLabels = {quick:'Quick screening',standard:'Standard assessment',reviewed:'Reviewed by psychologist',comprehensive:'Consultation included',sensitive:'Practitioner only'};
+  var badgeLabels = {quick:t.badge_quick,standard:t.badge_standard,reviewed:t.badge_reviewed,comprehensive:t.badge_comprehensive,sensitive:t.badge_sensitive};
 
-  // Badges
   var badgeHtml = '<span class="badge ' + badge + '">' + (badgeLabels[badge]||badge) + '</span>';
-  if (consultIncluded) badgeHtml += ' <span class="badge comprehensive">Consultation included</span>';
+  if (consultIncluded) badgeHtml += ' <span class="badge comprehensive">' + t.badge_comprehensive + '</span>';
   document.getElementById('modalBadges').innerHTML = badgeHtml;
   document.getElementById('modalTitle').textContent = d.getAttribute('data-title');
   document.getElementById('modalFullname').textContent = d.getAttribute('data-fullname');
@@ -685,32 +1038,31 @@ function openModal(card) {
   document.getElementById('modalDesc').textContent = d.getAttribute('data-desc');
   document.getElementById('modalMeta').innerHTML = '<span>&#128221; ' + d.getAttribute('data-q') + ' questions</span><span>&#9203; ' + d.getAttribute('data-dur') + '</span>';
 
-  // Banners
   var sensitiveEl = document.getElementById('modalSensitiveBanner');
+  sensitiveEl.textContent = t.modal_sensitive_banner;
   sensitiveEl.style.display = sensitive ? 'block' : 'none';
   var consultEl = document.getElementById('modalConsultBanner');
   if (consultIncluded && !sensitive) {
-    consultEl.textContent = 'A consultation with a Creaven psychologist is included in this price. Your results will be interpreted together with your psychologist.';
+    consultEl.textContent = t.modal_consult_included;
     consultEl.style.display = 'block';
   } else if (!consultIncluded && !sensitive) {
-    consultEl.textContent = 'A paid consultation with a psychologist is required to access and interpret your results. You will book your consultation as part of the checkout process.';
+    consultEl.textContent = t.modal_consult_required;
     consultEl.style.display = 'block';
   } else {
     consultEl.style.display = 'none';
   }
 
-  // Actions
   var actionsEl = document.getElementById('modalActions');
   if (currentUser) {
     if (sensitive) {
-      actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'booking.html\'">Book consultation with psychologist</button>';
+      actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'booking.html\'">' + t.modal_book_sensitive + '</button>';
     } else {
-      actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'booking.html\'">Book consultation + take assessment</button>';
+      actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'booking.html\'">' + t.modal_book_standard + '</button>';
     }
   } else {
-    actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'account.html?tab=signup\'">Create free account to proceed</button>'
-      + '<div class="modal-or">Already have an account?</div>'
-      + '<button class="btn-modal-secondary" onclick="window.location.href=\'account.html\'">Sign in</button>';
+    actionsEl.innerHTML = '<button class="btn-modal-primary" onclick="window.location.href=\'account.html?tab=signup\'">' + t.modal_create_account + '</button>'
+      + '<div class="modal-or">' + t.modal_already_account + '</div>'
+      + '<button class="btn-modal-secondary" onclick="window.location.href=\'account.html\'">' + t.modal_signin + '</button>';
   }
 
   document.getElementById('modalOverlay').classList.add('open');
@@ -724,16 +1076,18 @@ function closeModal() {
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
 
-// LANG
+// LANG SWITCHER
 function toggleLangMenu() { document.getElementById('langDropdown').classList.toggle('open'); }
 function selectLang(lang, label) {
   document.getElementById('langToggle').textContent = label;
   document.getElementById('langDropdown').classList.remove('open');
-  document.documentElement.lang = {kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es'}[lang]||'en';
+  applyLang(lang);
 }
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.lang-switcher')) document.getElementById('langDropdown').classList.remove('open');
 });
+
+applyLang('en');
 </script>
 </body>
-</html>
+        </html>
