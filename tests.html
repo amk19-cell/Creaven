@@ -942,6 +942,24 @@ function applyLang(lang){
   document.getElementById('footer-tagline').textContent=t.footer_tagline;
   document.documentElement.lang = lang;
   document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  function applyCardI18n(lang) {
+  document.querySelectorAll('.test-card[data-cat]').forEach(function(card) {
+    var d = card.querySelector('.modal-data');
+    if (!d) return;
+    var id = d.getAttribute('data-id');
+    var entry = cardI18n[id];
+    if (!entry) return;
+    var tr = entry[lang] || entry.en;
+    // Update visible card fullname + description (title/abbr stays as acronym, unchanged)
+    var abbrEl = card.querySelector('.test-abbr');
+    var descEl = card.querySelector('.test-desc');
+    if (abbrEl) abbrEl.textContent = tr.fullname;
+    if (descEl) descEl.textContent = tr.desc;
+    // Update modal-data attributes so modal shows correct language too
+    d.setAttribute('data-fullname', tr.fullname);
+    d.setAttribute('data-desc', tr.desc);
+  });
+  applyCardI18n(lang);
   applyFilters(); // refresh results count text in new language
 }
 
