@@ -683,12 +683,23 @@ async function loadPractitioners(){
   var grid=document.getElementById('practGrid');
   grid.innerHTML='<div class="pract-loading">Loading available practitioners...</div>';
   try{
-    var snap=await db.collection('practitioners').where('status','==','approved').get();
-    if(snap.empty){grid.innerHTML=buildPractCard({uid:'dani',fullName:'Grace Daniella Amakon',languages:'French, English',specialities:'Burnout, Trauma, Psychosocial Support',emoji:'🌿'});return;}
+    // Récupération de TOUS les praticiens dans Firestore (sans filtre status)
+    var snap=await db.collection('practitioners').get();
+    
+    if(snap.empty){
+      grid.innerHTML='<div class="pract-loading">Aucun praticien trouvé dans la base Firestore.</div>';
+      return;
+    }
+    
     var html='';
-    snap.forEach(function(doc){html+=buildPractCard(Object.assign({},doc.data(),{uid:doc.id}));});
+    snap.forEach(function(doc){
+      html+=buildPractCard(Object.assign({},doc.data(),{uid:doc.id}));
+    });
     grid.innerHTML=html;
-  }catch(e){grid.innerHTML=buildPractCard({uid:'dani',fullName:'Grace Daniella Amakon',languages:'French, English',specialities:'Burnout, Trauma, Psychosocial Support',emoji:'🌿'});}
+  }catch(e){
+    console.error("Erreur Firestore :", e);
+    grid.innerHTML='<div class="pract-loading">Erreur lors du chargement des praticiens. Vérifiez la console.</div>';
+  }
 }
 function buildPractCard(p){return '<div class="pract-card" onclick="selectPract(\''+p.uid+'\',\''+p.fullName+'\',\''+(p.languages||'')+'\')">'+'<div class="pract-avatar">'+(p.emoji||'🧠')+'</div>'+'<div class="pract-name">'+p.fullName+'</div>'+'<div class="pract-langs">'+(p.languages||'')+'</div>'+'<div class="pract-spec">'+(p.specialities||'')+'</div>'+'</div>';}
 function selectPract(uid,name,langs){selectedPract={uid:uid,name:name,langs:langs};document.querySelectorAll('.pract-card').forEach(function(c){c.classList.toggle('selected',c.querySelector('.pract-name').textContent===name);});loadCalendar();document.getElementById('step3Section').style.display='block';setTimeout(function(){document.getElementById('step3Section').scrollIntoView({behavior:'smooth',block:'start'});},100);}
