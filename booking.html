@@ -684,10 +684,10 @@ async function loadPractitioners(){
   grid.innerHTML='<div class="pract-loading">Loading available practitioners...</div>';
   try{
     // Récupération de TOUS les praticiens dans Firestore (sans filtre status)
-    var snap=await db.collection('practitioners').get();
+    var snap=await db.collection('Practitioners').get();
     
     if(snap.empty){
-      grid.innerHTML='<div class="pract-loading">Aucun praticien trouvé dans la base Firestore.</div>';
+      grid.innerHTML='<div class="pract-loading">No practitioner found.</div>';
       return;
     }
     
