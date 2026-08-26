@@ -683,26 +683,26 @@ async function loadPractitioners(){
   var grid=document.getElementById('practGrid');
   grid.innerHTML='<div class="pract-loading">Loading available practitioners...</div>';
   try{
-    // Filtrage sur la collection Practitioners avec le status "approved"
     var snap=await db.collection('Practitioners').where('status','==','approved').get();
     
     if(snap.empty){
-      grid.innerHTML='<div class="pract-loading">Aucun praticien approuvé trouvé.</div>';
+      grid.innerHTML='<div class="pract-loading">Aucun praticien approuvé pour le moment.</div>';
       return;
     }
     
     var html='';
     snap.forEach(function(doc){
       var data = doc.data();
+      
+      // Extraction automatique de l'initiale du nom
+      var firstInitial = data.fullName ? data.fullName.charAt(0).toUpperCase() : 'P';
 
-      // Construction des données avec sécurité pour l'emoji manquant
       var formattedData = {
         uid: doc.id,
-        fullName: data.fullName || data.name || 'Nom non renseigné',
-        Languages: data.languages || data.langues || 'Français',
-        specialities: data.specialities || data.specialites || 'Général',
-        emoji: data.emoji || '🌿' // Emoji par défaut si absent dans Firestore,
-        status: data.status || data.status|| 'approved'
+        fullName: data.fullName || 'Nom non renseigné',
+        languages: data.languages || 'Non spécifié',
+        specialities: data.specialities || 'Général',
+        emoji: firstInitial // Utilise l'initiale à la place de l'émoticône
       };
 
       html += buildPractCard(formattedData);
@@ -711,7 +711,7 @@ async function loadPractitioners(){
     grid.innerHTML = html;
   }catch(e){
     console.error("Erreur Firestore :", e);
-    grid.innerHTML='<div class="pract-loading">Error.</div>';
+    grid.innerHTML='<div class="pract-loading">Erreur lors du chargement des données.</div>';
   }
 }
 function buildPractCard(p){return '<div class="pract-card" onclick="selectPract(\''+p.uid+'\',\''+p.fullName+'\',\''+(p.Languages||'')+'\')">'+'<div class="pract-avatar">'+(p.emoji||'🧠')+'</div>'+'<div class="pract-name">'+p.fullName+'</div>'+'<div class="pract-langs">'+(p.languages||'')+'</div>'+'<div class="pract-spec">'+(p.specialities||'')+'</div>'+'</div>';}
