@@ -679,14 +679,14 @@ function selectType(idx){
   setTimeout(function(){document.getElementById('step2Section').scrollIntoView({behavior:'smooth',block:'start'});},100);
 }
 
-async function loadPractitioners(){
+async function loadPractitionners(){
   var grid=document.getElementById('practGrid');
-  grid.innerHTML='<div class="pract-loading">Loading available practitioners...</div>';
+  grid.innerHTML='<div class="pract-loading">Loading available practitionners...</div>';
   try{
-    var snap=await db.collection('Practitioners').where('status','==','approved').get();
+    var snap=await db.collection('Practitionners').where('status','==','approved').get();
     
     if(snap.empty){
-      grid.innerHTML='<div class="pract-loading">Aucun praticien approuvé pour le moment.</div>';
+      grid.innerHTML='<div class="pract-loading">None approved.</div>';
       return;
     }
     
@@ -711,7 +711,7 @@ async function loadPractitioners(){
     grid.innerHTML = html;
   }catch(e){
     console.error("Erreur Firestore :", e);
-    grid.innerHTML='<div class="pract-loading">Erreur lors du chargement des données.</div>';
+    grid.innerHTML='<div class="pract-loading">Error.</div>';
   }
 }
 function buildPractCard(p){return '<div class="pract-card" onclick="selectPract(\''+p.uid+'\',\''+p.fullName+'\',\''+(p.Languages||'')+'\')">'+'<div class="pract-avatar">'+(p.emoji||'🧠')+'</div>'+'<div class="pract-name">'+p.fullName+'</div>'+'<div class="pract-langs">'+(p.languages||'')+'</div>'+'<div class="pract-spec">'+(p.specialities||'')+'</div>'+'</div>';}
@@ -722,7 +722,7 @@ var MONTHS_EN=['January','February','March','April','May','June','July','August'
 var MONTHS_FR=['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
 async function loadCalendar(){
   availableSlots={};
-  try{var snap=await db.collection('availability').where('practitionerUid','==',selectedPract.uid).where('status','==','available').get();snap.forEach(function(doc){var d=doc.data();if(!availableSlots[d.date])availableSlots[d.date]=[];availableSlots[d.date].push(Object.assign({},d,{docId:doc.id}));});}catch(e){generateDemoSlots();}
+  try{var snap=await db.collection('availability').where('practitionnerUid','==',selectedPract.uid).where('status','==','available').get();snap.forEach(function(doc){var d=doc.data();if(!availableSlots[d.date])availableSlots[d.date]=[];availableSlots[d.date].push(Object.assign({},d,{docId:doc.id}));});}catch(e){generateDemoSlots();}
   renderCalendar();
 }
 function generateDemoSlots(){var today=new Date();for(var i=1;i<=30;i++){var d=new Date(today);d.setDate(today.getDate()+i);if(d.getDay()===0||d.getDay()===6)continue;var key=d.toISOString().split('T')[0];availableSlots[key]=[{time:'09:00',duration:60,practitionerUid:selectedPract.uid},{time:'10:30',duration:60,practitionerUid:selectedPract.uid},{time:'14:00',duration:60,practitionerUid:selectedPract.uid},{time:'16:00',duration:60,practitionerUid:selectedPract.uid}];}}
