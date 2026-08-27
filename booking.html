@@ -372,58 +372,79 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
     <div class="booking-form">
       <div class="summary" id="bookingSummary"></div>
       <div class="msg-box" id="formMsg"></div>
-      <div class="form-row">
+
+      <!-- AUTH GATE : affiché seulement si personne n'est connecté -->
+      <div id="authGateBox" style="display:none;background:var(--cream-dark,#F0F5F0);border-radius:16px;padding:24px;margin-bottom:20px;">
+        <div style="font-weight:600;margin-bottom:4px;">Sign in to book a session</div>
+        <div style="font-size:13px;color:var(--mid,#4A5A4A);margin-bottom:16px;">You need an account so you can access your booking confirmation and session details later.</div>
+        <div class="msg-box" id="authGateMsg"></div>
         <div class="form-group">
-          <label class="form-label" id="fl-name">Full name</label>
-          <input type="text" class="form-input" id="fi-name" placeholder="Your full name">
+          <input type="email" class="form-input" id="auth-email" placeholder="your@email.com">
         </div>
         <div class="form-group">
-          <label class="form-label" id="fl-email">Email address</label>
-          <input type="email" class="form-input" id="fi-email" placeholder="your@email.com">
+          <input type="password" class="form-input" id="auth-password" placeholder="Password (min 6 characters)">
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-confirm" style="flex:1;min-width:140px;" onclick="authSignIn()">Sign In</button>
+          <button class="btn-pay-manual" style="flex:1;min-width:140px;" onclick="authSignUp()">Create Account</button>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label" id="fl-lang">Session language</label>
-        <select class="form-select" id="fi-lang">
-          <option value="English">English</option>
-          <option value="Francais">Francais</option>
-          <option value="Korean">Korean</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Chinese">Chinese (Mandarin)</option>
-          <option value="Thai">Thai</option>
-          <option value="German">German</option>
-          <option value="Spanish">Spanish</option>
-        </select>
+
+      <!-- CONTENU RÉSERVÉ AUX UTILISATEURS CONNECTÉS -->
+      <div id="authGatedContent" style="display:none;">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" id="fl-name">Full name</label>
+            <input type="text" class="form-input" id="fi-name" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="fl-email">Email address</label>
+            <input type="email" class="form-input" id="fi-email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="fl-lang">Session language</label>
+          <select class="form-select" id="fi-lang">
+            <option value="English">English</option>
+            <option value="Francais">Francais</option>
+            <option value="Korean">Korean</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Chinese">Chinese (Mandarin)</option>
+            <option value="Thai">Thai</option>
+            <option value="German">German</option>
+            <option value="Spanish">Spanish</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="fl-note">Note for your psychologist <span style="color:var(--light);font-weight:400;">(optional)</span></label>
+          <textarea class="form-textarea" id="fi-note" placeholder="Anything you want them to know before the session..."></textarea>
+        </div>
+        <div class="payment-section">
+          <div class="payment-title">Payment</div>
+          <div class="payment-amount">
+            <div class="payment-amount-label">Session total</div>
+            <div class="payment-amount-value" id="pay-amount-display">$45.00</div>
+          </div>
+          <div class="payment-methods">
+            <button class="pay-method-btn active" id="pm-card" onclick="selectPayMethod('card')">
+              <span>&#128179;</span> Card / Mobile Money
+            </button>
+            <button class="pay-method-btn" id="pm-paypal" onclick="selectPayMethod('paypal')">
+              <span>🅿</span> PayPal
+            </button>
+          </div>
+          <div class="manual-pay-box" id="manualPayBox" style="display:none;"></div>
+          <div class="paypal-info" id="paypalInfo">
+            <strong>Pay securely via PayPal.</strong> You will be redirected to PayPal to complete your payment. Works with any Visa, Mastercard, or PayPal account — worldwide.
+          </div>
+          <div class="resend-info" id="paystackInfo">
+            Secured by <a href="https://paystack.com" target="_blank">Paystack</a> - Card, Mobile Money, Bank transfer accepted
+          </div>
+        </div>
+        <button class="btn-confirm" id="btnPay" onclick="initiatePayment()">Pay &amp; Confirm Booking</button>
+        <button class="btn-pay-paypal show" id="btnPayPal" onclick="initiatePayPal()" style="display:none;">&#128179; Pay with PayPal</button>
+        <button class="btn-pay-manual" id="btnManual" onclick="confirmManualBooking()">I have sent the payment</button>
       </div>
-      <div class="form-group">
-        <label class="form-label" id="fl-note">Note for your psychologist <span style="color:var(--light);font-weight:400;">(optional)</span></label>
-        <textarea class="form-textarea" id="fi-note" placeholder="Anything you want them to know before the session..."></textarea>
-      </div>
-      <div class="payment-section">
-        <div class="payment-title">Payment</div>
-        <div class="payment-amount">
-          <div class="payment-amount-label">Session total</div>
-          <div class="payment-amount-value" id="pay-amount-display">$45.00</div>
-        </div>
-        <div class="payment-methods">
-          <button class="pay-method-btn active" id="pm-card" onclick="selectPayMethod('card')">
-            <span>&#128179;</span> Card / Mobile Money
-          </button>
-          <button class="pay-method-btn" id="pm-paypal" onclick="selectPayMethod('paypal')">
-            <span>🅿</span> PayPal
-          </button>
-        </div>
-        <div class="manual-pay-box" id="manualPayBox" style="display:none;"></div>
-        <div class="paypal-info" id="paypalInfo">
-          <strong>Pay securely via PayPal.</strong> You will be redirected to PayPal to complete your payment. Works with any Visa, Mastercard, or PayPal account — worldwide.
-        </div>
-        <div class="resend-info" id="paystackInfo">
-          Secured by <a href="https://paystack.com" target="_blank">Paystack</a> - Card, Mobile Money, Bank transfer accepted
-        </div>
-      </div>
-      <button class="btn-confirm" id="btnPay" onclick="initiatePayment()">Pay &amp; Confirm Booking</button>
-      <button class="btn-pay-paypal show" id="btnPayPal" onclick="initiatePayPal()" style="display:none;">&#128179; Pay with PayPal</button>
-      <button class="btn-pay-manual" id="btnManual" onclick="confirmManualBooking()">I have sent the payment</button>
     </div>
   </div>
 
@@ -513,6 +534,53 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
+
+// =============================================
+// AUTH GATE — il faut être connecté pour réserver
+// =============================================
+var currentAuthUser = null;
+firebase.auth().onAuthStateChanged(function(user){
+  currentAuthUser = user;
+  var gateBox = document.getElementById('authGateBox');
+  var gatedContent = document.getElementById('authGatedContent');
+  if(!gateBox || !gatedContent) return;
+  if(user){
+    gateBox.style.display = 'none';
+    gatedContent.style.display = 'block';
+    var emailField = document.getElementById('fi-email');
+    if(emailField && !emailField.value) emailField.value = user.email || '';
+  } else {
+    gateBox.style.display = 'block';
+    gatedContent.style.display = 'none';
+  }
+});
+
+function authSignIn(){
+  var email = document.getElementById('auth-email').value.trim();
+  var pw = document.getElementById('auth-password').value;
+  var msg = document.getElementById('authGateMsg');
+  if(!email || !pw){ msg.textContent='Please enter your email and password.'; msg.className='msg-box error show'; return; }
+  msg.textContent='Signing in...'; msg.className='msg-box info show';
+  firebase.auth().signInWithEmailAndPassword(email, pw).then(function(){
+    msg.className='msg-box';
+  }).catch(function(err){
+    msg.textContent = err.message; msg.className='msg-box error show';
+  });
+}
+
+function authSignUp(){
+  var email = document.getElementById('auth-email').value.trim();
+  var pw = document.getElementById('auth-password').value;
+  var msg = document.getElementById('authGateMsg');
+  if(!email || !pw){ msg.textContent='Please enter your email and password.'; msg.className='msg-box error show'; return; }
+  if(pw.length < 6){ msg.textContent='Password must be at least 6 characters.'; msg.className='msg-box error show'; return; }
+  msg.textContent='Creating your account...'; msg.className='msg-box info show';
+  firebase.auth().createUserWithEmailAndPassword(email, pw).then(function(){
+    msg.className='msg-box';
+  }).catch(function(err){
+    msg.textContent = err.message; msg.className='msg-box error show';
+  });
+}
 
 // =============================================
 // RESEND EMAIL FUNCTION
@@ -783,7 +851,7 @@ async function confirmPayPalBooking(){
   btn.disabled=false;
 }
 
-function validateForm(){var name=document.getElementById('fi-name').value.trim();var email=document.getElementById('fi-email').value.trim();var msg=document.getElementById('formMsg');if(!name||!email){msg.textContent='Please fill in your name and email.';msg.className='msg-box error show';return false;}if(!email.includes('@')){msg.textContent='Please enter a valid email address.';msg.className='msg-box error show';return false;}msg.className='msg-box';return true;}
+function validateForm(){if(!currentAuthUser){var msg0=document.getElementById('formMsg');msg0.textContent='Please sign in first to book a session.';msg0.className='msg-box error show';return false;}var name=document.getElementById('fi-name').value.trim();var email=document.getElementById('fi-email').value.trim();var msg=document.getElementById('formMsg');if(!name||!email){msg.textContent='Please fill in your name and email.';msg.className='msg-box error show';return false;}if(!email.includes('@')){msg.textContent='Please enter a valid email address.';msg.className='msg-box error show';return false;}msg.className='msg-box';return true;}
 
 function initiatePayment(){
   if(!validateForm())return;
@@ -816,7 +884,8 @@ async function onPaymentSuccess(reference,method){
   var msg=document.getElementById('formMsg');
   msg.textContent='Saving your booking...';msg.className='msg-box info show';
   try{
-    await db.collection('bookings').add({clientName:name,clientEmail:email,practitionerUid:selectedPract.uid,practitionerName:selectedPract.name,consultationType:typeName,date:selectedDate,time:selectedSlot.time,duration:selectedSlot.duration||60,sessionLang:lang,note:note||'',sessionCode:sessionCode,sessionLink:sessionLink,currency:selectedCurrency,displayPrice:priceDisplay,amountXofCharged:selectedCurrency==='XOF'?BASE_PRICE_XOF:Math.round(BASE_PRICE_USD*620),paymentMethod:method,paymentStatus:method==='paystack'?'paid':'pending_verification',status:method==='paystack'?'confirmed':'pending_payment',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    if(!currentAuthUser){msg.textContent='Session expired — please sign in again.';msg.className='msg-box error show';return;}
+    await db.collection('bookings').add({uid:currentAuthUser.uid,clientName:name,clientEmail:email,practitionerUid:selectedPract.uid,practitionerName:selectedPract.name,consultationType:typeName,date:selectedDate,time:selectedSlot.time,duration:selectedSlot.duration||60,sessionLang:lang,note:note||'',sessionCode:sessionCode,sessionLink:sessionLink,currency:selectedCurrency,displayPrice:priceDisplay,amountXofCharged:selectedCurrency==='XOF'?BASE_PRICE_XOF:Math.round(BASE_PRICE_USD*620),paymentMethod:method,paymentStatus:method==='paystack'?'paid':'pending_verification',status:method==='paystack'?'confirmed':'pending_payment',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     if(availableSlots[selectedDate]&&availableSlots[selectedDate][selectedSlot.idx]&&availableSlots[selectedDate][selectedSlot.idx].docId){await db.collection('availability').doc(availableSlots[selectedDate][selectedSlot.idx].docId).update({status:'booked',clientName:name,clientEmail:email,sessionCode:sessionCode});}
     msg.textContent='Sending confirmation...';
     var payNote=method==='paystack'?'Payment confirmed via Paystack. Ref: '+sessionCode:'Manual payment declared (Wave/MTN). Ref: '+sessionCode+'. Pending verification.';
@@ -872,3 +941,4 @@ pendingSessionCode=generateCode();
 </script>
 </body>
 </html>
+
