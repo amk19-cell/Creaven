@@ -11,7 +11,10 @@ const i18n = {
     hero_eyebrow:"Psychological Well-being for the Creative Industry",
     hero_h1_a:"Every person behind the work", hero_h1_b:"deserves care.",
     hero_desc:"The industry sees the art. Creaven sees the person behind it. For those who built everything they were told to want, and still feel lost. For those who are struggling in silence, searching for a way out or a way back to themselves. You don't have to be falling apart to deserve support. You just have to be human. Fame is loud. Pain is quiet. Creaven listens.",
-    hero_cta1:"Explore Our Services", hero_call:"Call Now", hero_cta2:"Book a Consultation",
+    hero_cta1:"Explore Our Services", hero_call:"Call Now", hero_call_sub:"Choose how to reach us", hero_cta2:"Book a Consultation",
+    callmenu_wa_title:"WhatsApp", callmenu_wa_desc:"Chat with us now",
+    callmenu_em_title:"Emergency Resources", callmenu_em_desc:"In danger right now",
+    callmenu_cons_title:"Book a Consultation", callmenu_cons_desc:"Immediate session, no appointment",
     stat1_unit:"people worldwide", stat1_label:"live with a mental health condition (WHO, 2024)",
     stat2_unit:"of creative workers", stat2_label:"report symptoms of anxiety or depression (MusiCares, 2023)",
     stat3_unit:"lost per year", stat3_label:"in global productivity due to mental health (WHO)",
@@ -69,6 +72,10 @@ const i18n = {
     hero_h1_a: "Chaque personne derriere le travail", hero_h1_b: "merite des soins.", hero_h1_c: "",
     hero_desc:"L'industrie voit l'art. Creaven voit la personne derriere. Pour ceux qui ont tout construit comme on leur avait dit de le faire, et qui se sentent quand meme perdus. Pour ceux qui luttent en silence, cherchant une issue ou un chemin pour se retrouver. Tu n'as pas besoin d'etre brise pour meriter du soutien. Tu dois juste etre humain. La gloire est bruyante. La douleur est silencieuse. Creaven ecoute.",
     hero_cta1: "Nos Services", hero_cta2: "Nous Contacter",
+    hero_call: "Appeler Maintenant", hero_call_sub: "Choisissez comment nous joindre",
+    callmenu_wa_title: "WhatsApp", callmenu_wa_desc: "Discutez avec nous maintenant",
+    callmenu_em_title: "Ressources d'Urgence", callmenu_em_desc: "En danger maintenant",
+    callmenu_cons_title: "Réserver une Consultation", callmenu_cons_desc: "Session immédiate, sans rendez-vous",
     badge1: "100% Remote, Mondial", badge2: "Prévention  -  Pas Seulement la Crise",
     card_title: "Votre bien-être compte",
     card_desc: "Que vous soyez manager, caméraman, agent de sécurité ou stagiaire  -  Creaven est là pour vous.",
@@ -161,7 +168,7 @@ const i18n = {
     tc_cta: "Passer l'evaluation →",
     footer_rights: "Tous droits réservés.", footer_tagline: "\"Protéger les esprits dans l'ombre des projecteurs.\""
   },
-  kr: {
+  ko: {
     nav_home: "홈", nav_session: "내 세션", nav_org: "기관", nav_emergency: "긴급", nav_account: "내 계정", nav_book: "예약",
     nav_services: "서비스", nav_who: "대상", nav_tests: "심리검사",
     nav_about: "소개", nav_contact: "문의", nav_account: "고객 로그인",
@@ -242,7 +249,7 @@ const i18n = {
     nav_emergency: "긴급",
     footer_rights: "모든 권리 보유.", footer_tagline: "\"무대 뒤의 마음을 지켜드립니다.\""
   },
-  jp: {
+  ja: {
     nav_services: "サービス", nav_who: "対象者", nav_tests: "心理検査",
     nav_about: "について", nav_contact: "お問い合わせ", nav_account: "ログイン",
     hero_eyebrow: "心理的ウェルビーイングプログラム",
@@ -714,92 +721,352 @@ const i18n = {
     tc8_cta: "Ver biblioteca completa →",
     tc_cta: "Iniciar evaluacion →",
     footer_rights: "Todos los derechos reservados.", footer_tagline: "\"Bienestar psicologico para todos en la industria creativa.\""
-  }
-};
-
-let currentLang = 'en';
-
-function setLang(lang) {
-  currentLang = lang;
-  const t = i18n[lang];
-  if (!t) return;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.textContent = t[key];
-  });
-  document.documentElement.lang = lang === 'kr' ? 'ko' : lang === 'jp' ? 'ja' : lang === 'zh' ? 'zh' : lang === 'th' ? 'th' : lang === 'de' ? 'de' : lang === 'es' ? 'es' : 'en';
-}
-
-// Language dropdown
-function toggleLangMenu() {
-  const dd = document.getElementById('langDropdown');
-  const btn = document.getElementById('langToggle');
-  dd.classList.toggle('open');
-  btn.classList.toggle('open');
-}
-function selectLang(lang, label) {
-  setLang(lang);
-  document.getElementById('langToggle').textContent = label;
-  document.getElementById('langDropdown').classList.remove('open');
-  document.getElementById('langToggle').classList.remove('open');
-}
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.lang-switcher')) {
-    document.getElementById('langDropdown').classList.remove('open');
-    document.getElementById('langToggle').classList.remove('open');
-  }
-});
-
-// Scroll reveal
-const observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
-
-// Marquee translation
-function updateMarquee(lang) {
-  const items = {
-    en: ['Prevention & Psychoeducation','Individual Support','Team Training','Crisis Protocols','Burnout Assessment','Multilingual Care','Creative Industry Expertise','Organizational Safety'],
-    fr: ['Prevention','Soutien Individuel','Formation Equipes','Protocoles Crise','Evaluation Burnout','Soins Multilingues','Expertise Creative','Securite Organisationnelle'],
-    kr: ['예방 및 심리교육','개인 지원','팀 교육','위기 프로토콜','번아웃 평가','다국어 케어','창작 전문성','조직 안전'],
-    jp: ['予防と心理教育','個別サポート','チームトレーニング','危機プロトコル','バーンアウト評価','多言語ケア','専門知識','組織安全'],
-    zh: ['预防和心理教育','个人支持','团队培训','危机协议','倦怠评估','多语言','创意产业','组织安全'],
-    th: ['การป้องกัน','การสนับสนุน','การฝึกอบรม','โปรโตคอลวิกฤต','การประเมิน','หลายภาษา','ความเชี่ยวชาญ','ความปลอดภัย'],
-    de: ['Pravention','Unterstutzung','Teamschulung','Krisenprotokolle','Burnout-Bewertung','Mehrsprachig','Expertise','Sicherheit'],
-    es: ['Prevencion','Apoyo Individual','Formacion','Protocolos','Burnout','Multilingue','Experiencia','Seguridad']
-  };
-  const t = items[lang] || items.en;
-  const doubled = [...t, ...t];
-  const track = document.getElementById('marquee');
-  if (track) track.innerHTML = doubled.map(function(i){ return '<span class="marquee-item">'+i+'</span>'; }).join('');
-}
-
-// Override setLang to also update marquee
-const _setLangOrig = setLang;
-function setLang(lang) {
-  _setLangOrig(lang);
-  updateMarquee(lang);
-}
-
-// Carousel
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const dots = document.querySelectorAll('.cdot');
-function goToSlide(n) {
-  slides[currentSlide].classList.remove('active');
-  dots[currentSlide].classList.remove('active');
-  currentSlide = n;
-  slides[currentSlide].classList.add('active');
-  dots[currentSlide].classList.add('active');
-}
-function nextSlide() { goToSlide((currentSlide + 1) % slides.length); }
-setInterval(nextSlide, 5000);
-
-// Nav scroll
-window.addEventListener('scroll', function() {
-  const nav = document.getElementById('mainNav');
-  if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// Init
-setLang('en');
+  },
+  pt: {
+    "stag_workshops":"Workshops","stag_webinars":"Webinars","stag_resources":"Recursos",
+    "stag_1-on-1-sessions":"Sessões individuais","stag_follow-up":"Acompanhamento","stag_referral":"Encaminhamento",
+    "stag_leadership":"Liderança","stag_eq-training":"Treinamento em IE","stag_protocols":"Protocolos",
+    "stag_risk-audit":"Auditoria de risco","stag_policy-design":"Elaboração de políticas","stag_crisis-plans":"Planos de crise",
+    nav_home:"Início", nav_tests:"Avaliações", nav_session:"Minha Sessão", nav_org:"Organizações",
+    nav_emergency:"Emergência", nav_about:"Sobre", nav_contact:"Contato",
+    nav_account:"Minha Conta", nav_book:"Agendar Consulta", nav_book_short:"Agendar",
+    hero_eyebrow:"Bem-estar psicológico para a indústria criativa",
+    hero_h1_a:"Cada pessoa por trás do trabalho", hero_h1_b:"merece cuidado.",
+    hero_desc:"A indústria vê a arte. A Creaven vê a pessoa por trás dela. Para quem construiu tudo o que lhe disseram para querer, e ainda assim se sente perdido. Para quem luta em silêncio, buscando uma saída ou um caminho de volta a si mesmo. Você não precisa estar em pedaços para merecer apoio. Só precisa ser humano. A fama é ruidosa. A dor é silenciosa. A Creaven escuta.",
+    hero_cta1:"Explorar Nossos Serviços", hero_call:"Ligar Agora", hero_cta2:"Agendar Consulta",
+    stat1_unit:"pessoas no mundo todo", stat1_label:"vivem com uma condição de saúde mental (OMS, 2024)",
+    stat2_unit:"dos trabalhadores criativos", stat2_label:"relatam sintomas de ansiedade ou depressão (MusiCares, 2023)",
+    stat3_unit:"perdidos por ano", stat3_label:"em produtividade global devido à saúde mental (OMS)",
+    stat4_unit:"dos trabalhadores", stat4_label:"já sofreram burnout ao menos uma vez na carreira",
+    stat5_unit:"plataformas existem", stat5_label:"dedicadas à saúde mental de todos os trabalhadores da indústria criativa",
+    mission_tag:"Nossa Filosofia",
+    mission_quote:"\"A indústria criativa brilha graças a milhares de mãos invisíveis. Elas merecem mais do que reconhecimento - merecem cuidado.\"",
+    mission_author:"- Amakon Grace Daniella, Fundadora, Creaven",
+    mp1_title:"Prevenção em Primeiro Lugar", mp1_desc:"Agimos antes que as crises ocorram. Nossa abordagem é proativa, contínua e profundamente humana.",
+    mp2_title:"Holística e Sem Estigma", mp2_desc:"Saúde mental não é fraqueza. Criamos espaços onde toda pessoa se sente segura para falar.",
+    mp3_title:"Acessível Globalmente", mp3_desc:"100% remoto, multilíngue e culturalmente sensível - disponível para equipes em todo o mundo.",
+    services_tag:"O Que Oferecemos", services_h2a:"Quatro pilares", services_h2b:"de cuidado",
+    services_desc:"Todo serviço é prestado 100% remotamente e adaptado à cultura e às necessidades específicas da sua organização.",
+    s1_title:"Prevenção e Psicoeducação", s1_desc:"Construindo alfabetização e consciência psicológica em toda a organização.",
+    s2_title:"Escuta e Apoio Individual", s2_desc:"Sessões individuais confidenciais que oferecem um espaço seguro para ser ouvido, avaliado e orientado.",
+    s3_title:"Treinamento de Equipes e Gestão", s3_desc:"Capacitando gestores e líderes com ferramentas para reconhecer sinais de sofrimento.",
+    s4_title:"Protocolos e Segurança Organizacional", s4_desc:"Projetando sistemas robustos para proteger os funcionários em nível estrutural.",
+    who_tag:"A Quem Servimos", who_h2a:"Todos", who_h2b:"importam aqui",
+    who_desc:"Toda pessoa que contribui para o trabalho criativo acontecer. Artistas e RH, gestores e segurança, técnicos e estagiários. Se você faz parte dessa indústria, a Creaven é para você.",
+    wc1_title:"Artistas e Performers", wc1_desc:"Cantores, dançarinos, atores, músicos. Aqueles que dão tudo no palco e carregam o que ninguém vê quando as luzes se apagam.",
+    wc2_title:"Produção e Técnica", wc2_desc:"Equipes de câmera, engenheiros de som, equipes de iluminação, construtores de palco. As mãos que fazem o show existir, invisíveis nos aplausos.",
+    wc3_title:"Gestão e Coordenação", wc3_desc:"Gestores, coordenadores, planejadores. As pessoas que absorvem toda a pressão para que os outros possam atuar, sem que ninguém pergunte como estão.",
+    wc4_title:"Recursos Humanos", wc4_desc:"Equipes de RH, recrutadores, gestores de talentos. Eles mantêm o lado humano das organizações unido. Eles também carregam o peso dos outros.",
+    wc5_title:"Criativo e Mídia", wc5_desc:"Designers, fotógrafos, criadores de conteúdo, equipes de redes sociais. Construindo cultura diariamente, muitas vezes sozinhos, muitas vezes sem reconhecimento.",
+    wc6_title:"Suporte e Operações", wc6_desc:"Motoristas, equipe de catering, logística, administração. Sem eles nada se move. São a base que ninguém fotografa.",
+    wc7_title:"Estagiários e Início de Carreira", wc7_desc:"Aqueles que estão apenas começando, carregando mais com menos proteção. Sua paixão merece o mesmo cuidado que qualquer outra pessoa.",
+    wc8_title:"Segurança e Proteção", wc8_desc:"Equipe de segurança, seguranças pessoais, oficiais de segurança de eventos. Eles protegem todos os outros. Quem os protege?",
+    tests_tag:"Avaliações Psicológicas", tests_h2a:"Saiba", tests_h2b:"onde você está",
+    tests_desc:"Avaliações psicológicas validadas - desde triagens rápidas com resultados instantâneos até avaliações completas revisadas por nossa equipe.",
+    tc1_title:"Depressão", tc1_desc:"Ferramenta de triagem de 9 itens usada globalmente. Resultados automáticos instantâneos.",
+    tc2_title:"Ansiedade", tc2_desc:"Triagem de transtorno de ansiedade generalizada de 7 itens com resultados instantâneos.",
+    tc3_title:"Burnout", tc3_desc:"Mede o esgotamento pessoal, profissional e relacionado a clientes em três dimensões.",
+    tc4_title:"TEPT", tc4_desc:"Lista de verificação de TEPT validada com base nos critérios do DSM-5.",
+    tc5_title:"Qualidade do Sono", tc5_desc:"Avalia a qualidade do sono e as perturbações ao longo de um mês.",
+    tc6_title:"Autoestima", tc6_desc:"Medida padrão-ouro de 10 itens sobre autoestima e autovalorização global.",
+    tc7_title:"Consumo de Álcool", tc7_desc:"Triagem validada pela OMS para transtornos relacionados ao consumo de álcool.",
+    tc8_title:"Ver Todas as Avaliações", tc8_abbr:"Biblioteca Completa", tc8_desc:"12 ferramentas psicométricas validadas cobrindo todas as principais dimensões do bem-estar.", tc8_cta:"Ver biblioteca completa →",
+    tc_cta:"Fazer a avaliação →",
+    cta_h2:"Pronto para levar cuidado à sua equipe?", cta_p:"Seja você uma agência, um estúdio, ou uma pessoa em busca de apoio - estamos aqui. Vamos conversar.", cta_btn:"Entrar em Contato",
+    footer_desc:"Bem-estar psicológico para a indústria criativa. Acessível a todos, independentemente de cargo ou função.",
+    footer_about:"Sobre a Creaven", footer_col1:"Serviços", footer_col2:"Avaliações", footer_col3:"Empresa",
+    fc1_1:"Prevenção", fc1_2:"Apoio Individual", fc1_3:"Treinamento de Equipes", fc1_4:"Protocolos",
+    fc3_1:"Sobre", fc3_2:"Contato", fc3_3:"Blog", fc3_4:"Minha Conta",
+    footer_rights:"Todos os direitos reservados.", footer_tagline:"\"Bem-estar psicológico para todos na indústria criativa.\""
+  },
+  it: {
+    "stag_workshops":"Workshop","stag_webinars":"Webinar","stag_resources":"Risorse",
+    "stag_1-on-1-sessions":"Sessioni individuali","stag_follow-up":"Follow-up","stag_referral":"Invio a specialista",
+    "stag_leadership":"Leadership","stag_eq-training":"Formazione IE","stag_protocols":"Protocolli",
+    "stag_risk-audit":"Audit dei rischi","stag_policy-design":"Definizione di policy","stag_crisis-plans":"Piani di crisi",
+    nav_home:"Home", nav_tests:"Valutazioni", nav_session:"La Mia Sessione", nav_org:"Organizzazioni",
+    nav_emergency:"Emergenza", nav_about:"Chi Siamo", nav_contact:"Contatti",
+    nav_account:"Il Mio Account", nav_book:"Prenota una Consulenza", nav_book_short:"Prenota",
+    hero_eyebrow:"Benessere psicologico per l'industria creativa",
+    hero_h1_a:"Ogni persona dietro al lavoro", hero_h1_b:"merita cura.",
+    hero_desc:"L'industria vede l'arte. Creaven vede la persona dietro di essa. Per chi ha costruito tutto ciò che gli era stato detto di volere, e ancora si sente perso. Per chi lotta in silenzio, cercando una via d'uscita o un modo per ritrovare se stesso. Non devi essere allo stremo per meritare supporto. Devi solo essere umano. La fama è rumorosa. Il dolore è silenzioso. Creaven ascolta.",
+    hero_cta1:"Scopri i Nostri Servizi", hero_call:"Chiama Ora", hero_cta2:"Prenota una Consulenza",
+    stat1_unit:"persone nel mondo", stat1_label:"vivono con una condizione di salute mentale (OMS, 2024)",
+    stat2_unit:"dei lavoratori creativi", stat2_label:"riferisce sintomi di ansia o depressione (MusiCares, 2023)",
+    stat3_unit:"persi ogni anno", stat3_label:"di produttività globale a causa della salute mentale (OMS)",
+    stat4_unit:"dei lavoratori", stat4_label:"ha sperimentato il burnout almeno una volta in carriera",
+    stat5_unit:"piattaforme esistono", stat5_label:"dedicate alla salute mentale di tutti i lavoratori dell'industria creativa",
+    mission_tag:"La Nostra Filosofia",
+    mission_quote:"\"L'industria creativa brilla grazie a migliaia di mani invisibili. Meritano più del riconoscimento - meritano cura.\"",
+    mission_author:"- Amakon Grace Daniella, Fondatrice, Creaven",
+    mp1_title:"Prevenzione Prima di Tutto", mp1_desc:"Agiamo prima che le crisi si verifichino. Il nostro approccio è proattivo, continuo e profondamente umano.",
+    mp2_title:"Olistico e Senza Stigma", mp2_desc:"La salute mentale non è debolezza. Creiamo spazi in cui ogni persona si sente libera di parlare.",
+    mp3_title:"Accessibile a Livello Globale", mp3_desc:"100% da remoto, multilingue e culturalmente sensibile - disponibile per team in tutto il mondo.",
+    services_tag:"Cosa Offriamo", services_h2a:"Quattro pilastri", services_h2b:"di cura",
+    services_desc:"Ogni servizio viene erogato al 100% da remoto e adattato alla cultura e alle esigenze specifiche della tua organizzazione.",
+    s1_title:"Prevenzione e Psicoeducazione", s1_desc:"Costruire alfabetizzazione e consapevolezza psicologica in tutta l'organizzazione.",
+    s2_title:"Ascolto e Supporto Individuale", s2_desc:"Sessioni individuali riservate che offrono uno spazio sicuro per essere ascoltati, valutati e guidati.",
+    s3_title:"Formazione di Team e Management", s3_desc:"Dotare manager e team leader di strumenti per riconoscere i segnali di disagio.",
+    s4_title:"Protocolli e Sicurezza Organizzativa", s4_desc:"Progettare sistemi robusti per proteggere i dipendenti a livello strutturale.",
+    who_tag:"A Chi Ci Rivolgiamo", who_h2a:"Tutti", who_h2b:"contano qui",
+    who_desc:"Ogni persona che contribuisce a realizzare il lavoro creativo. Artisti e HR, manager e sicurezza, tecnici e stagisti. Se fai parte di questo settore, Creaven è per te.",
+    wc1_title:"Artisti e Performer", wc1_desc:"Cantanti, ballerini, attori, musicisti. Chi dà tutto sul palco e porta ciò che nessuno vede quando le luci si spengono.",
+    wc2_title:"Produzione e Tecnica", wc2_desc:"Troupe, tecnici del suono, squadre luci, allestitori di palco. Le mani che fanno esistere lo spettacolo, invisibili tra gli applausi.",
+    wc3_title:"Management e Coordinamento", wc3_desc:"Manager, coordinatori, pianificatori. Le persone che assorbono ogni pressione perché gli altri possano esibirsi, senza che nessuno chieda come stanno.",
+    wc4_title:"Risorse Umane", wc4_desc:"Team HR, recruiter, talent manager. Tengono unito il lato umano delle organizzazioni. Anche loro portano il peso degli altri.",
+    wc5_title:"Creativo e Media", wc5_desc:"Designer, fotografi, content creator, team social media. Costruiscono cultura ogni giorno, spesso da soli, spesso senza riconoscimento.",
+    wc6_title:"Supporto e Operazioni", wc6_desc:"Autisti, personale catering, logistica, amministrazione. Senza di loro nulla si muove. Sono le fondamenta che nessuno fotografa.",
+    wc7_title:"Stagisti e Inizio Carriera", wc7_desc:"Chi sta appena iniziando, portando il peso maggiore con la minor protezione. La loro passione merita la stessa cura di chiunque altro.",
+    wc8_title:"Sicurezza e Protezione", wc8_desc:"Personale di sicurezza, guardie del corpo, addetti alla sicurezza degli eventi. Proteggono tutti gli altri. Chi protegge loro?",
+    tests_tag:"Valutazioni Psicologiche", tests_h2a:"Scopri", tests_h2b:"a che punto sei",
+    tests_desc:"Valutazioni psicologiche validate - da screening rapidi con risultati immediati a valutazioni complete riviste dal nostro team.",
+    tc1_title:"Depressione", tc1_desc:"Strumento di screening a 9 item usato a livello globale. Risultati automatici immediati.",
+    tc2_title:"Ansia", tc2_desc:"Screening del disturbo d'ansia generalizzato a 7 item con risultati immediati.",
+    tc3_title:"Burnout", tc3_desc:"Misura l'esaurimento personale, lavorativo e legato ai clienti su tre dimensioni.",
+    tc4_title:"PTSD", tc4_desc:"Checklist PTSD validata secondo i criteri del DSM-5.",
+    tc5_title:"Qualità del Sonno", tc5_desc:"Valuta la qualità del sonno e i disturbi nell'arco di un mese.",
+    tc6_title:"Autostima", tc6_desc:"Misura di riferimento a 10 item per l'autostima e il valore personale globale.",
+    tc7_title:"Consumo di Alcol", tc7_desc:"Screening validato dall'OMS per i disturbi da uso di alcol.",
+    tc8_title:"Vedi Tutte le Valutazioni", tc8_abbr:"Libreria Completa", tc8_desc:"12 strumenti psicometrici validati che coprono tutte le principali dimensioni del benessere.", tc8_cta:"Vedi la libreria completa →",
+    tc_cta:"Esegui la valutazione →",
+    cta_h2:"Pronto a portare cura al tuo team?", cta_p:"Che tu rappresenti un'agenzia, uno studio, o sia una persona in cerca di supporto - siamo qui. Parliamone.", cta_btn:"Contattaci",
+    footer_desc:"Benessere psicologico per l'industria creativa. Accessibile a tutti, indipendentemente dal ruolo o dal grado.",
+    footer_about:"Chi è Creaven", footer_col1:"Servizi", footer_col2:"Valutazioni", footer_col3:"Azienda",
+    fc1_1:"Prevenzione", fc1_2:"Supporto Individuale", fc1_3:"Formazione Team", fc1_4:"Protocolli",
+    fc3_1:"Chi Siamo", fc3_2:"Contatti", fc3_3:"Blog", fc3_4:"Il Mio Account",
+    footer_rights:"Tutti i diritti riservati.", footer_tagline:"\"Benessere psicologico per tutti nell'industria creativa.\""
+  },
+  nl: {
+    "stag_workshops":"Workshops","stag_webinars":"Webinars","stag_resources":"Bronnen",
+    "stag_1-on-1-sessions":"Individuele Sessies","stag_follow-up":"Follow-up","stag_referral":"Doorverwijzing",
+    "stag_leadership":"Leiderschap","stag_eq-training":"EQ-training","stag_protocols":"Protocollen",
+    "stag_risk-audit":"Risicoaudit","stag_policy-design":"Beleidsontwerp","stag_crisis-plans":"Crisisplannen",
+    nav_home:"Home", nav_tests:"Assessments", nav_session:"Mijn Sessie", nav_org:"Organisaties",
+    nav_emergency:"Noodgeval", nav_about:"Over Ons", nav_contact:"Contact",
+    nav_account:"Mijn Account", nav_book:"Consult Boeken", nav_book_short:"Boeken",
+    hero_eyebrow:"Psychisch welzijn voor de creatieve industrie",
+    hero_h1_a:"Iedereen achter het werk", hero_h1_b:"verdient zorg.",
+    hero_desc:"De industrie ziet de kunst. Creaven ziet de mens erachter. Voor wie alles heeft opgebouwd wat hen werd verteld te willen, en zich toch verloren voelt. Voor wie in stilte worstelt, op zoek naar een uitweg of een weg terug naar zichzelf. Je hoeft niet volledig kapot te zijn om steun te verdienen. Je hoeft alleen maar mens te zijn. Roem is luid. Pijn is stil. Creaven luistert.",
+    hero_cta1:"Ontdek Onze Diensten", hero_call:"Bel Nu", hero_cta2:"Consult Boeken",
+    stat1_unit:"mensen wereldwijd", stat1_label:"leven met een psychische aandoening (WHO, 2024)",
+    stat2_unit:"van creatieve professionals", stat2_label:"rapporteert symptomen van angst of depressie (MusiCares, 2023)",
+    stat3_unit:"verloren per jaar", stat3_label:"aan wereldwijde productiviteit door mentale gezondheid (WHO)",
+    stat4_unit:"van de werknemers", stat4_label:"heeft ooit een burn-out doorgemaakt tijdens hun carrière",
+    stat5_unit:"platforms bestaan", stat5_label:"gewijd aan mentale gezondheid voor alle werknemers in de creatieve sector",
+    mission_tag:"Onze Filosofie",
+    mission_quote:"\"De creatieve industrie schittert dankzij duizenden onzichtbare handen. Zij verdienen meer dan erkenning - zij verdienen zorg.\"",
+    mission_author:"- Amakon Grace Daniella, Oprichter, Creaven",
+    mp1_title:"Preventie Voorop", mp1_desc:"Wij handelen voordat crises ontstaan. Onze aanpak is proactief, continu en diep menselijk.",
+    mp2_title:"Holistisch en Zonder Stigma", mp2_desc:"Mentale gezondheid is geen zwakte. Wij creëren ruimtes waar iedereen zich veilig voelt om te spreken.",
+    mp3_title:"Wereldwijd Toegankelijk", mp3_desc:"100% op afstand, meertalig en cultureel gevoelig - beschikbaar voor teams over de hele wereld.",
+    services_tag:"Wat Wij Bieden", services_h2a:"Vier pijlers", services_h2b:"van zorg",
+    services_desc:"Elke dienst wordt 100% op afstand geleverd en afgestemd op de cultuur en specifieke behoeften van uw organisatie.",
+    s1_title:"Preventie en Psycho-educatie", s1_desc:"Psychologische kennis en bewustzijn opbouwen binnen de hele organisatie.",
+    s2_title:"Luisteren en Individuele Ondersteuning", s2_desc:"Vertrouwelijke individuele sessies die een veilige ruimte bieden om gehoord, beoordeeld en begeleid te worden.",
+    s3_title:"Team- en Managementtraining", s3_desc:"Managers en teamleiders uitrusten met hulpmiddelen om signalen van stress te herkennen.",
+    s4_title:"Protocollen en Organisatieveiligheid", s4_desc:"Robuuste systemen ontwerpen om werknemers op structureel niveau te beschermen.",
+    who_tag:"Voor Wie Wij Er Zijn", who_h2a:"Iedereen", who_h2b:"telt hier",
+    who_desc:"Elke persoon die bijdraagt aan creatief werk. Artiesten en HR, managers en beveiliging, technici en stagiairs. Als u deel uitmaakt van deze sector, is Creaven er voor u.",
+    wc1_title:"Artiesten en Performers", wc1_desc:"Zangers, dansers, acteurs, muzikanten. Zij die alles geven op het podium en dragen wat niemand ziet als de lichten uitgaan.",
+    wc2_title:"Productie en Techniek", wc2_desc:"Cameraploegen, geluidstechnici, lichtteams, podiumbouwers. De handen die de show mogelijk maken, onzichtbaar in het applaus.",
+    wc3_title:"Management en Coördinatie", wc3_desc:"Managers, coördinatoren, planners. De mensen die alle druk opvangen zodat anderen kunnen presteren, zonder dat iemand vraagt hoe het met hen gaat.",
+    wc4_title:"Human Resources", wc4_desc:"HR-teams, recruiters, talentmanagers. Zij houden de menselijke kant van organisaties samen. Ook zij dragen het gewicht van anderen.",
+    wc5_title:"Creatief en Media", wc5_desc:"Designers, fotografen, content creators, social media teams. Bouwen dagelijks aan cultuur, vaak alleen, vaak zonder erkenning.",
+    wc6_title:"Ondersteuning en Operaties", wc6_desc:"Chauffeurs, cateringpersoneel, logistiek, administratie. Zonder hen beweegt niets. Zij zijn het fundament dat niemand fotografeert.",
+    wc7_title:"Stagiairs en Starters", wc7_desc:"Zij die net beginnen, met de meeste last en de minste bescherming. Hun passie verdient dezelfde zorg als ieder ander.",
+    wc8_title:"Beveiliging en Veiligheid", wc8_desc:"Beveiligingspersoneel, bodyguards, evenementveiligheidsfunctionarissen. Zij beschermen iedereen. Wie beschermt hen?",
+    tests_tag:"Psychologische Assessments", tests_h2a:"Weet", tests_h2b:"waar u staat",
+    tests_desc:"Gevalideerde psychologische assessments - van snelle screenings met directe resultaten tot uitgebreide evaluaties beoordeeld door ons team.",
+    tc1_title:"Depressie", tc1_desc:"Wereldwijd gebruikt screeningsinstrument met 9 items. Directe automatische resultaten.",
+    tc2_title:"Angst", tc2_desc:"Screening op gegeneraliseerde angststoornis met 7 items en directe resultaten.",
+    tc3_title:"Burn-out", tc3_desc:"Meet persoonlijke, werkgerelateerde en klantgerelateerde burn-out over drie dimensies.",
+    tc4_title:"PTSS", tc4_desc:"Gevalideerde PTSS-checklist gebaseerd op DSM-5-criteria.",
+    tc5_title:"Slaapkwaliteit", tc5_desc:"Beoordeelt de slaapkwaliteit en verstoringen over een periode van een maand.",
+    tc6_title:"Zelfvertrouwen", tc6_desc:"Gouden standaard meting van 10 items voor globaal zelfrespect en eigenwaarde.",
+    tc7_title:"Alcoholgebruik", tc7_desc:"Door de WHO gevalideerde screening voor alcoholgebruiksstoornissen.",
+    tc8_title:"Bekijk Alle Assessments", tc8_abbr:"Volledige Bibliotheek", tc8_desc:"12 gevalideerde psychometrische instrumenten die alle belangrijke dimensies van welzijn dekken.", tc8_cta:"Bekijk volledige bibliotheek →",
+    tc_cta:"Doe de assessment →",
+    cta_h2:"Klaar om zorg naar uw team te brengen?", cta_p:"Of u nu een bureau, een studio vertegenwoordigt, of individueel op zoek bent naar steun - wij zijn er. Laten we praten.", cta_btn:"Neem Contact Op",
+    footer_desc:"Psychisch welzijn voor de creatieve industrie. Toegankelijk voor iedereen, ongeacht rol of rang.",
+    footer_about:"Over Creaven", footer_col1:"Diensten", footer_col2:"Assessments", footer_col3:"Bedrijf",
+    fc1_1:"Preventie", fc1_2:"Individuele Ondersteuning", fc1_3:"Teamtraining", fc1_4:"Protocollen",
+    fc3_1:"Over Ons", fc3_2:"Contact", fc3_3:"Blog", fc3_4:"Mijn Account",
+    footer_rights:"Alle rechten voorbehouden.", footer_tagline:"\"Psychisch welzijn voor iedereen in de creatieve industrie.\""
+  },
+  sv: {
+    "stag_workshops":"Workshops","stag_webinars":"Webbinarier","stag_resources":"Resurser",
+    "stag_1-on-1-sessions":"Enskilda samtal","stag_follow-up":"Uppföljning","stag_referral":"Remiss",
+    "stag_leadership":"Ledarskap","stag_eq-training":"EQ-träning","stag_protocols":"Protokoll",
+    "stag_risk-audit":"Riskgranskning","stag_policy-design":"Policyutformning","stag_crisis-plans":"Krisplaner",
+    nav_home:"Hem", nav_tests:"Bedömningar", nav_session:"Min Session", nav_org:"Organisationer",
+    nav_emergency:"Akut", nav_about:"Om Oss", nav_contact:"Kontakt",
+    nav_account:"Mitt Konto", nav_book:"Boka Konsultation", nav_book_short:"Boka",
+    hero_eyebrow:"Psykiskt välbefinnande för den kreativa industrin",
+    hero_h1_a:"Varje person bakom arbetet", hero_h1_b:"förtjänar omsorg.",
+    hero_desc:"Branschen ser konsten. Creaven ser människan bakom den. För dem som byggt allt de blivit tillsagda att vilja ha, och ändå känner sig vilsna. För dem som kämpar i tysthet, som söker en väg ut eller en väg tillbaka till sig själva. Du behöver inte gå sönder för att förtjäna stöd. Du behöver bara vara människa. Berömmelse är högljudd. Smärta är tyst. Creaven lyssnar.",
+    hero_cta1:"Utforska Våra Tjänster", hero_call:"Ring Nu", hero_cta2:"Boka Konsultation",
+    stat1_unit:"människor världen över", stat1_label:"lever med ett psykiskt hälsotillstånd (WHO, 2024)",
+    stat2_unit:"av kreativa yrkesarbetare", stat2_label:"rapporterar symtom på ångest eller depression (MusiCares, 2023)",
+    stat3_unit:"förloras per år", stat3_label:"i global produktivitet på grund av psykisk hälsa (WHO)",
+    stat4_unit:"av arbetstagarna", stat4_label:"har upplevt utbrändhet minst en gång under karriären",
+    stat5_unit:"plattformar finns", stat5_label:"dedikerade åt psykisk hälsa för alla inom den kreativa industrin",
+    mission_tag:"Vår Filosofi",
+    mission_quote:"\"Den kreativa industrin lyser tack vare tusentals osynliga händer. De förtjänar mer än erkännande - de förtjänar omsorg.\"",
+    mission_author:"- Amakon Grace Daniella, Grundare, Creaven",
+    mp1_title:"Prevention Först", mp1_desc:"Vi agerar innan kriser uppstår. Vårt tillvägagångssätt är proaktivt, kontinuerligt och djupt mänskligt.",
+    mp2_title:"Holistiskt och Fritt från Stigma", mp2_desc:"Psykisk hälsa är inte svaghet. Vi skapar utrymmen där alla känner sig trygga att prata.",
+    mp3_title:"Globalt Tillgängligt", mp3_desc:"100% på distans, flerspråkigt och kulturellt känsligt - tillgängligt för team över hela världen.",
+    services_tag:"Vad Vi Erbjuder", services_h2a:"Fyra pelare", services_h2b:"av omsorg",
+    services_desc:"Varje tjänst levereras 100% på distans och anpassas till din organisations kultur och specifika behov.",
+    s1_title:"Prevention och Psykoedukation", s1_desc:"Bygger psykologisk kunskap och medvetenhet i hela organisationen.",
+    s2_title:"Lyssnande och Individuellt Stöd", s2_desc:"Konfidentiella enskilda samtal som ger ett tryggt utrymme att bli hörd, bedömd och vägledd.",
+    s3_title:"Team- och Ledarskapsutbildning", s3_desc:"Utrustar chefer och teamledare med verktyg för att känna igen tecken på stress.",
+    s4_title:"Protokoll och Organisationssäkerhet", s4_desc:"Utformar robusta system för att skydda medarbetare på strukturell nivå.",
+    who_tag:"Vilka Vi Är Till För", who_h2a:"Alla", who_h2b:"räknas här",
+    who_desc:"Varje person som bidrar till att kreativt arbete blir av. Artister och HR, chefer och säkerhetspersonal, tekniker och praktikanter. Om du är en del av branschen är Creaven till för dig.",
+    wc1_title:"Artister och Utövare", wc1_desc:"Sångare, dansare, skådespelare, musiker. De som ger allt på scen och bär det ingen ser när ljuset släcks.",
+    wc2_title:"Produktion och Teknik", wc2_desc:"Kamerateam, ljudtekniker, ljusteam, scenbyggare. Händerna som gör att föreställningen finns, osynliga i applåderna.",
+    wc3_title:"Ledning och Samordning", wc3_desc:"Chefer, samordnare, planerare. De som absorberar allt tryck så att andra kan prestera, utan att någon frågar hur de mår.",
+    wc4_title:"Personal (HR)", wc4_desc:"HR-team, rekryterare, talangansvariga. De håller ihop organisationens mänskliga sida. Även de bär andras bördor.",
+    wc5_title:"Kreativt och Media", wc5_desc:"Designers, fotografer, innehållsskapare, sociala medieteam. Bygger kultur dagligen, ofta ensamma, ofta utan erkännande.",
+    wc6_title:"Support och Drift", wc6_desc:"Chaufförer, cateringpersonal, logistik, administration. Utan dem rör sig ingenting. De är grunden som ingen fotograferar.",
+    wc7_title:"Praktikanter och Nyexaminerade", wc7_desc:"De som just börjat, bär mest med minst skydd. Deras passion förtjänar samma omsorg som alla andras.",
+    wc8_title:"Säkerhet och Skydd", wc8_desc:"Säkerhetspersonal, livvakter, evenemangssäkerhet. De skyddar alla andra. Vem skyddar dem?",
+    tests_tag:"Psykologiska Bedömningar", tests_h2a:"Ta reda på", tests_h2b:"var du står",
+    tests_desc:"Validerade psykologiska bedömningar - från snabba screeningar med omedelbara resultat till omfattande utvärderingar granskade av vårt team.",
+    tc1_title:"Depression", tc1_desc:"9-frågors screeningverktyg som används globalt. Omedelbara automatiska resultat.",
+    tc2_title:"Ångest", tc2_desc:"7-frågors screening för generaliserat ångestsyndrom med omedelbara resultat.",
+    tc3_title:"Utbrändhet", tc3_desc:"Mäter personlig, arbetsrelaterad och klientrelaterad utbrändhet i tre dimensioner.",
+    tc4_title:"PTSD", tc4_desc:"Validerad PTSD-checklista baserad på DSM-5-kriterier.",
+    tc5_title:"Sömnkvalitet", tc5_desc:"Utvärderar sömnkvalitet och störningar under en månad.",
+    tc6_title:"Självkänsla", tc6_desc:"Guldstandard, 10 frågor, för global självkänsla och självvärde.",
+    tc7_title:"Alkoholanvändning", tc7_desc:"WHO-validerad screening för alkoholrelaterade problem.",
+    tc8_title:"Se Alla Bedömningar", tc8_abbr:"Fullständigt Bibliotek", tc8_desc:"12 validerade psykometriska verktyg som täcker alla viktiga dimensioner av välbefinnande.", tc8_cta:"Se hela biblioteket →",
+    tc_cta:"Gör bedömningen →",
+    cta_h2:"Redo att ge omsorg till ditt team?", cta_p:"Oavsett om du representerar en byrå, en studio, eller söker individuellt stöd - vi finns här. Låt oss prata.", cta_btn:"Kontakta Oss",
+    footer_desc:"Psykiskt välbefinnande för den kreativa industrin. Tillgängligt för alla, oavsett roll eller position.",
+    footer_about:"Om Creaven", footer_col1:"Tjänster", footer_col2:"Bedömningar", footer_col3:"Företag",
+    fc1_1:"Prevention", fc1_2:"Individuellt Stöd", fc1_3:"Teamutbildning", fc1_4:"Protokoll",
+    fc3_1:"Om Oss", fc3_2:"Kontakt", fc3_3:"Blogg", fc3_4:"Mitt Konto",
+    footer_rights:"Alla rättigheter förbehållna.", footer_tagline:"\"Psykiskt välbefinnande för alla inom den kreativa industrin.\""
+  },
+  pl: {
+    "stag_workshops":"Warsztaty","stag_webinars":"Webinary","stag_resources":"Zasoby",
+    "stag_1-on-1-sessions":"Sesje indywidualne","stag_follow-up":"Kontynuacja","stag_referral":"Skierowanie",
+    "stag_leadership":"Przywództwo","stag_eq-training":"Szkolenie z IE","stag_protocols":"Protokoły",
+    "stag_risk-audit":"Audyt ryzyka","stag_policy-design":"Tworzenie polityk","stag_crisis-plans":"Plany kryzysowe",
+    nav_home:"Start", nav_tests:"Oceny", nav_session:"Moja Sesja", nav_org:"Organizacje",
+    nav_emergency:"Nagły wypadek", nav_about:"O Nas", nav_contact:"Kontakt",
+    nav_account:"Moje Konto", nav_book:"Zarezerwuj Konsultację", nav_book_short:"Zarezerwuj",
+    hero_eyebrow:"Dobrostan psychiczny dla branży kreatywnej",
+    hero_h1_a:"Każda osoba stojąca za pracą", hero_h1_b:"zasługuje na troskę.",
+    hero_desc:"Branża widzi sztukę. Creaven widzi osobę, która za nią stoi. Dla tych, którzy zbudowali wszystko, czego kazano im chcieć, a mimo to czują się zagubieni. Dla tych, którzy zmagają się w milczeniu, szukając wyjścia albo drogi powrotnej do siebie. Nie musisz się rozpadać, by zasłużyć na wsparcie. Wystarczy, że jesteś człowiekiem. Sława jest głośna. Ból jest cichy. Creaven słucha.",
+    hero_cta1:"Poznaj Nasze Usługi", hero_call:"Zadzwoń Teraz", hero_cta2:"Zarezerwuj Konsultację",
+    stat1_unit:"osób na świecie", stat1_label:"żyje z zaburzeniem zdrowia psychicznego (WHO, 2024)",
+    stat2_unit:"pracowników branży kreatywnej", stat2_label:"zgłasza objawy lęku lub depresji (MusiCares, 2023)",
+    stat3_unit:"traconych rocznie", stat3_label:"globalnej produktywności z powodu zdrowia psychicznego (WHO)",
+    stat4_unit:"pracowników", stat4_label:"doświadczyło wypalenia zawodowego przynajmniej raz w karierze",
+    stat5_unit:"platform istnieje", stat5_label:"poświęconych zdrowiu psychicznemu wszystkich pracowników branży kreatywnej",
+    mission_tag:"Nasza Filozofia",
+    mission_quote:"\"Branża kreatywna błyszczy dzięki tysiącom niewidzialnych rąk. Zasługują na więcej niż uznanie - zasługują na troskę.\"",
+    mission_author:"- Amakon Grace Daniella, Założycielka, Creaven",
+    mp1_title:"Prewencja Przede Wszystkim", mp1_desc:"Działamy, zanim wystąpi kryzys. Nasze podejście jest proaktywne, ciągłe i głęboko ludzkie.",
+    mp2_title:"Holistyczne i Bez Stygmatyzacji", mp2_desc:"Zdrowie psychiczne to nie słabość. Tworzymy przestrzenie, w których każdy czuje się bezpiecznie, by mówić.",
+    mp3_title:"Dostępne Globalnie", mp3_desc:"100% zdalnie, wielojęzycznie i z wrażliwością kulturową - dostępne dla zespołów na całym świecie.",
+    services_tag:"Co Oferujemy", services_h2a:"Cztery filary", services_h2b:"opieki",
+    services_desc:"Każda usługa świadczona jest w 100% zdalnie i dostosowana do kultury oraz specyficznych potrzeb Twojej organizacji.",
+    s1_title:"Prewencja i Psychoedukacja", s1_desc:"Budowanie świadomości i wiedzy psychologicznej w całej organizacji.",
+    s2_title:"Wysłuchanie i Wsparcie Indywidualne", s2_desc:"Poufne sesje indywidualne zapewniające bezpieczną przestrzeń, w której można zostać wysłuchanym, ocenionym i pokierowanym.",
+    s3_title:"Szkolenie Zespołów i Kadry Zarządzającej", s3_desc:"Wyposażanie menedżerów i liderów zespołów w narzędzia do rozpoznawania sygnałów cierpienia.",
+    s4_title:"Protokoły i Bezpieczeństwo Organizacyjne", s4_desc:"Projektowanie solidnych systemów chroniących pracowników na poziomie strukturalnym.",
+    who_tag:"Dla Kogo Jesteśmy", who_h2a:"Każdy", who_h2b:"się tu liczy",
+    who_desc:"Każda osoba, która przyczynia się do powstania pracy kreatywnej. Artyści i dział HR, menedżerowie i ochrona, technicy i stażyści. Jeśli jesteś częścią tej branży, Creaven jest dla Ciebie.",
+    wc1_title:"Artyści i Wykonawcy", wc1_desc:"Wokaliści, tancerze, aktorzy, muzycy. Ci, którzy dają wszystko na scenie i noszą to, czego nikt nie widzi, gdy gasną światła.",
+    wc2_title:"Produkcja i Technika", wc2_desc:"Ekipy kamerzystów, realizatorzy dźwięku, zespoły oświetleniowe, budowniczowie scen. Ręce, dzięki którym pokaz istnieje, niewidoczne w oklaskach.",
+    wc3_title:"Zarządzanie i Koordynacja", wc3_desc:"Menedżerowie, koordynatorzy, planiści. Osoby, które przyjmują na siebie całą presję, by inni mogli występować, choć nikt nie pyta, jak się czują.",
+    wc4_title:"Zasoby Ludzkie", wc4_desc:"Zespoły HR, rekruterzy, menedżerowie talentów. Utrzymują ludzką stronę organizacji. Oni również dźwigają ciężar innych.",
+    wc5_title:"Kreatywność i Media", wc5_desc:"Projektanci, fotografowie, twórcy treści, zespoły social media. Codziennie budują kulturę, często samotnie, często bez uznania.",
+    wc6_title:"Wsparcie i Operacje", wc6_desc:"Kierowcy, personel cateringowy, logistyka, administracja. Bez nich nic się nie porusza. To fundament, którego nikt nie fotografuje.",
+    wc7_title:"Stażyści i Osoby Rozpoczynające Karierę", wc7_desc:"Ci, którzy dopiero zaczynają, dźwigają najwięcej przy najmniejszej ochronie. Ich pasja zasługuje na taką samą troskę jak każdego innego.",
+    wc8_title:"Ochrona i Bezpieczeństwo", wc8_desc:"Ochroniarze, bodyguardzi, oficerowie bezpieczeństwa wydarzeń. Chronią wszystkich innych. Kto chroni ich?",
+    tests_tag:"Oceny Psychologiczne", tests_h2a:"Poznaj", tests_h2b:"swój stan",
+    tests_desc:"Zwalidowane oceny psychologiczne - od szybkich badań przesiewowych z natychmiastowymi wynikami po pełne oceny analizowane przez nasz zespół.",
+    tc1_title:"Depresja", tc1_desc:"9-punktowe narzędzie przesiewowe stosowane na całym świecie. Natychmiastowe automatyczne wyniki.",
+    tc2_title:"Lęk", tc2_desc:"7-punktowe badanie przesiewowe zaburzeń lękowych uogólnionych z natychmiastowymi wynikami.",
+    tc3_title:"Wypalenie Zawodowe", tc3_desc:"Mierzy wypalenie osobiste, zawodowe i związane z klientami w trzech wymiarach.",
+    tc4_title:"PTSD", tc4_desc:"Zwalidowana lista kontrolna PTSD oparta na kryteriach DSM-5.",
+    tc5_title:"Jakość Snu", tc5_desc:"Ocenia jakość snu i zaburzenia w ciągu jednego miesiąca.",
+    tc6_title:"Poczucie Własnej Wartości", tc6_desc:"Złoty standard, 10 pozycji, mierzący globalne poczucie własnej wartości.",
+    tc7_title:"Spożycie Alkoholu", tc7_desc:"Zwalidowane przez WHO badanie przesiewowe zaburzeń związanych ze spożyciem alkoholu.",
+    tc8_title:"Zobacz Wszystkie Oceny", tc8_abbr:"Pełna Biblioteka", tc8_desc:"12 zwalidowanych narzędzi psychometrycznych obejmujących wszystkie główne wymiary dobrostanu.", tc8_cta:"Zobacz pełną bibliotekę →",
+    tc_cta:"Wykonaj ocenę →",
+    cta_h2:"Gotowi zapewnić opiekę swojemu zespołowi?", cta_p:"Niezależnie od tego, czy reprezentujesz agencję, studio, czy szukasz wsparcia indywidualnie - jesteśmy tutaj. Porozmawiajmy.", cta_btn:"Skontaktuj Się",
+    footer_desc:"Dobrostan psychiczny dla branży kreatywnej. Dostępny dla każdego, niezależnie od roli czy stanowiska.",
+    footer_about:"O Creaven", footer_col1:"Usługi", footer_col2:"Oceny", footer_col3:"Firma",
+    fc1_1:"Prewencja", fc1_2:"Wsparcie Indywidualne", fc1_3:"Szkolenie Zespołów", fc1_4:"Protokoły",
+    fc3_1:"O Nas", fc3_2:"Kontakt", fc3_3:"Blog", fc3_4:"Moje Konto",
+    footer_rights:"Wszelkie prawa zastrzeżone.", footer_tagline:"\"Dobrostan psychiczny dla każdego w branży kreatywnej.\""
+  },
+  ru: {
+    "stag_workshops":"Мастер-классы","stag_webinars":"Вебинары","stag_resources":"Ресурсы",
+    "stag_1-on-1-sessions":"Индивидуальные сессии","stag_follow-up":"Сопровождение","stag_referral":"Направление",
+    "stag_leadership":"Лидерство","stag_eq-training":"Тренинг ЭИ","stag_protocols":"Протоколы",
+    "stag_risk-audit":"Аудит рисков","stag_policy-design":"Разработка политики","stag_crisis-plans":"Кризисные планы",
+    nav_home:"Главная", nav_tests:"Оценки", nav_session:"Моя Сессия", nav_org:"Организациям",
+    nav_emergency:"Экстренная помощь", nav_about:"О нас", nav_contact:"Контакты",
+    nav_account:"Мой Аккаунт", nav_book:"Записаться на консультацию", nav_book_short:"Записаться",
+    hero_eyebrow:"Психологическое благополучие для творческой индустрии",
+    hero_h1_a:"Каждый человек за работой", hero_h1_b:"заслуживает заботы.",
+    hero_desc:"Индустрия видит искусство. Creaven видит человека за ним. Для тех, кто построил всё, чего от них ждали, и всё равно чувствует себя потерянным. Для тех, кто молча борется, ищет выход или путь обратно к себе. Не нужно быть на грани, чтобы заслужить поддержку. Достаточно просто быть человеком. Слава громкая. Боль тихая. Creaven слушает.",
+    hero_cta1:"Наши Услуги", hero_call:"Позвонить Сейчас", hero_cta2:"Записаться на консультацию",
+    stat1_unit:"человек в мире", stat1_label:"живут с психическим расстройством (ВОЗ, 2024)",
+    stat2_unit:"творческих работников", stat2_label:"сообщают о симптомах тревоги или депрессии (MusiCares, 2023)",
+    stat3_unit:"теряется ежегодно", stat3_label:"мировой производительности из-за проблем с психическим здоровьем (ВОЗ)",
+    stat4_unit:"работников", stat4_label:"хотя бы раз переживали выгорание за карьеру",
+    stat5_unit:"платформ существует", stat5_label:"посвящённых психическому здоровью всех работников творческой индустрии",
+    mission_tag:"Наша Философия",
+    mission_quote:"\"Творческая индустрия сияет благодаря тысячам невидимых рук. Они заслуживают большего, чем признание - они заслуживают заботы.\"",
+    mission_author:"- Амакон Грейс Даниэлла, основатель Creaven",
+    mp1_title:"Профилактика Прежде Всего", mp1_desc:"Мы действуем до наступления кризиса. Наш подход проактивен, непрерывен и глубоко человечен.",
+    mp2_title:"Целостный Подход Без Стигмы", mp2_desc:"Психическое здоровье - это не слабость. Мы создаём пространства, где каждый может говорить свободно.",
+    mp3_title:"Доступность По Всему Миру", mp3_desc:"100% удалённо, на нескольких языках и с культурной чуткостью - доступно командам по всему миру.",
+    services_tag:"Что Мы Предлагаем", services_h2a:"Четыре опоры", services_h2b:"заботы",
+    services_desc:"Каждая услуга предоставляется на 100% удалённо и адаптируется под культуру и конкретные потребности вашей организации.",
+    s1_title:"Профилактика и Психообразование", s1_desc:"Формирование психологической грамотности и осведомлённости во всей организации.",
+    s2_title:"Выслушивание и Индивидуальная Поддержка", s2_desc:"Конфиденциальные индивидуальные сессии, предоставляющие безопасное пространство для того, чтобы быть услышанным, оценённым и направленным.",
+    s3_title:"Обучение Команд и Руководства", s3_desc:"Обучение менеджеров и лидеров команд навыкам распознавания признаков стресса.",
+    s4_title:"Протоколы и Организационная Безопасность", s4_desc:"Разработка надёжных систем для защиты сотрудников на структурном уровне.",
+    who_tag:"Кому Мы Помогаем", who_h2a:"Каждый", who_h2b:"важен здесь",
+    who_desc:"Каждый, кто вносит вклад в создание творческой работы. Артисты и HR, менеджеры и охрана, техники и стажёры. Если вы часть этой индустрии, Creaven для вас.",
+    wc1_title:"Артисты и Исполнители", wc1_desc:"Певцы, танцоры, актёры, музыканты. Те, кто отдают всё на сцене и несут то, что никто не видит, когда гаснет свет.",
+    wc2_title:"Продакшн и Техническая Команда", wc2_desc:"Операторы, звукорежиссёры, световые команды, строители сцен. Руки, благодаря которым шоу существует, невидимые в аплодисментах.",
+    wc3_title:"Менеджмент и Координация", wc3_desc:"Менеджеры, координаторы, планировщики. Люди, которые принимают на себя всё давление, чтобы другие могли выступать, при этом их саму никто не спрашивает, как они.",
+    wc4_title:"Отдел Кадров", wc4_desc:"HR-команды, рекрутеры, талант-менеджеры. Они удерживают человеческую сторону организаций вместе. Они тоже несут груз других.",
+    wc5_title:"Творчество и Медиа", wc5_desc:"Дизайнеры, фотографы, создатели контента, команды соцсетей. Ежедневно строят культуру, часто в одиночку, часто без признания.",
+    wc6_title:"Поддержка и Операции", wc6_desc:"Водители, персонал кейтеринга, логистика, администрация. Без них ничего не движется. Они фундамент, который никто не фотографирует.",
+    wc7_title:"Стажёры и Начинающие Специалисты", wc7_desc:"Те, кто только начинает, несут больше всего при наименьшей защите. Их увлечённость заслуживает такой же заботы, как и у всех остальных.",
+    wc8_title:"Охрана и Безопасность", wc8_desc:"Охрана, телохранители, сотрудники безопасности мероприятий. Они защищают всех остальных. Кто защищает их?",
+    tests_tag:"Психологические Оценки", tests_h2a:"Узнайте", tests_h2b:"своё состояние",
+    tests_desc:"Валидированные психологические оценки - от быстрых скринингов с мгновенными результатами до полных оценок, проверяемых нашей командой.",
+    tc1_title:"Депрессия", tc1_desc:"Скрининговый инструмент из 9 пунктов, используемый во всём мире. Мгновенные автоматические результаты.",
+    tc2_title:"Тревожность", tc2_desc:"Скрининг генерализованного тревожного расстройства из 7 пунктов с мгновенными результатами.",
+    tc3_title:"Выгорание", tc3_desc:"Измеряет личное, профессиональное и связанное с клиентами выгорание по трём измерениям.",
+    tc4_title:"ПТСР", tc4_desc:"Валидированный опросник ПТСР на основе критериев DSM-5.",
+    tc5_title:"Качество Сна", tc5_desc:"Оценивает качество сна и нарушения в течение одного месяца.",
+    tc6_title:"Самооценка", tc6_desc:"Золотой стандарт из 10 пунктов для оценки общей самооценки и самоуважения.",
+    tc7_title:"Употребление Алкоголя", tc7_desc:"Валидированный ВОЗ скрининг расстройств, связанных с употреблением алкоголя.",
+    tc8_title:"Посмотреть Все Оценки", tc8_abbr:"Полная Библиотека", tc8_desc:"12 валидированных психометрических инструментов, охватывающих все основные аспекты благополучия.", tc8_cta:"Смотреть всю библиотеку →",
+    tc_cta:"Пройти оценку →",
+    cta_h2:"Готовы позаботиться о своей команде?", cta_p:"Представляете ли вы агентство, студию, или ищете индивидуальную поддержку - мы здесь. Давайте поговорим.", cta_btn:"Связаться с Нами",
+    footer_desc:"Психологическое благополучие для творческой индустрии. Доступно каждому, независимо от роли или должности.",
+    footer_about:"О Creaven", footer_col1:"Услуги", footer_col2:"Оценки", footer_col3:"Компания",
+    fc1_1:"Профилактика", fc1_2:"Индивидуальная Поддержка", fc1_3:"Обучение Команд", fc1_4:"Протоколы",
+    fc3_1:"О нас", fc3_2:"Контакты", fc3_3:"Блог", fc3_4:"Мой Аккаунт",
+    footer_rights:"Все права защищены.", footer_tagline:"\"Психологическое благополучие для всех в творческой индустрии.\""
+  },
+  tr: {
+    "stag_workshops":"Atölyeler","stag_webinars":"Webinarlar","stag_resources":"Kaynaklar",
+    "stag_1-on-1-sessions":"Birebir Görüşmeler","stag_follow-up":"Takip","stag_referral":"Yönlendirme",
+    "stag_leadership":"Liderlik","stag_eq-training":"DZ Eğitimi","stag_protocols":"Protokoller",
+    "stag_risk-audit":"Risk Denetimi","stag_policy-design":"Politika Tasarımı","stag_crisis-plans":"Kriz Planları",
+    nav_home:"Ana Sayfa", nav_tests:"Değerlendirmeler
