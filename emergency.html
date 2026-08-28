@@ -22,7 +22,7 @@ nav{padding:16px 48px;display:flex;justify-content:space-between;align-items:cen
 .lang-switcher{position:relative;}
 .lang-toggle{background:none;border:1.5px solid var(--green);color:var(--green);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
 .lang-toggle:hover{background:var(--green);color:white;}
-.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:100;}
+.lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;max-height:60vh;overflow-y:auto;z-index:100;}
 .lang-dropdown.open{display:block;}
 .lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:var(--charcoal);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
 .lang-dropdown button:last-child{border-bottom:none;}
@@ -123,12 +123,22 @@ footer p{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;}
       <div class="lang-dropdown" id="langDropdown">
         <button onclick="selectLang('en','EN')">English</button>
         <button onclick="selectLang('fr','FR')">Francais</button>
-        <button onclick="selectLang('kr','KR')">한국어</button>
-        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('ko','KO')">한국어</button>
+        <button onclick="selectLang('ja','JA')">日本語</button>
         <button onclick="selectLang('zh','ZH')">中文</button>
         <button onclick="selectLang('th','TH')">ไทย</button>
         <button onclick="selectLang('de','DE')">Deutsch</button>
         <button onclick="selectLang('es','ES')">Espanol</button>
+        <button onclick="selectLang('pt','PT')">Portugues</button>
+        <button onclick="selectLang('it','IT')">Italiano</button>
+        <button onclick="selectLang('nl','NL')">Nederlands</button>
+        <button onclick="selectLang('sv','SV')">Svenska</button>
+        <button onclick="selectLang('pl','PL')">Polski</button>
+        <button onclick="selectLang('ru','RU')">Русский</button>
+        <button onclick="selectLang('tr','TR')">Turkce</button>
+        <button onclick="selectLang('ar','AR')">العربية</button>
+        <button onclick="selectLang('hi','HI')">हिन्दी</button>
+        <button onclick="selectLang('vi','VI')">Tieng Viet</button>
       </div>
     </div>
   </div>
@@ -306,7 +316,7 @@ footer p{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;}
   </div>
 
   <div class="quote-box">
-    <div class="quote-text">"Fantasy and fame, yeah the things we choose.<br>But what about <em>exhaustion, hate, hard work,<br>pressure, self-hate</em> and other negative stuff?"</div>
+    <div class="quote-text">"Behind the applause, <em>exhaustion</em>. Behind the fame, the fatigue.<br>Hard work, pressure, <em>self-hate</em> and other negative stuff?"</div>
     <div class="quote-sub">The other side of the spotlight. Creaven is here for everything that does not make it into the highlight reel.</div>
   </div>
 
@@ -359,7 +369,7 @@ const T = {
     "ct6-t":"Consultation organisationnelle","ct6-d":"Pour les agences et studios. Evaluez le climat psychologique de votre equipe et co-construisez un programme de bien-etre.","ct6-b":"B2B",
     "em-label":"Numeros d'urgence","em-title":"Urgences physiques par pays"
   },
-  kr:{
+  ko:{
     "nav-back":"사이트로 돌아가기","h-eyebrow":"심리적 위기 자원",
     "h-title":"지금 위험에 처해 있다면 응급 서비스에 전화하세요.",
     "h-desc":"Creaven는 온라인 플랫폼입니다. 즉각적인 신체적 위험이 있다면 먼저 해당 국가의 응급 번호에 전화하세요. 그 이후를 위해 우리가 여기 있습니다.",
@@ -375,16 +385,263 @@ const T = {
     "ct5-t":"첫 번째 상담","ct5-d":"심리학자를 만나고 함께 적합한 지원을 정의하는 20-30분.","ct5-b":"발견",
     "ct6-t":"조직 상담","ct6-d":"에이전시 및 스튜디오를 위한 팀 웰빙 프로그램.","ct6-b":"B2B",
     "em-label":"응급 번호","em-title":"국가별 신체적 응급 상황"
+  },
+  ja:{
+    "nav-back":"サイトに戻る","h-eyebrow":"心理的危機リソース",
+    "h-title":"今すぐ危険な状態にある場合は、緊急サービスに電話してください。",
+    "h-desc":"Creavenはオンラインプラットフォームです。物理的な緊急サービスの代わりにはなりません。誰かが直ちに身体的危険にさらされている場合は、まずお住まいの国の緊急番号に電話してください。私たちはその後のためにここにいます。",
+    "n-title":"重要：Creavenはオンラインの心理的ウェルビーイングサービスです",
+    "n-text":"私たちはプラットフォームを通じて予防、サポート、相談を提供しています。自殺未遂、自傷行為、身体的介入を必要とする精神科的緊急事態など、生命に関わる急性の危機の場合は、直ちにお住まいの地域の緊急サービスに連絡してください。Creavenの心理士は危機の前後にサポートできますが、身体的な緊急事態には身体的な対応者が必要です。",
+    "clarif-title":"Creavenがあなたのためにできること",
+    "clarif-text":"Creavenは、心理的苦痛の中にあるが差し迫った身体的危険はない場合の危機相談を提供しています。圧倒されている、不安、限界にいる、あるいは今すぐ誰かと話す必要がある場合は、緊急相談を予約してください。できるだけ早く心理士とつなげます。私たちは一本の電話で繋がっています。",
+    "ct-label":"Creavenの相談","ct-title":"サポートできる5つの方法",
+    "ct1-t":"緊急相談","ct1-d":"危機的状況にあるが身体的危険はない場合。今すぐ誰かと話す必要があります。できるだけ早く心理士とつなげます。","ct1-b":"優先",
+    "ct2-t":"フォローアップセッション","ct2-d":"継続的な同行のための定期セッション。困難な期間の後、または継続的なサポートのために心理士があなたの歩みに寄り添います。","ct2-b":"継続",
+    "ct3-t":"心理評価","ct3-d":"完全な報告書付きの総合評価。あなたの状況とどのようなサポートが最も適しているかを理解します。","ct3-b":"評価",
+    "ct4-t":"バーンアウト同行","ct4-d":"職業的疲労のための専門的サポート。クリエイティブ業界の文脈でのバーンアウトの認識、理解、回復。","ct4-b":"専門",
+    "ct5-t":"初回相談","ct5-d":"心理士と会い、あなたに合ったサポートを一緒に定義するための20〜30分。義務はありません。","ct5-b":"発見",
+    "ct6-t":"組織相談","ct6-d":"代理店やスタジオ向け。チームの心理的な状態を評価し、あなたの組織のためのウェルビーイングプログラムを共同設計します。","ct6-b":"B2B",
+    "em-label":"緊急番号","em-title":"国別の身体的緊急事態"
+  },
+  zh:{
+    "nav-back":"返回网站","h-eyebrow":"心理危机资源",
+    "h-title":"如果您现在处于危险之中，请拨打紧急服务电话。",
+    "h-desc":"Creaven是一个在线平台。我们无法替代实体紧急服务。如果有人处于直接的身体危险中，请先拨打您所在国家的紧急电话号码。我们在这之后为您提供支持。",
+    "n-title":"重要提示：Creaven是一项在线心理健康服务",
+    "n-text":"我们通过平台提供预防、支持和咨询服务。在涉及生命危险的急性危机情况下，例如自杀企图、自残或需要physical干预的精神科紧急情况，请立即联系当地紧急服务机构。Creaven的心理咨询师可以在危机前后为您提供支持，但身体紧急情况需要现场救援人员。",
+    "clarif-title":"Creaven能为您做什么",
+    "clarif-text":"当您处于心理困扰但没有直接身体危险时，Creaven提供危机咨询服务。如果您感到不知所措、焦虑、濒临崩溃，或只是现在需要与人交谈，请预约紧急咨询。我们会尽快为您联系心理咨询师。我们随时一通电话就能联系到。",
+    "ct-label":"Creaven咨询服务","ct-title":"我们能提供帮助的五种方式",
+    "ct1-t":"紧急咨询","ct1-d":"您正处于危机中但没有身体危险。您需要立即与人交谈。我们会尽快为您联系心理咨询师。","ct1-b":"优先",
+    "ct2-t":"跟进会谈","ct2-d":"用于持续陪伴的定期会谈。您的心理咨询师会在困难时期后或为持续支持跟进您的历程。","ct2-b":"持续",
+    "ct3-t":"心理评估","ct3-d":"附带完整书面报告的综合评估。了解您的状况以及最适合您的支持方式。","ct3-b":"评估",
+    "ct4-t":"职业倦怠陪伴","ct4-d":"针对职业倦怠的专业支持。在创意产业背景下识别、理解并从职业倦怠中恢复。","ct4-b":"专业",
+    "ct5-t":"首次咨询","ct5-d":"20到30分钟，与您的心理咨询师会面，共同确定适合您的支持方式。无需承诺。","ct5-b":"探索",
+    "ct6-t":"组织咨询","ct6-d":"面向机构和工作室。评估您团队的心理氛围，共同设计适合您组织的健康计划。","ct6-b":"B2B",
+    "em-label":"紧急电话","em-title":"各国身体紧急情况"
+  },
+  th:{
+    "nav-back":"กลับไปยังเว็บไซต์","h-eyebrow":"ทรัพยากรวิกฤตทางจิตวิทยา",
+    "h-title":"หากคุณกำลังตกอยู่ในอันตรายตอนนี้ โปรดโทรหาบริการฉุกเฉิน",
+    "h-desc":"Creaven เป็นแพลตฟอร์มออนไลน์ เราไม่สามารถทดแทนบริการฉุกเฉินทางกายภาพได้ หากมีใครตกอยู่ในอันตรายทางกายภาพทันที โปรดโทรหาหมายเลขฉุกเฉินของประเทศคุณก่อน เราอยู่ที่นี่สำหรับสิ่งที่ตามมา",
+    "n-title":"สำคัญ: Creaven เป็นบริการด้านสุขภาพจิตออนไลน์",
+    "n-text":"เราให้บริการป้องกัน สนับสนุน และให้คำปรึกษาผ่านแพลตฟอร์มของเรา ในกรณีวิกฤตเฉียบพลันที่เกี่ยวข้องกับความเสี่ยงต่อชีวิต เช่น การพยายามฆ่าตัวตาย การทำร้ายตัวเอง หรือภาวะฉุกเฉินทางจิตเวชที่ต้องการการแทรกแซงทางกายภาพ โปรดติดต่อบริการฉุกเฉินในพื้นที่ของคุณทันที",
+    "clarif-title":"สิ่งที่ Creaven สามารถทำเพื่อคุณได้",
+    "clarif-text":"Creaven พร้อมให้คำปรึกษาวิกฤตเมื่อคุณกำลังทุกข์ทรมานทางจิตใจแต่ไม่ได้อยู่ในอันตรายทางกายภาพทันที หากคุณรู้สึกท่วมท้น วิตกกังวล อยู่ในภาวะขอบเขต หรือเพียงแค่ต้องการคุยกับใครสักคนตอนนี้ ให้จองการให้คำปรึกษาฉุกเฉิน เราจะเชื่อมต่อคุณกับนักจิตวิทยาโดยเร็วที่สุด เราอยู่ห่างเพียงปลายสาย",
+    "ct-label":"การให้คำปรึกษาของ Creaven","ct-title":"ห้าวิธีที่เราช่วยได้",
+    "ct1-t":"การให้คำปรึกษาฉุกเฉิน","ct1-d":"คุณอยู่ในภาวะวิกฤตแต่ไม่ได้อยู่ในอันตรายทางกายภาพ คุณต้องการคุยกับใครสักคนตอนนี้ เราจะเชื่อมต่อคุณกับนักจิตวิทยาโดยเร็วที่สุด","ct1-b":"ลำดับความสำคัญ",
+    "ct2-t":"เซสชันติดตามผล","ct2-d":"เซสชันปกติสำหรับการติดตามอย่างต่อเนื่อง นักจิตวิทยาของคุณจะติดตามเส้นทางของคุณหลังจากช่วงเวลาที่ยากลำบากหรือเพื่อการสนับสนุนอย่างต่อเนื่อง","ct2-b":"ต่อเนื่อง",
+    "ct3-t":"การประเมินทางจิตวิทยา","ct3-d":"การประเมินที่ครอบคลุมพร้อมรายงานเป็นลายลักษณ์อักษรฉบับเต็ม เข้าใจสถานการณ์ของคุณและการสนับสนุนที่เหมาะสมที่สุด","ct3-b":"การประเมิน",
+    "ct4-t":"การดูแลภาวะหมดไฟ","ct4-d":"การสนับสนุนเฉพาะทางสำหรับความเหนื่อยล้าทางวิชาชีพ การรับรู้ ทำความเข้าใจ และฟื้นตัวจากภาวะหมดไฟในบริบทของอุตสาหกรรมสร้างสรรค์","ct4-b":"เฉพาะทาง",
+    "ct5-t":"การให้คำปรึกษาครั้งแรก","ct5-d":"20 ถึง 30 นาทีเพื่อพบนักจิตวิทยาของคุณและร่วมกันกำหนดการสนับสนุนที่เหมาะกับคุณ ไม่มีข้อผูกมัด","ct5-b":"การค้นพบ",
+    "ct6-t":"การให้คำปรึกษาองค์กร","ct6-d":"สำหรับเอเจนซี่และสตูดิโอ ประเมินบรรยากาศทางจิตวิทยาของทีมคุณและร่วมออกแบบโปรแกรมความเป็นอยู่ที่ดีสำหรับองค์กรของคุณ","ct6-b":"B2B",
+    "em-label":"หมายเลขฉุกเฉิน","em-title":"เหตุฉุกเฉินทางกายภาพแยกตามประเทศ"
+  },
+  de:{
+    "nav-back":"Zuruck zur Website","h-eyebrow":"Ressourcen fur psychologische Krisen",
+    "h-title":"Wenn Sie gerade in Gefahr sind, rufen Sie bitte den Notdienst an.",
+    "h-desc":"Creaven ist eine Online-Plattform. Wir konnen physische Notdienste nicht ersetzen. Wenn jemand in unmittelbarer korperlicher Gefahr ist, rufen Sie zuerst die Notrufnummer Ihres Landes an. Wir sind fur das da, was danach kommt.",
+    "n-title":"Wichtig: Creaven ist ein Online-Dienst fur psychisches Wohlbefinden",
+    "n-text":"Wir bieten Pravention, Unterstutzung und Beratung uber unsere Plattform. Bei akuten Krisen mit Lebensgefahr, wie einem Suizidversuch, Selbstverletzung oder einem psychiatrischen Notfall, der physisches Eingreifen erfordert, wenden Sie sich bitte sofort an Ihren lokalen Notdienst.",
+    "clarif-title":"Was Creaven fur Sie tun kann",
+    "clarif-text":"Creaven bietet Krisenberatung an, wenn Sie sich in psychischer Not befinden, aber nicht in unmittelbarer korperlicher Gefahr sind. Wenn Sie sich uberfordert, angstlich, am Rande fuhlen oder einfach jetzt mit jemandem sprechen mussen, buchen Sie eine Notfallberatung. Wir verbinden Sie so schnell wie moglich mit einem Psychologen. Wir sind nur einen Anruf entfernt.",
+    "ct-label":"Creaven Beratungen","ct-title":"Funf Wege, wie wir helfen konnen",
+    "ct1-t":"Notfallberatung","ct1-d":"Sie befinden sich in einer Krise, aber nicht in korperlicher Gefahr. Sie mussen jetzt mit jemandem sprechen. Wir verbinden Sie so schnell wie moglich mit einem Psychologen.","ct1-b":"Prioritat",
+    "ct2-t":"Folgesitzung","ct2-d":"Regelmassige Sitzungen fur eine kontinuierliche Begleitung. Ihr Psychologe begleitet Sie nach einer schwierigen Zeit oder fur fortlaufende Unterstutzung.","ct2-b":"Fortlaufend",
+    "ct3-t":"Psychologische Bewertung","ct3-d":"Eine umfassende Bewertung mit einem vollstandigen schriftlichen Bericht. Verstehen Sie Ihre Situation und welche Unterstutzung am besten geeignet ist.","ct3-b":"Bewertung",
+    "ct4-t":"Burnout-Begleitung","ct4-d":"Spezialisierte Unterstutzung bei beruflicher Erschopfung. Erkennen, Verstehen und Erholung von Burnout im Kontext der Kreativbranche.","ct4-b":"Spezialisiert",
+    "ct5-t":"Erstberatung","ct5-d":"20 bis 30 Minuten, um Ihren Psychologen kennenzulernen und gemeinsam die passende Unterstutzung zu definieren. Unverbindlich.","ct5-b":"Entdeckung",
+    "ct6-t":"Organisationsberatung","ct6-d":"Fur Agenturen und Studios. Bewerten Sie das psychologische Klima Ihres Teams und entwickeln Sie gemeinsam ein Wohlbefindensprogramm.","ct6-b":"B2B",
+    "em-label":"Notrufnummern","em-title":"Physische Notfalle nach Land"
+  },
+  es:{
+    "nav-back":"Volver al sitio","h-eyebrow":"Recursos para crisis psicologicas",
+    "h-title":"Si esta en peligro ahora mismo, llame a los servicios de emergencia.",
+    "h-desc":"Creaven es una plataforma en linea. No podemos reemplazar los servicios de emergencia fisicos. Si alguien esta en peligro fisico inmediato, llame primero al numero de emergencia de su pais. Estamos aqui para lo que viene despues.",
+    "n-title":"Importante: Creaven es un servicio de bienestar psicologico en linea",
+    "n-text":"Ofrecemos prevencion, apoyo y consultas a traves de nuestra plataforma. En casos de crisis aguda que impliquen riesgo para la vida, como un intento de suicidio, autolesion o una emergencia psiquiatrica que requiera intervencion fisica, contacte inmediatamente a los servicios de emergencia locales.",
+    "clarif-title":"Lo que Creaven puede hacer por usted",
+    "clarif-text":"Creaven esta disponible para consultas de crisis cuando esta en angustia psicologica pero no en peligro fisico inmediato. Si se siente abrumado, ansioso, al limite, o simplemente necesita hablar con alguien ahora, reserve una consulta de emergencia. Lo conectaremos con un psicologo lo mas rapido posible. Estamos a una llamada de distancia.",
+    "ct-label":"Consultas Creaven","ct-title":"Cinco formas en que podemos ayudar",
+    "ct1-t":"Consulta de emergencia","ct1-d":"Esta en crisis pero no en peligro fisico. Necesita hablar con alguien ahora. Lo conectamos con un psicologo lo mas rapido posible.","ct1-b":"Prioridad",
+    "ct2-t":"Sesion de seguimiento","ct2-d":"Sesiones regulares para un acompanamiento continuo. Su psicologo sigue su proceso despues de un periodo dificil o para un apoyo continuo.","ct2-b":"Continuo",
+    "ct3-t":"Evaluacion psicologica","ct3-d":"Una evaluacion integral con un informe escrito completo. Comprenda su situacion y que apoyo es mas adecuado para usted.","ct3-b":"Evaluacion",
+    "ct4-t":"Acompanamiento de burnout","ct4-d":"Apoyo especializado para el agotamiento profesional. Reconocer, comprender y recuperarse del burnout en el contexto de la industria creativa.","ct4-b":"Especializado",
+    "ct5-t":"Primera consulta","ct5-d":"De 20 a 30 minutos para conocer a su psicologo y definir juntos el apoyo adecuado para usted. Sin compromiso.","ct5-b":"Descubrimiento",
+    "ct6-t":"Consulta organizacional","ct6-d":"Para agencias y estudios. Evalue el clima psicologico de su equipo y disene juntos un programa de bienestar para su estructura.","ct6-b":"B2B",
+    "em-label":"Numeros de emergencia","em-title":"Emergencias fisicas por pais"
+  },
+  pt:{
+    "nav-back":"Voltar ao site","h-eyebrow":"Recursos para crise psicologica",
+    "h-title":"Se voce esta em perigo agora, ligue para os servicos de emergencia.",
+    "h-desc":"Creaven e uma plataforma online. Nao podemos substituir os servicos de emergencia fisicos. Se alguem esta em perigo fisico imediato, ligue primeiro para o numero de emergencia do seu pais. Estamos aqui para o que vem depois.",
+    "n-title":"Importante: Creaven e um servico de bem-estar psicologico online",
+    "n-text":"Oferecemos prevencao, apoio e consultas atraves da nossa plataforma. Em casos de crise aguda envolvendo risco de vida, como uma tentativa de suicidio, automutilacao ou uma emergencia psiquiatrica que requer intervencao fisica, contate imediatamente os servicos de emergencia locais.",
+    "clarif-title":"O que a Creaven pode fazer por voce",
+    "clarif-text":"A Creaven esta disponivel para consultas de crise quando voce esta em sofrimento psicologico mas nao em perigo fisico imediato. Se voce se sente sobrecarregado, ansioso, no limite, ou simplesmente precisa falar com alguem agora, reserve uma consulta de emergencia. Vamos conecta-lo a um psicologo o mais rapido possivel. Estamos a uma ligacao de distancia.",
+    "ct-label":"Consultas Creaven","ct-title":"Cinco formas de ajudarmos",
+    "ct1-t":"Consulta de emergencia","ct1-d":"Voce esta em crise mas nao em perigo fisico. Precisa falar com alguem agora. Conectamos voce a um psicologo o mais rapido possivel.","ct1-b":"Prioridade",
+    "ct2-t":"Sessao de acompanhamento","ct2-d":"Sessoes regulares para acompanhamento continuo. Seu psicologo acompanha sua jornada apos um periodo dificil ou para apoio continuo.","ct2-b":"Continuo",
+    "ct3-t":"Avaliacao psicologica","ct3-d":"Uma avaliacao completa com um relatorio escrito completo. Entenda sua situacao e qual apoio e mais adequado.","ct3-b":"Avaliacao",
+    "ct4-t":"Acompanhamento de burnout","ct4-d":"Apoio especializado para esgotamento profissional. Reconhecer, entender e recuperar-se do burnout no contexto da industria criativa.","ct4-b":"Especializado",
+    "ct5-t":"Primeira consulta","ct5-d":"20 a 30 minutos para conhecer seu psicologo e definir juntos o apoio certo para voce. Sem compromisso.","ct5-b":"Descoberta",
+    "ct6-t":"Consulta organizacional","ct6-d":"Para agencias e estudios. Avalie o clima psicologico da sua equipe e co-crie um programa de bem-estar para sua estrutura.","ct6-b":"B2B",
+    "em-label":"Numeros de emergencia","em-title":"Emergencias fisicas por pais"
+  },
+  it:{
+    "nav-back":"Torna al sito","h-eyebrow":"Risorse per crisi psicologiche",
+    "h-title":"Se sei in pericolo in questo momento, chiama i servizi di emergenza.",
+    "h-desc":"Creaven e una piattaforma online. Non possiamo sostituire i servizi di emergenza fisici. Se qualcuno e in pericolo fisico immediato, chiama prima il numero di emergenza del tuo paese. Siamo qui per cio che viene dopo.",
+    "n-title":"Importante: Creaven e un servizio di benessere psicologico online",
+    "n-text":"Offriamo prevenzione, supporto e consulenze attraverso la nostra piattaforma. In caso di crisi acuta con rischio per la vita, come un tentativo di suicidio, autolesionismo o un'emergenza psichiatrica che richiede un intervento fisico, contatta immediatamente i servizi di emergenza locali.",
+    "clarif-title":"Cosa puo fare Creaven per te",
+    "clarif-text":"Creaven e disponibile per consulenze di crisi quando sei in difficolta psicologica ma non in pericolo fisico immediato. Se ti senti sopraffatto, ansioso, al limite, o hai semplicemente bisogno di parlare con qualcuno ora, prenota una consulenza d'emergenza. Ti collegheremo con uno psicologo il piu velocemente possibile. Siamo a una chiamata di distanza.",
+    "ct-label":"Consulenze Creaven","ct-title":"Cinque modi in cui possiamo aiutare",
+    "ct1-t":"Consulenza d'emergenza","ct1-d":"Sei in crisi ma non in pericolo fisico. Hai bisogno di parlare con qualcuno ora. Ti colleghiamo con uno psicologo il piu velocemente possibile.","ct1-b":"Priorita",
+    "ct2-t":"Sessione di follow-up","ct2-d":"Sessioni regolari per un accompagnamento continuo. Il tuo psicologo segue il tuo percorso dopo un periodo difficile o per un supporto continuo.","ct2-b":"Continuo",
+    "ct3-t":"Valutazione psicologica","ct3-d":"Una valutazione completa con un rapporto scritto completo. Comprendi la tua situazione e quale supporto e piu adatto.","ct3-b":"Valutazione",
+    "ct4-t":"Accompagnamento burnout","ct4-d":"Supporto specializzato per l'esaurimento professionale. Riconoscere, comprendere e riprendersi dal burnout nel contesto dell'industria creativa.","ct4-b":"Specializzato",
+    "ct5-t":"Prima consulenza","ct5-d":"20-30 minuti per incontrare il tuo psicologo e definire insieme il supporto adatto a te. Nessun impegno richiesto.","ct5-b":"Scoperta",
+    "ct6-t":"Consulenza organizzativa","ct6-d":"Per agenzie e studi. Valuta il clima psicologico del tuo team e co-progetta un programma di benessere per la tua struttura.","ct6-b":"B2B",
+    "em-label":"Numeri di emergenza","em-title":"Emergenze fisiche per paese"
+  },
+  nl:{
+    "nav-back":"Terug naar de site","h-eyebrow":"Bronnen voor psychologische crisis",
+    "h-title":"Als u nu in gevaar bent, bel dan de hulpdiensten.",
+    "h-desc":"Creaven is een online platform. Wij kunnen fysieke hulpdiensten niet vervangen. Als iemand in direct fysiek gevaar is, bel dan eerst het alarmnummer van uw land. Wij zijn er voor wat daarna komt.",
+    "n-title":"Belangrijk: Creaven is een online dienst voor psychisch welzijn",
+    "n-text":"Wij bieden preventie, ondersteuning en consulten via ons platform. Bij acute crises met levensgevaar, zoals een zelfmoordpoging, zelfbeschadiging of een psychiatrische noodsituatie die fysieke interventie vereist, neem dan onmiddellijk contact op met uw lokale hulpdiensten.",
+    "clarif-title":"Wat Creaven voor u kan doen",
+    "clarif-text":"Creaven biedt crisisconsulten wanneer u in psychische nood verkeert maar niet in direct fysiek gevaar bent. Als u zich overweldigd, angstig, op het randje voelt, of gewoon nu met iemand moet praten, boek dan een spoedconsult. Wij verbinden u zo snel mogelijk met een psycholoog. Wij zijn een telefoontje verwijderd.",
+    "ct-label":"Creaven Consulten","ct-title":"Vijf manieren waarop wij kunnen helpen",
+    "ct1-t":"Spoedconsult","ct1-d":"U bevindt zich in een crisis maar niet in fysiek gevaar. U moet nu met iemand praten. Wij verbinden u zo snel mogelijk met een psycholoog.","ct1-b":"Prioriteit",
+    "ct2-t":"Vervolgsessie","ct2-d":"Regelmatige sessies voor continue begeleiding. Uw psycholoog volgt uw traject na een moeilijke periode of voor doorlopende ondersteuning.","ct2-b":"Doorlopend",
+    "ct3-t":"Psychologische beoordeling","ct3-d":"Een uitgebreide evaluatie met een volledig schriftelijk rapport. Begrijp uw situatie en welke ondersteuning het beste past.","ct3-b":"Evaluatie",
+    "ct4-t":"Burn-out begeleiding","ct4-d":"Gespecialiseerde ondersteuning bij professionele uitputting. Herkennen, begrijpen en herstellen van burn-out in de creatieve sector.","ct4-b":"Gespecialiseerd",
+    "ct5-t":"Eerste consult","ct5-d":"20 tot 30 minuten om uw psycholoog te ontmoeten en samen de juiste ondersteuning te bepalen. Geheel vrijblijvend.","ct5-b":"Kennismaking",
+    "ct6-t":"Organisatieconsult","ct6-d":"Voor bureaus en studio's. Beoordeel het psychologische klimaat van uw team en ontwerp samen een welzijnsprogramma.","ct6-b":"B2B",
+    "em-label":"Alarmnummers","em-title":"Fysieke noodgevallen per land"
+  },
+  sv:{
+    "nav-back":"Tillbaka till webbplatsen","h-eyebrow":"Resurser vid psykologisk kris",
+    "h-title":"Om du ar i fara just nu, ring larmtjansten.",
+    "h-desc":"Creaven ar en onlineplattform. Vi kan inte ersatta fysiska larmtjanster. Om nagon ar i omedelbar fysisk fara, ring ditt lands larmnummer forst. Vi finns har for det som kommer efter.",
+    "n-title":"Viktigt: Creaven ar en online-tjanst for psykiskt valbefinnande",
+    "n-text":"Vi erbjuder prevention, stod och konsultationer via var plattform. Vid akuta kriser som innebar livsfara, som ett sjalvmordsforsok, sjalvskada eller en psykiatrisk nodsituation som kraver fysisk intervention, kontakta omedelbart din lokala larmtjanst.",
+    "clarif-title":"Vad Creaven kan gora for dig",
+    "clarif-text":"Creaven finns tillgangligt for krisrad givning nar du befinner dig i psykisk nod men inte i omedelbar fysisk fara. Om du kanner dig overvaldigad, angslig, pa graensen, eller helt enkelt behover prata med nagon just nu, boka en akutkonsultation. Vi kopplar dig till en psykolog sa snabbt som mojligt. Vi ar bara ett samtal bort.",
+    "ct-label":"Creaven Konsultationer","ct-title":"Fem satt vi kan hjalpa till",
+    "ct1-t":"Akutkonsultation","ct1-d":"Du befinner dig i kris men inte i fysisk fara. Du behover prata med nagon nu. Vi kopplar dig till en psykolog sa snabbt som mojligt.","ct1-b":"Prioritet",
+    "ct2-t":"Uppfoljningssamtal","ct2-d":"Regelbundna samtal for kontinuerligt stod. Din psykolog foljer din resa efter en svar period eller for lopande stod.","ct2-b":"Lopande",
+    "ct3-t":"Psykologisk bedomning","ct3-d":"En omfattande utvardering med en fullstandig skriftlig rapport. Forsta din situation och vilket stod som passar bast.","ct3-b":"Bedomning",
+    "ct4-t":"Utbrandhetsstod","ct4-d":"Specialiserat stod for professionell utmattning. Att kanna igen, forsta och aterhamta sig fran utbrandhet inom den kreativa branschen.","ct4-b":"Specialiserad",
+    "ct5-t":"Forsta konsultationen","ct5-d":"20 till 30 minuter for att traffa din psykolog och tillsammans definiera det stod som passar dig. Inget atagande kravs.","ct5-b":"Upptackt",
+    "ct6-t":"Organisationskonsultation","ct6-d":"For byraer och studios. Bedom ditt teams psykologiska klimat och samskapa ett valbefinnandeprogram for din organisation.","ct6-b":"B2B",
+    "em-label":"Larmnummer","em-title":"Fysiska nodsituationer per land"
+  },
+  pl:{
+    "nav-back":"Powrot do strony","h-eyebrow":"Zasoby na wypadek kryzysu psychologicznego",
+    "h-title":"Jesli jestes teraz w niebezpieczenstwie, zadzwon po sluzby ratunkowe.",
+    "h-desc":"Creaven to platforma internetowa. Nie mozemy zastapic fizycznych sluzb ratunkowych. Jesli ktos jest w bezposrednim niebezpieczenstwie fizycznym, zadzwon najpierw pod numer alarmowy swojego kraju. Jestesmy tutaj dla tego, co przyjdzie pozniej.",
+    "n-title":"Wazne: Creaven to internetowa usluga dobrostanu psychicznego",
+    "n-text":"Oferujemy prewencje, wsparcie i konsultacje za posrednictwem naszej platformy. W przypadku ostrego kryzysu zwiazanego z zagrozeniem zycia, takiego jak proba samobojcza, samookaleczenie lub nagly wypadek psychiatryczny wymagajacy fizycznej interwencji, natychmiast skontaktuj sie z lokalnymi sluzbami ratunkowymi.",
+    "clarif-title":"Co Creaven moze dla Ciebie zrobic",
+    "clarif-text":"Creaven oferuje konsultacje kryzysowe, gdy jestes w cierpieniu psychicznym, ale nie w bezposrednim niebezpieczenstwie fizycznym. Jesli czujesz sie przytloczony, niespokojny, na granicy wytrzymalosci, lub po prostu potrzebujesz z kims porozmawiac teraz, zarezerwuj konsultacje awaryjna. Polaczymy Cie z psychologiem tak szybko, jak to mozliwe. Dzieli nas tylko jeden telefon.",
+    "ct-label":"Konsultacje Creaven","ct-title":"Piec sposobow, w jakie mozemy pomoc",
+    "ct1-t":"Konsultacja awaryjna","ct1-d":"Jestes w kryzysie, ale nie w niebezpieczenstwie fizycznym. Musisz teraz z kims porozmawiac. Polaczymy Cie z psychologiem tak szybko, jak to mozliwe.","ct1-b":"Priorytet",
+    "ct2-t":"Sesja kontrolna","ct2-d":"Regularne sesje dla ciaglego towarzyszenia. Twoj psycholog sledzi Twoja droge po trudnym okresie lub w celu ciaglego wsparcia.","ct2-b":"Ciagly",
+    "ct3-t":"Ocena psychologiczna","ct3-d":"Kompleksowa ocena z pelnym pisemnym raportem. Zrozum swoja sytuacje i jakie wsparcie jest najbardziej odpowiednie.","ct3-b":"Ocena",
+    "ct4-t":"Towarzyszenie w wypaleniu","ct4-d":"Specjalistyczne wsparcie w przypadku wyczerpania zawodowego. Rozpoznawanie, rozumienie i powrot do zdrowia po wypaleniu w kontekscie branzy kreatywnej.","ct4-b":"Specjalistyczny",
+    "ct5-t":"Pierwsza konsultacja","ct5-d":"20 do 30 minut, aby poznac swojego psychologa i wspolnie okreslic odpowiednie wsparcie. Bez zobowiazan.","ct5-b":"Odkrycie",
+    "ct6-t":"Konsultacja organizacyjna","ct6-d":"Dla agencji i studiow. Ocen klimat psychologiczny swojego zespolu i wspoltworz program dobrostanu dla swojej struktury.","ct6-b":"B2B",
+    "em-label":"Numery alarmowe","em-title":"Fizyczne sytuacje awaryjne wedlug kraju"
+  },
+  ru:{
+    "nav-back":"Вернуться на сайт","h-eyebrow":"Ресурсы при психологическом кризисе",
+    "h-title":"Если вы сейчас в опасности, позвоните в экстренные службы.",
+    "h-desc":"Creaven - это онлайн-платформа. Мы не можем заменить физические экстренные службы. Если кто-то находится в непосредственной физической опасности, сначала позвоните по номеру экстренной службы вашей страны. Мы здесь для того, что будет после.",
+    "n-title":"Важно: Creaven - это онлайн-служба психологического благополучия",
+    "n-text":"Мы предоставляем профилактику, поддержку и консультации через нашу платформу. В случаях острого кризиса, связанного с риском для жизни, таких как попытка самоубийства, самоповреждение или психиатрическая неотложная ситуация, требующая физического вмешательства, немедленно обратитесь в местные экстренные службы.",
+    "clarif-title":"Что Creaven может сделать для вас",
+    "clarif-text":"Creaven доступен для кризисных консультаций, когда вы находитесь в психологическом дистрессе, но не в непосредственной физической опасности. Если вы чувствуете себя подавленным, тревожным, на грани, или просто нужно поговорить с кем-то прямо сейчас, забронируйте экстренную консультацию. Мы свяжем вас с психологом как можно быстрее. Мы всего в одном звонке.",
+    "ct-label":"Консультации Creaven","ct-title":"Пять способов, которыми мы можем помочь",
+    "ct1-t":"Экстренная консультация","ct1-d":"Вы в кризисе, но не в физической опасности. Вам нужно поговорить с кем-то прямо сейчас. Мы свяжем вас с психологом как можно быстрее.","ct1-b":"Приоритет",
+    "ct2-t":"Последующая сессия","ct2-d":"Регулярные сессии для постоянного сопровождения. Ваш психолог следит за вашим путем после сложного периода или для постоянной поддержки.","ct2-b":"Постоянный",
+    "ct3-t":"Психологическая оценка","ct3-d":"Комплексная оценка с полным письменным отчетом. Поймите свою ситуацию и какая поддержка наиболее подходит.","ct3-b":"Оценка",
+    "ct4-t":"Сопровождение при выгорании","ct4-d":"Специализированная поддержка при профессиональном истощении. Распознавание, понимание и восстановление после выгорания в контексте творческой индустрии.","ct4-b":"Специализированный",
+    "ct5-t":"Первая консультация","ct5-d":"От 20 до 30 минут, чтобы познакомиться с вашим психологом и вместе определить подходящую поддержку. Без обязательств.","ct5-b":"Знакомство",
+    "ct6-t":"Организационная консультация","ct6-d":"Для агентств и студий. Оцените психологический климат вашей команды и совместно разработайте программу благополучия для вашей структуры.","ct6-b":"B2B",
+    "em-label":"Экстренные номера","em-title":"Физические чрезвычайные ситуации по странам"
+  },
+  tr:{
+    "nav-back":"Siteye don","h-eyebrow":"Psikolojik kriz kaynaklari",
+    "h-title":"Su anda tehlikedeyseniz, lutfen acil servisleri arayin.",
+    "h-desc":"Creaven cevrimici bir platformdur. Fiziksel acil servislerin yerini alamayiz. Biri acil fiziksel tehlikedeyse, once ulkenizin acil numarasini arayin. Biz sonrasinda burada olacagiz.",
+    "n-title":"Onemli: Creaven cevrimici bir psikolojik iyi olus hizmetidir",
+    "n-text":"Platformumuz araciligiyla onleme, destek ve danismanlik hizmeti sunuyoruz. Intihar girisimi, kendine zarar verme veya fiziksel mudahale gerektiren psikiyatrik acil durum gibi yasami tehdit eden akut kriz durumlarinda, lutfen hemen yerel acil servislerinizle iletisime gecin.",
+    "clarif-title":"Creaven sizin icin ne yapabilir",
+    "clarif-text":"Creaven, acil fiziksel tehlikede olmadiginiz ancak psikolojik sikinti icinde oldugunuz durumlarda kriz danismanligi sunar. Bunalmis, endiseli, sinirda hissediyorsaniz ya da simdi biriyle konusmaniz gerekiyorsa, acil danismanlik ayirtin. Sizi mumkun oldugunca cabuk bir psikologla baglayacagiz. Bir telefon kadar yakinizdayiz.",
+    "ct-label":"Creaven Danismanliklari","ct-title":"Yardimci olabilecegimiz bes yol",
+    "ct1-t":"Acil danismanlik","ct1-d":"Kriz icindesiniz ama fiziksel tehlikede degilsiniz. Simdi biriyle konusmaniz gerekiyor. Sizi mumkun oldugunca cabuk bir psikologla baglayacagiz.","ct1-b":"Oncelik",
+    "ct2-t":"Takip seansi","ct2-d":"Surekli eslik icin duzenli seanslar. Psikoloğunuz zor bir donemin ardindan ya da surekli destek icin yolculugunuzu takip eder.","ct2-b":"Surekli",
+    "ct3-t":"Psikolojik degerlendirme","ct3-d":"Tam yazili raporla kapsamli bir degerlendirme. Durumunuzu ve size en uygun destegi anlayin.","ct3-b":"Degerlendirme",
+    "ct4-t":"Tukenmislik eslik","ct4-d":"Mesleki tukenme icin uzman destegi. Yaratici endustri baglaminda tukenmisligi tanima, anlama ve iyilesme.","ct4-b":"Uzman",
+    "ct5-t":"Ilk danismanlik","ct5-d":"Psikoloğunuzla tanismak ve size uygun destegi birlikte belirlemek icin 20-30 dakika. Taahhut gerekmez.","ct5-b":"Kesif",
+    "ct6-t":"Kurumsal danismanlik","ct6-d":"Ajanslar ve stüdyolar icin. Ekibinizin psikolojik iklimini degerlendirin ve yapiniza uygun bir iyi olus programi birlikte tasarlayin.","ct6-b":"B2B",
+    "em-label":"Acil numaralar","em-title":"Ulkeye gore fiziksel acil durumlar"
+  },
+  ar:{
+    "nav-back":"العودة إلى الموقع","h-eyebrow":"موارد الأزمات النفسية",
+    "h-title":"إذا كنت في خطر الآن، يرجى الاتصال بخدمات الطوارئ.",
+    "h-desc":"Creaven منصة إلكترونية. لا يمكننا أن نحل محل خدمات الطوارئ الفعلية. إذا كان شخص ما في خطر جسدي مباشر، اتصل أولاً برقم الطوارئ في بلدك. نحن هنا لما يأتي بعد ذلك.",
+    "n-title":"مهم: Creaven هي خدمة رفاهية نفسية عبر الإنترنت",
+    "n-text":"نقدم الوقاية والدعم والاستشارات عبر منصتنا. في حالات الأزمة الحادة التي تنطوي على خطر على الحياة، مثل محاولة الانتحار أو إيذاء النفس أو حالة طوارئ نفسية تتطلب تدخلاً جسدياً، يرجى الاتصال بخدمات الطوارئ المحلية فوراً.",
+    "clarif-title":"ما يمكن أن تفعله Creaven من أجلك",
+    "clarif-text":"تتوفر Creaven لاستشارات الأزمات عندما تكون في ضائقة نفسية دون أن تكون في خطر جسدي مباشر. إذا شعرت بالإرهاق أو القلق أو أنك على وشك الانهيار، أو تحتاج فقط للتحدث مع شخص ما الآن، احجز استشارة طارئة. سنوصلك بأخصائي نفسي بأسرع ما يمكن. نحن على بعد مكالمة واحدة.",
+    "ct-label":"استشارات Creaven","ct-title":"خمس طرق يمكننا المساعدة بها",
+    "ct1-t":"استشارة طارئة","ct1-d":"أنت في أزمة لكنك لست في خطر جسدي. تحتاج إلى التحدث مع شخص ما الآن. سنوصلك بأخصائي نفسي بأسرع ما يمكن.","ct1-b":"أولوية",
+    "ct2-t":"جلسة متابعة","ct2-d":"جلسات منتظمة للمرافقة المستمرة. يتابع أخصائيك النفسي مسيرتك بعد فترة صعبة أو من أجل دعم مستمر.","ct2-b":"مستمر",
+    "ct3-t":"تقييم نفسي","ct3-d":"تقييم شامل مع تقرير مكتوب كامل. افهم وضعك وأي دعم هو الأنسب لك.","ct3-b":"تقييم",
+    "ct4-t":"مرافقة الاحتراق الوظيفي","ct4-d":"دعم متخصص للإرهاق المهني. التعرف على الاحتراق الوظيفي وفهمه والتعافي منه في سياق الصناعة الإبداعية.","ct4-b":"متخصص",
+    "ct5-t":"الاستشارة الأولى","ct5-d":"20 إلى 30 دقيقة للقاء أخصائيك النفسي وتحديد الدعم المناسب لك معاً. دون التزام.","ct5-b":"اكتشاف",
+    "ct6-t":"استشارة تنظيمية","ct6-d":"للوكالات والاستوديوهات. قيّم المناخ النفسي لفريقك وصمم معاً برنامج رفاهية لمؤسستك.","ct6-b":"B2B",
+    "em-label":"أرقام الطوارئ","em-title":"حالات الطوارئ الجسدية حسب البلد"
+  },
+  hi:{
+    "nav-back":"साइट पर वापस जाएं","h-eyebrow":"मानसिक संकट संसाधन",
+    "h-title":"यदि आप अभी खतरे में हैं, तो कृपया आपातकालीन सेवाओं को कॉल करें।",
+    "h-desc":"Creaven एक ऑनलाइन प्लेटफ़ॉर्म है। हम भौतिक आपातकालीन सेवाओं की जगह नहीं ले सकते। यदि कोई तत्काल शारीरिक खतरे में है, तो पहले अपने देश के आपातकालीन नंबर पर कॉल करें। हम इसके बाद आने वाली चीज़ों के लिए यहां हैं।",
+    "n-title":"महत्वपूर्ण: Creaven एक ऑनलाइन मानसिक कल्याण सेवा है",
+    "n-text":"हम अपने प्लेटफ़ॉर्म के माध्यम से रोकथाम, सहायता और परामर्श प्रदान करते हैं। जीवन के लिए जोखिम से जुड़े गंभीर संकट के मामलों में, जैसे आत्महत्या का प्रयास, आत्म-नुकसान, या शारीरिक हस्तक्षेप की आवश्यकता वाली मानसिक आपात स्थिति, कृपया तुरंत अपनी स्थानीय आपातकालीन सेवाओं से संपर्क करें।",
+    "clarif-title":"Creaven आपके लिए क्या कर सकता है",
+    "clarif-text":"Creaven संकट परामर्श के लिए उपलब्ध है जब आप मानसिक संकट में हों लेकिन तत्काल शारीरिक खतरे में न हों। यदि आप अभिभूत, चिंतित, कगार पर महसूस करते हैं, या बस अभी किसी से बात करने की आवश्यकता है, तो आपातकालीन परामर्श बुक करें। हम आपको जल्द से जल्द एक मनोवैज्ञानिक से जोड़ेंगे। हम बस एक कॉल दूर हैं।",
+    "ct-label":"Creaven परामर्श","ct-title":"पांच तरीके जिनसे हम मदद कर सकते हैं",
+    "ct1-t":"आपातकालीन परामर्श","ct1-d":"आप संकट में हैं लेकिन शारीरिक खतरे में नहीं हैं। आपको अभी किसी से बात करने की आवश्यकता है। हम आपको जल्द से जल्द एक मनोवैज्ञानिक से जोड़ेंगे।","ct1-b":"प्राथमिकता",
+    "ct2-t":"अनुवर्ती सत्र","ct2-d":"निरंतर साथ के लिए नियमित सत्र। आपका मनोवैज्ञानिक किसी कठिन दौर के बाद या निरंतर सहायता के लिए आपकी यात्रा का अनुसरण करता है।","ct2-b":"निरंतर",
+    "ct3-t":"मनोवैज्ञानिक मूल्यांकन","ct3-d":"पूर्ण लिखित रिपोर्ट के साथ एक व्यापक मूल्यांकन। अपनी स्थिति को समझें और कौन सी सहायता सबसे उपयुक्त है।","ct3-b":"मूल्यांकन",
+    "ct4-t":"बर्नआउट सहयोग","ct4-d":"व्यावसायिक थकान के लिए विशेष सहायता। रचनात्मक उद्योग के संदर्भ में बर्नआउट को पहचानना, समझना और उससे उबरना।","ct4-b":"विशेष",
+    "ct5-t":"पहला परामर्श","ct5-d":"अपने मनोवैज्ञानिक से मिलने और आपके लिए सही सहायता को एक साथ परिभाषित करने के लिए 20 से 30 मिनट। कोई प्रतिबद्धता आवश्यक नहीं।","ct5-b":"खोज",
+    "ct6-t":"संगठनात्मक परामर्श","ct6-d":"एजेंसियों और स्टूडियो के लिए। अपनी टीम के मनोवैज्ञानिक माहौल का आकलन करें और अपनी संरचना के लिए एक कल्याण कार्यक्रम को सह-डिज़ाइन करें।","ct6-b":"B2B",
+    "em-label":"आपातकालीन नंबर","em-title":"देश के अनुसार शारीरिक आपात स्थिति"
+  },
+  vi:{
+    "nav-back":"Quay lại trang web","h-eyebrow":"Tài nguyên khủng hoảng tâm lý",
+    "h-title":"Nếu bạn đang gặp nguy hiểm ngay bây giờ, vui lòng gọi dịch vụ khẩn cấp.",
+    "h-desc":"Creaven là một nền tảng trực tuyến. Chúng tôi không thể thay thế các dịch vụ khẩn cấp thực tế. Nếu ai đó đang gặp nguy hiểm về thể chất ngay lập tức, hãy gọi số khẩn cấp của quốc gia bạn trước. Chúng tôi ở đây cho những gì đến sau đó.",
+    "n-title":"Quan trọng: Creaven là dịch vụ sức khỏe tâm lý trực tuyến",
+    "n-text":"Chúng tôi cung cấp phòng ngừa, hỗ trợ và tư vấn thông qua nền tảng của mình. Trong trường hợp khủng hoảng cấp tính liên quan đến nguy cơ tính mạng, chẳng hạn như cố gắng tự tử, tự làm hại bản thân, hoặc trường hợp khẩn cấp tâm thần cần can thiệp thể chất, vui lòng liên hệ ngay với dịch vụ khẩn cấp địa phương.",
+    "clarif-title":"Những gì Creaven có thể làm cho bạn",
+    "clarif-text":"Creaven sẵn sàng tư vấn khủng hoảng khi bạn đang gặp đau khổ tâm lý nhưng không gặp nguy hiểm thể chất ngay lập tức. Nếu bạn cảm thấy quá tải, lo lắng, đang ở bên bờ vực, hoặc chỉ cần nói chuyện với ai đó ngay bây giờ, hãy đặt lịch tư vấn khẩn cấp. Chúng tôi sẽ kết nối bạn với một nhà tâm lý học nhanh nhất có thể. Chúng tôi chỉ cách một cuộc gọi.",
+    "ct-label":"Tư vấn Creaven","ct-title":"Năm cách chúng tôi có thể giúp đỡ",
+    "ct1-t":"Tư vấn khẩn cấp","ct1-d":"Bạn đang trong khủng hoảng nhưng không gặp nguy hiểm thể chất. Bạn cần nói chuyện với ai đó ngay bây giờ. Chúng tôi sẽ kết nối bạn với một nhà tâm lý học nhanh nhất có thể.","ct1-b":"Ưu tiên",
+    "ct2-t":"Buổi theo dõi","ct2-d":"Các buổi thường xuyên để đồng hành liên tục. Nhà tâm lý học của bạn theo dõi hành trình của bạn sau một giai đoạn khó khăn hoặc để hỗ trợ liên tục.","ct2-b":"Liên tục",
+    "ct3-t":"Đánh giá tâm lý","ct3-d":"Một đánh giá toàn diện với báo cáo viết đầy đủ. Hiểu tình huống của bạn và hỗ trợ nào phù hợp nhất.","ct3-b":"Đánh giá",
+    "ct4-t":"Đồng hành kiệt sức","ct4-d":"Hỗ trợ chuyên biệt cho tình trạng kiệt sức nghề nghiệp. Nhận biết, hiểu và phục hồi từ kiệt sức trong bối cảnh ngành công nghiệp sáng tạo.","ct4-b":"Chuyên biệt",
+    "ct5-t":"Tư vấn đầu tiên","ct5-d":"20 đến 30 phút để gặp nhà tâm lý học của bạn và cùng nhau xác định sự hỗ trợ phù hợp với bạn. Không cần cam kết.","ct5-b":"Khám phá",
+    "ct6-t":"Tư vấn tổ chức","ct6-d":"Dành cho các agency và studio. Đánh giá không khí tâm lý của nhóm bạn và cùng thiết kế chương trình sức khỏe cho tổ chức của bạn.","ct6-b":"B2B",
+    "em-label":"Số điện thoại khẩn cấp","em-title":"Trường hợp khẩn cấp thể chất theo quốc gia"
   }
 };
-
-// Fill other languages with EN as fallback
-['jp','zh','th','de','es'].forEach(l => T[l] = {...T.en});
-T.jp["nav-back"]="サイトに戻る"; T.jp["h-eyebrow"]="心理的危機リソース"; T.jp["em-title"]="国別の身体的緊急事態";
-T.zh["nav-back"]="返回网站"; T.zh["h-eyebrow"]="心理危机资源"; T.zh["em-title"]="各国身体紧急情况";
-T.th["nav-back"]="กลับไปยังเว็บไซต์"; T.th["h-eyebrow"]="ทรัพยากรวิกฤตทางจิตวิทยา";
-T.de["nav-back"]="Zuruck zur Website"; T.de["h-eyebrow"]="Ressourcen fur psychologische Krisen"; T.de["ct1-t"]="Notfallberatung"; T.de["ct4-t"]="Burnout-Begleitung";
-T.es["nav-back"]="Volver al sitio"; T.es["h-eyebrow"]="Recursos para crisis psicologicas"; T.es["ct1-t"]="Consulta de emergencia"; T.es["ct4-t"]="Acompanamiento burnout";
 
 const IDS = ["nav-back","h-eyebrow","h-title","h-desc","n-title","n-text","clarif-title","clarif-text","ct-label","ct-title","ct1-t","ct1-d","ct1-b","ct2-t","ct2-d","ct2-b","ct3-t","ct3-d","ct3-b","ct4-t","ct4-d","ct4-b","ct5-t","ct5-d","ct5-b","ct6-t","ct6-d","ct6-b","em-label","em-title"];
 
@@ -394,7 +651,7 @@ function applyLang(l) {
     const el = document.getElementById(id);
     if (el && t[id]) el.textContent = t[id];
   });
-  document.documentElement.lang = {kr:'ko',jp:'ja',zh:'zh',th:'th',de:'de',es:'es'}[l] || 'en';
+  document.documentElement.lang = l || 'en';
 }
 
 function toggleLangMenu() {
