@@ -172,6 +172,8 @@
     border: 1px solid rgba(0,0,0,0.06);
     overflow: hidden;
     min-width: 140px;
+    max-height: 60vh;
+    overflow-y: auto;
     z-index: 100;
   }
   .lang-dropdown.open { display: block; }
@@ -512,6 +514,23 @@
     animation:pulse 2s infinite;
   }
   .btn-call:hover{background:var(--red-dark,#922B21);transform:translateY(-2px);}
+  .call-now-wrap{position:relative;display:inline-block;}
+  .call-menu{
+    display:none;position:absolute;top:calc(100% + 10px);left:0;
+    background:white;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.18);
+    border:1px solid rgba(0,0,0,0.06);overflow:hidden;min-width:250px;z-index:200;
+  }
+  .call-menu.open{display:block;}
+  .call-menu a{
+    display:flex;align-items:center;gap:12px;padding:14px 18px;text-decoration:none;
+    border-bottom:1px solid rgba(0,0,0,0.05);transition:background 0.15s;
+  }
+  .call-menu a:last-child{border-bottom:none;}
+  .call-menu a:hover{background:var(--teal-light,#E8F2E8);}
+  .call-menu-icon{font-size:20px;flex-shrink:0;}
+  .call-menu-text{display:flex;flex-direction:column;}
+  .call-menu-text strong{font-size:14px;color:var(--charcoal,#1A2A1A);font-weight:600;}
+  .call-menu-text small{font-size:11px;color:var(--mid,#4A5A4A);margin-top:2px;}
   @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,.35);}50%{box-shadow:0 4px 30px rgba(192,57,43,.6);}}
   .btn-secondary {
     background: transparent;
@@ -1321,12 +1340,22 @@
     <div class="lang-dropdown" id="langDropdown">
       <button onclick="selectLang('en','EN')">English</button>
       <button onclick="selectLang('fr','FR')">Français</button>
-      <button onclick="selectLang('kr','한국어')">한국어</button>
-      <button onclick="selectLang('jp','日本語')">日本語</button>
+      <button onclick="selectLang('ko','한국어')">한국어</button>
+      <button onclick="selectLang('ja','日本語')">日本語</button>
       <button onclick="selectLang('zh','中文')">中文</button>
       <button onclick="selectLang('th','ไทย')">ไทย</button>
       <button onclick="selectLang('de','DE')">Deutsch</button>
       <button onclick="selectLang('es','ES')">Español</button>
+      <button onclick="selectLang('pt','PT')">Português</button>
+      <button onclick="selectLang('it','IT')">Italiano</button>
+      <button onclick="selectLang('nl','NL')">Nederlands</button>
+      <button onclick="selectLang('sv','SV')">Svenska</button>
+      <button onclick="selectLang('pl','PL')">Polski</button>
+      <button onclick="selectLang('ru','RU')">Русский</button>
+      <button onclick="selectLang('tr','TR')">Türkçe</button>
+      <button onclick="selectLang('ar','AR')">العربية</button>
+      <button onclick="selectLang('hi','HI')">हिन्दी</button>
+      <button onclick="selectLang('vi','VI')">Tiếng Việt</button>
     </div>
   </div>
 </nav>
@@ -1350,10 +1379,26 @@
     <div class="carousel-actions">
       <a href="#services" class="btn-primary" data-i18n="hero_cta1">Explore Our Services</a>
       <a href="booking.html" class="btn-secondary" data-i18n="hero_cta2">Book a Consultation</a>
-      <a href="consultation.html?instant=true" class="btn-call" id="btn-call">
-        📞 <span data-i18n="hero_call">Call Now</span>
-        <span style="font-size:11px;display:block;opacity:.8;">Immediate session - no appointment needed</span>
-      </a>
+      <div class="call-now-wrap" id="callNowWrap">
+        <button type="button" class="btn-call" id="btn-call" onclick="toggleCallMenu()">
+          📞 <span data-i18n="hero_call">Call Now</span>
+          <span style="font-size:11px;display:block;opacity:.8;" data-i18n="hero_call_sub">Choose how to reach us</span>
+        </button>
+        <div class="call-menu" id="callMenu">
+          <a href="https://wa.me/qr/7EICNKILQ2VJO1" target="_blank" rel="noopener">
+            <span class="call-menu-icon">💬</span>
+            <span class="call-menu-text"><strong data-i18n="callmenu_wa_title">WhatsApp</strong><small data-i18n="callmenu_wa_desc">Chat with us now</small></span>
+          </a>
+          <a href="emergency.html">
+            <span class="call-menu-icon">🆘</span>
+            <span class="call-menu-text"><strong data-i18n="callmenu_em_title">Emergency Resources</strong><small data-i18n="callmenu_em_desc">In danger right now</small></span>
+          </a>
+          <a href="consultation.html?instant=true">
+            <span class="call-menu-icon">📅</span>
+            <span class="call-menu-text"><strong data-i18n="callmenu_cons_title">Book a Consultation</strong><small data-i18n="callmenu_cons_desc">Immediate session, no appointment</small></span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
   <div class="carousel-dots" id="carouselDots">
@@ -1675,6 +1720,17 @@
 </footer>
 
 <script>
+function toggleCallMenu(){
+  var m=document.getElementById('callMenu');
+  if(m)m.classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.call-now-wrap')){
+    var m=document.getElementById('callMenu');
+    if(m)m.classList.remove('open');
+  }
+});
+
 function toggleLangMenu(){
   var d=document.getElementById('langDropdown');
   var b=document.getElementById('langToggle');
