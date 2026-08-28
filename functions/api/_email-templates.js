@@ -90,6 +90,23 @@ export function paymentConfirmedEmail({ name, amountLabel, itemLabel, receiptUrl
   return { subject, html };
 }
 
+// 5. Notification interne à l'équipe lors d'une nouvelle réservation
+export function adminBookingNotifyEmail({ clientName, clientEmail, typeName, dateLabel, timeLabel, practitionerName, sessionCode, payNote }) {
+  const subject = `Nouvelle réservation - ${typeName}`;
+  const html = wrapper(`
+    <h2 style="font-weight:600;">Nouvelle réservation reçue</h2>
+    <table style="width:100%;margin:20px 0;border-collapse:collapse;">
+      <tr><td style="padding:6px 0;color:#8A9A8A;font-size:12px;">Client</td><td style="padding:6px 0;font-weight:500;">${clientName} (${clientEmail})</td></tr>
+      <tr><td style="padding:6px 0;color:#8A9A8A;font-size:12px;">Type</td><td style="padding:6px 0;font-weight:500;">${typeName}</td></tr>
+      <tr><td style="padding:6px 0;color:#8A9A8A;font-size:12px;">Psychologue</td><td style="padding:6px 0;font-weight:500;">${practitionerName || ""}</td></tr>
+      <tr><td style="padding:6px 0;color:#8A9A8A;font-size:12px;">Date</td><td style="padding:6px 0;font-weight:500;">${dateLabel} ${timeLabel || ""}</td></tr>
+      <tr><td style="padding:6px 0;color:#8A9A8A;font-size:12px;">Code de session</td><td style="padding:6px 0;font-weight:600;color:${BRAND.color};">${sessionCode}</td></tr>
+      <tr><td style="padding:6px 0;color:#8A9A8A;font-size:12px;">Paiement</td><td style="padding:6px 0;font-weight:500;">${payNote || ""}</td></tr>
+    </table>
+  `);
+  return { subject, html };
+}
+
 // 4. Rappel de rendez-vous (utilisé par le Worker Cron séparé)
 export function appointmentReminderEmail({ name, dateTimeLabel, sessionCode, minutesBefore, lang = "en" }) {
   const subject =
