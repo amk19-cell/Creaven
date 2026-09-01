@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creaven - Practitioner Dashboard</title>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<style>
+  :root{
+    --teal:#3A6B3A;--teal-dark:#2A4A2A;--teal-light:#E8F2E8;
+    --gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;
+    --cream:#FAFCFA;--cream-dark:#F0F5F0;--charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',Arial,sans-serif;background:var(--cream);color:var(--charcoal);padding:24px;}
+  h1{font-size:22px;font-weight:600;margin-bottom:4px;color:var(--teal-dark);}
+  h2{font-size:16px;font-weight:600;margin:28px 0 12px;color:var(--charcoal);}
+  .sub{font-size:13px;color:var(--light);margin-bottom:24px;}
+  #loginBox{max-width:360px;margin:80px auto;text-align:center;}
+  #loginBox input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(0,0,0,.15);font-size:14px;margin:8px 0;}
+  #loginBox button{width:100%;padding:12px;border-radius:10px;border:none;background:var(--teal);color:#fff;font-size:14px;font-weight:500;cursor:pointer;margin-top:8px;}
+  #loginBox button:hover{background:var(--teal-dark);}
+  #loginMsg{font-size:12px;color:#B23A2E;margin-top:8px;min-height:16px;}
+  #dashboard{display:none;max-width:900px;margin:0 auto;}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.04);margin-bottom:20px;}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--light);padding:12px;background:var(--cream-dark);}
+  td{padding:12px;font-size:13px;border-top:1px solid var(--cream-dark);}
+  .badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;}
+  .badge.confirmed{background:#E8F5E9;color:#388E3C;}
+  .badge.pending{background:var(--gold-light);color:var(--gold-dark);}
+  #empty{padding:30px;text-align:center;color:var(--light);font-size:13px;background:#fff;border-radius:12px;}
+  .add-slot{background:#fff;border-radius:12px;padding:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:20px;}
+  .add-slot .fld{display:flex;flex-direction:column;gap:4px;}
+  .add-slot label{font-size:11px;color:var(--light);}
+  .add-slot input{padding:9px 12px;border-radius:8px;border:1px solid rgba(0,0,0,.15);font-size:13px;}
+  .add-slot button{padding:10px 20px;border-radius:20px;border:none;background:var(--teal);color:#fff;font-size:13px;cursor:pointer;height:38px;}
+  .add-slot button:hover{background:var(--teal-dark);}
+  .del-btn{padding:5px 12px;border-radius:20px;border:1px solid #B23A2E;background:#fff;color:#B23A2E;font-size:11px;cursor:pointer;}
+  .del-btn:hover{background:#FDECEA;}
+  #msg{font-size:13px;margin-bottom:12px;padding:10px 14px;border-radius:8px;display:none;}
+  #msg.show{display:block;}
+  #msg.error{background:#FDECEA;color:#B23A2E;}
+  #msg.success{background:#E8F5E9;color:#388E3C;}
+  #logoutBtn{position:absolute;top:24px;right:24px;background:none;border:1px solid rgba(0,0,0,.15);border-radius:20px;padding:8px 16px;font-size:12px;cursor:pointer;color:var(--mid);}
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+  <h1>Creaven — Practitioner</h1>
+  <p class="sub">Sign in with your practitioner account.</p>
+  <input type="email" id="loginEmail" placeholder="your@email.com">
+  <input type="password" id="loginPassword" placeholder="Password">
+  <button onclick="doLogin()">Sign In</button>
+  <div id="loginMsg"></div>
+</div>
+
+<button id="logoutBtn" style="display:none;" onclick="firebase.auth().signOut()">Sign out</button>
+
+<div id="dashboard">
+  <h1>My Dashboard</h1>
+  <p class="sub" id="welcomeMsg"></p>
+  <div id="msg"></div>
+
+  <h2>Upcoming Bookings</h2>
+  <div id="bookingsWrap"><div id="empty">Loading...</div></div>
+
+  <h2>Manage My Availability</h2>
+  <div class="add-slot">
+    <div class="fld"><label>Date</label><input type="date" id="slotDate"></div>
+    <div class="fld"><label>Time</label><input type="time" id="slotTime"></div>
+    <div class="fld"><label>Duration (min)</label><input type="number" id="slotDuration" value="60" style="width:80px;"></div>
+    <button onclick="addSlot()">Add Slot</button>
+  </div>
+  <div id="slotsWrap"><div id="empty">Loading...</div></div>
+</div>
+
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain: "creaven-01.firebaseapp.com",
+  projectId: "creaven-01",
+  storageBucket: "creaven-01.firebasestorage.app",
+  messagingSenderId: "247953277751",
+  appId: "1:247953277751:web:2e6c9bde3b28998742d0b2"
+};
+firebase.initializeApp(firebaseConfig);
+
+function doLogin(){
+  var email = document.getElementById('loginEmail').value.trim();
+  var pw = document.getElementById('loginPassword').value;
+  var msg = document.getElementById('loginMsg');
+  if(!email || !pw){ msg.textContent = 'Please enter your email and password.'; return; }
+  msg.textContent = 'Signing in...';
+  firebase.auth().signInWithEmailAndPassword(email, pw).catch(function(err){
+    msg.textContent = err.message;
+  });
+}
+
+firebase.auth().onAuthStateChanged(function(user){
+  if(user){
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'block';
+    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('welcomeMsg').textContent = 'Signed in as ' + user.email;
+    loadBookings();
+    loadSlots();
+  } else {
+    document.getElementById('loginBox').style.display = 'block';
+    document.getElementById('logoutBtn').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
+  }
+});
+
+async function authedFetch(url, opts){
+  var user = firebase.auth().currentUser;
+  if(!user) throw new Error('Not signed in.');
+  var token = await user.getIdToken();
+  opts = opts || {};
+  opts.headers = Object.assign({}, opts.headers, { 'Authorization': 'Bearer ' + token });
+  return fetch(url, opts);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+async function loadBookings(){
+  var wrap = document.getElementById('bookingsWrap');
+  try{
+    var res = await authedFetch('/api/practitioner-bookings');
+    var data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to load bookings.');
+    var list = (data.bookings || []).sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
+    if(list.length === 0){
+      wrap.innerHTML = '<div id="empty">No bookings yet.</div>';
+      return;
+    }
+    var rows = list.map(function(b){
+      var badgeClass = b.status === 'confirmed' ? 'confirmed' : 'pending';
+      return '<tr>'
+        + '<td>' + escapeHtml(b.date||'') + ' ' + escapeHtml(b.time||'') + '</td>'
+        + '<td>' + escapeHtml(b.clientName||'') + '</td>'
+        + '<td>' + escapeHtml(b.consultationType||'') + '</td>'
+        + '<td>' + escapeHtml(b.sessionLang||'') + '</td>'
+        + '<td><span class="badge ' + badgeClass + '">' + escapeHtml(b.status||'') + '</span></td>'
+        + '<td>' + escapeHtml(b.note||'') + '</td>'
+        + '</tr>';
+    }).join('');
+    wrap.innerHTML = '<table><thead><tr><th>Date</th><th>Client</th><th>Type</th><th>Language</th><th>Status</th><th>Note</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }catch(err){
+    wrap.innerHTML = '<div id="empty">' + escapeHtml(err.message) + '</div>';
+  }
+}
+
+async function loadSlots(){
+  var wrap = document.getElementById('slotsWrap');
+  try{
+    var res = await authedFetch('/api/practitioner-availability');
+    var data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to load availability.');
+    var list = (data.slots || []).sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
+    if(list.length === 0){
+      wrap.innerHTML = '<div id="empty">No availability slots yet — add one above.</div>';
+      return;
+    }
+    var rows = list.map(function(s){
+      var badgeClass = s.status === 'booked' ? 'confirmed' : 'pending';
+      var delBtn = s.status === 'booked' ? '' : '<button class="del-btn" onclick="deleteSlot(\'' + s.id + '\', this)">Remove</button>';
+      return '<tr>'
+        + '<td>' + escapeHtml(s.date||'') + ' ' + escapeHtml(s.time||'') + '</td>'
+        + '<td>' + escapeHtml(String(s.duration||'')) + ' min</td>'
+        + '<td><span class="badge ' + badgeClass + '">' + escapeHtml(s.status||'') + '</span></td>'
+        + '<td>' + delBtn + '</td>'
+        + '</tr>';
+    }).join('');
+    wrap.innerHTML = '<table><thead><tr><th>Date</th><th>Duration</th><th>Status</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }catch(err){
+    wrap.innerHTML = '<div id="empty">' + escapeHtml(err.message) + '</div>';
+  }
+}
+
+async function addSlot(){
+  var date = document.getElementById('slotDate').value;
+  var time = document.getElementById('slotTime').value;
+  var duration = document.getElementById('slotDuration').value;
+  var msg = document.getElementById('msg');
+  if(!date || !time){
+    msg.textContent = 'Please choose a date and time.';
+    msg.className = 'error show';
+    return;
+  }
+  try{
+    var res = await authedFetch('/api/practitioner-availability', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ date: date, time: time, duration: duration })
+    });
+    var data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to add slot.');
+    msg.textContent = 'Slot added.';
+    msg.className = 'success show';
+    document.getElementById('slotDate').value = '';
+    document.getElementById('slotTime').value = '';
+    loadSlots();
+  }catch(err){
+    msg.textContent = err.message;
+    msg.className = 'error show';
+  }
+}
+
+async function deleteSlot(id, btn){
+  btn.disabled = true;
+  btn.textContent = 'Removing...';
+  var msg = document.getElementById('msg');
+  try{
+    var res = await authedFetch('/api/practitioner-availability?id=' + encodeURIComponent(id), { method: 'DELETE' });
+    var data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to remove slot.');
+    loadSlots();
+  }catch(err){
+    msg.textContent = err.message;
+    msg.className = 'error show';
+    btn.disabled = false;
+    btn.textContent = 'Remove';
+  }
+}
+</script>
+
+</body>
+</html>

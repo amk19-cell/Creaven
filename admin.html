@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creaven - Admin Dashboard</title>
+<style>
+  :root{
+    --teal:#3A6B3A;--teal-dark:#2A4A2A;--teal-light:#E8F2E8;
+    --gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;
+    --cream:#FAFCFA;--cream-dark:#F0F5F0;--charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',Arial,sans-serif;background:var(--cream);color:var(--charcoal);padding:24px;}
+  h1{font-size:22px;font-weight:600;margin-bottom:4px;color:var(--teal-dark);}
+  .sub{font-size:13px;color:var(--light);margin-bottom:24px;}
+  #gate{max-width:360px;margin:80px auto;text-align:center;}
+  #gate input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(0,0,0,.15);font-size:14px;margin:12px 0;}
+  #gate button{width:100%;padding:12px;border-radius:10px;border:none;background:var(--teal);color:#fff;font-size:14px;font-weight:500;cursor:pointer;}
+  #gate button:hover{background:var(--teal-dark);}
+  #dashboard{display:none;max-width:1000px;margin:0 auto;}
+  .filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .filter-btn{padding:8px 16px;border-radius:20px;border:1px solid rgba(0,0,0,.12);background:#fff;font-size:12px;cursor:pointer;color:var(--mid);}
+  .filter-btn.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--light);padding:12px;background:var(--cream-dark);}
+  td{padding:12px;font-size:13px;border-top:1px solid var(--cream-dark);vertical-align:top;}
+  .badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;}
+  .badge.confirmed{background:#E8F5E9;color:#388E3C;}
+  .badge.pending{background:var(--gold-light);color:var(--gold-dark);}
+  .confirm-btn{padding:6px 14px;border-radius:20px;border:none;background:var(--teal);color:#fff;font-size:11px;cursor:pointer;}
+  .confirm-btn:hover{background:var(--teal-dark);}
+  .confirm-btn:disabled{background:var(--light);cursor:default;}
+  #msg{font-size:13px;margin-bottom:12px;padding:10px 14px;border-radius:8px;display:none;}
+  #msg.show{display:block;}
+  #msg.error{background:#FDECEA;color:#B23A2E;}
+  #msg.success{background:#E8F5E9;color:#388E3C;}
+  #empty{padding:40px;text-align:center;color:var(--light);font-size:13px;}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>Creaven Admin</h1>
+  <p class="sub">Enter the dashboard token to continue.</p>
+  <input type="password" id="tokenInput" placeholder="Admin token">
+  <button onclick="enterDashboard()">Enter</button>
+  <div id="gateMsg" style="font-size:12px;color:#B23A2E;margin-top:8px;"></div>
+</div>
+
+<div id="dashboard">
+  <h1>Bookings</h1>
+  <p class="sub">Manual payment confirmations (Wave / MTN / PayPal) and full booking overview.</p>
+  <div id="msg"></div>
+  <div class="filters">
+    <button class="filter-btn active" data-f="pending" onclick="setFilter('pending')">Needs confirmation</button>
+    <button class="filter-btn" data-f="all" onclick="setFilter('all')">All bookings</button>
+  </div>
+  <div id="tableWrap"></div>
+</div>
+
+<script>
+let ADMIN_TOKEN = '';
+let ALL_BOOKINGS = [];
+let currentFilter = 'pending';
+
+function enterDashboard(){
+  const t = document.getElementById('tokenInput').value.trim();
+  if(!t){ document.getElementById('gateMsg').textContent = 'Please enter a token.'; return; }
+  ADMIN_TOKEN = t;
+  loadBookings();
+}
+
+async function loadBookings(){
+  const gateMsg = document.getElementById('gateMsg');
+  gateMsg.textContent = '';
+  try{
+    const res = await fetch('/api/admin-list-bookings?token=' + encodeURIComponent(ADMIN_TOKEN));
+    const data = await res.json();
+    if(!res.ok){
+      gateMsg.textContent = data.error || 'Invalid token.';
+      return;
+    }
+    ALL_BOOKINGS = data.bookings || [];
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    sessionStorage.setItem('creaven_admin_token', ADMIN_TOKEN);
+    render();
+  }catch(err){
+    gateMsg.textContent = 'Network error, please try again.';
+  }
+}
+
+function setFilter(f){
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.f === f));
+  render();
+}
+
+function render(){
+  const wrap = document.getElementById('tableWrap');
+  let list = ALL_BOOKINGS.slice().sort((a,b) => (a.date||'').localeCompare(b.date||''));
+  if(currentFilter === 'pending'){
+    list = list.filter(b => b.paymentMethod !== 'paystack' && b.status !== 'confirmed');
+  }
+  if(list.length === 0){
+    wrap.innerHTML = '<div id="empty">Nothing to show here.</div>';
+    return;
+  }
+  let rows = list.map(b => {
+    const needsConfirm = b.paymentMethod !== 'paystack' && b.status !== 'confirmed';
+    const badgeClass = b.status === 'confirmed' ? 'confirmed' : 'pending';
+    return `<tr>
+      <td>${escapeHtml(b.date||'')} ${escapeHtml(b.time||'')}</td>
+      <td>${escapeHtml(b.clientName||'')}<br><small style="color:var(--light)">${escapeHtml(b.clientEmail||'')}</small></td>
+      <td>${escapeHtml(b.practitionerName||'')}</td>
+      <td>${escapeHtml(b.consultationType||'')}</td>
+      <td>${escapeHtml(b.paymentMethod||'')}<br><small style="color:var(--light)">${escapeHtml(b.displayPrice||'')}</small></td>
+      <td><span class="badge ${badgeClass}">${escapeHtml(b.status||'')}</span></td>
+      <td>${needsConfirm ? `<button class="confirm-btn" onclick="confirmBooking('${b.id}', this)">Confirm payment</button>` : '—'}</td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML = `<table><thead><tr>
+    <th>Date</th><th>Client</th><th>Psychologist</th><th>Type</th><th>Payment</th><th>Status</th><th></th>
+  </tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+async function confirmBooking(id, btn){
+  btn.disabled = true;
+  btn.textContent = 'Confirming...';
+  const msg = document.getElementById('msg');
+  try{
+    const res = await fetch('/api/admin-confirm-booking', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ token: ADMIN_TOKEN, bookingId: id })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to confirm.');
+    msg.textContent = 'Booking confirmed and client notified by email.';
+    msg.className = 'success show';
+    const b = ALL_BOOKINGS.find(x => x.id === id);
+    if(b) b.status = 'confirmed';
+    render();
+  }catch(err){
+    msg.textContent = err.message;
+    msg.className = 'error show';
+    btn.disabled = false;
+    btn.textContent = 'Confirm payment';
+  }
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Reprend le token en mémoire si déjà entré dans cette session d'onglet.
+const saved = sessionStorage.getItem('creaven_admin_token');
+if(saved){ ADMIN_TOKEN = saved; loadBookings(); }
+</script>
+
+</body>
+</html>
