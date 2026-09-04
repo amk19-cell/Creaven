@@ -717,8 +717,17 @@ async function joinSession(mode) {
       animateAudioBars(true);
     }
 
-    // Initialize PeerJS
-    const peerId = 'sm-' + code.toLowerCase().replace(/[^a-z0-9]/g,'') + '-' + Math.random().toString(36).substr(2,4);
+    // Détermine le rôle depuis l'URL. Le praticien accède via
+    // consultation.html?code=XXX&role=practitioner (lien à ajouter dans son
+    // dashboard) ; le client accède via le lien standard reçu par email.
+    // Le praticien s'enregistre sous un identifiant FIXE et attend l'appel.
+    // Le client s'enregistre sous un identifiant aléatoire et appelle le
+    // praticien. Sans cette distinction, les deux généraient un identifiant
+    // aléatoire et ne se trouvaient jamais.
+    const isPractitioner = new URLSearchParams(window.location.search).get('role') === 'practitioner';
+    const peerId = isPractitioner
+      ? 'sm-psy-' + code.toLowerCase().replace(/[^a-z0-9]/g,'')
+      : 'sm-' + code.toLowerCase().replace(/[^a-z0-9]/g,'') + '-' + Math.random().toString(36).substr(2,4);
     peer = new Peer(peerId, {
       host: '0.peerjs.com',
       port: 443,
@@ -728,7 +737,7 @@ async function joinSession(mode) {
 
     peer.on('open', (id) => {
       document.getElementById('myPeerId').textContent = id;
-      document.getElementById('connStatus').textContent = 'Waiting for psychologist...';
+      document.getElementById('connStatus').textContent = isPractitioner ? 'Waiting for client...' : 'Waiting for psychologist...';
     });
 
     // Listen for incoming call
@@ -738,17 +747,20 @@ async function joinSession(mode) {
       handleCallStream(call, mode, name);
     });
 
-    // Try to call the psychologist's peer ID (code-based)
-    const psyPeerId = 'sm-psy-' + code.toLowerCase().replace(/[^a-z0-9]/g,'');
-    setTimeout(() => {
-      if (peer && !currentCall) {
-        const call = peer.call(psyPeerId, localStream);
-        if (call) {
-          currentCall = call;
-          handleCallStream(call, mode, name);
+    // Seul le CLIENT appelle activement — le praticien attend, déjà
+    // enregistré sous l'identifiant fixe ci-dessus.
+    if (!isPractitioner) {
+      const psyPeerId = 'sm-psy-' + code.toLowerCase().replace(/[^a-z0-9]/g,'');
+      setTimeout(() => {
+        if (peer && !currentCall) {
+          const call = peer.call(psyPeerId, localStream);
+          if (call) {
+            currentCall = call;
+            handleCallStream(call, mode, name);
+          }
         }
-      }
-    }, 2000);
+      }, 2000);
+    }
 
   } catch (err) {
     if (err.name === 'NotAllowedError') {
