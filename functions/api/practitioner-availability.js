@@ -1,5 +1,9 @@
 import { getVerifiedUser } from "./_firebase-auth.js";
-import { runFirestoreQuery, createFirestoreDoc, deleteFirestoreDoc } from "./_firestore.js";
+import {
+  runFirestoreQuery,
+  createFirestoreDoc,
+  deleteFirestoreDoc,
+} from "./_firestore.js";
 
 const PROJECT_ID = "creaven-01";
 
@@ -21,7 +25,10 @@ function docToObject(doc) {
 // DELETE /api/practitioner-availability?id=XXX → supprime un créneau non réservé
 export async function onRequestGet({ request, env }) {
   const user = await getVerifiedUser(request, PROJECT_ID);
-  if (!user) return new Response(JSON.stringify({ error: "Non authentifié." }), { status: 401 });
+  if (!user)
+    return new Response(JSON.stringify({ error: "Non authentifié." }), {
+      status: 401,
+    });
 
   const structuredQuery = {
     from: [{ collectionId: "availability" }],
@@ -38,10 +45,14 @@ export async function onRequestGet({ request, env }) {
   try {
     results = await runFirestoreQuery(env, structuredQuery);
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
 
-  const slots = (results || []).filter((r) => r.document).map((r) => docToObject(r.document));
+  const slots = (results || [])
+    .filter((r) => r.document)
+    .map((r) => docToObject(r.document));
   return new Response(JSON.stringify({ slots }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
@@ -50,13 +61,19 @@ export async function onRequestGet({ request, env }) {
 
 export async function onRequestPost({ request, env }) {
   const user = await getVerifiedUser(request, PROJECT_ID);
-  if (!user) return new Response(JSON.stringify({ error: "Non authentifié." }), { status: 401 });
+  if (!user)
+    return new Response(JSON.stringify({ error: "Non authentifié." }), {
+      status: 401,
+    });
 
   try {
     const body = await request.json();
     const { date, time, duration } = body;
     if (!date || !time) {
-      return new Response(JSON.stringify({ error: "Champs requis manquants (date, time)." }), { status: 400 });
+      return new Response(
+        JSON.stringify({ error: "Champs requis manquants (date, time)." }),
+        { status: 400 }
+      );
     }
 
     const { docId } = await createFirestoreDoc(env, "availability", {
@@ -73,17 +90,25 @@ export async function onRequestPost({ request, env }) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
 }
 
 export async function onRequestDelete({ request, env }) {
   const user = await getVerifiedUser(request, PROJECT_ID);
-  if (!user) return new Response(JSON.stringify({ error: "Non authentifié." }), { status: 401 });
+  if (!user)
+    return new Response(JSON.stringify({ error: "Non authentifié." }), {
+      status: 401,
+    });
 
   const url = new URL(request.url);
   const id = url.searchParams.get("id");
-  if (!id) return new Response(JSON.stringify({ error: "Paramètre 'id' manquant." }), { status: 400 });
+  if (!id)
+    return new Response(JSON.stringify({ error: "Paramètre 'id' manquant." }), {
+      status: 400,
+    });
 
   try {
     // Vérifie que le créneau appartient bien au praticien connecté avant de le supprimer.
@@ -97,9 +122,14 @@ export async function onRequestDelete({ request, env }) {
         },
       },
     });
-    const owns = (check || []).some((r) => r.document && r.document.name.split("/").pop() === id);
+    const owns = (check || []).some(
+      (r) => r.document && r.document.name.split("/").pop() === id
+    );
     if (!owns) {
-      return new Response(JSON.stringify({ error: "Ce créneau ne vous appartient pas." }), { status: 403 });
+      return new Response(
+        JSON.stringify({ error: "Ce créneau ne vous appartient pas." }),
+        { status: 403 }
+      );
     }
 
     await deleteFirestoreDoc(env, "availability", id);
@@ -108,7 +138,9 @@ export async function onRequestDelete({ request, env }) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
 }
 
@@ -120,4 +152,3 @@ export async function onRequestOptions() {
     },
   });
 }
-
