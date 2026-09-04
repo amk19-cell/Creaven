@@ -22,15 +22,22 @@ export async function onRequestPost({ request, env }) {
     const { token, bookingId } = body;
 
     if (!env.ADMIN_DASHBOARD_TOKEN || token !== env.ADMIN_DASHBOARD_TOKEN) {
-      return new Response(JSON.stringify({ error: "Non autorisé." }), { status: 401 });
+      return new Response(JSON.stringify({ error: "Non autorisé." }), {
+        status: 401,
+      });
     }
     if (!bookingId) {
-      return new Response(JSON.stringify({ error: "bookingId manquant." }), { status: 400 });
+      return new Response(JSON.stringify({ error: "bookingId manquant." }), {
+        status: 400,
+      });
     }
 
     const bookingDoc = await getFirestoreDoc(env, "bookings", bookingId);
     if (!bookingDoc) {
-      return new Response(JSON.stringify({ error: "Réservation introuvable." }), { status: 404 });
+      return new Response(
+        JSON.stringify({ error: "Réservation introuvable." }),
+        { status: 404 }
+      );
     }
     const f = bookingDoc.fields || {};
     const clientName = extractValue(f.clientName);
@@ -63,7 +70,9 @@ export async function onRequestPost({ request, env }) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
 }
 
@@ -75,4 +84,3 @@ export async function onRequestOptions() {
     },
   });
 }
-
