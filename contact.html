@@ -124,7 +124,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
   .lang-switcher{position:relative;}
   .lang-toggle{background:none;border:1.5px solid var(--green,#3A6B3A);color:var(--green,#3A6B3A);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;min-width:44px;}
   .lang-toggle:hover,.lang-toggle.open{background:var(--green,#3A6B3A);color:white;}
-  .lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;z-index:200;}
+  .lang-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06);overflow:hidden;min-width:140px;max-height:60vh;overflow-y:auto;z-index:200;}
   .lang-dropdown.open{display:block;}
   .lang-dropdown button{display:block;width:100%;padding:11px 18px;text-align:left;background:none;border:none;font-size:13px;color:#1A2A1A;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;border-bottom:1px solid rgba(0,0,0,.04);}
   .lang-dropdown button:last-child{border-bottom:none;}
@@ -156,12 +156,22 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
       <div class="lang-dropdown" id="langDropdown">
         <button onclick="selectLang('en','EN')">English</button>
         <button onclick="selectLang('fr','FR')">Francais</button>
-        <button onclick="selectLang('kr','KR')">한국어</button>
-        <button onclick="selectLang('jp','JP')">日本語</button>
+        <button onclick="selectLang('ko','KO')">한국어</button>
+        <button onclick="selectLang('ja','JA')">日本語</button>
         <button onclick="selectLang('zh','ZH')">中文</button>
         <button onclick="selectLang('th','TH')">ไทย</button>
         <button onclick="selectLang('de','DE')">Deutsch</button>
         <button onclick="selectLang('es','ES')">Espanol</button>
+        <button onclick="selectLang('pt','PT')">Portugues</button>
+        <button onclick="selectLang('it','IT')">Italiano</button>
+        <button onclick="selectLang('nl','NL')">Nederlands</button>
+        <button onclick="selectLang('sv','SV')">Svenska</button>
+        <button onclick="selectLang('pl','PL')">Polski</button>
+        <button onclick="selectLang('ru','RU')">Русский</button>
+        <button onclick="selectLang('tr','TR')">Turkce</button>
+        <button onclick="selectLang('ar','AR')">العربية</button>
+        <button onclick="selectLang('hi','HI')">हिन्दी</button>
+        <button onclick="selectLang('vi','VI')">Tieng Viet</button>
       </div>
     </div>
 </nav>
@@ -249,7 +259,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
           <div class="rt-label" id="rt3-label">Organizational proposals</div>
         </div>
         <div class="rt-item">
-          <div class="rt-val">6</div>
+          <div class="rt-val">18</div>
           <div class="rt-label" id="rt4-label">Languages supported</div>
         </div>
       </div>
@@ -303,7 +313,7 @@ const T = {
     rt_title:"Delais de reponse",rt1:"Demandes generales",rt2:"Demandes de reservation",rt3:"Propositions organisationnelles",rt4:"Langues supportees",
     footer:"Creaven \u00a9 2026 \u2014 Bien-etre psychologique pour l'industrie creative \u2014 Tous droits reserves."
   },
-  kr: {
+  ko: {
     eyebrow:"연락처", title:"저희는 <em>여기 있습니다.</em>",
     desc:"질문이 있거나 정보가 필요하거나 시작할 준비가 되셨다면 연락주세요. 48시간 이내에 답변드립니다.",
     nl_home:"홈",nl_tests:"평가",nl_org:"기관을 위한",nl_book:"예약",nl_cta:"상담 예약",
@@ -321,7 +331,7 @@ const T = {
     rt_title:"응답 시간",rt1:"일반 문의",rt2:"예약 요청",rt3:"기관 제안",rt4:"지원 언어",
     footer:"Creaven \u00a9 2026 \u2014 창작 산업을 위한 심리적 웰빙 \u2014 All rights reserved."
   },
-  jp: {
+  ja: {
     eyebrow:"お問い合わせ", title:"私たちは<em>ここにいます。</em>",
     desc:"質問、情報の必要、または始める準備ができている場合はご連絡ください。48時間以内に返信します。",
     nl_home:"ホーム",nl_tests:"評価",nl_org:"組織向け",nl_book:"予約",nl_cta:"相談を予約する",
@@ -374,20 +384,250 @@ const T = {
     ic2_title:"จองการปรึกษา",ic2_text:"พร้อมเริ่มต้นแล้วหรือ? จองโดยตรงผ่านระบบการจัดตารางของเรา",ic2_link:"ไปที่หน้าการจอง →",
     rt_title:"เวลาตอบกลับ",rt1:"การสอบถามทั่วไป",rt2:"คำขอการจอง",rt3:"ข้อเสนอองค์กร",rt4:"ภาษาที่รองรับ",
     footer:"Creaven \u00a9 2026 \u2014 สุขภาวะทางจิตสำหรับอุตสาหกรรมสร้างสรรค์ \u2014 All rights reserved."
+  },
+  de: {
+    eyebrow:"Kontakt", title:"Wir sind <em>fur Sie da.</em>",
+    desc:"Ob Sie eine Frage haben, Informationen benotigen oder bereit sind zu beginnen - melden Sie sich. Wir antworten innerhalb von 48 Stunden.",
+    nl_home:"Home",nl_tests:"Bewertungen",nl_org:"Fur Organisationen",nl_book:"Buchen",nl_cta:"Beratung buchen",
+    form_title:"Senden Sie uns eine Nachricht",
+    form_sub:"Wir melden uns innerhalb von 48 Stunden bei creavenconnect@gmail.com",
+    fl_name:"Vollstandiger Name",fl_email:"Ihre E-Mail",fl_reason:"Betreff",fl_message:"Nachricht",
+    fi_name_ph:"Ihr Name",fi_email_ph:"ihre@email.com",fi_message_ph:"Sagen Sie uns, wie wir helfen konnen...",
+    btn_submit:"Nachricht senden",
+    success:"Danke. Ihre Nachricht wurde an creavenconnect@gmail.com gesendet. Wir antworten innerhalb von 48 Stunden.",
+    reasons:["Betreff auswahlen","Anfrage zu Einzelberatung","Anfrage zu Organisationsprogramm","Partnerschaft oder Zusammenarbeit","Klinische oder technische Frage","Sonstiges"],
+    crisis_title:"Befinden Sie sich in akuter Notlage?",
+    crisis_text:"Wenn Sie gerade eine psychische Krise erleben, warten Sie bitte nicht auf unsere Antwort. Kontaktieren Sie sofort Ihren lokalen Notdienst oder eine Krisen-Hotline. Creaven-Beratungen sind keine Notfalldienste.",
+    ic1_title:"E-Mail",ic1_text:"Fur alle Anfragen, Partnerschaftsanfragen und Organisationsberatungen.",
+    ic2_title:"Beratung buchen",ic2_text:"Bereit zu beginnen? Buchen Sie direkt uber unser Terminsystem.",ic2_link:"Zur Buchungsseite →",
+    rt_title:"Antwortzeiten",rt1:"Allgemeine Anfragen",rt2:"Buchungsanfragen",rt3:"Organisationsvorschlage",rt4:"Unterstutzte Sprachen",
+    footer:"Creaven \u00a9 2026 \u2014 Psychologisches Wohlbefinden fur die Kreativbranche \u2014 Alle Rechte vorbehalten."
+  },
+  es: {
+    eyebrow:"Contacto", title:"Estamos <em>aqui para usted.</em>",
+    desc:"Ya sea que tenga una pregunta, necesite informacion o este listo para comenzar, contactenos. Respondemos en 48 horas.",
+    nl_home:"Inicio",nl_tests:"Evaluaciones",nl_org:"Para Organizaciones",nl_book:"Reservar",nl_cta:"Reservar una Consulta",
+    form_title:"Enviennos un mensaje",
+    form_sub:"Le responderemos en 48 horas a creavenconnect@gmail.com",
+    fl_name:"Nombre completo",fl_email:"Su correo",fl_reason:"Asunto",fl_message:"Mensaje",
+    fi_name_ph:"Su nombre",fi_email_ph:"su@email.com",fi_message_ph:"Cuentenos como podemos ayudar...",
+    btn_submit:"Enviar mensaje",
+    success:"Gracias. Su mensaje ha sido enviado a creavenconnect@gmail.com. Responderemos en 48 horas.",
+    reasons:["Seleccione un asunto","Consulta individual","Consulta programa organizacional","Asociacion o colaboracion","Pregunta clinica o tecnica","Otro"],
+    crisis_title:"Esta en una crisis inmediata?",
+    crisis_text:"Si esta experimentando una crisis de salud mental en este momento, no espere nuestra respuesta. Contacte de inmediato a los servicios de emergencia locales o una linea de crisis. Las consultas de Creaven no son servicios de emergencia.",
+    ic1_title:"Correo electronico",ic1_text:"Para todas las consultas, solicitudes de asociacion y consultas organizacionales.",
+    ic2_title:"Reservar una Consulta",ic2_text:"Listo para comenzar? Reserve directamente a traves de nuestro sistema de programacion.",ic2_link:"Ir a la pagina de Reservas →",
+    rt_title:"Tiempos de respuesta",rt1:"Consultas generales",rt2:"Solicitudes de reserva",rt3:"Propuestas organizacionales",rt4:"Idiomas soportados",
+    footer:"Creaven \u00a9 2026 \u2014 Bienestar Psicologico para la Industria Creativa \u2014 Todos los derechos reservados."
+  },
+  pt: {
+    eyebrow:"Contato", title:"Estamos <em>aqui por voce.</em>",
+    desc:"Se voce tem uma pergunta, precisa de informacoes ou esta pronto para comecar, entre em contato. Respondemos em 48 horas.",
+    nl_home:"Inicio",nl_tests:"Avaliacoes",nl_org:"Para Organizacoes",nl_book:"Agendar",nl_cta:"Agendar uma Consulta",
+    form_title:"Envie-nos uma mensagem",
+    form_sub:"Responderemos em 48 horas em creavenconnect@gmail.com",
+    fl_name:"Nome completo",fl_email:"Seu e-mail",fl_reason:"Assunto",fl_message:"Mensagem",
+    fi_name_ph:"Seu nome",fi_email_ph:"seu@email.com",fi_message_ph:"Diga-nos como podemos ajudar...",
+    btn_submit:"Enviar mensagem",
+    success:"Obrigado. Sua mensagem foi enviada para creavenconnect@gmail.com. Responderemos em 48 horas.",
+    reasons:["Selecione um assunto","Consulta individual","Consulta sobre programa organizacional","Parceria ou colaboracao","Pergunta clinica ou tecnica","Outro"],
+    crisis_title:"Voce esta em sofrimento imediato?",
+    crisis_text:"Se voce esta vivenciando uma crise de saude mental agora, nao espere nossa resposta. Entre em contato imediatamente com os servicos de emergencia locais ou uma linha de crise. As consultas da Creaven nao sao servicos de emergencia.",
+    ic1_title:"E-mail",ic1_text:"Para todas as consultas, solicitacoes de parceria e consultas organizacionais.",
+    ic2_title:"Agendar uma Consulta",ic2_text:"Pronto para comecar? Agende diretamente atraves do nosso sistema de agendamento.",ic2_link:"Ir para a pagina de Agendamento →",
+    rt_title:"Tempos de resposta",rt1:"Consultas gerais",rt2:"Solicitacoes de agendamento",rt3:"Propostas organizacionais",rt4:"Idiomas suportados",
+    footer:"Creaven \u00a9 2026 \u2014 Bem-estar Psicologico para a Industria Criativa \u2014 Todos os direitos reservados."
+  },
+  it: {
+    eyebrow:"Contatti", title:"Siamo <em>qui per te.</em>",
+    desc:"Che tu abbia una domanda, abbia bisogno di informazioni o sia pronto a iniziare, contattaci. Rispondiamo entro 48 ore.",
+    nl_home:"Home",nl_tests:"Valutazioni",nl_org:"Per le Organizzazioni",nl_book:"Prenota",nl_cta:"Prenota una Consulenza",
+    form_title:"Inviaci un messaggio",
+    form_sub:"Ti risponderemo entro 48 ore a creavenconnect@gmail.com",
+    fl_name:"Nome completo",fl_email:"La tua email",fl_reason:"Oggetto",fl_message:"Messaggio",
+    fi_name_ph:"Il tuo nome",fi_email_ph:"tua@email.com",fi_message_ph:"Dicci come possiamo aiutarti...",
+    btn_submit:"Invia messaggio",
+    success:"Grazie. Il tuo messaggio e stato inviato a creavenconnect@gmail.com. Risponderemo entro 48 ore.",
+    reasons:["Seleziona un oggetto","Richiesta consulenza individuale","Richiesta programma organizzativo","Partnership o collaborazione","Domanda clinica o tecnica","Altro"],
+    crisis_title:"Sei in una situazione di emergenza?",
+    crisis_text:"Se stai vivendo una crisi di salute mentale in questo momento, non aspettare la nostra risposta. Contatta immediatamente i servizi di emergenza locali o una linea di crisi. Le consulenze Creaven non sono servizi di emergenza.",
+    ic1_title:"Email",ic1_text:"Per tutte le richieste, proposte di partnership e consulenze organizzative.",
+    ic2_title:"Prenota una Consulenza",ic2_text:"Pronto a iniziare? Prenota direttamente tramite il nostro sistema di prenotazione.",ic2_link:"Vai alla pagina Prenotazioni →",
+    rt_title:"Tempi di risposta",rt1:"Richieste generali",rt2:"Richieste di prenotazione",rt3:"Proposte organizzative",rt4:"Lingue supportate",
+    footer:"Creaven \u00a9 2026 \u2014 Benessere Psicologico per l'Industria Creativa \u2014 Tutti i diritti riservati."
+  },
+  nl: {
+    eyebrow:"Contact", title:"Wij zijn <em>er voor u.</em>",
+    desc:"Of u nu een vraag heeft, informatie nodig heeft of klaar bent om te beginnen, neem contact op. Wij reageren binnen 48 uur.",
+    nl_home:"Home",nl_tests:"Assessments",nl_org:"Voor Organisaties",nl_book:"Boeken",nl_cta:"Consult Boeken",
+    form_title:"Stuur ons een bericht",
+    form_sub:"We nemen binnen 48 uur contact met u op via creavenconnect@gmail.com",
+    fl_name:"Volledige naam",fl_email:"Uw e-mail",fl_reason:"Onderwerp",fl_message:"Bericht",
+    fi_name_ph:"Uw naam",fi_email_ph:"uw@email.com",fi_message_ph:"Vertel ons hoe we kunnen helpen...",
+    btn_submit:"Bericht verzenden",
+    success:"Dank u. Uw bericht is verzonden naar creavenconnect@gmail.com. We reageren binnen 48 uur.",
+    reasons:["Selecteer een onderwerp","Vraag over individueel consult","Vraag over organisatieprogramma","Partnerschap of samenwerking","Klinische of technische vraag","Anders"],
+    crisis_title:"Bevindt u zich in acute nood?",
+    crisis_text:"Als u nu een psychische crisis ervaart, wacht dan niet op ons antwoord. Neem onmiddellijk contact op met uw lokale hulpdiensten of een crisislijn. Creaven-consulten zijn geen noodhulpdiensten.",
+    ic1_title:"E-mail",ic1_text:"Voor alle vragen, partnerschapsverzoeken en organisatieconsulten.",
+    ic2_title:"Consult Boeken",ic2_text:"Klaar om te beginnen? Boek direct via ons planningssysteem.",ic2_link:"Naar de Boekingspagina →",
+    rt_title:"Reactietijden",rt1:"Algemene vragen",rt2:"Boekingsaanvragen",rt3:"Organisatievoorstellen",rt4:"Ondersteunde talen",
+    footer:"Creaven \u00a9 2026 \u2014 Psychisch Welzijn voor de Creatieve Industrie \u2014 Alle rechten voorbehouden."
+  },
+  sv: {
+    eyebrow:"Kontakt", title:"Vi finns <em>har for dig.</em>",
+    desc:"Oavsett om du har en fraga, behover information eller ar redo att borja, hor av dig. Vi svarar inom 48 timmar.",
+    nl_home:"Hem",nl_tests:"Bedomningar",nl_org:"For Organisationer",nl_book:"Boka",nl_cta:"Boka Konsultation",
+    form_title:"Skicka oss ett meddelande",
+    form_sub:"Vi svarar inom 48 timmar till creavenconnect@gmail.com",
+    fl_name:"Fullstandigt namn",fl_email:"Din e-post",fl_reason:"Amne",fl_message:"Meddelande",
+    fi_name_ph:"Ditt namn",fi_email_ph:"din@email.com",fi_message_ph:"Beratta hur vi kan hjalpa till...",
+    btn_submit:"Skicka meddelande",
+    success:"Tack. Ditt meddelande har skickats till creavenconnect@gmail.com. Vi svarar inom 48 timmar.",
+    reasons:["Valj ett amne","Fraga om individuell konsultation","Fraga om organisationsprogram","Partnerskap eller samarbete","Klinisk eller teknisk fraga","Annat"],
+    crisis_title:"Befinner du dig i akut nod?",
+    crisis_text:"Om du just nu upplever en psykisk kris, vanta inte pa vart svar. Kontakta omedelbart din lokala larmtjanst eller en krislinje. Creaven-konsultationer ar inte akuttjanster.",
+    ic1_title:"E-post",ic1_text:"For alla forfragningar, partnerskapsforfragningar och organisationskonsultationer.",
+    ic2_title:"Boka Konsultation",ic2_text:"Redo att borja? Boka direkt via vart bokningssystem.",ic2_link:"Ga till Bokningssidan →",
+    rt_title:"Svarstider",rt1:"Allmanna forfragningar",rt2:"Bokningsforfragningar",rt3:"Organisationsforslag",rt4:"Sprak som stods",
+    footer:"Creaven \u00a9 2026 \u2014 Psykiskt Valbefinnande for den Kreativa Branschen \u2014 Alla rattigheter forbehallna."
+  },
+  pl: {
+    eyebrow:"Kontakt", title:"Jestesmy <em>tutaj dla Ciebie.</em>",
+    desc:"Niezaleznie od tego, czy masz pytanie, potrzebujesz informacji, czy jestes gotowy zaczac, napisz do nas. Odpowiadamy w ciagu 48 godzin.",
+    nl_home:"Start",nl_tests:"Oceny",nl_org:"Dla Organizacji",nl_book:"Zarezerwuj",nl_cta:"Zarezerwuj Konsultacje",
+    form_title:"Wyslij nam wiadomosc",
+    form_sub:"Odpowiemy w ciagu 48 godzin na creavenconnect@gmail.com",
+    fl_name:"Imie i nazwisko",fl_email:"Twoj e-mail",fl_reason:"Temat",fl_message:"Wiadomosc",
+    fi_name_ph:"Twoje imie",fi_email_ph:"twoj@email.com",fi_message_ph:"Powiedz nam, jak mozemy pomoc...",
+    btn_submit:"Wyslij wiadomosc",
+    success:"Dziekujemy. Twoja wiadomosc zostala wyslana na creavenconnect@gmail.com. Odpowiemy w ciagu 48 godzin.",
+    reasons:["Wybierz temat","Zapytanie o konsultacje indywidualna","Zapytanie o program organizacyjny","Partnerstwo lub wspolpraca","Pytanie kliniczne lub techniczne","Inne"],
+    crisis_title:"Czy jestes w bezposrednim kryzysie?",
+    crisis_text:"Jesli doswiadczasz teraz kryzysu zdrowia psychicznego, nie czekaj na nasza odpowiedz. Skontaktuj sie natychmiast z lokalnymi sluzbami ratunkowymi lub linia kryzysowa. Konsultacje Creaven nie sa usluga ratunkowa.",
+    ic1_title:"E-mail",ic1_text:"Dla wszystkich zapytan, prosb o partnerstwo i konsultacji organizacyjnych.",
+    ic2_title:"Zarezerwuj Konsultacje",ic2_text:"Gotowy zaczac? Zarezerwuj bezposrednio przez nasz system planowania.",ic2_link:"Przejdz do strony Rezerwacji →",
+    rt_title:"Czasy odpowiedzi",rt1:"Zapytania ogolne",rt2:"Prosby o rezerwacje",rt3:"Propozycje organizacyjne",rt4:"Obslugiwane jezyki",
+    footer:"Creaven \u00a9 2026 \u2014 Dobrostan Psychiczny dla Branzy Kreatywnej \u2014 Wszelkie prawa zastrzezone."
+  },
+  ru: {
+    eyebrow:"Контакты", title:"Мы <em>здесь для вас.</em>",
+    desc:"Если у вас есть вопрос, вам нужна информация или вы готовы начать - свяжитесь с нами. Мы отвечаем в течение 48 часов.",
+    nl_home:"Главная",nl_tests:"Оценки",nl_org:"Для организаций",nl_book:"Записаться",nl_cta:"Записаться на консультацию",
+    form_title:"Отправьте нам сообщение",
+    form_sub:"Мы ответим вам в течение 48 часов на creavenconnect@gmail.com",
+    fl_name:"Полное имя",fl_email:"Ваш email",fl_reason:"Тема",fl_message:"Сообщение",
+    fi_name_ph:"Ваше имя",fi_email_ph:"ваш@email.com",fi_message_ph:"Расскажите, как мы можем помочь...",
+    btn_submit:"Отправить сообщение",
+    success:"Спасибо. Ваше сообщение отправлено на creavenconnect@gmail.com. Мы ответим в течение 48 часов.",
+    reasons:["Выберите тему","Запрос индивидуальной консультации","Запрос организационной программы","Партнёрство или сотрудничество","Клинический или технический вопрос","Другое"],
+    crisis_title:"Вы находитесь в непосредственной опасности?",
+    crisis_text:"Если вы сейчас переживаете кризис психического здоровья, не ждите нашего ответа. Немедленно свяжитесь с местными экстренными службами или горячей линией кризисной помощи. Консультации Creaven не являются экстренными службами.",
+    ic1_title:"Email",ic1_text:"Для всех запросов, предложений о партнёрстве и организационных консультаций.",
+    ic2_title:"Записаться на консультацию",ic2_text:"Готовы начать? Записывайтесь напрямую через нашу систему планирования.",ic2_link:"Перейти на страницу записи →",
+    rt_title:"Время ответа",rt1:"Общие запросы",rt2:"Запросы на запись",rt3:"Организационные предложения",rt4:"Поддерживаемые языки",
+    footer:"Creaven \u00a9 2026 \u2014 Психологическое благополучие для творческой индустрии \u2014 Все права защищены."
+  },
+  tr: {
+    eyebrow:"Iletisim", title:"Sizin icin <em>buradayiz.</em>",
+    desc:"Bir sorunuz olsun, bilgiye ihtiyaciniz olsun ya da baslamaya hazir olun, bize ulasin. 48 saat icinde yanit veriyoruz.",
+    nl_home:"Ana Sayfa",nl_tests:"Degerlendirmeler",nl_org:"Kurumlar Icin",nl_book:"Randevu Al",nl_cta:"Danismanlik Ayirt",
+    form_title:"Bize mesaj gonderin",
+    form_sub:"48 saat icinde creavenconnect@gmail.com adresinden size donus yapacagiz",
+    fl_name:"Ad soyad",fl_email:"E-postaniz",fl_reason:"Konu",fl_message:"Mesaj",
+    fi_name_ph:"Adiniz",fi_email_ph:"sizin@email.com",fi_message_ph:"Nasil yardimci olabilecegimizi soyleyin...",
+    btn_submit:"Mesaj Gonder",
+    success:"Tesekkurler. Mesajiniz creavenconnect@gmail.com adresine gonderildi. 48 saat icinde yanit verecegiz.",
+    reasons:["Bir konu secin","Bireysel danismanlik talebi","Kurumsal program talebi","Ortaklik veya isbirligi","Klinik veya teknik soru","Diger"],
+    crisis_title:"Aninda sikinti icinde misiniz?",
+    crisis_text:"Su anda bir ruh sagligi krizi yasiyorsaniz, lutfen yanitimizi beklemeyin. Hemen yerel acil servislerinizle veya bir kriz hattiyla iletisime gecin. Creaven danismanliklari acil servis degildir.",
+    ic1_title:"E-posta",ic1_text:"Tum sorular, ortaklik talepleri ve kurumsal danismanliklar icin.",
+    ic2_title:"Danismanlik Ayirt",ic2_text:"Baslamaya hazir misiniz? Zamanlama sistemimiz uzerinden dogrudan randevu alin.",ic2_link:"Randevu sayfasina git →",
+    rt_title:"Yanit sureleri",rt1:"Genel sorular",rt2:"Randevu talepleri",rt3:"Kurumsal teklifler",rt4:"Desteklenen diller",
+    footer:"Creaven \u00a9 2026 \u2014 Yaratici Endustri Icin Psikolojik Iyi Olus \u2014 Tum haklari saklidir."
+  },
+  ar: {
+    eyebrow:"تواصل معنا", title:"نحن <em>هنا من أجلك.</em>",
+    desc:"سواء كان لديك سؤال أو تحتاج إلى معلومات أو مستعد للبدء، تواصل معنا. نرد خلال 48 ساعة.",
+    nl_home:"الرئيسية",nl_tests:"التقييمات",nl_org:"للمؤسسات",nl_book:"احجز",nl_cta:"احجز استشارة",
+    form_title:"أرسل لنا رسالة",
+    form_sub:"سنرد عليك خلال 48 ساعة على creavenconnect@gmail.com",
+    fl_name:"الاسم الكامل",fl_email:"بريدك الإلكتروني",fl_reason:"الموضوع",fl_message:"الرسالة",
+    fi_name_ph:"اسمك",fi_email_ph:"بريدك@email.com",fi_message_ph:"أخبرنا كيف يمكننا المساعدة...",
+    btn_submit:"إرسال الرسالة",
+    success:"شكراً لك. تم إرسال رسالتك إلى creavenconnect@gmail.com. سنرد خلال 48 ساعة.",
+    reasons:["اختر موضوعاً","استفسار عن استشارة فردية","استفسار عن برنامج تنظيمي","شراكة أو تعاون","سؤال سريري أو تقني","أخرى"],
+    crisis_title:"هل أنت في ضائقة فورية؟",
+    crisis_text:"إذا كنت تعاني من أزمة صحية نفسية الآن، يرجى عدم انتظار ردنا. تواصل فوراً مع خدمات الطوارئ المحلية أو خط أزمات. استشارات Creaven ليست خدمات طوارئ.",
+    ic1_title:"البريد الإلكتروني",ic1_text:"لجميع الاستفسارات وطلبات الشراكة والاستشارات التنظيمية.",
+    ic2_title:"احجز استشارة",ic2_text:"مستعد للبدء؟ احجز مباشرة عبر نظام الجدولة لدينا.",ic2_link:"الذهاب إلى صفحة الحجز ←",
+    rt_title:"أوقات الرد",rt1:"الاستفسارات العامة",rt2:"طلبات الحجز",rt3:"المقترحات التنظيمية",rt4:"اللغات المدعومة",
+    footer:"Creaven \u00a9 2026 \u2014 الرفاه النفسي للصناعة الإبداعية \u2014 جميع الحقوق محفوظة."
+  },
+  hi: {
+    eyebrow:"संपर्क करें", title:"हम <em>आपके लिए यहाँ हैं।</em>",
+    desc:"चाहे आपके पास कोई प्रश्न हो, जानकारी चाहिए हो, या शुरू करने के लिए तैयार हों, संपर्क करें। हम 48 घंटों के भीतर जवाब देते हैं।",
+    nl_home:"होम",nl_tests:"मूल्यांकन",nl_org:"संगठनों के लिए",nl_book:"बुक करें",nl_cta:"परामर्श बुक करें",
+    form_title:"हमें संदेश भेजें",
+    form_sub:"हम 48 घंटों के भीतर creavenconnect@gmail.com पर जवाब देंगे",
+    fl_name:"पूरा नाम",fl_email:"आपका ईमेल",fl_reason:"विषय",fl_message:"संदेश",
+    fi_name_ph:"आपका नाम",fi_email_ph:"आपका@email.com",fi_message_ph:"बताएं हम कैसे मदद कर सकते हैं...",
+    btn_submit:"संदेश भेजें",
+    success:"धन्यवाद। आपका संदेश creavenconnect@gmail.com पर भेज दिया गया है। हम 48 घंटों के भीतर जवाब देंगे।",
+    reasons:["एक विषय चुनें","व्यक्तिगत परामर्श पूछताछ","संगठनात्मक कार्यक्रम पूछताछ","साझेदारी या सहयोग","नैदानिक या तकनीकी प्रश्न","अन्य"],
+    crisis_title:"क्या आप तत्काल संकट में हैं?",
+    crisis_text:"यदि आप अभी मानसिक स्वास्थ्य संकट का सामना कर रहे हैं, तो कृपया हमारे जवाब का इंतजार न करें। तुरंत अपनी स्थानीय आपातकालीन सेवाओं या संकट हॉटलाइन से संपर्क करें। Creaven परामर्श आपातकालीन सेवाएं नहीं हैं।",
+    ic1_title:"ईमेल",ic1_text:"सभी पूछताछ, साझेदारी अनुरोध और संगठनात्मक परामर्श के लिए।",
+    ic2_title:"परामर्श बुक करें",ic2_text:"शुरू करने के लिए तैयार हैं? हमारी शेड्यूलिंग प्रणाली के माध्यम से सीधे बुक करें।",ic2_link:"बुकिंग पृष्ठ पर जाएं →",
+    rt_title:"प्रतिक्रिया समय",rt1:"सामान्य पूछताछ",rt2:"बुकिंग अनुरोध",rt3:"संगठनात्मक प्रस्ताव",rt4:"समर्थित भाषाएँ",
+    footer:"Creaven \u00a9 2026 \u2014 रचनात्मक उद्योग के लिए मानसिक कल्याण \u2014 सर्वाधिकार सुरक्षित।"
+  },
+  vi: {
+    eyebrow:"Liên hệ", title:"Chúng tôi <em>ở đây vì bạn.</em>",
+    desc:"Dù bạn có câu hỏi, cần thông tin, hay đã sẵn sàng bắt đầu, hãy liên hệ với chúng tôi. Chúng tôi phản hồi trong vòng 48 giờ.",
+    nl_home:"Trang chủ",nl_tests:"Đánh giá",nl_org:"Dành cho Tổ chức",nl_book:"Đặt lịch",nl_cta:"Đặt Lịch Tư Vấn",
+    form_title:"Gửi tin nhắn cho chúng tôi",
+    form_sub:"Chúng tôi sẽ phản hồi trong vòng 48 giờ tại creavenconnect@gmail.com",
+    fl_name:"Họ và tên",fl_email:"Email của bạn",fl_reason:"Chủ đề",fl_message:"Tin nhắn",
+    fi_name_ph:"Tên của bạn",fi_email_ph:"ban@email.com",fi_message_ph:"Cho chúng tôi biết chúng tôi có thể giúp gì...",
+    btn_submit:"Gửi Tin Nhắn",
+    success:"Cảm ơn bạn. Tin nhắn của bạn đã được gửi đến creavenconnect@gmail.com. Chúng tôi sẽ phản hồi trong vòng 48 giờ.",
+    reasons:["Chọn một chủ đề","Yêu cầu tư vấn cá nhân","Yêu cầu chương trình tổ chức","Hợp tác hoặc cộng tác","Câu hỏi lâm sàng hoặc kỹ thuật","Khác"],
+    crisis_title:"Bạn có đang gặp khủng hoảng ngay lập tức không?",
+    crisis_text:"Nếu bạn đang trải qua khủng hoảng sức khỏe tâm thần ngay bây giờ, vui lòng không chờ phản hồi của chúng tôi. Hãy liên hệ ngay với dịch vụ khẩn cấp địa phương hoặc đường dây nóng khủng hoảng. Tư vấn của Creaven không phải là dịch vụ khẩn cấp.",
+    ic1_title:"Email",ic1_text:"Dành cho mọi thắc mắc, yêu cầu hợp tác và tư vấn tổ chức.",
+    ic2_title:"Đặt Lịch Tư Vấn",ic2_text:"Sẵn sàng bắt đầu? Đặt lịch trực tiếp qua hệ thống lên lịch của chúng tôi.",ic2_link:"Đến trang Đặt Lịch →",
+    rt_title:"Thời gian phản hồi",rt1:"Thắc mắc chung",rt2:"Yêu cầu đặt lịch",rt3:"Đề xuất tổ chức",rt4:"Ngôn ngữ được hỗ trợ",
+    footer:"Creaven \u00a9 2026 \u2014 Sức Khỏe Tâm Lý Cho Ngành Công Nghiệp Sáng Tạo \u2014 Đã đăng ký bản quyền."
   }
 };
 
 let lang = 'en';
 
-function setLang(l, btn) {
+function toggleLangMenu(){
+  var d = document.getElementById('langDropdown');
+  var b = document.getElementById('langToggle');
+  if(d) d.classList.toggle('open');
+  if(b) b.classList.toggle('open');
+}
+function selectLang(l, label){
   lang = l;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  var b = document.getElementById('langToggle');
+  var d = document.getElementById('langDropdown');
+  if(b) b.textContent = label;
+  if(d) d.classList.remove('open');
   applyTranslations();
 }
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.lang-toggle') && !e.target.closest('.lang-dropdown')){
+    var d = document.getElementById('langDropdown');
+    if(d) d.classList.remove('open');
+  }
+});
 
 function applyTranslations() {
-  const t = T[lang];
+  const t = T[lang] || T.en;
   document.getElementById('h-eyebrow').textContent = t.eyebrow;
   document.getElementById('h-title').innerHTML = t.title;
   document.getElementById('h-desc').textContent = t.desc;
@@ -427,10 +667,65 @@ function applyTranslations() {
 function submitForm() {
   const name = document.getElementById('fi-name').value.trim();
   const email = document.getElementById('fi-email').value.trim();
-  const reason = document.getElementById('fi-reason').value;
+  const reasonIdx = document.getElementById('fi-reason').value;
   const message = document.getElementById('fi-message').value.trim();
-  const t = T[lang];
+  const t = T[lang] || T.en;
+  const reasonLabel = reasonIdx ? t.reasons[Number(reasonIdx)] : '';
+
+  const missingMsg = {
+    fr: 'Veuillez remplir votre nom et votre email.',
+    ko: '이름과 이메일을 입력해 주세요.',
+    ja: 'お名前とメールアドレスを入力してください。',
+    zh: '请填写您的姓名和电子邮件。',
+    th: 'กรุณากรอกชื่อและอีเมลของคุณ'
+  };
 
   if (!name || !email) {
-    alert(lang === 'fr' ? 'Veuillez remplir votre nom et votre email.' :
-          lang === 'kr' ?
+    alert(missingMsg[lang] || 'Please fill in your name and email.');
+    return;
+  }
+  if (!email.includes('@')) {
+    alert(lang === 'fr' ? 'Veuillez entrer une adresse email valide.' : 'Please enter a valid email address.');
+    return;
+  }
+  if (!message) {
+    alert(lang === 'fr' ? 'Veuillez ecrire un message.' : 'Please write a message.');
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = lang === 'fr' ? 'Envoi...' : 'Sending...';
+
+  fetch('/api/send-contact-message', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, reason: reasonLabel, message, lang })
+  })
+    .then(res => res.json().then(data => ({ ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (!ok) throw new Error(data.error || 'Failed to send message.');
+      document.getElementById('successMsg').classList.add('show');
+      document.getElementById('fi-name').value = '';
+      document.getElementById('fi-email').value = '';
+      document.getElementById('fi-reason').value = '';
+      document.getElementById('fi-message').value = '';
+      btn.disabled = false;
+      btn.textContent = originalText;
+    })
+    .catch(err => {
+      alert(lang === 'fr'
+        ? "Une erreur est survenue. Veuillez reessayer ou nous ecrire directement a creavenconnect@gmail.com"
+        : "Something went wrong. Please try again or email us directly at creavenconnect@gmail.com");
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+}
+
+applyTranslations();
+</script>
+
+</body>
+</html>
+
