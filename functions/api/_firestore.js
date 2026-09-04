@@ -143,6 +143,22 @@ export async function updateFirestoreDoc(env, collection, docId, data) {
   return res.json();
 }
 
+// Supprime un document Firestore.
+export async function deleteFirestoreDoc(env, collection, docId) {
+  const { accessToken, projectId } = await getAccessToken(env);
+  const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${collection}/${docId}`;
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  if (!res.ok && res.status !== 404) {
+    throw new Error(`Firestore delete failed (${res.status}): ${await res.text()}`);
+  }
+  return true;
+}
+
 // GET un document Firestore
 export async function getFirestoreDoc(env, collection, docId) {
   const { accessToken, projectId } = await getAccessToken(env);
