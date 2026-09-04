@@ -25,7 +25,9 @@ export async function onRequestGet({ request, env }) {
   const token = url.searchParams.get("token");
 
   if (!env.ADMIN_DASHBOARD_TOKEN || token !== env.ADMIN_DASHBOARD_TOKEN) {
-    return new Response(JSON.stringify({ error: "Non autorisé." }), { status: 401 });
+    return new Response(JSON.stringify({ error: "Non autorisé." }), {
+      status: 401,
+    });
   }
 
   // Pas de filtre côté requête : on récupère tout et on trie côté client
@@ -36,10 +38,14 @@ export async function onRequestGet({ request, env }) {
   try {
     results = await runFirestoreQuery(env, structuredQuery);
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
 
-  const bookings = (results || []).filter((r) => r.document).map((r) => docToObject(r.document));
+  const bookings = (results || [])
+    .filter((r) => r.document)
+    .map((r) => docToObject(r.document));
 
   return new Response(JSON.stringify({ bookings }), {
     status: 200,
