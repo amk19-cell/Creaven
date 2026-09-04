@@ -141,6 +141,9 @@ async function loadBookings(){
     }
     var rows = list.map(function(b){
       var badgeClass = b.status === 'confirmed' ? 'confirmed' : 'pending';
+      var joinLink = b.sessionCode
+        ? '<a href="consultation.html?code=' + encodeURIComponent(b.sessionCode) + '&role=practitioner" target="_blank" style="color:var(--teal);font-weight:600;">Join →</a>'
+        : '—';
       return '<tr>'
         + '<td>' + escapeHtml(b.date||'') + ' ' + escapeHtml(b.time||'') + '</td>'
         + '<td>' + escapeHtml(b.clientName||'') + '</td>'
@@ -148,9 +151,10 @@ async function loadBookings(){
         + '<td>' + escapeHtml(b.sessionLang||'') + '</td>'
         + '<td><span class="badge ' + badgeClass + '">' + escapeHtml(b.status||'') + '</span></td>'
         + '<td>' + escapeHtml(b.note||'') + '</td>'
+        + '<td>' + joinLink + '</td>'
         + '</tr>';
     }).join('');
-    wrap.innerHTML = '<table><thead><tr><th>Date</th><th>Client</th><th>Type</th><th>Language</th><th>Status</th><th>Note</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    wrap.innerHTML = '<table><thead><tr><th>Date</th><th>Client</th><th>Type</th><th>Language</th><th>Status</th><th>Note</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
   }catch(err){
     wrap.innerHTML = '<div id="empty">' + escapeHtml(err.message) + '</div>';
   }
