@@ -11,7 +11,10 @@ const GOOGLE_CERTS_URL =
   "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
 
 function base64urlToArrayBuffer(b64url) {
-  const b64 = b64url.replace(/-/g, "+").replace(/_/g, "/").padEnd(b64url.length + ((4 - (b64url.length % 4)) % 4), "=");
+  const b64 = b64url
+    .replace(/-/g, "+")
+    .replace(/_/g, "/")
+    .padEnd(b64url.length + ((4 - (b64url.length % 4)) % 4), "=");
   const bin = atob(b64);
   const bytes = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
@@ -60,8 +63,12 @@ export async function verifyFirebaseIdToken(idToken, projectId) {
   const [headerB64, payloadB64, sigB64] = parts;
   let header, payload;
   try {
-    header = JSON.parse(new TextDecoder().decode(base64urlToArrayBuffer(headerB64)));
-    payload = JSON.parse(new TextDecoder().decode(base64urlToArrayBuffer(payloadB64)));
+    header = JSON.parse(
+      new TextDecoder().decode(base64urlToArrayBuffer(headerB64))
+    );
+    payload = JSON.parse(
+      new TextDecoder().decode(base64urlToArrayBuffer(payloadB64))
+    );
   } catch {
     return null;
   }
@@ -69,7 +76,8 @@ export async function verifyFirebaseIdToken(idToken, projectId) {
   // Verifications de base sur les claims, avant meme de verifier la signature.
   const now = Math.floor(Date.now() / 1000);
   if (payload.aud !== projectId) return null;
-  if (payload.iss !== `https://securetoken.google.com/${projectId}`) return null;
+  if (payload.iss !== `https://securetoken.google.com/${projectId}`)
+    return null;
   if (payload.exp < now) return null;
   if (payload.iat > now + 60) return null;
   if (!payload.sub) return null;
@@ -93,7 +101,10 @@ export async function verifyFirebaseIdToken(idToken, projectId) {
     );
     if (!valid) return null;
   } catch (err) {
-    console.error("verifyFirebaseIdToken: erreur de verification:", err.message);
+    console.error(
+      "verifyFirebaseIdToken: erreur de verification:",
+      err.message
+    );
     return null;
   }
 
