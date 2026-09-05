@@ -678,6 +678,8 @@ let micOn = true;
 let camOn = true;
 let transOn = false;
 let recognition = null;
+let remoteMediaStream = null; // flux audio/vidéo du participant distant, source de la traduction
+let remoteMediaEl = null;     // élément <video> ou <audio> qui joue ce flux, pour baisser son volume pendant la traduction
 
 // ─── JOIN SESSION ───
 async function joinSession(mode) {
@@ -776,15 +778,19 @@ function handleCallStream(call, mode, name) {
   call.on('stream', (remoteStream) => {
     document.getElementById('waitingScreen').classList.remove('active');
     document.getElementById('connStatus').textContent = 'Connected';
+    remoteMediaStream = remoteStream;
 
     if (mode === 'video') {
       document.getElementById('videoArea').style.display = 'grid';
-      document.getElementById('remoteVideo').srcObject = remoteStream;
+      const videoEl = document.getElementById('remoteVideo');
+      videoEl.srcObject = remoteStream;
+      remoteMediaEl = videoEl;
     } else {
       document.getElementById('audioArea').style.display = 'flex';
       const audio = new Audio();
       audio.srcObject = remoteStream;
       audio.play();
+      remoteMediaEl = audio;
     }
 
     startTimer();
@@ -831,13 +837,16 @@ function updateLang(lang) {
   if (transOn) { stopRecognition(); startRecognition(); }
 }
 
-// ─── GEMINI LIVE API - REAL-TIME SPEECH TRANSLATION ───
+// ─── GEMINI LIVE API - REAL-TIME SPEECH-TO-SPEECH TRANSLATION ───
+// Traduit la voix du PARTICIPANT DISTANT (pas la sienne) et fait parler la
+// traduction à voix haute. Le volume original est baissé pendant ce temps
+// pour éviter la superposition confuse de deux voix.
 const GEMINI_API_KEY = 'AIzaSyAkfsPwMkTCRb2qFGmM3WUtqUpj5n88QfI';
 let geminiWs = null;
-let audioContext = null;
+let captureContext = null;   // capture l'audio distant pour l'envoyer à Gemini
+let playbackContext = null;  // joue l'audio traduit renvoyé par Gemini
 let mediaProcessor = null;
-let geminiStream = null;
-let targetLang = 'English';
+let nextPlaybackTime = 0;
 
 const LANG_NAMES = {
   en:'English', fr:'French', ko:'Korean', ja:'Japanese',
@@ -845,140 +854,147 @@ const LANG_NAMES = {
 };
 
 async function startGeminiTranslation() {
+  if (!remoteMediaStream) {
+    document.getElementById('transText').textContent = 'Waiting for the other participant to connect before starting translation...';
+    return;
+  }
   const myLang = LANG_NAMES[document.getElementById('sessionLang').value] || 'English';
-  // Determine other language (opposite of user's language)
-  // We'll translate everything to the user's language
   document.getElementById('transText').textContent = 'Connecting to Gemini translation...';
 
   try {
-    // Use Gemini 2.5 Flash Native Audio via WebSocket
     const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_API_KEY}`;
     geminiWs = new WebSocket(wsUrl);
 
     geminiWs.onopen = () => {
-      // Send setup message - instruct Gemini to translate to user's language
       const setup = {
         setup: {
-          model: 'models/gemini-2.0-flash-live-001',
-          generation_config: {
-            response_modalities: ['TEXT'],
+          model: 'models/gemini-2.5-flash-native-audio-preview-12-2025',
+          generationConfig: {
+            responseModalities: ['AUDIO'],
           },
-          system_instruction: {
+          systemInstruction: {
             parts: [{
-              text: `You are a real-time interpreter. Listen to speech in any language and immediately translate it to ${myLang}. Output ONLY the translation, nothing else. Be instantaneous and natural.`
+              text: `You are a real-time interpreter for a live conversation. Listen to the incoming speech and immediately speak the translation aloud in ${myLang}. Translate only — no commentary, no greetings, no explanations. Be instantaneous and natural.`
             }]
           }
         }
       };
       geminiWs.send(JSON.stringify(setup));
-      startMicStream();
+      startRemoteAudioCapture();
+      if (remoteMediaEl) remoteMediaEl.volume = 0.15;
     };
 
     geminiWs.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        // Extract text from Gemini response
+        if (data.error) {
+          document.getElementById('transText').textContent = 'Gemini error: ' + (data.error.message || JSON.stringify(data.error));
+          return;
+        }
         const parts = data?.serverContent?.modelTurn?.parts;
         if (parts) {
-          const text = parts.map(p => p.text || '').join('');
-          if (text.trim()) {
-            document.getElementById('transText').textContent = text;
-          }
+          parts.forEach(p => {
+            if (p.text) {
+              document.getElementById('transText').textContent = p.text;
+            }
+            if (p.inlineData && p.inlineData.data) {
+              playTranslatedAudioChunk(p.inlineData.data);
+            }
+          });
         }
       } catch(e) {}
     };
 
     geminiWs.onerror = (e) => {
       console.error('Gemini WS error:', e);
-      document.getElementById('transText').textContent = 'Translation connection error. Retrying...';
-      fallbackToWebSpeech();
+      document.getElementById('transText').textContent = 'Translation connection error.';
     };
 
     geminiWs.onclose = () => {
       document.getElementById('transText').textContent = 'Translation ended.';
+      if (remoteMediaEl) remoteMediaEl.volume = 1.0;
     };
 
   } catch(err) {
     console.error('Gemini setup failed:', err);
-    fallbackToWebSpeech();
+    document.getElementById('transText').textContent = 'Could not start translation.';
   }
 }
 
-async function startMicStream() {
+// Capture l'audio du flux DISTANT (remoteMediaStream, reçu via PeerJS) et
+// l'envoie à Gemini en PCM 16-bit / 16kHz — jamais le micro local.
+async function startRemoteAudioCapture() {
   try {
-    audioContext = new AudioContext({ sampleRate: 16000 });
-    geminiStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const source = audioContext.createMediaStreamSource(geminiStream);
-    const processor = audioContext.createScriptProcessor(4096, 1, 1);
+    captureContext = new AudioContext({ sampleRate: 16000 });
+    const source = captureContext.createMediaStreamSource(remoteMediaStream);
+    const processor = captureContext.createScriptProcessor(4096, 1, 1);
 
     processor.onaudioprocess = (e) => {
       if (geminiWs && geminiWs.readyState === WebSocket.OPEN) {
         const inputData = e.inputBuffer.getChannelData(0);
-        // Convert to 16-bit PCM
         const pcm = new Int16Array(inputData.length);
         for (let i = 0; i < inputData.length; i++) {
           pcm[i] = Math.max(-32768, Math.min(32767, inputData[i] * 32768));
         }
-        // Encode as base64
         const buffer = new Uint8Array(pcm.buffer);
         let binary = '';
         buffer.forEach(b => binary += String.fromCharCode(b));
         const b64 = btoa(binary);
-        // Send audio chunk to Gemini
         geminiWs.send(JSON.stringify({
-          realtime_input: {
-            media_chunks: [{ mime_type: 'audio/pcm;rate=16000', data: b64 }]
+          realtimeInput: {
+            audio: { data: b64, mimeType: 'audio/pcm;rate=16000' }
           }
         }));
       }
     };
 
     source.connect(processor);
-    processor.connect(audioContext.destination);
+    processor.connect(captureContext.destination);
     mediaProcessor = processor;
-    document.getElementById('transText').textContent = 'Gemini translation active. Speak to see translation...';
+    document.getElementById('transText').textContent = 'Translation active — listening to the other participant...';
   } catch(err) {
-    console.error('Mic stream error:', err);
-    fallbackToWebSpeech();
+    console.error('Remote audio capture error:', err);
+    document.getElementById('transText').textContent = 'Could not capture the other participant\'s audio for translation.';
   }
+}
+
+// Joue les morceaux audio traduits renvoyés par Gemini (PCM 16-bit, 24kHz),
+// mis bout à bout sans chevauchement ni coupure.
+function playTranslatedAudioChunk(base64Data) {
+  if (!playbackContext) {
+    playbackContext = new AudioContext({ sampleRate: 24000 });
+    nextPlaybackTime = playbackContext.currentTime;
+  }
+  const binary = atob(base64Data);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  const pcm16 = new Int16Array(bytes.buffer);
+  const float32 = new Float32Array(pcm16.length);
+  for (let i = 0; i < pcm16.length; i++) float32[i] = pcm16[i] / 32768;
+
+  const audioBuffer = playbackContext.createBuffer(1, float32.length, 24000);
+  audioBuffer.copyToChannel(float32, 0);
+
+  const src = playbackContext.createBufferSource();
+  src.buffer = audioBuffer;
+  src.connect(playbackContext.destination);
+
+  const startAt = Math.max(nextPlaybackTime, playbackContext.currentTime);
+  src.start(startAt);
+  nextPlaybackTime = startAt + audioBuffer.duration;
 }
 
 function stopGeminiTranslation() {
   if (geminiWs) { geminiWs.close(); geminiWs = null; }
   if (mediaProcessor) { mediaProcessor.disconnect(); mediaProcessor = null; }
-  if (geminiStream) { geminiStream.getTracks().forEach(t => t.stop()); geminiStream = null; }
-  if (audioContext) { audioContext.close(); audioContext = null; }
-}
-
-// Fallback: Web Speech API (Chrome only) if Gemini fails
-function fallbackToWebSpeech() {
-  document.getElementById('transText').textContent = 'Using browser speech recognition (Chrome only)...';
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    document.getElementById('transText').textContent = 'Translation unavailable. Use Chrome for speech recognition.';
-    return;
-  }
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  const langCode = document.getElementById('sessionLang').value;
-  recognition.lang = langCode === 'ko' ? 'ko-KR' : langCode === 'ja' ? 'ja-JP' :
-    langCode === 'zh' ? 'zh-CN' : langCode === 'th' ? 'th-TH' :
-    langCode === 'de' ? 'de-DE' : langCode === 'es' ? 'es-ES' :
-    langCode === 'fr' ? 'fr-FR' : 'en-US';
-  recognition.onresult = (e) => {
-    let t = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript;
-    document.getElementById('transText').textContent = t;
-  };
-  recognition.onerror = () => {};
-  recognition.start();
+  if (captureContext) { captureContext.close(); captureContext = null; }
+  if (playbackContext) { playbackContext.close(); playbackContext = null; }
+  if (remoteMediaEl) remoteMediaEl.volume = 1.0;
 }
 
 function startRecognition() { startGeminiTranslation(); }
 function stopRecognition() {
   stopGeminiTranslation();
-  if (recognition) { recognition.stop(); recognition = null; }
 }
 
 // ─── TIMER ───
