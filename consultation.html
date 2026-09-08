@@ -680,6 +680,9 @@ let transOn = false;
 let recognition = null;
 let remoteMediaStream = null; // flux audio/vidéo du participant distant, source de la traduction
 let remoteMediaEl = null;     // élément <video> ou <audio> qui joue ce flux, pour baisser son volume pendant la traduction
+let currentSessionCode = null;
+let practitionerVoiceId = null; // ID de la voix ElevenLabs clonée du praticien, si disponible (récupéré via /api/session-info)
+let isPractitioner = false;
 
 // ─── JOIN SESSION ───
 async function joinSession(mode) {
@@ -691,6 +694,19 @@ async function joinSession(mode) {
   if (!name) { alert('Please enter your name.'); return; }
 
   sessionMode = mode;
+  currentSessionCode = code;
+
+  // Récupère les infos publiques de la session (praticien, voix clonée
+  // éventuelle) pour savoir quel pipeline de traduction utiliser.
+  try {
+    const infoRes = await fetch('/api/session-info?code=' + encodeURIComponent(code));
+    const info = await infoRes.json();
+    if (infoRes.ok) {
+      practitionerVoiceId = info.elevenLabsVoiceId || null;
+    }
+  } catch(e) {
+    console.error('session-info fetch failed:', e);
+  }
 
   // Show session interface
   document.getElementById('sessionInterface').classList.add('active');
@@ -726,7 +742,7 @@ async function joinSession(mode) {
     // Le client s'enregistre sous un identifiant aléatoire et appelle le
     // praticien. Sans cette distinction, les deux généraient un identifiant
     // aléatoire et ne se trouvaient jamais.
-    const isPractitioner = new URLSearchParams(window.location.search).get('role') === 'practitioner';
+    isPractitioner = new URLSearchParams(window.location.search).get('role') === 'practitioner';
     const peerId = isPractitioner
       ? 'sm-psy-' + code.toLowerCase().replace(/[^a-z0-9]/g,'')
       : 'sm-' + code.toLowerCase().replace(/[^a-z0-9]/g,'') + '-' + Math.random().toString(36).substr(2,4);
@@ -847,6 +863,9 @@ let captureContext = null;   // capture l'audio distant pour l'envoyer à Gemini
 let playbackContext = null;  // joue l'audio traduit renvoyé par Gemini
 let mediaProcessor = null;
 let nextPlaybackTime = 0;
+let useClonedVoice = false;
+let ttsAudioQueue = [];
+let ttsPlaying = false;
 
 const LANG_NAMES = {
   en:'English', fr:'French', ko:'Korean', ja:'Japanese',
@@ -859,7 +878,14 @@ async function startGeminiTranslation() {
     return;
   }
   const myLang = LANG_NAMES[document.getElementById('sessionLang').value] || 'English';
-  document.getElementById('transText').textContent = 'Connecting to Gemini translation...';
+
+  // Le client entend le PRATICIEN traduit : si une voix clonée existe pour
+  // ce praticien, on demande du TEXTE à Gemini puis on le fait parler via
+  // ElevenLabs avec sa vraie voix. Le praticien, lui, entend le CLIENT
+  // traduit avec une voix Gemini générique — on ne clone jamais les clients.
+  useClonedVoice = !isPractitioner && !!practitionerVoiceId;
+
+  document.getElementById('transText').textContent = 'Connecting to translation...';
 
   try {
     const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_API_KEY}`;
@@ -870,11 +896,13 @@ async function startGeminiTranslation() {
         setup: {
           model: 'models/gemini-2.5-flash-native-audio-preview-12-2025',
           generationConfig: {
-            responseModalities: ['AUDIO'],
+            responseModalities: [useClonedVoice ? 'TEXT' : 'AUDIO'],
           },
           systemInstruction: {
             parts: [{
-              text: `You are a real-time interpreter for a live conversation. Listen to the incoming speech and immediately speak the translation aloud in ${myLang}. Translate only — no commentary, no greetings, no explanations. Be instantaneous and natural.`
+              text: useClonedVoice
+                ? `You are a real-time interpreter. Listen to the incoming speech and immediately output ONLY the translation in ${myLang}, as plain text. No commentary, no greetings, no explanations.`
+                : `You are a real-time interpreter for a live conversation. Listen to the incoming speech and immediately speak the translation aloud in ${myLang}. Translate only — no commentary, no greetings, no explanations. Be instantaneous and natural.`
             }]
           }
         }
@@ -896,6 +924,9 @@ async function startGeminiTranslation() {
           parts.forEach(p => {
             if (p.text) {
               document.getElementById('transText').textContent = p.text;
+              if (useClonedVoice && p.text.trim()) {
+                speakWithClonedVoice(p.text.trim());
+              }
             }
             if (p.inlineData && p.inlineData.data) {
               playTranslatedAudioChunk(p.inlineData.data);
@@ -982,6 +1013,42 @@ function playTranslatedAudioChunk(base64Data) {
   const startAt = Math.max(nextPlaybackTime, playbackContext.currentTime);
   src.start(startAt);
   nextPlaybackTime = startAt + audioBuffer.duration;
+}
+
+// Envoie le texte traduit à ElevenLabs (voix clonée du praticien) et joue
+// l'audio renvoyé. Mise en file d'attente simple pour éviter que deux
+// phrases se chevauchent si elles arrivent rapprochées.
+function speakWithClonedVoice(text) {
+  ttsAudioQueue.push(text);
+  if (!ttsPlaying) processTtsQueue();
+}
+
+async function processTtsQueue() {
+  if (ttsAudioQueue.length === 0) { ttsPlaying = false; return; }
+  ttsPlaying = true;
+  const text = ttsAudioQueue.shift();
+  try {
+    const res = await fetch('/api/tts-speak', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, voiceId: practitionerVoiceId })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.error('tts-speak error:', err);
+      processTtsQueue();
+      return;
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    audio.onended = () => { URL.revokeObjectURL(url); processTtsQueue(); };
+    audio.onerror = () => { URL.revokeObjectURL(url); processTtsQueue(); };
+    audio.play();
+  } catch(err) {
+    console.error('speakWithClonedVoice failed:', err);
+    processTtsQueue();
+  }
 }
 
 function stopGeminiTranslation() {
