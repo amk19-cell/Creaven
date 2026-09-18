@@ -323,9 +323,69 @@ footer p{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;}
   <div class="page-cta">
     <h3>You do not have to wait for a crisis to ask for help.</h3>
     <p>Creaven is here before, during, and after difficult moments. Talk to a psychologist today.</p>
-    <a href="consultation.html" class="btn-w">Book an Emergency Consultation</a>
+    <button onclick="openEmergencyModal()" class="btn-w" style="border:none;cursor:pointer;">Connect Me Now</button>
     <a href="booking.html" class="btn-ow">Schedule a Session</a>
   </div>
+
+  <div id="emergencyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:16px;padding:32px;max-width:360px;width:90%;">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--charcoal);margin-bottom:6px;">We're connecting you now</h3>
+      <p style="font-size:13px;color:var(--mid);margin-bottom:20px;">A psychologist will join as soon as one is available. No forms, no payment right now.</p>
+      <div id="emergencyModalMsg" style="font-size:12px;color:var(--red);margin-bottom:10px;min-height:16px;"></div>
+      <input type="text" id="emName" placeholder="Your name" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,.15);margin-bottom:10px;font-size:14px;">
+      <select id="emLang" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,.15);margin-bottom:10px;font-size:14px;">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="ko">한국어</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+        <option value="th">ไทย</option>
+        <option value="de">Deutsch</option>
+        <option value="es">Español</option>
+      </select>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button onclick="setEmMode('video')" id="emModeVideo" class="btn-w" style="flex:1;border:1.5px solid var(--green);color:var(--green-dark);background:var(--green-light);">🎥 Video</button>
+        <button onclick="setEmMode('audio')" id="emModeAudio" class="btn-w" style="flex:1;border:1.5px solid rgba(0,0,0,.15);color:var(--mid);background:#fff;">🎧 Audio</button>
+      </div>
+      <button onclick="startEmergencyNow()" id="emStartBtn" style="width:100%;background:var(--red);color:#fff;border:none;padding:14px;border-radius:40px;font-size:14px;font-weight:600;cursor:pointer;">Connect Now</button>
+      <button onclick="closeEmergencyModal()" style="width:100%;background:none;border:none;color:var(--light);padding:10px;font-size:12px;cursor:pointer;margin-top:6px;">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    var emMode = 'video';
+    function openEmergencyModal(){ document.getElementById('emergencyModal').style.display='flex'; }
+    function closeEmergencyModal(){ document.getElementById('emergencyModal').style.display='none'; }
+    function setEmMode(m){
+      emMode = m;
+      document.getElementById('emModeVideo').style.background = m==='video' ? 'var(--green-light)' : '#fff';
+      document.getElementById('emModeVideo').style.borderColor = m==='video' ? 'var(--green)' : 'rgba(0,0,0,.15)';
+      document.getElementById('emModeAudio').style.background = m==='audio' ? 'var(--green-light)' : '#fff';
+      document.getElementById('emModeAudio').style.borderColor = m==='audio' ? 'var(--green)' : 'rgba(0,0,0,.15)';
+    }
+    async function startEmergencyNow(){
+      var name = document.getElementById('emName').value.trim();
+      var lang = document.getElementById('emLang').value;
+      var msg = document.getElementById('emergencyModalMsg');
+      if(!name){ msg.textContent = 'Please enter your name.'; return; }
+      var btn = document.getElementById('emStartBtn');
+      btn.disabled = true; btn.textContent = 'Connecting...';
+      try{
+        var res = await fetch('/api/create-emergency', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ clientName: name, sessionLang: lang, mode: emMode })
+        });
+        var data = await res.json();
+        if(!res.ok) throw new Error(data.error || 'Could not connect. Please try again.');
+        window.location.href = 'consultation.html?code=' + encodeURIComponent(data.sessionCode)
+          + '&name=' + encodeURIComponent(name) + '&lang=' + encodeURIComponent(lang) + '&mode=' + emMode;
+      }catch(err){
+        msg.textContent = err.message;
+        btn.disabled = false; btn.textContent = 'Connect Now';
+      }
+    }
+  </script>
 
 </div>
 
