@@ -1104,12 +1104,27 @@ function copyPeerId() {
 // Read session code from URL if coming from booking
 const urlParams = new URLSearchParams(window.location.search);
 const urlCode = urlParams.get('code');
+const urlName = urlParams.get('name');
+const urlLang = urlParams.get('lang');
+const urlMode = urlParams.get('mode');
 if (urlCode) {
   document.getElementById('videoCode').value = urlCode.toUpperCase();
   document.getElementById('audioCode').value = urlCode.toUpperCase();
+  if (urlName) {
+    document.getElementById('videoName').value = urlName;
+    document.getElementById('audioName').value = urlName;
+  }
+  if (urlLang) {
+    document.getElementById('videoLang').value = urlLang;
+    document.getElementById('audioLang').value = urlLang;
+  }
   // Scroll to session section
   setTimeout(() => {
     document.querySelector('.session-section')?.scrollIntoView({behavior:'smooth'});
+    // Urgence : rejoint automatiquement, sans attendre un clic supplémentaire.
+    if (urlName && urlMode) {
+      joinSession(urlMode === 'audio' ? 'audio' : 'video');
+    }
   }, 500);
 }
 
