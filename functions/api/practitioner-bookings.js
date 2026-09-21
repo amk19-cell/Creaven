@@ -1,5 +1,6 @@
 import { getVerifiedUser } from "./_firebase-auth.js";
 import { runFirestoreQuery } from "./_firestore.js";
+import { resolvePractitionerId } from "./_practitioner-identity.js";
 
 const PROJECT_ID = "creaven-01";
 
@@ -23,9 +24,15 @@ function docToObject(doc) {
 export async function onRequestGet({ request, env }) {
   const user = await getVerifiedUser(request, PROJECT_ID);
   if (!user) {
-    return new Response(JSON.stringify({ error: "Non authentifié." }), {
-      status: 401,
-    });
+    return new Response(JSON.stringify({ error: "Non authentifié." }), { status: 401 });
+  }
+
+  const practitionerId = await resolvePractitionerId(env, user.uid);
+  if (!practitionerId) {
+    return new Response(
+      JSON.stringify({ error: "Aucun profil praticien approuvé n'est lié à ce compte. Demande à l'admin d'ajouter ton authUid dans Firestore." }),
+      { status: 403 }
+    );
   }
 
   const structuredQuery = {
@@ -34,7 +41,7 @@ export async function onRequestGet({ request, env }) {
       fieldFilter: {
         field: { fieldPath: "practitionerUid" },
         op: "EQUAL",
-        value: { stringValue: user.uid },
+        value: { stringValue: practitionerId },
       },
     },
   };
@@ -43,14 +50,10 @@ export async function onRequestGet({ request, env }) {
   try {
     results = await runFirestoreQuery(env, structuredQuery);
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-    });
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 
-  const bookings = (results || [])
-    .filter((r) => r.document)
-    .map((r) => docToObject(r.document));
+  const bookings = (results || []).filter((r) => r.document).map((r) => docToObject(r.document));
 
   return new Response(JSON.stringify({ bookings }), {
     status: 200,
