@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <style>
 :root {
   --green:#3A6B3A;--green-dark:#2A4A2A;--green-mid:#4A8B4A;--green-light:#E8F2E8;--green-pale:#F2F8F2;
@@ -519,6 +521,16 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
 </footer>
 
 <script>
+// ─── FIREBASE (pour vérifier le rôle praticien) ───
+firebase.initializeApp({
+  apiKey:"AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain:"creaven-01.firebaseapp.com",
+  projectId:"creaven-01",
+  storageBucket:"creaven-01.firebasestorage.app",
+  messagingSenderId:"247953277751",
+  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+});
+
 // ─── TRANSLATIONS ───
 const T = {
   en: {
@@ -615,7 +627,6 @@ const T = {
     w_title:"심리학자를 기다리는 중...",w_sub:"이 페이지에 머물러 주세요. 심리학자가 곧 연결됩니다.",
   }
 };
-// Add minimal versions for other languages
 ['jp','zh','th','de','es'].forEach(l => { T[l] = {...T.en}; });
 T.jp.eyebrow="相談"; T.jp.nl_home="ホーム"; T.jp.nl_book="予約";
 T.zh.eyebrow="咨询"; T.zh.nl_home="主页"; T.zh.nl_book="预约";
@@ -642,7 +653,6 @@ function applyTranslations(lang) {
     const key = id.replace(/-/g,'_');
     if (el && t[key]) el.textContent = t[key];
   });
-  // innerHTML for elements with em tags
   ['h-title','how-title','ts-title','conf-title','ss-title','bc-title','jc-video-title','jc-audio-title'].forEach(id => {
     const el = document.getElementById(id);
     const key = id.replace(/-/g,'_');
@@ -677,11 +687,10 @@ let timerInterval = null;
 let micOn = true;
 let camOn = true;
 let transOn = false;
-let recognition = null;
-let remoteMediaStream = null; // flux audio/vidéo du participant distant, source de la traduction
-let remoteMediaEl = null;     // élément <video> ou <audio> qui joue ce flux, pour baisser son volume pendant la traduction
+let remoteMediaStream = null;
+let remoteMediaEl = null;
 let currentSessionCode = null;
-let practitionerVoiceId = null; // ID de la voix ElevenLabs clonée du praticien, si disponible (récupéré via /api/session-info)
+let practitionerVoiceId = null;
 let isPractitioner = false;
 
 // ─── JOIN SESSION ───
@@ -696,8 +705,6 @@ async function joinSession(mode) {
   sessionMode = mode;
   currentSessionCode = code;
 
-  // Récupère les infos publiques de la session (praticien, voix clonée
-  // éventuelle) pour savoir quel pipeline de traduction utiliser.
   try {
     const infoRes = await fetch('/api/session-info?code=' + encodeURIComponent(code));
     const info = await infoRes.json();
@@ -708,19 +715,16 @@ async function joinSession(mode) {
     console.error('session-info fetch failed:', e);
   }
 
-  // Show session interface
   document.getElementById('sessionInterface').classList.add('active');
   document.getElementById('modeBadge').textContent = mode === 'video' ? '🎥 Video' : '🎧 Audio';
   document.getElementById('sessionLang').value = lang;
   document.getElementById('audioSessionName').textContent = name;
 
-  // Show correct area
   if (mode === 'video') {
     document.getElementById('btnCam').style.display = 'flex';
   }
 
   try {
-    // Get user media
     const constraints = mode === 'video'
       ? { video: true, audio: true }
       : { video: false, audio: true };
@@ -731,21 +735,16 @@ async function joinSession(mode) {
       document.getElementById('localVideo').srcObject = localStream;
       document.getElementById('localLabel').textContent = name;
     } else {
-      // Audio visualizer
       animateAudioBars(true);
     }
 
-    // Détermine le rôle depuis l'URL. Le praticien accède via
-    // consultation.html?code=XXX&role=practitioner (lien à ajouter dans son
-    // dashboard) ; le client accède via le lien standard reçu par email.
-    // Le praticien s'enregistre sous un identifiant FIXE et attend l'appel.
-    // Le client s'enregistre sous un identifiant aléatoire et appelle le
-    // praticien. Sans cette distinction, les deux généraient un identifiant
-    // aléatoire et ne se trouvaient jamais.
-    isPractitioner = new URLSearchParams(window.location.search).get('role') === 'Practitioner';
+    // CORRECTION : le rôle praticien est en MAJUSCULE dans l'URL
+    isPractitioner = new URLSearchParams(window.location.search).get('role') === 'practitioner';
+    
     const peerId = isPractitioner
       ? 'sm-psy-' + code.toLowerCase().replace(/[^a-z0-9]/g,'')
       : 'sm-' + code.toLowerCase().replace(/[^a-z0-9]/g,'') + '-' + Math.random().toString(36).substr(2,4);
+    
     peer = new Peer(peerId, {
       host: '0.peerjs.com',
       port: 443,
@@ -758,15 +757,12 @@ async function joinSession(mode) {
       document.getElementById('connStatus').textContent = isPractitioner ? 'Waiting for client...' : 'Waiting for psychologist...';
     });
 
-    // Listen for incoming call
     peer.on('call', (call) => {
       call.answer(localStream);
       currentCall = call;
       handleCallStream(call, mode, name);
     });
 
-    // Seul le CLIENT appelle activement — le praticien attend, déjà
-    // enregistré sous l'identifiant fixe ci-dessus.
     if (!isPractitioner) {
       const psyPeerId = 'sm-psy-' + code.toLowerCase().replace(/[^a-z0-9]/g,'');
       setTimeout(() => {
@@ -853,19 +849,22 @@ function updateLang(lang) {
   if (transOn) { stopRecognition(); startRecognition(); }
 }
 
-// ─── GEMINI LIVE API - REAL-TIME SPEECH-TO-SPEECH TRANSLATION ───
-// Traduit la voix du PARTICIPANT DISTANT (pas la sienne) et fait parler la
-// traduction à voix haute. Le volume original est baissé pendant ce temps
-// pour éviter la superposition confuse de deux voix.
-const GEMINI_API_KEY = '';
+// ─── GEMINI LIVE TRANSLATE - SPEECH-TO-SPEECH ───
+// Utilise le modèle dédié gemini-3.5-live-translate-preview avec translationConfig
+// natif. Reconnexion automatique via sessionResumption + contextWindowCompression.
+// Token éphémère via /api/get-gemini-token (la vraie clé reste sur Cloudflare).
+
 let geminiWs = null;
-let captureContext = null;   // capture l'audio distant pour l'envoyer à Gemini
-let playbackContext = null;  // joue l'audio traduit renvoyé par Gemini
+let captureContext = null;
+let playbackContext = null;
 let mediaProcessor = null;
 let nextPlaybackTime = 0;
 let useClonedVoice = false;
 let ttsAudioQueue = [];
 let ttsPlaying = false;
+let sessionHandle = null; // handle de reprise
+let reconnectAttempts = 0;
+let reconnectScheduled = false;
 
 const LANG_NAMES = {
   en:'English', fr:'French', ko:'Korean', ja:'Japanese',
@@ -877,85 +876,178 @@ async function startGeminiTranslation() {
     document.getElementById('transText').textContent = 'Waiting for the other participant to connect before starting translation...';
     return;
   }
-  const myLang = LANG_NAMES[document.getElementById('sessionLang').value] || 'English';
+  const myLangCode = document.getElementById('sessionLang').value;
+  const myLang = LANG_NAMES[myLangCode] || 'English';
 
-  // Le client entend le PRATICIEN traduit : si une voix clonée existe pour
-  // ce praticien, on demande du TEXTE à Gemini puis on le fait parler via
-  // ElevenLabs avec sa vraie voix. Le praticien, lui, entend le CLIENT
-  // traduit avec une voix Gemini générique — on ne clone jamais les clients.
   useClonedVoice = !isPractitioner && !!practitionerVoiceId;
 
   document.getElementById('transText').textContent = 'Connecting to translation...';
+  reconnectAttempts = 0;
 
+  // ── 1. Récupérer un ephemeral token depuis Cloudflare ──
+  let ephemeralToken;
   try {
-    const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_API_KEY}`;
-    geminiWs = new WebSocket(wsUrl);
-
-    geminiWs.onopen = () => {
-      const setup = {
-        setup: {
-          model: 'models/gemini-2.5-flash-native-audio-preview-12-2025',
-          generationConfig: {
-            responseModalities: [useClonedVoice ? 'TEXT' : 'AUDIO'],
-          },
-          systemInstruction: {
-            parts: [{
-              text: useClonedVoice
-                ? `You are a real-time interpreter. Listen to the incoming speech and immediately output ONLY the translation in ${myLang}, as plain text. No commentary, no greetings, no explanations.`
-                : `You are a real-time interpreter for a live conversation. Listen to the incoming speech and immediately speak the translation aloud in ${myLang}. Translate only — no commentary, no greetings, no explanations. Be instantaneous and natural.`
-            }]
-          }
-        }
-      };
-      geminiWs.send(JSON.stringify(setup));
-      startRemoteAudioCapture();
-      if (remoteMediaEl) remoteMediaEl.volume = 0.15;
-    };
-
-    geminiWs.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.error) {
-          document.getElementById('transText').textContent = 'Gemini error: ' + (data.error.message || JSON.stringify(data.error));
-          return;
-        }
-        const parts = data?.serverContent?.modelTurn?.parts;
-        if (parts) {
-          parts.forEach(p => {
-            if (p.text) {
-              document.getElementById('transText').textContent = p.text;
-              if (useClonedVoice && p.text.trim()) {
-                speakWithClonedVoice(p.text.trim());
-              }
-            }
-            if (p.inlineData && p.inlineData.data) {
-              playTranslatedAudioChunk(p.inlineData.data);
-            }
-          });
-        }
-      } catch(e) {}
-    };
-
-    geminiWs.onerror = (e) => {
-      console.error('Gemini WS error:', e);
-      document.getElementById('transText').textContent = 'Translation connection error.';
-    };
-
-    geminiWs.onclose = () => {
-      document.getElementById('transText').textContent = 'Translation ended.';
-      if (remoteMediaEl) remoteMediaEl.volume = 1.0;
-    };
-
-  } catch(err) {
-    console.error('Gemini setup failed:', err);
-    document.getElementById('transText').textContent = 'Could not start translation.';
+    const tokRes = await fetch('/api/get-gemini-token', { method: 'POST' });
+    const tokData = await tokRes.json();
+    if (!tokRes.ok || !tokData.token) {
+      throw new Error(tokData.error || 'Could not obtain translation token.');
+    }
+    ephemeralToken = tokData.token;
+  } catch (err) {
+    console.error('Gemini token fetch failed:', err);
+    document.getElementById('transText').textContent = 'Translation unavailable right now. Please continue in your session language.';
+    return;
   }
+
+  connectGeminiWs(ephemeralToken, myLangCode, myLang);
 }
 
-// Capture l'audio du flux DISTANT (remoteMediaStream, reçu via PeerJS) et
-// l'envoie à Gemini en PCM 16-bit / 16kHz — jamais le micro local.
+function connectGeminiWs(ephemeralToken, langCode, langName) {
+  // Modèle dédié traduction, endpoint v1beta (requis pour translationConfig)
+  const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?access_token=${encodeURIComponent(ephemeralToken)}`;
+  
+  try {
+    geminiWs = new WebSocket(wsUrl);
+  } catch (e) {
+    console.error('WebSocket creation failed:', e);
+    scheduleReconnect(ephemeralToken, langCode, langName);
+    return;
+  }
+
+  geminiWs.onopen = () => {
+    reconnectAttempts = 0;
+    reconnectScheduled = false;
+    
+    // Setup avec translationConfig natif + session resumption + compression
+    const setup = {
+      setup: {
+        model: 'models/gemini-3.5-live-translate-preview',
+        generationConfig: {
+          responseModalities: ['AUDIO'],
+          inputAudioTranscription: {},
+          outputAudioTranscription: {},
+          translationConfig: {
+            targetLanguageCode: langCode,
+            echoTargetLanguage: false
+          }
+        },
+        // Reprise de session : permet de se reconnecter sans perdre le contexte
+        sessionResumption: {},
+        // Compression du contexte : permet des sessions illimitées (sans ça, 15 min max en audio)
+        contextWindowCompression: {
+          slidingWindow: {}
+        }
+      }
+    };
+
+    // Si on a un handle de reprise, on l'envoie pour reprendre où on s'était arrêté
+    if (sessionHandle) {
+      setup.setup.sessionResumption.handle = sessionHandle;
+    }
+
+    geminiWs.send(JSON.stringify(setup));
+    startRemoteAudioCapture();
+    if (remoteMediaEl) remoteMediaEl.volume = 0.15;
+    document.getElementById('transText').textContent = 'Translation active — listening...';
+  };
+
+  geminiWs.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data);
+
+      // Handle de reprise : on le stocke pour la prochaine reconnexion
+      if (data.sessionResumptionUpdate && data.sessionResumptionUpdate.newHandle) {
+        sessionHandle = data.sessionResumptionUpdate.newHandle;
+      }
+
+      // GoAway : le serveur prévient qu'il va couper. On ouvre la nouvelle
+      // connexion proactivement avant la coupure pour une transition invisible.
+      if (data.goAway) {
+        console.log('GoAway received, reconnecting proactively...');
+        if (!reconnectScheduled) {
+          reconnectScheduled = true;
+          // On demande un nouveau token (l'ancien peut expirer)
+          fetch('/api/get-gemini-token', { method: 'POST' })
+            .then(r => r.json())
+            .then(d => {
+              if (d.token) {
+                // Ferme l'ancienne et ouvre la nouvelle
+                if (geminiWs) { geminiWs.close(); geminiWs = null; }
+                connectGeminiWs(d.token, langCode, langName);
+              }
+            })
+            .catch(() => scheduleReconnect(ephemeralToken, langCode, langName));
+        }
+        return;
+      }
+
+      if (data.error) {
+        document.getElementById('transText').textContent = 'Translation error: ' + (data.error.message || 'Connection issue. Reconnecting...');
+        scheduleReconnect(ephemeralToken, langCode, langName);
+        return;
+      }
+
+      // Transcriptions (optionnel - affichage)
+      if (data.serverContent?.inputTranscription?.text) {
+        // On pourrait afficher la transcription source
+      }
+      if (data.serverContent?.outputTranscription?.text) {
+        document.getElementById('transText').textContent = data.serverContent.outputTranscription.text;
+      }
+
+      // Audio traduit
+      const parts = data?.serverContent?.modelTurn?.parts;
+      if (parts) {
+        parts.forEach(p => {
+          if (p.text && useClonedVoice && p.text.trim()) {
+            speakWithClonedVoice(p.text.trim());
+          }
+          if (p.inlineData && p.inlineData.data) {
+            playTranslatedAudioChunk(p.inlineData.data);
+          }
+        });
+      }
+    } catch(e) {}
+  };
+
+  geminiWs.onerror = (e) => {
+    console.error('Gemini WS error:', e);
+    document.getElementById('transText').textContent = 'Translation connection issue. Reconnecting...';
+    scheduleReconnect(ephemeralToken, langCode, langName);
+  };
+
+  geminiWs.onclose = (e) => {
+    console.log('Gemini WS closed:', e.code, e.reason);
+    if (transOn && !reconnectScheduled) {
+      // Fermeture inattendue → reconnexion
+      scheduleReconnect(ephemeralToken, langCode, langName);
+    } else {
+      document.getElementById('transText').textContent = 'Translation ended.';
+      if (remoteMediaEl) remoteMediaEl.volume = 1.0;
+    }
+  };
+}
+
+function scheduleReconnect(token, langCode, langName) {
+  if (!transOn) return;
+  reconnectAttempts++;
+  if (reconnectAttempts > 10) {
+    document.getElementById('transText').textContent = 'Translation stopped after multiple reconnection attempts. Please toggle OFF and ON again.';
+    return;
+  }
+  const delay = Math.min(1000 * reconnectAttempts, 5000);
+  document.getElementById('transText').textContent = `Reconnecting translation (attempt ${reconnectAttempts})...`;
+  setTimeout(() => {
+    if (transOn) connectGeminiWs(token, langCode, langName);
+  }, delay);
+}
+
 async function startRemoteAudioCapture() {
   try {
+    // Nettoie l'ancien processor si reconnexion
+    if (mediaProcessor) { mediaProcessor.disconnect(); mediaProcessor = null; }
+    if (captureContext) { captureContext.close(); captureContext = null; }
+
     captureContext = new AudioContext({ sampleRate: 16000 });
     const source = captureContext.createMediaStreamSource(remoteMediaStream);
     const processor = captureContext.createScriptProcessor(4096, 1, 1);
@@ -982,15 +1074,12 @@ async function startRemoteAudioCapture() {
     source.connect(processor);
     processor.connect(captureContext.destination);
     mediaProcessor = processor;
-    document.getElementById('transText').textContent = 'Translation active — listening to the other participant...';
   } catch(err) {
     console.error('Remote audio capture error:', err);
-    document.getElementById('transText').textContent = 'Could not capture the other participant\'s audio for translation.';
+    document.getElementById('transText').textContent = 'Could not capture audio for translation.';
   }
 }
 
-// Joue les morceaux audio traduits renvoyés par Gemini (PCM 16-bit, 24kHz),
-// mis bout à bout sans chevauchement ni coupure.
 function playTranslatedAudioChunk(base64Data) {
   if (!playbackContext) {
     playbackContext = new AudioContext({ sampleRate: 24000 });
@@ -1015,9 +1104,6 @@ function playTranslatedAudioChunk(base64Data) {
   nextPlaybackTime = startAt + audioBuffer.duration;
 }
 
-// Envoie le texte traduit à ElevenLabs (voix clonée du praticien) et joue
-// l'audio renvoyé. Mise en file d'attente simple pour éviter que deux
-// phrases se chevauchent si elles arrivent rapprochées.
 function speakWithClonedVoice(text) {
   ttsAudioQueue.push(text);
   if (!ttsPlaying) processTtsQueue();
@@ -1033,12 +1119,7 @@ async function processTtsQueue() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text, voiceId: practitionerVoiceId })
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      console.error('tts-speak error:', err);
-      processTtsQueue();
-      return;
-    }
+    if (!res.ok) { processTtsQueue(); return; }
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     const audio = new Audio(url);
@@ -1046,23 +1127,24 @@ async function processTtsQueue() {
     audio.onerror = () => { URL.revokeObjectURL(url); processTtsQueue(); };
     audio.play();
   } catch(err) {
-    console.error('speakWithClonedVoice failed:', err);
+    console.error('Cloned voice TTS failed:', err);
     processTtsQueue();
   }
 }
 
 function stopGeminiTranslation() {
+  transOn = false;
+  reconnectScheduled = false;
   if (geminiWs) { geminiWs.close(); geminiWs = null; }
   if (mediaProcessor) { mediaProcessor.disconnect(); mediaProcessor = null; }
   if (captureContext) { captureContext.close(); captureContext = null; }
   if (playbackContext) { playbackContext.close(); playbackContext = null; }
   if (remoteMediaEl) remoteMediaEl.volume = 1.0;
+  sessionHandle = null;
 }
 
 function startRecognition() { startGeminiTranslation(); }
-function stopRecognition() {
-  stopGeminiTranslation();
-}
+function stopRecognition() { stopGeminiTranslation(); }
 
 // ─── TIMER ───
 function startTimer() {
@@ -1076,11 +1158,11 @@ function startTimer() {
 }
 
 function endSession() {
+  stopGeminiTranslation();
   if (currentCall) currentCall.close();
   if (peer) peer.destroy();
   if (localStream) localStream.getTracks().forEach(t => t.stop());
   if (timerInterval) clearInterval(timerInterval);
-  if (recognition) recognition.stop();
 
   peer = null; localStream = null; currentCall = null;
   document.getElementById('sessionInterface').classList.remove('active');
@@ -1118,17 +1200,14 @@ if (urlCode) {
     document.getElementById('videoLang').value = urlLang;
     document.getElementById('audioLang').value = urlLang;
   }
-  // Scroll to session section
   setTimeout(() => {
     document.querySelector('.session-section')?.scrollIntoView({behavior:'smooth'});
-    // Urgence : rejoint automatiquement, sans attendre un clic supplémentaire.
     if (urlName && urlMode) {
       joinSession(urlMode === 'audio' ? 'audio' : 'video');
     }
   }, 500);
 }
 
-// Init
 applyTranslations('en');
 </script>
 </body>
