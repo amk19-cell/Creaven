@@ -352,7 +352,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
 // =============================================
 const firebaseConfig = {
   apiKey: "AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
-  authDomain: "creaven-01.firebaseapp.com",
+  authDomain: "www.creavenconnect.com",
   projectId: "creaven-01",
   storageBucket: "creaven-01.firebasestorage.app",
   messagingSenderId: "247953277751",
@@ -523,14 +523,14 @@ function signUpPractitioner(email, pass) {
       return cred.user.updateProfile({ displayName: fullName });
     })
     .then(function() {
-      return storage.ref('practitioners/' + uid + '/diploma.pdf').put(dip);
+      return storage.ref('Practitioners/' + uid + '/diploma.pdf').put(dip);
     })
     .then(function(s) { return s.ref.getDownloadURL(); })
     .then(function(dipUrl) {
-      return storage.ref('practitioners/' + uid + '/cv.pdf').put(cv)
+      return storage.ref('Practitioners/' + uid + '/cv.pdf').put(cv)
         .then(function(s) { return s.ref.getDownloadURL(); })
         .then(function(cvUrl) {
-          return db.collection('practitioners').doc(uid).set({
+          return db.collection('Practitioners').doc(uid).set({
             uid: uid, email: email, firstName: fn, lastName: ln, fullName: fullName,
             dob: dob, country: country, languages: langs, specialities: spec,
             licence: lic, diplomaUrl: dipUrl, cvUrl: cvUrl,
@@ -576,11 +576,11 @@ function closeForgot() { document.getElementById('forgotModal').style.display = 
 // =============================================
 auth.onAuthStateChanged(function(user) {
   if (user) {
-    db.collection('practitioners').doc(user.uid).get()
+    db.collection('Practitioners').doc(user.uid).get()
       .then(function(doc) {
         if (doc.exists) {
           var d = doc.data();
-          localStorage.setItem('sm_type', d.status === 'approved' ? 'practitioner' : 'practitioner_pending');
+          localStorage.setItem('sm_type', d.status === 'approved' ? 'Practitioner' : 'Practitioner_pending');
           localStorage.setItem('sm_name', d.fullName || user.displayName || '');
         }
       })
@@ -595,8 +595,8 @@ function showDashboard(user) {
   var name = user.displayName || localStorage.getItem('sm_name') || user.email.split('@')[0];
   var userType = localStorage.getItem('sm_type') || 'individual';
 
-  if (userType === 'practitioner_pending') {
-    showView('practitionerPendingView');
+  if (userType === 'Practitioner_pending') {
+    showView('PractitionerPendingView');
     document.getElementById('pendingName').textContent = name;
     return;
   }
