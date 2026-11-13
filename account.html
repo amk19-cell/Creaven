@@ -437,8 +437,14 @@ function signInWithGoogle() {
         localStorage.setItem('sm_name', user.displayName);
       }
     })
-    .catch(function(err) {
+        .catch(function(err) {
       console.error(err);
+      
+      // NOUVEAU : On ignore si l'utilisateur ferme juste la fenêtre
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+        return; 
+      }
+
       var currentForm = document.getElementById('loginForm').style.display !== 'none' ? 'loginMsg' : 'signupMsg';
       showMsg(currentForm, 'Google sign in failed: ' + err.message, 'error');
     });
