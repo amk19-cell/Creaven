@@ -386,12 +386,17 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
 
 <script>
 firebase.initializeApp({
-  apiKey:"",
-  authDomain:"creaven-01.firebaseapp.com",
-  projectId:"creaven-01",
-  storageBucket:"creaven-01.firebasestorage.app",
-  messagingSenderId:"247953277751",
-  appId:"1:247953277751:web:2e6c9bde3b28998742d0b2"
+  var firebaseConfig = {
+  apiKey: "AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain: "creaven-01.firebaseapp.com",
+  projectId: "creaven-01",
+  storageBucket: "creaven-01.firebasestorage.app",
+  messagingSenderId: "247953277751",
+  appId: "1:247953277751:web:2e6c9bde3b28998742d0b2",
+  measurementId: "G-3R264P9Z46"
+};
+
+firebase.initializeApp(firebaseConfig);"
 });
 var auth=firebase.auth();
 var db=firebase.firestore();
