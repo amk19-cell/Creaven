@@ -427,27 +427,24 @@ function showView(viewId) {
 // =============================================
 function signInWithGoogle() {
   var provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider)
-    .then(function(result) {
-      var user = result.user;
-      if (!localStorage.getItem('sm_type')) {
-        localStorage.setItem('sm_type', 'individual');
-      }
-      if (!localStorage.getItem('sm_name') && user.displayName) {
-        localStorage.setItem('sm_name', user.displayName);
-      }
-    })
-        .catch(function(err) {
-      console.error(err);
-      
-      // NOUVEAU : On ignore si l'utilisateur ferme juste la fenêtre
-      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-        return; 
-      }
-
-      var currentForm = document.getElementById('loginForm').style.display !== 'none' ? 'loginMsg' : 'signupMsg';
-      showMsg(currentForm, 'Google sign in failed: ' + err.message, 'error');
-    });
+  
+  // On utilise la redirection au lieu de la popup
+  auth.signInWithRedirect(provider);
+}
+// Cette fonction gère le retour de Google
+auth.getRedirectResult().then(function(result) {
+  if (result.user) {
+    var user = result.user;
+    if (!localStorage.getItem('sm_type')) {
+      localStorage.setItem('sm_type', 'individual');
+    }
+    if (!localStorage.getItem('sm_name') && user.displayName) {
+      localStorage.setItem('sm_name', user.displayName);
+    }
+  }
+}).catch(function(error) {
+  console.error("Erreur retour Google:", error);
+});
 }
 
 function signIn() {
