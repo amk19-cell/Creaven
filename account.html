@@ -427,42 +427,26 @@ function showView(viewId) {
 // =============================================
 function signInWithGoogle() {
   var provider = new firebase.auth.GoogleAuthProvider();
-  
-  // On utilise la redirection au lieu de la popup
-  auth.signInWithRedirect(provider);
-}
-// Cette fonction gère le retour de Google
-auth.getRedirectResult().then(function(result) {
-  if (result.user) {
-    var user = result.user;
-    if (!localStorage.getItem('sm_type')) {
-      localStorage.setItem('sm_type', 'individual');
-    }
-    if (!localStorage.getItem('sm_name') && user.displayName) {
-      localStorage.setItem('sm_name', user.displayName);
-    }
-  }
-}).catch(function(error) {
-  console.error("Erreur retour Google:", error);
-});
-}
-
-function signIn() {
-  var email = document.getElementById('loginEmail').value.trim();
-  var pass = document.getElementById('loginPassword').value;
-  if (!email || !pass) return showMsg('loginMsg', 'Please enter your email and password.', 'error');
-  
-  showMsg('loginMsg', 'Signing in...', 'info');
-  auth.signInWithEmailAndPassword(email, pass)
-    .then(function() {
-      var rp = new URLSearchParams(window.location.search);
-      var rd = rp.get('redirect');
-      if (rd && rd.endsWith('.html')) {
-        setTimeout(function() { window.location.href = rd; }, 800);
+  auth.signInWithPopup(provider)
+    .then(function(result) {
+      var user = result.user;
+      if (!localStorage.getItem('sm_type')) {
+        localStorage.setItem('sm_type', 'individual');
+      }
+      if (!localStorage.getItem('sm_name') && user.displayName) {
+        localStorage.setItem('sm_name', user.displayName);
       }
     })
-    .catch(function(err) {
-      showMsg('loginMsg', err.message, 'error');
+        .catch(function(err) {
+      console.error(err);
+      
+      // NOUVEAU : On ignore si l'utilisateur ferme juste la fenêtre
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+        return; 
+      }
+
+      var currentForm = document.getElementById('loginForm').style.display !== 'none' ? 'loginMsg' : 'signupMsg';
+      showMsg(currentForm, 'Google sign in failed: ' + err.message, 'error');
     });
 }
 
