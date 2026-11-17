@@ -9,7 +9,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 <style>
 :root{--green:#3A6B3A;--green-dark:#2A4A2A;--green-light:#E8F2E8;--blue:#2B5FA8;--blue-light:#E8EFF8;--gold:#C8A84B;--gold-light:#F5EDD0;--gold-dark:#A08030;--cream:#FAFCFA;--cream-dark:#F0F5F0;--charcoal:#1A2A1A;--mid:#4A5A4A;--light:#8A9A8A;--red:#C0392B;--red-light:#FDEAEA;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -224,8 +223,8 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
           <div class="form-group"><label class="form-label">Languages spoken *</label><input type="text" class="form-input" id="pLanguages" placeholder="e.g. French, English"></div>
           <div class="form-group"><label class="form-label">Specialities</label><input type="text" class="form-input" id="pSpec" placeholder="e.g. Burnout, Trauma"></div>
           <div class="form-group"><label class="form-label">Licence number *</label><input type="text" class="form-input" id="pLicence" placeholder="Required"></div>
-          <div class="form-group"><label class="form-label">Diploma * <span style="color:var(--red);font-size:10px;">PDF max 5MB</span></label><input type="file" class="form-input" id="pDiploma" accept=".pdf" style="padding:10px;"></div>
-          <div class="form-group"><label class="form-label">CV * <span style="color:var(--red);font-size:10px;">PDF max 5MB</span></label><input type="file" class="form-input" id="pCv" accept=".pdf" style="padding:10px;"></div>
+          <div class="form-group"><label class="form-label">Diploma * <span style="color:var(--red);font-size:10px;">PDF max 500KB</span></label><input type="file" class="form-input" id="pDiploma" accept=".pdf" style="padding:10px;"></div>
+          <div class="form-group"><label class="form-label">CV * <span style="color:var(--red);font-size:10px;">PDF max 500KB</span></label><input type="file" class="form-input" id="pCv" accept=".pdf" style="padding:10px;"></div>
           <div class="form-group">
             <div style="display:flex;gap:10px;align-items:flex-start;background:var(--cream-dark);border-radius:10px;padding:14px;">
               <input type="checkbox" id="pConsent" style="margin-top:2px;flex-shrink:0;">
@@ -309,4 +308,358 @@ footer p{font-size:12px;color:rgba(255,255,255,.3);}
       </div>
       <div class="dash-card">
         <div class="dc-icon">&#128274;</div>
-        <div class="dc-title" data-i18n="card
+        <div class="dc-title" data-i18n="card_privacy_title">Privacy and Security</div>
+        <div class="dc-desc" data-i18n="card_privacy_desc">Manage your data and privacy settings.</div>
+        <div class="dc-btns"><a href="contact.html" class="dc-btn outline" data-i18n="card_privacy_btn">Contact Us</a></div>
+      </div>
+    </div>
+    <div class="account-info">
+      <div class="ai-title" data-i18n="account_info">Account Information</div>
+      <div class="ai-grid">
+        <div><div class="ai-label" data-i18n="acc_email">Email</div><div class="ai-val" id="dashEmailInfo">...</div></div>
+        <div><div class="ai-label" data-i18n="acc_type">Account type</div><div class="ai-val" id="dashType">Individual</div></div>
+        <div><div class="ai-label" data-i18n="acc_since">Member since</div><div class="ai-val" id="dashSince">...</div></div>
+        <div><div class="ai-label" data-i18n="acc_status">Status</div><div class="ai-val active" data-i18n="acc_status_val">Active</div></div>
+      </div>
+    </div>
+    <div class="danger-zone">
+      <div class="danger-title" data-i18n="danger_title">Danger Zone</div>
+      <div class="danger-desc" data-i18n="danger_desc">Permanently delete your account. This cannot be undone.</div>
+      <button class="btn-danger" onclick="deleteAccount()" data-i18n="danger_btn">Delete my account</button>
+      <div class="msg" id="deleteMsg" style="margin-top:12px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTITIONER PENDING -->
+<div id="practitionerPendingView" class="view">
+  <div class="auth-wrap">
+    <div class="auth-card" style="text-align:center;">
+      <div style="font-size:56px;margin-bottom:20px;">&#9203;</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:10px;">Thank you, <em id="pendingName">Doctor</em>.</h2>
+      <p style="font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:24px;">Your application to join the Creaven network has been received. Our team will review your profile within 3 to 5 business days.</p>
+      <button class="btn-logout" onclick="signOutUser()" style="margin-top:20px;">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<footer><p data-i18n="footer_text">Creaven 2026 - Psychological well-being for the creative industry - All rights reserved.</p></footer>
+
+<script>
+// =============================================
+// 1. INITIALISATION DE FIREBASE
+// =============================================
+const firebaseConfig = {
+  apiKey: "AIzaSyAFBdg7-JuTbnr2gKFaXZfBihdwNXTXgTg",
+  authDomain: "creavenconnect.com",
+  projectId: "creaven-01",
+  storageBucket: "creaven-01.firebasestorage.app",
+  messagingSenderId: "247953277751",
+  appId: "1:247953277751:web:2e6c9bde3b28998742d0b2"
+};
+
+firebase.initializeApp(firebaseConfig);
+var auth = firebase.auth();
+var db = firebase.firestore();
+// On ne déclare plus "var storage = firebase.storage();" car on n'utilise plus Firebase Storage
+
+// =============================================
+// 2. TRADUCTIONS ET UI
+// =============================================
+var currentLang = 'en';
+
+function toggleLangMenu() {
+  var d = document.getElementById('langDropdown');
+  if (d) d.classList.toggle('open');
+}
+
+function selectLang(lang, label) {
+  currentLang = lang;
+  var b = document.getElementById('langToggle');
+  if (b) b.textContent = label;
+  var d = document.getElementById('langDropdown');
+  if (d) d.classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) {
+    var d = document.getElementById('langDropdown');
+    if (d) d.classList.remove('open');
+  }
+});
+
+function showMsg(id, text, type) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'msg ' + type + ' show';
+}
+
+function switchTab(tab) {
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+}
+
+function selectType(type) {
+  window.selectedUserType = type;
+  ['Individual', 'Org', 'Practitioner'].forEach(function(t) {
+    var el = document.getElementById('type' + t);
+    if (el) el.classList.toggle('selected', t.toLowerCase() === type || (t === 'Org' && type === 'organization'));
+  });
+  var oh = document.getElementById('orgHint');
+  if (oh) oh.style.display = type === 'organization' ? 'block' : 'none';
+  var pf = document.getElementById('practitionerFields');
+  if (pf) pf.style.display = type === 'practitioner' ? 'block' : 'none';
+  var nf = document.getElementById('nameField');
+  if (nf) nf.style.display = type === 'practitioner' ? 'none' : 'block';
+}
+
+function showView(viewId) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  var el = document.getElementById(viewId);
+  if (el) el.classList.add('active');
+}
+
+// =============================================
+// 3. AUTHENTIFICATION
+// =============================================
+function signInWithGoogle() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
+    .then(function(result) {
+      console.log("Connexion Google réussie :", result.user.email);
+    })
+    .catch(function(err) {
+      console.error(err);
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+        return;
+      }
+      var currentForm = document.getElementById('loginForm').style.display !== 'none' ? 'loginMsg' : 'signupMsg';
+      showMsg(currentForm, 'Google error: ' + err.message, 'error');
+    });
+}
+
+function signIn() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var pass = document.getElementById('loginPassword').value;
+  if (!email || !pass) return showMsg('loginMsg', 'Please enter your email and password.', 'error');
+  
+  showMsg('loginMsg', 'Signing in...', 'info');
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(function() {
+      var rp = new URLSearchParams(window.location.search);
+      var rd = rp.get('redirect');
+      if (rd && rd.endsWith('.html')) {
+        setTimeout(function() { window.location.href = rd; }, 800);
+      }
+    })
+    .catch(function(err) {
+      showMsg('loginMsg', err.message, 'error');
+    });
+}
+
+function signUp() {
+  var userType = window.selectedUserType || 'individual';
+  var email = document.getElementById('signupEmail').value.trim();
+  var pass = document.getElementById('signupPassword').value;
+
+  if (userType === 'practitioner') return signUpPractitioner(email, pass);
+
+  var name = document.getElementById('signupName').value.trim();
+  if (!name || !email || !pass) return showMsg('signupMsg', 'Please fill all fields.', 'error');
+  if (pass.length < 6) return showMsg('signupMsg', 'Password must be at least 6 characters.', 'error');
+
+  showMsg('signupMsg', 'Creating account...', 'info');
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(function(cred) {
+      return cred.user.updateProfile({ displayName: name })
+        .then(function() { return cred.user.sendEmailVerification(); })
+        .then(function() {
+          localStorage.setItem('sm_name', name);
+          localStorage.setItem('sm_type', userType);
+          showMsg('signupMsg', 'Account created! Check your email.', 'success');
+        });
+    })
+    .catch(function(err) {
+      showMsg('signupMsg', err.message, 'error');
+    });
+}
+
+// --- INSCRIPTION PRATICIEN (Base64 direct dans Firestore) ---
+function signUpPractitioner(email, pass) {
+  var fn = document.getElementById('pFirstName').value.trim();
+  var ln = document.getElementById('pLastName').value.trim();
+  var dob = document.getElementById('pDob').value;
+  var country = document.getElementById('pCountry').value.trim();
+  var langs = document.getElementById('pLanguages').value.trim();
+  var spec = document.getElementById('pSpec').value.trim();
+  var lic = document.getElementById('pLicence').value.trim();
+  var dipFile = document.getElementById('pDiploma').files[0];
+  var cvFile = document.getElementById('pCv').files[0];
+  var consent = document.getElementById('pConsent').checked;
+
+  if (!fn || !ln || !dob || !country || !langs || !lic) return showMsg('signupMsg', 'Please fill required fields.', 'error');
+  if (!dipFile || !cvFile) return showMsg('signupMsg', 'Please upload diploma and CV.', 'error');
+  if (!consent) return showMsg('signupMsg', 'You must give consent.', 'error');
+  if (!email || !pass) return showMsg('signupMsg', 'Email and password required.', 'error');
+
+  var fullName = fn + ' ' + ln;
+  var uid;
+  showMsg('signupMsg', 'Creating application...', 'info');
+
+  // Fonction utilitaire pour convertir un fichier en Base64
+  function fileToBase64(file) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function() { resolve(reader.result); };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(function(cred) {
+      uid = cred.user.uid;
+      return cred.user.updateProfile({ displayName: fullName });
+    })
+    .then(function() {
+      showMsg('signupMsg', 'Processing files...', 'info');
+      return Promise.all([fileToBase64(dipFile), fileToBase64(cvFile)]);
+    })
+    .then(function(base64Results) {
+      var dipBase64 = base64Results[0];
+      var cvBase64 = base64Results[1];
+      
+      // Vérification de taille (Firestore limite à 1MB par document)
+      if (dipBase64.length > 800000 || cvBase64.length > 800000) {
+        throw new Error('Files are too large. Please upload smaller PDFs (under 500KB each).');
+      }
+
+      // Practitioners (Grand P)
+      return db.collection('Practitioners').doc(uid).set({
+        uid: uid, email: email, firstName: fn, lastName: ln, fullName: fullName,
+        dob: dob, country: country, languages: langs, specialities: spec,
+        licence: lic, 
+        diplomaBase64: dipBase64, 
+        cvBase64: cvBase64,
+        status: 'pending', 
+        appliedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    })
+    .then(function() {
+      localStorage.setItem('sm_name', fullName);
+      localStorage.setItem('sm_type', 'practitioner_pending');
+      showMsg('signupMsg', 'Application submitted successfully!', 'success');
+    })
+    .catch(function(err) {
+      showMsg('signupMsg', err.message, 'error');
+    });
+}
+
+function signOutUser() {
+  auth.signOut();
+  localStorage.removeItem('sm_type');
+  localStorage.removeItem('sm_name');
+}
+
+function resetPassword() {
+  var email = document.getElementById('resetEmail').value.trim();
+  if (!email) return showMsg('resetMsg', 'Please enter your email.', 'error');
+  
+  auth.sendPasswordResetEmail(email)
+    .then(function() {
+      showMsg('resetMsg', 'Reset link sent. Check your inbox.', 'success');
+      setTimeout(function() { document.getElementById('forgotModal').style.display = 'none'; }, 2500);
+    })
+    .catch(function(err) {
+      showMsg('resetMsg', err.message, 'error');
+    });
+}
+
+function showForgot() { document.getElementById('forgotModal').style.display = 'flex'; }
+function closeForgot() { document.getElementById('forgotModal').style.display = 'none'; }
+
+// =============================================
+// 4. ETAT DE CONNEXION ET DASHBOARD
+// =============================================
+auth.onAuthStateChanged(function(user) {
+  if (user) {
+    // Practitioners (Grand P)
+    db.collection('Practitioners').doc(user.uid).get()
+      .then(function(doc) {
+        if (doc.exists) {
+          var d = doc.data();
+          localStorage.setItem('sm_type', d.status === 'approved' ? 'practitioner' : 'practitioner_pending');
+          localStorage.setItem('sm_name', d.fullName || user.displayName || '');
+        }
+      })
+      .catch(function() {})
+      .then(function() { showDashboard(user); });
+  } else {
+    showView('authView');
+  }
+});
+
+function showDashboard(user) {
+  var name = user.displayName || localStorage.getItem('sm_name') || user.email.split('@')[0];
+  var userType = localStorage.getItem('sm_type') || 'individual';
+
+  if (userType === 'practitioner_pending') {
+    showView('practitionerPendingView');
+    document.getElementById('pendingName').textContent = name;
+    return;
+  }
+
+  showView('dashboardView');
+  document.getElementById('dashName').textContent = name;
+  document.getElementById('dashEmail').textContent = user.email;
+  document.getElementById('dashEmailInfo').textContent = user.email;
+  
+  var created = new Date(user.metadata.creationTime).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  document.getElementById('dashSince').textContent = created;
+  
+  var badge = document.getElementById('planBadge');
+  var isOrg = userType === 'organization';
+  
+  document.getElementById('dashType').textContent = isOrg ? 'Organization' : 'Individual';
+  badge.textContent = isOrg ? '🏢 Organization' : '👤 Individual';
+  badge.className = 'plan-badge ' + (isOrg ? 'organization' : 'individual');
+  document.getElementById('upgradeBanner').style.display = isOrg ? 'none' : 'flex';
+}
+
+function deleteAccount() {
+  if (!confirm('Are you sure you want to permanently delete your account?')) return;
+  var msg = document.getElementById('deleteMsg');
+  msg.textContent = 'Deleting...'; msg.className = 'msg info show';
+  var user = auth.currentUser;
+  if (!user) return;
+  
+  // Practitioners (Grand P)
+  db.collection('Practitioners').doc(user.uid).delete().catch(function() {})
+    .then(function() { return user.delete(); })
+    .then(function() {
+      localStorage.removeItem('sm_type');
+      localStorage.removeItem('sm_name');
+      alert('Account deleted.');
+      window.location.href = 'index.html';
+    })
+    .catch(function(err) {
+      msg.textContent = err.message;
+      msg.className = 'msg error show';
+    });
+}
+
+// =============================================
+// 5. INITIALISATION UI
+// =============================================
+window.selectedUserType = 'individual';
+var _urlP = new URLSearchParams(window.location.search);
+if (_urlP.get('tab') === 'signup') {
+  setTimeout(function() {
+    if (document.getElementById('authView').classList.contains('active')) switchTab('signup');
+  }, 300);
+}
+</script>
+</body>
+</html>
